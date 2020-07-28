@@ -1,0 +1,118 @@
+﻿using System;
+using System.Linq;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
+using WebApi.Entities;
+using WebApi.Helpers;
+
+namespace WebApi.Services
+{
+
+    public interface ICampaignsService
+    {
+        IQueryable<Campaigns> GetAll();
+        Campaigns GetById(int id);
+        Campaigns Create(Campaigns payload);
+        Campaigns Update(Campaigns payload);
+        void Delete(int id);
+    }
+
+    public class CampaignsService : ICampaignsService
+    {
+        private readonly DataContext _context;
+        private readonly AppSettings _appSettings;
+
+        public CampaignsService(DataContext context, IOptions<AppSettings> appSettings)
+        {
+            _context = context;
+            _appSettings = appSettings.Value;
+        }
+
+        public IQueryable<Campaigns> GetAll()
+        {
+            IQueryable<Campaigns> payload = null;
+
+            try
+            {
+
+                payload = _context.Campaigns.AsQueryable();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return payload.AsNoTracking();
+        }
+
+        public Campaigns GetById(int id)
+        {
+            var res = _context.Campaigns.Find(id);
+            return res;
+        }
+
+        public Campaigns Create(Campaigns payload)
+        {
+            try
+            {
+
+                payload.CreatedAt = DateTime.Now;
+                _context.Campaigns.Add(payload);
+                _context.SaveChanges();
+
+                return payload;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public Campaigns Update(Campaigns payload)
+        {
+            try
+            {
+
+                var item = _context.Campaigns.Find(payload.Id);
+
+                if (item == null)
+                    throw new AppException("Agency not found");
+
+                item.Name = payload.Name;
+                item.UpdatedAt = DateTime.Now;
+
+                _context.Campaigns.Update(item);
+                _context.SaveChanges();
+
+                return item;
+
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+        }
+
+        public void Delete(int id)
+        {
+            var item = _context.Campaigns.Find(id);
+
+            if (item != null)
+            {
+
+                item.DeletedAt = DateTime.Now;
+
+                _context.Campaigns.Update(item);
+                _context.SaveChanges();
+            }
+            else
+                throw new AppException("Agency not found");
+
+        }
+
+    }
+}

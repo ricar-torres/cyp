@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Text;
-using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
-using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
 
@@ -41,21 +35,8 @@ namespace WebApi
             services.AddCors();
 
 
-            //services.AddDbContext<DataContext>(x => x.UseInMemoryDatabase("TestDb"));
             services.AddDbContext<DataContext>(options => options.UseSqlServer(appSettings.DefaultConnection));
 
-
-            // ===== Add Identity ========
-            //services.AddIdentity<User, Role>()
-            //.AddEntityFrameworkStores<DataContext>()
-            //.AddDefaultTokenProviders();
-
-            //services.AddTransient<UserManager<User>>();
-            //services.AddTransient<DataContext>();
-
-            // ===== Add MVC ========
-            //services.AddMvc();
-            //services.AddControllersWithViews();
             services.AddControllers().AddNewtonsoftJson();
             //services.AddMvc().AddNewtonsoftJson();
 
@@ -98,24 +79,14 @@ namespace WebApi
             services.AddScoped<IOtpService, OtpService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<AuthorizationService>();
+            services.AddScoped<IAgenciesServices, AgenciesServices>();
+            services.AddScoped<ICampaignsService, CampaignsService>();
 
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
-            //if (env.IsDevelopment())
-            //{
-            //    app.UseDeveloperExceptionPage();
-            //}
-            //else
-            //{
-            //    app.UseExceptionHandler("/Home/Error");
-            //}
-
-            //loggerFactory.AddConsole(Configuration.GetSection("Logging"));
-            //loggerFactory.AddDebug();
 
             app.UseStaticFiles();
             app.UseRouting();
@@ -128,19 +99,8 @@ namespace WebApi
                 builder.AllowAnyOrigin();
             });
 
-            //app.UseCors(option => option.WithOrigins("*").AllowAnyMethod());  
-
             app.UseAuthentication();
             app.UseAuthorization();
-
-            //app.UseMvc();
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllerRoute(
-            //                                 name: "default",
-            //                                 pattern: "{controller=Home}/{action=Index}/{id?}");
-            //    endpoints.MapRazorPages();
-            //});
 
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();

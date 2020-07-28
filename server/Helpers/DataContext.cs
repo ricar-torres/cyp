@@ -10,9 +10,9 @@ namespace WebApi.Helpers
     //public class DataContext : IdentityDbContext<User, Role, int>
     public class DataContext : DbContext
     {
-        public DataContext(DbContextOptions<DataContext> options) : base(options) 
+        public DataContext(DbContextOptions<DataContext> options) : base(options)
         {
-            
+
         }
 
         #region TABLES
