@@ -1,0 +1,14 @@
+<h1 mat-dialog-title>{{ message.header }}</h1>
+<mat-dialog-content>
+  <div [innerHTML]="html" style="height: 250px;"></div>
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+  <button
+    mat-button
+    [mat-dialog-close]="true"
+    class="mat-raised-button mat-primary"
+  >
+    Ok
+  </button>
+</mat-dialog-actions>

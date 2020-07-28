@@ -1,0 +1,286 @@
+﻿[
+  {
+    "RoleMenuId": 1,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 1,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 1,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 1,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 2,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 2,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 2,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 2,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 3,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 3,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 3,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 3,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 4,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 4,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 4,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 4,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 5,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 5,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 5,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 5,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 6,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 6,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 6,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 6,
+    "PermissionId": 4
+  },
+  //
+  {
+    "RoleMenuId": 7,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 7,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 7,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 7,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 8,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 8,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 8,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 8,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 9,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 9,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 9,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 9,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 10,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 10,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 10,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 10,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 11,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 11,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 11,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 11,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 12,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 12,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 12,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 12,
+    "PermissionId": 4
+  },
+  //
+  {
+    "RoleMenuId": 13,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 13,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 13,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 13,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 14,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 14,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 14,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 14,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 15,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 15,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 15,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 15,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 16,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 16,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 16,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 16,
+    "PermissionId": 4
+  },
+  {
+    "RoleMenuId": 17,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 17,
+    "PermissionId": 2
+  },
+  {
+    "RoleMenuId": 17,
+    "PermissionId": 3
+  },
+  {
+    "RoleMenuId": 17,
+    "PermissionId": 4
+  },
+  //
+  {
+    "RoleMenuId": 18,
+    "PermissionId": 1
+  },
+  {
+    "RoleMenuId": 18,
+    "PermissionId": 3
+  }
+
+]

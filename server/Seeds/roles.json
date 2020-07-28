@@ -1,0 +1,22 @@
+﻿[
+  {
+    "Id":  1,
+    "Name": "admin",
+    "Description": "Administrator" 
+  },
+  {
+    "Id": 2,
+    "Name": "developer",
+    "Description": "Developer"
+  },
+  {
+    "Id": 3,
+    "Name": "editor",
+    "Description": "Editor role gives access to all the day-to-day file management operations"
+  },
+  {
+    "Id": 4,
+    "Name": "contributor",
+    "Description": "Contributor a limited role, Contributor's cancomplete task"
+  }
+]

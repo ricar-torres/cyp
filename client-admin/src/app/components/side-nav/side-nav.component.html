@@ -1,0 +1,104 @@
+<mat-toolbar color="primary">
+  <!-- <mat-toolbar-row class="white-background" style="min-height:90px;">
+    
+    <img alt="hacienda" class="logo" src="assets/images/hacienda.png" />
+
+    <h1></h1>
+
+    <span class="menu-spacer"></span>
+    
+  </mat-toolbar-row> -->
+
+  <mat-toolbar-row>
+
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+
+    <span>eFileHub</span>
+
+    <div fxLayout fxLayoutAlign="end center" class="full-width">
+
+      <small>{{ userDisplayName }}</small>
+
+      <button mat-icon-button [matMenuTriggerFor]="menuLan" aria-label="Example icon-button with a menu">
+        <fa-icon [icon]="faGlobeAmericas"></fa-icon>
+      </button>
+      <mat-menu #menuLan="matMenu">
+        <button mat-menu-item (click)="languageService.useLang('es')">
+          <span> {{ 'SPANISH' | translate }} </span>
+        </button>
+        <button mat-menu-item (click)="languageService.useLang('en')">
+          <span> {{ 'ENGLISH' | translate }}</span>
+        </button>
+      </mat-menu>
+
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+
+        <button mat-menu-item (click)="validate.changePassword()">
+          <mat-icon>fingerprint</mat-icon>
+          <span>{{ 'CHANGE_PASSWORD_BTN' | translate }}</span>
+        </button>
+        <button mat-menu-item (click)="app.logout()">
+          <mat-icon>exit_to_app</mat-icon>
+          <span>{{ 'LOGOUT_BTN' | translate }}</span>
+        </button>
+      </mat-menu>
+
+    </div>
+
+
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<mat-sidenav-container class="sidenav-container">
+
+  <mat-sidenav #sidenav [mode]="isBiggerScreen() ? 'over' : 'side'" [(opened)]="opened">
+    <mat-nav-list>
+      <span *ngFor="let item of navItems">
+        <span *ngIf="item.children && item.children.length > 0">
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  <!-- Cabeceras del submenu -->
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-icon>{{item.iconName}}</mat-icon>
+                    <span class="nav-caption">{{item.displayName}}</span>
+                  </div>
+                </mat-panel-title>
+              </mat-expansion-panel-header>
+              <span *ngFor="let child of item.children">
+                <mat-list-item [routerLink]="child.route">
+                  <!-- Entradas de cada submenú  -->
+                  <div fxLayout="row" fxLayoutAlign="space-between center">
+                    <mat-icon>{{child.iconName}}</mat-icon>
+                    <span class="nav-caption">{{child.displayName}}</span>
+                  </div>
+                </mat-list-item>
+              </span>
+            </mat-expansion-panel>
+          </mat-accordion>
+        </span>
+        <span *ngIf="!item.children || item.children.length === 0">
+          <mat-list-item [routerLink]="item.route">
+            <!-- Entradas principales -->
+            <div fxLayout="row" fxLayoutAlign="space-between center">
+              <mat-icon>{{item.iconName}}</mat-icon>
+              <span class="nav-caption">{{item.displayName}}</span>
+            </div>
+          </mat-list-item>
+        </span>
+      </span>
+    </mat-nav-list>
+  </mat-sidenav>
+
+  <mat-sidenav-content>
+    <div>
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

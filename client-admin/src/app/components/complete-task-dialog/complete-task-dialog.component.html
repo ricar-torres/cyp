@@ -1,0 +1,64 @@
+<md-content fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign="center center">
+
+  <div fxLayout="row" fxLayoutAlign="center center" class="full-width">
+
+    <form [formGroup]="form" class="full-width">
+
+      <mat-card>
+        <mat-card-header fxLayoutAlign="center" fxLayout="row">
+
+          <mat-card-title>
+            {{ 'TASK' | translate }}
+          </mat-card-title>
+
+        </mat-card-header>
+
+        <mat-card-content fxLayout="column">
+
+          <app-task-details [task]="task" [actionButtons]="false"></app-task-details>
+
+          <br />
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'COMMENT' | translate }}</mat-label>
+            <textarea matInput placeholder="" formControlName="adminComments"></textarea>
+          </mat-form-field>
+
+        </mat-card-content>
+
+        <mat-card-actions fxLayout="column" fxLayoutGap="32px">
+
+          <button *ngIf="data.action == 'APPROVE'" type="submit" (click)="onSubmit()" mat-raised-button color="primary"
+            class="full-width" [disabled]="!form.valid">
+            <fa-icon [icon]="faThumbsUp"></fa-icon> {{ 'APPROVE_BTN' | translate }}
+          </button>
+
+          <button *ngIf="data.action == 'ARCHIVE'" type="submit" (click)="onSubmit()" mat-raised-button color="warn"
+            class="full-width" [disabled]="!form.valid">
+            <fa-icon [icon]="faArchive"></fa-icon> {{ 'ARCHIVE_BTN' | translate }}
+          </button>
+
+          <button *ngIf="data.action == 'CANCEL'" type="submit" (click)="onSubmit()" mat-raised-button color="warn"
+            class="full-width" [disabled]="!form.valid">
+            <fa-icon [icon]="faTrash"></fa-icon> {{ 'CANCEL_BTN' | translate }}
+          </button>
+
+          <button *ngIf="data.action == 'RECOVER'" type="submit" (click)="onSubmit()" mat-raised-button color="primary"
+            class="full-width" [disabled]="!form.valid">
+            <fa-icon [icon]="faUndoAlt"></fa-icon> {{ 'RECOVER_BTN' | translate }}
+          </button>
+
+          <button mat-button color="warn" (click)="onNoClick()"> {{ 'CLOSE_BTN' | translate }} </button>
+
+        </mat-card-actions>
+      </mat-card>
+
+    </form>
+
+  </div>
+
+  <div class="loading-indicator" [hidden]="!loading">
+    <mat-progress-spinner [mode]="'indeterminate'">
+    </mat-progress-spinner>
+  </div>
+
+</md-content>

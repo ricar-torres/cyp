@@ -1,0 +1,113 @@
+<div fxLayout="row" fxLayoutGap="32px" *ngIf="task">
+
+  <div class="element-description" fxLayout="column" fxLayoutGap="6px">
+
+    <span>
+      <fa-icon [icon]="faKey"></fa-icon>
+      {{ task.file.type }}:
+      <a [routerLink]="['/home/file',task.file.id]">{{ task.key }}</a>
+    </span>
+
+    <span *ngIf="task.documentType">
+      <fa-icon [icon]="faBookmark"></fa-icon>
+      {{ 'TASK_DETAILS.BOOKMARK' | translate }}:
+      <span class="element-description-attribution">{{ task.documentType ? task.documentType.name : '' }} </span>
+    </span>
+
+    <span>
+      <fa-icon [icon]="faAsterisk"></fa-icon>
+      {{ 'TASK_DETAILS.REFERENCE1' | translate }}:
+      <span class="element-description-attribution">{{ task.file.reference1 }}</span>
+    </span>
+
+    <span *ngIf="task.eSign">
+      <fa-icon [icon]="faSignature"></fa-icon>
+      {{ 'TASK_DETAILS.SIGNING_DATE' | translate }}:
+      <span class="element-description-attribution">
+        {{ task.eSignDate | date: 'MM/dd/yyyy hh:mm:ss a' }}
+      </span>
+    </span>
+
+    <span>
+      <fa-icon [icon]="faPaperPlane"></fa-icon>
+      {{ 'TASK_DETAILS.SENT_DATE' | translate }}:
+      <span class="element-description-attribution">
+        {{ task.createdUser.userName }} - {{ task.createDt | date: 'MM/dd/yyyy hh:mm:ss a' }}
+      </span>
+    </span>
+
+    <span>
+      <fa-icon [icon]="faPen"></fa-icon>
+      {{ 'TASK_DETAILS.UPDATED_DATE' | translate }}:
+      <span class="element-description-attribution">
+        {{ task.updateUser.userName }} - {{ task.updDt | date: 'MM/dd/yyyy hh:mm:ss a' }}
+      </span>
+    </span>
+
+    <span class="comments">
+      <fa-icon [icon]="faTasks"></fa-icon>
+      {{ 'TASK_DETAILS.TASK' | translate }}:
+      <span class="element-description-attribution">{{ task.details }}</span>
+    </span>
+
+    <span *ngIf="task.publicComments" class="comments">
+      <fa-icon [icon]="faComment"></fa-icon>
+      {{ 'TASK_DETAILS.COMMENT' | translate }}:
+      <span class="element-description-attribution">
+        <a>{{ task.file.fullName }} </a> -
+        {{ task.publicComments }}
+      </span>
+    </span>
+
+    <span *ngIf="task.adminComments" class="comments">
+      <fa-icon [icon]="faComment"></fa-icon>
+      {{ 'TASK_DETAILS.COMMENT' | translate }}:
+      <span class="element-description-attribution">
+        <b>{{ task.createdUser ? task.createdUser.userName : ''  }} </b> -
+        {{ task.adminComments }}</span>
+    </span>
+
+    <button mat-button color="accent" *ngIf="task.document" (click)="downloadFile(task.document)">
+      <fa-icon [icon]="faFileDownload"></fa-icon>&nbsp;
+      {{ 'TASK_DETAILS.DOWNLOAD' | translate }}:
+    </button>
+
+    <button mat-button color="accent" *ngIf="task.templateFile" (click)="downloadTemplate(task.templateFile)">
+      <fa-icon [icon]="faFileDownload"></fa-icon>&nbsp;
+      {{ 'TASK_DETAILS.DOWNLOAD' | translate }}: {{ 'TASK_DETAILS.TEMPLATE' | translate }}
+    </button>
+
+
+  </div>
+
+  <div fxLayout="column" fxLayoutGap="6px" fxLayoutAlign="center center" *ngIf="actionButtons">
+
+    <div *ngIf="task.status == taskStatus.sent" (click)="cancel(task)">
+      <button mat-raised-button color="warn">
+        <fa-icon [icon]="faTrash"></fa-icon>&nbsp;{{ 'CANCEL_BTN' | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="task.status == taskStatus.inbox">
+      <button mat-raised-button color="primary" (click)="approve(task)">
+        <fa-icon [icon]="faThumbsUp"></fa-icon>
+        {{ 'APPROVE_BTN' | translate }}
+      </button>
+      <button mat-button color="warn" (click)="archive(task)">
+        <fa-icon [icon]="faArchive"></fa-icon>&nbsp;{{ 'ARCHIVE_BTN' | translate }}
+      </button>
+    </div>
+
+    <div *ngIf="task.status == taskStatus.archived">
+      <button mat-raised-button color="primary" (click)="recover(task)">
+        <fa-icon [icon]="faUndoAlt"></fa-icon> {{ 'RECOVER_BTN' | translate }}
+      </button>
+    </div>
+
+
+
+  </div>
+
+
+
+</div>

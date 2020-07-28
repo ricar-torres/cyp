@@ -1,0 +1,56 @@
+﻿[
+  {
+    "Id": 1,
+    "Title": "Users",
+    "Description": "Manage Users",
+    "ParentId": 0,
+    "Icon": "",
+    "Url": "",
+    "Type": "F"
+  },
+  {
+    "Id": 2,
+    "Title": "Files",
+    "Description": "Manage Files",
+    "ParentId": 0,
+    "Icon": "",
+    "Url": "",
+    "Type": "F"
+  },
+  {
+    "Id": 3,
+    "Title": "Tasks",
+    "Description": "Manage Tasks",
+    "ParentId": 0,
+    "Icon": "",
+    "Url": "",
+    "Type": "F"
+  },
+  {
+    "Id": 4,
+    "Title": "Documents",
+    "Description": "Manage Documents",
+    "ParentId": 0,
+    "Icon": "",
+    "Url": "",
+    "Type": "F"
+  },
+  {
+    "Id": 5,
+    "Title": "Comments",
+    "Description": "Manage Comments",
+    "ParentId": 0,
+    "Icon": "",
+    "Url": "",
+    "Type": "F"
+  },
+  {
+    "Id": 6,
+    "Title": "Document Types",
+    "Description": "Manage Document Types",
+    "ParentId": 0,
+    "Icon": "",
+    "Url": "",
+    "Type": "F"
+  }
+]

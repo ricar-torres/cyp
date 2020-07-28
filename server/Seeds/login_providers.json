@@ -1,0 +1,12 @@
+﻿[
+  {
+    "Id": 1,
+    "Name":  "Local",
+    "DelFlag":  false
+  },
+  {
+    "Id": 2,
+    "Name": "Active Directory",
+    "DelFlag": false
+  }
+]

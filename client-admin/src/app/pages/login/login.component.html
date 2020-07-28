@@ -1,0 +1,65 @@
+<md-content fxLayout="column" fxLayoutAlign="center center" class="main">
+  <mat-chip-list>
+    <mat-chip color="warn" selected *ngIf="!env.production">{{
+      env.name
+    }}</mat-chip>
+  </mat-chip-list>
+
+  <div fxLayout="row" fxLayoutAlign="center center">
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+      <mat-card>
+        <mat-card-header fxLayoutAlign="center" fxLayout="row">
+          <mat-card-title>
+            {{ 'APP' | translate }}
+          </mat-card-title>
+
+          <mat-card-subtitle>
+            {{ application.name }}
+            <!-- {{ 'TITLE' | translate }} -->
+          </mat-card-subtitle>
+        </mat-card-header>
+
+        <mat-card-content fxLayout="column">
+          <div fxLayout fxLayoutAlign="center" class="full-width">
+            <!-- <img alt="logo" width="80" height="80" class="logo" src="https://api.adorable.io/avatars/285/224040.png" /> -->
+            <fa-icon size="3x" [icon]="faLock"></fa-icon>
+          </div>
+
+          <br />
+          <br />
+
+          <mat-form-field color="accent">
+            <mat-label>{{ 'LOGIN-FORM.USER' | translate }}</mat-label>
+            <input formControlName="userName" matInput #inputUserName />
+          </mat-form-field>
+
+          <mat-form-field color="accent">
+            <mat-label>{{ 'LOGIN-FORM.PASSWORD' | translate }}</mat-label>
+            <input formControlName="password" type="password" matInput />
+          </mat-form-field>
+        </mat-card-content>
+
+        <mat-card-actions fxLayout="column" fxLayoutGap="32px">
+          <button
+            type="submit"
+            mat-raised-button
+            color="primary"
+            [disabled]="reactiveForm.invalid"
+            class="full-width"
+          >
+            {{ 'LOGIN-FORM.LOGIN_BTN' | translate }}
+          </button>
+        </mat-card-actions>
+      </mat-card>
+    </form>
+  </div>
+
+  <span>
+    <a class="lan-link" (click)="languageService.useLang('es')">es</a> |
+    <a class="lan-link" (click)="languageService.useLang('en')">en</a>
+  </span>
+
+  <div class="loading-indicator" [hidden]="!loading">
+    <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+  </div>
+</md-content>

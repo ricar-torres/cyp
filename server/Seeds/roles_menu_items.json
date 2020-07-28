@@ -1,0 +1,103 @@
+﻿[
+  {
+    "Id": 1,
+    "RoleId": 1, //Admin
+    "MenuItemId": 1 //Users
+  },
+
+  {
+    "Id": 2,
+    "RoleId": 1, //Admin
+    "MenuItemId": 2 //Files
+  },
+
+  {
+    "Id": 3,
+    "RoleId": 1, //Admin
+    "MenuItemId": 3 // Tasks
+  },
+  {
+    "Id": 4,
+    "RoleId": 1, //Admin
+    "MenuItemId": 4 //Documents
+  },
+  {
+    "Id": 5,
+    "RoleId": 1, //Admin
+    "MenuItemId": 5 //Comments
+  },
+  {
+    "Id": 6,
+    "RoleId": 1, //Admin
+    "MenuItemId": 6 //Document Type
+  },
+
+
+  {
+    "Id": 7,
+    "RoleId": 2, //Developer
+    "MenuItemId": 1 //Users
+  },
+
+  {
+    "Id": 8,
+    "RoleId": 2, //Developer
+    "MenuItemId": 2 //Files
+  },
+
+  {
+    "Id": 9,
+    "RoleId": 2, //Developer
+    "MenuItemId": 3 // Tasks
+  },
+  {
+    "Id": 10,
+    "RoleId": 2, //Developer
+    "MenuItemId": 4 //Documents
+  },
+  {
+    "Id": 11,
+    "RoleId": 2, //Developer
+    "MenuItemId": 5 //Comments
+  },
+  {
+    "Id": 12,
+    "RoleId": 2, //Developer
+    "MenuItemId": 6 //Document Type
+  },
+
+  {
+    "Id": 13,
+    "RoleId": 3, //Editor
+    "MenuItemId": 2 //Files
+  },
+
+  {
+    "Id": 14,
+    "RoleId": 3, //Editor
+    "MenuItemId": 3 // Tasks
+  },
+  {
+    "Id": 15,
+    "RoleId": 3, //Editor
+    "MenuItemId": 4 //Documents
+  },
+  {
+    "Id": 16,
+    "RoleId": 3, //Editor
+    "MenuItemId": 5 //Comments
+  },
+  {
+    "Id": 17,
+    "RoleId": 3, //Editor
+    "MenuItemId": 6 //Document Type
+  },
+
+
+  {
+    "Id": 18,
+    "RoleId": 4, // Contributor
+    "MenuItemId": 3 // Tasks
+  }
+
+]

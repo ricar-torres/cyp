@@ -1,0 +1,13 @@
+﻿[
+  {
+    "UserName": "admin",
+    "FirstName": "Administrator",
+    "LastName": "",
+    "Email": "gomezl.gustavo@gmail.com",
+    "password": "1234",
+    "isChgPwd": false,
+    "LoginProviderId": 1,
+    "ApplicationId": 2,
+    "UserType": "ADMIN"
+  }
+]

@@ -1,0 +1,83 @@
+<form class="form" [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+  <md-content layout-margin layout-padding flex="50">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{ 'USER.TITLE' | translate }}</mat-card-title>
+        <mat-card-subtitle># {{ id }}</mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'USER.USER' | translate }}</mat-label>
+          <textarea matInput formControlName="userName"></textarea>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
+          <input matInput formControlName="firstName" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'USER.FAMILY_NAME' | translate }}</mat-label>
+          <input matInput formControlName="lastName" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'USER.TYPE' | translate }}</mat-label>
+          <mat-select formControlName="loginProviderId">
+            <mat-option *ngFor="let item of loginProvider" [value]="item.id">
+              {{ item.desc }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'USER.PASSWORD' | translate }}</mat-label>
+          <input matInput formControlName="password" type="password" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'USER.ISACTIVE' | translate }}</mat-label>
+          <mat-slide-toggle formControlName="delFlag"></mat-slide-toggle>
+          <input matInput #value hidden formControlName="delFlag" />
+        </mat-form-field>
+
+        <mat-form-field class="full-width">
+          <mat-chip-list #chipList aria-label="Role selection">
+            <mat-chip *ngFor="let role of roles" [selectable]="selectable" [removable]="removable"
+              (removed)="remove(role)">
+              {{ role.name }}
+              <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+            </mat-chip>
+            <input placeholder="{{ 'USER.ROLES' | translate }}" #roleInput formControlName="rolesAlt"
+              [matAutocomplete]="auto" [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
+          </mat-chip-list>
+          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+            <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+              {{ role.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+        <p class="password-policy">
+          {{ 'PASSWORD_POLICY' | translate }}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button color="primary" type="submit" *ngIf="(id && editAccess) || (!id && createAccess)"
+          [disabled]="!reactiveForm.valid">
+          <mat-icon>save</mat-icon> {{ 'USER.SAVE' | translate }}
+        </button>
+
+        <button mat-stroked-button (click)="onBack()">
+          <mat-icon>list</mat-icon>{{ 'USER.GOBACK' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </md-content>
+</form>
+
+<!-- loader.component.html -->
+<div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div>
