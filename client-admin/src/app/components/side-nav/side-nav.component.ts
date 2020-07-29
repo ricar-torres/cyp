@@ -40,7 +40,7 @@ export class SideNavComponent implements OnInit {
             .toPromise(),
           iconName: 'home',
           route: '/home',
-          visible: this.app.checkMenuRoleAccess(MenuRoles.TASKS),
+          visible: true,
         },
         {
           displayName: await this.languageService.translate
@@ -49,7 +49,8 @@ export class SideNavComponent implements OnInit {
           iconName: 'settings_applications',
           visible:
             this.app.checkMenuRoleAccess(MenuRoles.USERS) ||
-            this.app.checkMenuRoleAccess(MenuRoles.DOCUMENT_TYPES),
+            this.app.checkMenuRoleAccess(MenuRoles.CAMPAIGNS) ||
+            this.app.checkMenuRoleAccess(MenuRoles.AGENCIES),
           children: [
             {
               displayName: await this.languageService.translate
@@ -63,16 +64,16 @@ export class SideNavComponent implements OnInit {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.AGENCIES')
                 .toPromise(),
-              iconName: 'person',
-              route: '',
+              iconName: 'account_balance',
+              route: '/home',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.CAMPAIGNS')
                 .toPromise(),
-              iconName: 'person',
-              route: '',
+              iconName: 'online_prediction',
+              route: '/home',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],

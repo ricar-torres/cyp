@@ -35,9 +35,9 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
         canActivate: [AuthGuardService],
-        data: {
-          expectedRoles: MenuRoles.TASKS,
-        },
+        // data: {
+        //   expectedRoles: [],
+        // },
       },
       {
         path: 'user-list',
