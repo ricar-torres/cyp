@@ -42,74 +42,6 @@
     "TAG": "Bookmark",
     "ALL_TASKS": "All users"
   },
-  "FILE": {
-    "TITLE": "File",
-    "DESCRIPTION": "Description",
-    "FIRST_NAME": "First name",
-    "LAST_NAME": "Last name",
-    "NAME": "Name",
-    "TYPE": "Type",
-    "REF1": "Reference 1",
-    "DOCUMENTS": "Documents",
-    "TASKS": "Tasks",
-    "COMMENTS": "Comments",
-    "SEARCH": "Search",
-    "FROM": "From",
-    "TASK": "Tarea",
-    "DATE": "Sent date",
-    "STATUS": "Status",
-    "EMAIL": "Email",
-    "PHONE_NUMBER": "Phone Number",
-    "WORKED_BY": "Worked by",
-    "UPDATED_BY": "Updated by",
-    "UPDATED_DATE": "Updated date",
-    "DOC_DATE": "Date",
-    "TAG": "Bookmark",
-    "LINKED_FILES": "Linked Files",
-    "KEY": "Key",
-    "ACTIVE": "Active",
-    "INACTIVE": "Inactive",
-    "COMMENT": "Comment",
-    "DELETED": "Deleted",
-    "ORIGIN": "Origin",
-    "ONLY_ACTIVE_DOCUMENT": "Only active",
-    "ADD_TASK_BTN": "New task",
-    "ADD_DOC_BTN": "New document"
-  },
-  "NEW_TASK": {
-    "TITLE": "New Task",
-    "DOCUMENT_TYPE": "Required documents",
-    "TASK_DESCRIPTION": "Task instructions",
-    "TEMPLATE": "Template",
-    "SIGNING": "ESign required",
-    "EMAIL_NOT_FOUND": "Email not found"
-  },
-  "NEW_COMMENT": {
-    "TITLE": "Comment",
-    "DATE": "Date",
-    "WORKED_BY": "Worked by"
-  },
-  "DOCUMENT": {
-    "TITLE": "Document",
-    "DOCUMENT_TYPE": "Bookmark",
-    "DISABLED": "Disabled?"
-  },
-  "FILE_LIST": {
-    "TITLE": "Files",
-    "TASK_DESCRIPTION": "Task instructions",
-    "SEARCH_KEY": "Search by no.",
-    "SEARCH_REFERENCE": "Search by reference",
-    "SEARCH_LASTNAME": "Search by last name",
-    "SEARCH_FIRSTNAME": "Search by first name",
-    "KEY": "No.",
-    "NAME": "Name",
-    "REF1": "Ref1",
-    "REF2": "Ref2",
-    "TYPE": "Type",
-    "ACTIVE": "Active",
-    "INACTIVE": "Inactive",
-    "ONLY_ACTIVE": "Only active"
-  },
   "USER": {
     "TITLE": "User",
     "USER": "User",
@@ -149,27 +81,10 @@
     "BOOKMARKS": "Bookmarks",
     "USERS": "Users",
     "ADMINISTRATION": "Administration",
-    "FILES": "Files",
+    "AGENCIES": "Agencies",
+    "CAMPAIGNS": "Campaigns",
     "HOME": "Home",
     "SETTINGS": "Settings"
-  },
-  "DOCUMENT_TYPE": {
-    "PAGE_TITLE": "Bookmark",
-    "SAVE": "Save",
-    "RETURN": "Return",
-    "NAME": "Name"
-  },
-  "DOCUMENT_TYPE_LIST": {
-    "PAGE_TITLE": "Bookmarks",
-    "NAME": "Name",
-    "CREATRED_DATE": "Created date",
-    "STATUS": "Status",
-    "ACTIVE": "Active",
-    "INACTIVE": "Inactive",
-    "GENERAL_FILTER": "Filter",
-    "ADD_BTN": "New bookmark",
-    "EDIT_BTN": "Edit",
-    "UPDATED_DATE": "Updated date"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
@@ -179,21 +94,6 @@
     "LAST_PAGE_LABEL": "End",
     "RANGE_PAGE_LABEL_1": "0 from {{length}}",
     "RANGE_PAGE_LABEL_2": "{{startIndex}} - {{endIndex}} from {{length}}"
-  },
-  "TASK_DETAILS": {
-    "TASK": "Task",
-    "BOOKMARK": "Bookmark",
-    "COMMENT": "Comment",
-    "SIGNING_DATE": "ESign date",
-    "DOWNLOAD": "Download",
-    "FILE": "File",
-    "REFERENCE1": "Reference1",
-    "TYPE": "Type",
-    "SENT_BY": "Sent by",
-    "UPDATED_BY": "Updated by",
-    "SENT_DATE": "Sent date",
-    "UPDATED_DATE": "Updated date",
-    "TEMPLATE": "Template"
   },
   "ACCESS_DENIED": {
     "CONTENT": "Not this time, access forbidden!"

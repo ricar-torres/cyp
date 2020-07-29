@@ -43,7 +43,7 @@ namespace WebApi.Controllers
         {
             try
             {
-                var res = _authService.Login(payload.ApplicationKey, payload.UserName, payload.Password, payload.UserType);
+                var res = _authService.Login(payload.ApplicationId, payload.UserName, payload.Password, payload.UserType);
                 return res;
             }
             catch (Exception ex)
@@ -64,7 +64,7 @@ namespace WebApi.Controllers
                 var user = _authService.SignUp(payload);
 
                 if (user != null) {
-                    var res = _authService.Login(payload.ApplicationKey, payload.UserName, payload.Password, payload.UserType);
+                    var res = _authService.Login(payload.ApplicationId, payload.UserName, payload.Password, payload.UserType);
                     return res;
                 }
 

@@ -23,7 +23,7 @@ namespace WebApi.Services
 
     public interface IAuthService
     {
-        IActionResult Login(string applicationKey, string username, string password, string type);
+        IActionResult Login(int applicationId, string username, string password, string type);
         AppUser SignUp(UserDto userDto);
         IEnumerable<Claim> GetClaims(AppUser user);
         AppUser CheckUserName(int ApplicationId, string username);
@@ -56,12 +56,12 @@ namespace WebApi.Services
             };
         }
 
-        public IActionResult Login(string applicationKey, string username, string password, string type)
+        public IActionResult Login(int applicationId, string username, string password, string type)
         {
 
             try
             {
-                var application = _context.Application.Where(x => x.Key == applicationKey).FirstOrDefault();
+                var application = _context.Application.Where(x => x.Id == applicationId).FirstOrDefault();
 
                 if (string.IsNullOrEmpty(username) || string.IsNullOrEmpty(password) || application == null)
                     return BadRequest();

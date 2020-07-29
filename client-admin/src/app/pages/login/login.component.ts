@@ -43,14 +43,7 @@ export class LoginComponent implements OnInit {
   }
 
   async ngOnInit() {
-    const key = this.route.snapshot.paramMap.get('app');
-    this.application = await this.applicationBykey(key);
-    if (this.application) {
-      this.init();
-      this.inputUserName.nativeElement.focus();
-    } else {
-      this.router.navigate(['/access-denied']);
-    }
+    this.init();
   }
 
   async onSubmit() {
@@ -59,7 +52,6 @@ export class LoginComponent implements OnInit {
 
       const res: User = await this.api.login(this.reactiveForm.value);
       this.app.setLoggedInUser(res);
-      this.app.setApplicationKey(this.application.key);
       this.loading = false;
       const redirect = this.app.redirectUrl ? this.app.redirectUrl : '/home';
       this.router.navigate([redirect]);
@@ -87,10 +79,7 @@ export class LoginComponent implements OnInit {
 
   init() {
     this.reactiveForm = new FormGroup({
-      applicationKey: new FormControl(
-        this.application ? this.application.key : null,
-        [Validators.required]
-      ),
+      applicationId: new FormControl(2, [Validators.required]),
       userName: new FormControl(null, [
         Validators.required,
         Validators.minLength(3),

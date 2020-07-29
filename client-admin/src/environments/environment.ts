@@ -4,9 +4,7 @@
 
 export const environment = {
   production: false,
-  //baseURL: 'http://173.215.169.14/efilehub-server/api',
-  baseURL: 'https://viviendabayamon.com/eFileHub-server-staging/api',
-  //baseURL: 'http://localhost:5001/api',
+  baseURL: 'http://localhost:5001/api',
   idleTimeout: 300, // seconds
   name: 'Development|Staging',
 };

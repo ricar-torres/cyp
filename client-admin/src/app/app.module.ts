@@ -85,24 +85,12 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { UserListComponent } from './pages/user-list/user-list.component';
 import { UserComponent } from './pages/user/user.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
-import { CompleteTaskDialogComponent } from './components/complete-task-dialog/complete-task-dialog.component';
-import { FileComponent } from './pages/file/file.component';
 import { DragNDropZoneComponent } from './components/drag-n-drop-zone/drag-n-drop-zone.component';
 import { DragNDropDirective } from './directives/drag-n-drop.directive';
 import { ProgressComponent } from './components/progress/progress.component';
-import {
-  NewTaskDialogComponent,
-  EmailNotfoundSnackComponent,
-} from './components/new-task-dialog/new-task-dialog.component';
-import { FileListComponent } from './pages/file-list/file-list.component';
 import { SpeedDialFabComponent } from './components/speed-dial-fab/speed-dial-fab.component';
-import { CommentDialogComponent } from './components/comment-dialog/comment-dialog.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
-import { DocumentDialogComponent } from './components/document-dialog/document-dialog.component';
-import { DocumentTypeComponent } from './pages/document-type/document-type.component';
-import { DocumentTypeListComponent } from './pages/document-type-list/document-type-list.component';
 import { PaginatorI18n } from './shared/PaginatorI18n';
-import { TaskDetailsComponent } from './components/task-details/task-details.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 
 // AoT requires an exported function for factories
@@ -125,21 +113,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     UserListComponent,
     UserComponent,
     DashboardComponent,
-    CompleteTaskDialogComponent,
-    FileComponent,
     DragNDropZoneComponent,
     DragNDropDirective,
     ProgressComponent,
-    NewTaskDialogComponent,
-    EmailNotfoundSnackComponent,
-    FileListComponent,
     SpeedDialFabComponent,
-    CommentDialogComponent,
     ChangePasswordComponent,
-    DocumentDialogComponent,
-    DocumentTypeComponent,
-    DocumentTypeListComponent,
-    TaskDetailsComponent,
     AccessDeniedComponent,
   ],
   imports: [

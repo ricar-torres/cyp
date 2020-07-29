@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseURL: 'https://viviendabayamon.com/efilehub-server/api',
+  baseURL: '',
   idleTimeout: 300, // seconds
   name: 'Production',
 };

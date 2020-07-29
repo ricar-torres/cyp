@@ -44,14 +44,6 @@ export class SideNavComponent implements OnInit {
         },
         {
           displayName: await this.languageService.translate
-            .get('SIDE_NAV.FILES')
-            .toPromise(),
-          iconName: 'folder',
-          route: '/home/file-list',
-          visible: this.app.checkMenuRoleAccess(MenuRoles.FILES),
-        },
-        {
-          displayName: await this.languageService.translate
             .get('SIDE_NAV.SETTINGS')
             .toPromise(),
           iconName: 'settings_applications',
@@ -69,11 +61,19 @@ export class SideNavComponent implements OnInit {
             },
             {
               displayName: await this.languageService.translate
-                .get('SIDE_NAV.BOOKMARKS')
+                .get('SIDE_NAV.AGENCIES')
                 .toPromise(),
-              iconName: 'bookmark',
-              route: '/home/document-type-list',
-              visible: this.app.checkMenuRoleAccess(MenuRoles.DOCUMENT_TYPES),
+              iconName: 'person',
+              route: '',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.CAMPAIGNS')
+                .toPromise(),
+              iconName: 'person',
+              route: '',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],
         },
