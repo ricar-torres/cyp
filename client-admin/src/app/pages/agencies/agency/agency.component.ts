@@ -12,6 +12,8 @@ import { AppService } from '@app/shared/app.service';
 export class AgencyComponent implements OnInit {
   reactiveForm: FormGroup;
   id: string;
+  loading = false;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -21,21 +23,23 @@ export class AgencyComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+    this.loading = true;
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       this.reactiveForm = this.fb.group({
-        Id: [this.id],
-        Name: ['', [Validators.minLength(2), Validators.required]],
+        id: [this.id],
+        name: ['', [Validators.minLength(2), Validators.required]],
       });
       var editAgency: any = await this.agencyApi.agency(this.id);
-      this.reactiveForm.get('Name').setValue(editAgency.name);
-      this.reactiveForm.get('Id').setValue(editAgency.id);
+      this.reactiveForm.get('name').setValue(editAgency.name);
+      this.reactiveForm.get('id').setValue(editAgency.id);
       console.log(editAgency);
     } else {
       this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.minLength(2), Validators.required]],
+        name: ['', [Validators.minLength(2), Validators.required]],
       });
     }
+    this.loading = false;
   }
 
   onBack() {
@@ -44,6 +48,7 @@ export class AgencyComponent implements OnInit {
 
   async onSubmit() {
     try {
+      this.loading = true;
       if (this.id) {
         console.log(this.reactiveForm.value, 'update');
         await this.agencyApi.update(this.reactiveForm.value);
@@ -54,10 +59,13 @@ export class AgencyComponent implements OnInit {
         this.onBack();
       }
     } catch (error) {
+      this.loading = false;
       if (error.status != 401) {
         console.error('error', error);
         this.app.showErrorMessage('Error');
       }
+    } finally {
+      this.loading = false;
     }
   }
 }

@@ -26,7 +26,7 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
-  loading = false;
+  loading = true;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
