@@ -36,7 +36,6 @@ export class AgencyComponent implements OnInit {
       this.agency = editAgency.name;
       this.reactiveForm.get('name').setValue(editAgency.name);
       this.reactiveForm.get('id').setValue(editAgency.id);
-      console.log(editAgency);
     } else {
       this.reactiveForm = this.fb.group({
         name: ['', [Validators.minLength(2), Validators.required]],
@@ -53,11 +52,9 @@ export class AgencyComponent implements OnInit {
     try {
       this.loading = true;
       if (this.id) {
-        console.log(this.reactiveForm.value, 'update');
         await this.agencyApi.update(this.reactiveForm.value);
         this.onBack();
       } else {
-        console.log(this.reactiveForm.value, 'create');
         await this.agencyApi.create(this.reactiveForm.value);
         this.onBack();
       }
