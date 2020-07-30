@@ -94,6 +94,8 @@ import { PaginatorI18n } from './shared/PaginatorI18n';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
+import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
+import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -123,6 +125,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AccessDeniedComponent,
     AgencyListComponent,
     AgencyComponent,
+    BonaFideListComponent,
+    BonaFideComponent,
   ],
   imports: [
     BrowserModule,
