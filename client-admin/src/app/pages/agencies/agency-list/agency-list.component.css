@@ -8,3 +8,7 @@ table {
 .mat-column-Actions {
   flex: 0 0 400px !important;
 }
+
+.search-form {
+  width: 30%;
+}

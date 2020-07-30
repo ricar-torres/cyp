@@ -14,6 +14,8 @@ export class AgencyComponent implements OnInit {
   id: string;
   loading = false;
 
+  agency: string;
+
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -31,6 +33,7 @@ export class AgencyComponent implements OnInit {
         name: ['', [Validators.minLength(2), Validators.required]],
       });
       var editAgency: any = await this.agencyApi.agency(this.id);
+      this.agency = editAgency.name;
       this.reactiveForm.get('name').setValue(editAgency.name);
       this.reactiveForm.get('id').setValue(editAgency.id);
       console.log(editAgency);
