@@ -35,7 +35,7 @@ namespace WebApi.Services
             try
             {
 
-                payload = _context.Campaigns.AsQueryable();
+                payload = _context.Campaigns.Where(ag => ag.DeletedAt == null).AsQueryable();
 
             }
             catch (Exception ex)
