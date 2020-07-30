@@ -103,6 +103,8 @@
     "ORIGIN": "Origin",
     "PAGE_TITLE": "Campaigns",
     "GENERAL_FILTER": "Filter",
-    "ADD_BTN": "Add Campaign"
+    "ADD_BTN": "Add Campaign",
+    "EDIT_BTN": "Edit",
+    "DEL_BTN": "Delete"
   }
 }

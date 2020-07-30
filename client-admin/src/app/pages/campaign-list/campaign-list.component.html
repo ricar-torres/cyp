@@ -1,5 +1,3 @@
-<p>campaign-list works!</p>
-
 <md-content layout-margin layout-padding flex="50">
   <mat-card>
     <mat-card-header>
@@ -57,15 +55,9 @@
             {{ 'CAMPAIGN_LIST.ORIGIN' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.origin }}
-            <!-- <mat-chip-list>
-              <mat-chip color="primary" selected *ngIf="!element.delFlag">{{
-                'DOCUMENT_TYPE_LIST.ACTIVE' | translate
-              }}</mat-chip>
-              <mat-chip color="warn" selected *ngIf="element.delFlag">{{
-                'DOCUMENT_TYPE_LIST.INACTIVE' | translate
-              }}</mat-chip>
-            </mat-chip-list> -->
+            <!-- {{ element.origin }} -->
+            <span *ngIf="element.origin == 1">Inbound</span>
+            <span *ngIf="element.origin == 2">Outbound</span>
           </td>
         </ng-container>
 
@@ -90,19 +82,33 @@
         </ng-container> -->
 
         <!-- Action Column -->
-        <!-- <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let element">
-            <button
-              mat-button
-              (click)="goToDetail(element.id)"
-              *ngIf="editAccess"
-            >
-              <mat-icon>edit</mat-icon>
-              {{ 'DOCUMENT_TYPE_LIST.EDIT_BTN' | translate }}
-            </button>
-          </td>
-        </ng-container> -->
+        <ng-container matColumnDef="action">
+          <div fxLayout fxLayoutAlign="end start">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+              <button
+                type="button"
+                mat-button
+                color="Warning"
+                (click)="goToDetail(element.id)"
+                *ngIf="editAccess"
+              >
+                <mat-icon>edit</mat-icon>
+                {{ 'CAMPAIGN_LIST.EDIT_BTN' | translate }}
+              </button>
+              <button
+                type="button"
+                mat-button
+                color="Danger"
+                (click)="goToDetail(element.id)"
+                *ngIf="editAccess"
+              >
+                <mat-icon>delete</mat-icon>
+                {{ 'CAMPAIGN_LIST.DEL_BTN' | translate }}
+              </button>
+            </td>
+          </div>
+        </ng-container>
 
         <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)"></tr> -->

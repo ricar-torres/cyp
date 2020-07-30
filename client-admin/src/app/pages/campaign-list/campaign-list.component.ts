@@ -28,7 +28,7 @@ export class CampaignListComponent implements AfterViewInit {
     'origin',
     // 'updDt',
     // 'status',
-    //'action',
+    'action',
   ];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
@@ -41,7 +41,7 @@ export class CampaignListComponent implements AfterViewInit {
     private api: ApiService,
     private app: AppService
   ) {}
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     try {
       this.loading = true;
       //TODO: Get access priviliges
@@ -52,9 +52,9 @@ export class CampaignListComponent implements AfterViewInit {
       //   MenuRoles.DOCUMENT_TYPES_UPDATE
       // );
       // var data: string = [];
-      this.api.getAllCampaigns().subscribe(
+      this.dataSource = new MatTableDataSource();
+      await this.api.getAllCampaigns().subscribe(
         (data: any) => {
-          this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -72,8 +72,6 @@ export class CampaignListComponent implements AfterViewInit {
       );
     } catch (error) {
       this.loading = false;
-    } finally {
-      var source = this.dataSource.data;
     }
   }
 
