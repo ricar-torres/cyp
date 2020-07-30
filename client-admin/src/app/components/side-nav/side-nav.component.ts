@@ -72,8 +72,10 @@ export class SideNavComponent implements OnInit {
                 .get('SIDE_NAV.CAMPAIGNS')
                 .toPromise(),
               iconName: 'person',
-              route: '',
-              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+              route: '/home/campaigns',
+              //TODO: Nav Item Campaigns Access
+              //this.app.checkMenuRoleAccess(MenuRoles.USERS),
+              visible: true,
             },
           ],
         },

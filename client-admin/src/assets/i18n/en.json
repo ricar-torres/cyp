@@ -97,5 +97,12 @@
   },
   "ACCESS_DENIED": {
     "CONTENT": "Not this time, access forbidden!"
+  },
+  "CAMPAIGN_LIST": {
+    "NAME": "Name",
+    "ORIGIN": "Origin",
+    "PAGE_TITLE": "Campaigns",
+    "GENERAL_FILTER": "Filter",
+    "ADD_BTN": "Add Campaign"
   }
 }

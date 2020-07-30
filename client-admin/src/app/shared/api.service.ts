@@ -1,3 +1,4 @@
+import { Campaign } from './../models/Campaign';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -287,5 +288,8 @@ export class ApiService {
       event.type === HttpEventType.DownloadProgress ||
       event.type === HttpEventType.UploadProgress
     );
+  }
+  getAllCampaigns(): Observable<any> {
+    return this.http.get(`${environment.baseURL}/Campaigns`);
   }
 }

@@ -1,3 +1,4 @@
+import { CampaignListComponent } from './pages/campaign-list/campaign-list.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -56,11 +57,11 @@ const routes: Routes = [
         },
       },
       {
-        path: 'user/:id',
-        component: UserComponent,
-        canActivate: [AuthGuardService],
+        path: 'campaigns',
+        component: CampaignListComponent,
+        //canActivate: [AuthGuardService],
         data: {
-          expectedRoles: MenuRoles.USERS_UPDATE,
+          //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
         },
       },
       {
@@ -71,6 +72,12 @@ const routes: Routes = [
       },
     ],
   },
+  // {
+  //   path: 'campaignlist/',
+  //   component: CampaignListComponent,
+  //   canActivate: [AuthGuardService],
+  //   data: {},
+  // },
 ];
 
 @NgModule({

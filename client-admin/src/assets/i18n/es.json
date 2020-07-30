@@ -98,5 +98,12 @@
   },
   "ACCESS_DENIED": {
     "CONTENT": "Acceso denegado!"
+  },
+  "CAMPAIGN_LIST": {
+    "NAME": "Nombre",
+    "ORIGIN": "Origen",
+    "PAGE_TITLE": "Campaign",
+    "GENERAL_FILTER": "Filter",
+    "ADD_BTN": "Agregar Campaña"
   }
 }
