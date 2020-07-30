@@ -1,0 +1,10 @@
+table {
+  width: 100%;
+}
+
+.mat-column-Name {
+  flex: 0 0 200px !important;
+}
+.mat-column-Actions {
+  flex: 0 0 400px !important;
+}

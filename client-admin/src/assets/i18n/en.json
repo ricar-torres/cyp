@@ -42,6 +42,14 @@
     "TAG": "Bookmark",
     "ALL_TASKS": "All users"
   },
+  "AGENCY": {
+    "TITLE": "AGENCIES",
+    "BTN_ADD": "Add",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "AGENCYEDIT": "Edit Agency",
+    "AGENCYCREATE": "Create Agency"
+  },
   "USER": {
     "TITLE": "User",
     "USER": "User",

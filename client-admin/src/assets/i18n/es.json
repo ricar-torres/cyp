@@ -43,6 +43,14 @@
     "TAG": "Etiqueta",
     "ALL_TASKS": "Todos los usuarios"
   },
+  "AGENCY": {
+    "TITLE": "AGENCIAS",
+    "BTN_ADD": "Nueva Agencia",
+    "NAME": "Nombre",
+    "ACTIONS": "Acciones",
+    "AGENCYEDIT": "Editar Agencia",
+    "AGENCYCREATE": "Crear Agencia"
+  },
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",

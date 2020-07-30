@@ -92,6 +92,8 @@ import { SpeedDialFabComponent } from './components/speed-dial-fab/speed-dial-fa
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { PaginatorI18n } from './shared/PaginatorI18n';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { AgencySearchComponent } from './pages/agencies/agency-search/agency-search.component';
+import { AgencyCreateEditComponent } from './pages/agencies/agency-create-edit/agency-create-edit.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -119,6 +121,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SpeedDialFabComponent,
     ChangePasswordComponent,
     AccessDeniedComponent,
+    AgencySearchComponent,
+    AgencyCreateEditComponent,
   ],
   imports: [
     BrowserModule,

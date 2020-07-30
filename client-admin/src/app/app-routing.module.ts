@@ -11,6 +11,7 @@ import { UserComponent } from './pages/user/user.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { AgencySearchComponent } from './pages/agencies/agency-search/agency-search.component';
 
 const routes: Routes = [
   {
@@ -66,6 +67,12 @@ const routes: Routes = [
       {
         path: 'user/:id/change-password',
         component: ChangePasswordComponent,
+        canActivate: [AuthGuardService],
+        data: {},
+      },
+      {
+        path: 'agencies',
+        component: AgencySearchComponent,
         canActivate: [AuthGuardService],
         data: {},
       },
