@@ -29,7 +29,7 @@
             <button mat-button (click)="editAgency(element.id)" *ngIf="editAccess">
               <mat-icon>edit</mat-icon> {{ 'AGENCY.EDIT' | translate }}
             </button>
-            <button mat-button (click)="deleteAgency(element.id)" *ngIf="deleteAccess">
+            <button mat-flat-button color="warn" mat-button (click)="deleteAgency(element.id)" *ngIf="deleteAccess">
               <mat-icon>delete</mat-icon> {{ 'AGENCY.DELETE' | translate }}
             </button>
           </td>
