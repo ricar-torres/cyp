@@ -48,7 +48,9 @@
     "NAME": "Name",
     "ACTIONS": "Actions",
     "AGENCYEDIT": "Edit Agency",
-    "AGENCYCREATE": "Create Agency"
+    "AGENCYCREATE": "Create Agency",
+    "DELETE": "Delete",
+    "EDIT": "Edit"
   },
   "USER": {
     "TITLE": "User",
