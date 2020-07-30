@@ -11,8 +11,8 @@ import { UserComponent } from './pages/user/user.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
-import { AgencySearchComponent } from './pages/agencies/agency-search/agency-search.component';
-import { AgencyCreateEditComponent } from './pages/agencies/agency-create-edit/agency-create-edit.component';
+import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
+import { AgencyComponent } from './pages/agencies/agency/agency.component';
 
 const routes: Routes = [
   {
@@ -37,9 +37,9 @@ const routes: Routes = [
         path: '',
         component: DashboardComponent,
         canActivate: [AuthGuardService],
-        // data: {
-        //   expectedRoles: [],
-        // },
+        data: {
+          //expectedRoles: [],
+        },
       },
       {
         path: 'user-list',
@@ -73,13 +73,15 @@ const routes: Routes = [
       },
       {
         path: 'agencies',
-        component: AgencySearchComponent,
+        component: AgencyListComponent,
         canActivate: [AuthGuardService],
-        data: {},
+        data: {
+          //expectedRoles: MenuRoles.AGENCIES,
+        },
       },
       {
         path: 'agency',
-        component: AgencyCreateEditComponent,
+        component: AgencyComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.AGENCIES_CREATE,
@@ -87,7 +89,7 @@ const routes: Routes = [
       },
       {
         path: 'agency/:id',
-        component: AgencyCreateEditComponent,
+        component: AgencyComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.AGENCIES_UPDATE,

@@ -6,30 +6,31 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class AgencyService {
-  Update(agency: any) {
-    return this.http
-      .put(`${environment.baseURL}/Agencies/${agency.Id}`, agency)
-      .toPromise();
-  }
   constructor(private http: HttpClient) {}
 
-  GetAll() {
-    return this.http.get(`${environment.baseURL}/Agencies`);
+  getAll() {
+    return this.http.get(`${environment.baseURL}/agencies`);
   }
 
-  Create(agency) {
+  create(agency) {
     return this.http
-      .post(`${environment.baseURL}/Agencies`, agency)
+      .post(`${environment.baseURL}/agencies`, agency)
       .toPromise();
   }
 
-  Agency(id: string) {
-    return this.http.get(`${environment.baseURL}/Agencies/${id}`).toPromise();
+  agency(id: string) {
+    return this.http.get(`${environment.baseURL}/agencies/${id}`).toPromise();
   }
 
-  Delete(id: string) {
+  update(agency: any) {
     return this.http
-      .delete(`${environment.baseURL}/Agencies/${id}`)
+      .put(`${environment.baseURL}/agencies/${agency.Id}`, agency)
+      .toPromise();
+  }
+
+  delete(id: string) {
+    return this.http
+      .delete(`${environment.baseURL}/agencies/${id}`)
       .toPromise();
   }
 }

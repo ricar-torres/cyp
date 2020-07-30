@@ -13,11 +13,11 @@ import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-agency-search',
-  templateUrl: './agency-search.component.html',
-  styleUrls: ['./agency-search.component.css'],
+  selector: 'app-agency-list',
+  templateUrl: './agency-list.component.html',
+  styleUrls: ['./agency-list.component.css'],
 })
-export class AgencySearchComponent implements OnInit, AfterViewInit {
+export class AgencyListComponent implements OnInit, AfterViewInit {
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
@@ -26,6 +26,7 @@ export class AgencySearchComponent implements OnInit, AfterViewInit {
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
+  loading = false;
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -51,12 +52,20 @@ export class AgencySearchComponent implements OnInit, AfterViewInit {
   }
 
   private LoadAgencies() {
-    this.agencyApi.GetAll().subscribe((res) => {
-      this.dataSource = new MatTableDataSource();
-      this.dataSource.data = res;
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
-    });
+    this.agencyApi.getAll().subscribe(
+      (res) => {
+        this.loading = true;
+        this.dataSource = new MatTableDataSource();
+        this.dataSource.data = res;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.loading = false;
+      },
+      (error) => {
+        this.loading = false;
+        this.app.showErrorMessage('Error');
+      }
+    );
   }
 
   onBack() {}
@@ -70,24 +79,16 @@ export class AgencySearchComponent implements OnInit, AfterViewInit {
   }
 
   async deleteAgency(id: string) {
-    await this.agencyApi.Delete(id);
+    await this.agencyApi.delete(id);
     this.LoadAgencies();
   }
 
   editAgency(id: number) {
-    this.router.navigate(['/home/agency', id]).then((e) => {
-      if (e) {
-      } else {
-      }
-    });
+    this.router.navigate(['/home/agency', id]);
   }
 
   goToNew() {
-    this.router.navigate(['/home/agency']).then((e) => {
-      if (e) {
-      } else {
-      }
-    });
+    this.router.navigate(['/home/agency']);
   }
 
   doFilter(value: any) {
