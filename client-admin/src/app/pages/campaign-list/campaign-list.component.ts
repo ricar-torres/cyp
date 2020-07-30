@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -27,7 +28,7 @@ export class CampaignListComponent implements AfterViewInit {
     'origin',
     // 'updDt',
     // 'status',
-    'action',
+    //'action',
   ];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
@@ -71,6 +72,8 @@ export class CampaignListComponent implements AfterViewInit {
       );
     } catch (error) {
       this.loading = false;
+    } finally {
+      var source = this.dataSource.data;
     }
   }
 

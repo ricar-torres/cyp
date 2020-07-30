@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
@@ -32,11 +34,12 @@ namespace WebApi.Controllers {
 			try {
 				// var res = Task.Run(async() => await _service.GetAll().ToListAsync());
 				var res = _service.GetAll();
-				if (res == null) {
+				var campaignList = _mapper.Map<List<CampaignDto>>(res);
+				if (campaignList == null) {
 					return NotFound();
 				}
 
-				return Ok(res);
+				return Ok(campaignList);
 
 			} catch (Exception ex) {
 				return DefaultError(ex);

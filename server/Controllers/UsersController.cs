@@ -50,6 +50,7 @@ namespace WebApi.Controllers {
 		}
 
 		//[Filters.Authorize(PermissionItem.User, PermissionAction.Read)]
+		[AllowAnonymous]
 		[HttpGet]
 		public IActionResult Get() {
 			try {
