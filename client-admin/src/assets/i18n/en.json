@@ -43,14 +43,17 @@
     "ALL_TASKS": "All users"
   },
   "AGENCY": {
-    "TITLE": "AGENCIES",
+    "TITLE": "Agencis",
     "BTN_ADD": "Add",
     "NAME": "Name",
     "ACTIONS": "Actions",
     "AGENCYEDIT": "Edit Agency",
     "AGENCYCREATE": "Create Agency",
     "DELETE": "Delete",
-    "EDIT": "Edit"
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "GOBACK": "Return"
   },
   "USER": {
     "TITLE": "User",

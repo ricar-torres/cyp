@@ -2,11 +2,25 @@
   <md-content layout-margin layout-padding flex="50">
     <mat-card>
       <mat-card-header>
-        <mat-card-title>{{ 'AGENCY.TITLE' | translate }}</mat-card-title>
+        <mat-card-title>{{ id ? ('AGENCY.AGENCYEDIT' | translate) : ('AGENCY.AGENCYCREATE' | translate) }}
+        </mat-card-title>
         <!-- <mat-card-subtitle># {{ id }}</mat-card-subtitle> -->
       </mat-card-header>
       <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'AGENCY.NAME' | translate }}</mat-label>
+          <input matInput formControlName="Name" />
+        </mat-form-field>
       </mat-card-content>
+      <mat-card-actions>
+        <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="!reactiveForm.valid">
+          <mat-icon>save</mat-icon> {{ id ? ('AGENCY.SAVE' | translate) : ('AGENCY.CREATE' | translate) }}
+        </button>
+        <button mat-stroked-button (click)="onBack()">
+          <mat-icon>list</mat-icon>{{ 'AGENCY.GOBACK' | translate }}
+        </button>
+      </mat-card-actions>
     </mat-card>
   </md-content>
 </form>

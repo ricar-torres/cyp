@@ -12,6 +12,7 @@ import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { AgencySearchComponent } from './pages/agencies/agency-search/agency-search.component';
+import { AgencyCreateEditComponent } from './pages/agencies/agency-create-edit/agency-create-edit.component';
 
 const routes: Routes = [
   {
@@ -75,6 +76,22 @@ const routes: Routes = [
         component: AgencySearchComponent,
         canActivate: [AuthGuardService],
         data: {},
+      },
+      {
+        path: 'agency',
+        component: AgencyCreateEditComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.AGENCIES_CREATE,
+        },
+      },
+      {
+        path: 'agency/:id',
+        component: AgencyCreateEditComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
       },
     ],
   },

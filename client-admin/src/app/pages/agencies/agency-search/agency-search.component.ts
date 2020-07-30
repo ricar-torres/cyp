@@ -8,6 +8,9 @@ import {
   MatPaginator,
 } from '@angular/material';
 import { AgencyService } from '@app/shared/agency.service';
+import { MenuRoles } from '@app/models/enums';
+import { Route } from '@angular/compiler/src/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-agency-search',
@@ -15,9 +18,9 @@ import { AgencyService } from '@app/shared/agency.service';
   styleUrls: ['./agency-search.component.css'],
 })
 export class AgencySearchComponent implements OnInit, AfterViewInit {
-  reactiveForm: FormGroup;
   editAccess: boolean = false;
   createAccess: boolean = false;
+  deleteAccess: boolean = false;
   dataSource;
   displayedColumns: string[] = ['Name', 'Actions'];
   pageSize = 5;
@@ -29,30 +32,32 @@ export class AgencySearchComponent implements OnInit, AfterViewInit {
   constructor(
     private app: AppService,
     private fb: FormBuilder,
-    private AgenciesServices: AgencyService
+    private agencyApi: AgencyService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
-    this.reactiveForm = this.fb.group({});
-    // this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_UPDATE);
-    // this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_CREATE);
+    //TODO: Acces
+    //this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_UPDATE);
+    //this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_CREATE);
+    //this.deleteAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_DELETE);
     this.editAccess = true;
     this.createAccess = true;
+    this.deleteAccess = true;
   }
 
   ngAfterViewInit(): void {
-    this.AgenciesServices.GetAll().subscribe((res) => {
-      console.log(res);
+    this.LoadAgencies();
+  }
+
+  private LoadAgencies() {
+    this.agencyApi.GetAll().subscribe((res) => {
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = res;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
     });
   }
-
-  onSubmit() {}
-
-  goToNew() {}
 
   onBack() {}
 
@@ -64,12 +69,25 @@ export class AgencySearchComponent implements OnInit, AfterViewInit {
     }
   }
 
-  deleteAgency(Id: number) {
-    console.log(Id);
+  async deleteAgency(id: string) {
+    await this.agencyApi.Delete(id);
+    this.LoadAgencies();
   }
 
-  editAgency(Id: number) {
-    console.log(Id);
+  editAgency(id: number) {
+    this.router.navigate(['/home/agency', id]).then((e) => {
+      if (e) {
+      } else {
+      }
+    });
+  }
+
+  goToNew() {
+    this.router.navigate(['/home/agency']).then((e) => {
+      if (e) {
+      } else {
+      }
+    });
   }
 
   doFilter(value: any) {
