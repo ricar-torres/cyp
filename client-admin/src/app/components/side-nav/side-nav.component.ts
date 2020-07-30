@@ -65,7 +65,7 @@ export class SideNavComponent implements OnInit {
                 .get('SIDE_NAV.AGENCIES')
                 .toPromise(),
               iconName: 'account_balance',
-              route: '/home',
+              route: '/home/agencies',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {

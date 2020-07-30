@@ -7,115 +7,115 @@ using WebApi.Helpers;
 
 namespace WebApi.Services
 {
-    public interface IAgenciesServices
+  public interface IAgenciesServices
+  {
+    IQueryable<Agencies> GetAll();
+    Agencies GetById(int id);
+    Agencies Create(Agencies payload);
+    Agencies Update(Agencies payload);
+    void Delete(int id);
+  }
+
+  public class AgenciesServices : IAgenciesServices
+  {
+    private readonly DataContext _context;
+    private readonly AppSettings _appSettings;
+
+    public AgenciesServices(DataContext context, IOptions<AppSettings> appSettings)
     {
-        IQueryable<Agencies> GetAll();
-        Agencies GetById(int id);
-        Agencies Create(Agencies payload);
-        Agencies Update(Agencies payload);
-        void Delete(int id);
+      _context = context;
+      _appSettings = appSettings.Value;
     }
 
-    public class AgenciesServices : IAgenciesServices
+    public IQueryable<Agencies> GetAll()
     {
-        private readonly DataContext _context;
-        private readonly AppSettings _appSettings;
+      IQueryable<Agencies> payload = null;
 
-        public AgenciesServices(DataContext context, IOptions<AppSettings> appSettings)
-        {
-            _context = context;
-            _appSettings = appSettings.Value;
-        }
+      try
+      {
 
-        public IQueryable<Agencies> GetAll()
-        {
-            IQueryable<Agencies> payload = null;
+        payload = _context.Agencies.Where(ag => ag.DeletedAt == null).AsQueryable();
 
-            try
-            {
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
 
-                payload = _context.Agencies.AsQueryable();
+      return payload.AsNoTracking();
+    }
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+    public Agencies GetById(int id)
+    {
+      var res = _context.Agencies.Find(id);
+      return res;
+    }
 
-            return payload.AsNoTracking();
-        }
+    public Agencies Create(Agencies payload)
+    {
+      try
+      {
 
-        public Agencies GetById(int id)
-        {
-            var res = _context.Agencies.Find(id);
-            return res;
-        }
+        payload.CreatedAt = DateTime.Now;
+        _context.Agencies.Add(payload);
+        _context.SaveChanges();
 
-        public Agencies Create(Agencies payload)
-        {
-            try
-            {
+        return payload;
 
-                payload.CreatedAt = DateTime.Now;
-                _context.Agencies.Add(payload);
-                _context.SaveChanges();
+      }
+      catch (Exception ex)
+      {
 
-                return payload;
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-        }
-
-        public Agencies Update(Agencies payload)
-        {
-            try
-            {
-
-                var item = _context.Agencies.Find(payload.Id);
-
-                if (item == null)
-                    throw new AppException("Agency not found");
-
-                item.Name = payload.Name;
-                item.UpdatedAt = DateTime.Now;
-
-                _context.Agencies.Update(item);
-                _context.SaveChanges();
-
-                return item;
-
-            }
-            catch (Exception ex)
-            {
-
-                throw ex;
-            }
-
-
-        }
-
-        public void Delete(int id)
-        {
-            var item = _context.Agencies.Find(id);
-
-            if (item != null)
-            {
-
-                item.DeletedAt = DateTime.Now;
-               
-                _context.Agencies.Update(item);
-                _context.SaveChanges();
-            }
-            else
-                throw new AppException("Agency not found");
-
-        }
+        throw ex;
+      }
 
     }
+
+    public Agencies Update(Agencies payload)
+    {
+      try
+      {
+
+        var item = _context.Agencies.Find(payload.Id);
+
+        if (item == null)
+          throw new AppException("Agency not found");
+
+        item.Name = payload.Name;
+        item.UpdatedAt = DateTime.Now;
+
+        _context.Agencies.Update(item);
+        _context.SaveChanges();
+
+        return item;
+
+      }
+      catch (Exception ex)
+      {
+
+        throw ex;
+      }
+
+
+    }
+
+    public void Delete(int id)
+    {
+      var item = _context.Agencies.Find(id);
+
+      if (item != null)
+      {
+
+        item.DeletedAt = DateTime.Now;
+
+        _context.Agencies.Update(item);
+        _context.SaveChanges();
+      }
+      else
+        throw new AppException("Agency not found");
+
+    }
+
+  }
 
 }
