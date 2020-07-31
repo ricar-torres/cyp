@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import {
   PageEvent,
   MatSort,
@@ -29,6 +29,8 @@ export class ChapterListComponent implements OnInit {
 
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
+
+  @Input() id: string;
   constructor(
     private app: AppService,
     private fb: FormBuilder,
@@ -51,7 +53,7 @@ export class ChapterListComponent implements OnInit {
   }
 
   private LoadAgencies() {
-    this.chapterService.getAll().subscribe(
+    this.chapterService.getByBonafideById(this.id).subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();

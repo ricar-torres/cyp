@@ -8,6 +8,9 @@ import { HttpClient } from '@angular/common/http';
 export class ChapterServiceService {
   constructor(private http: HttpClient) {}
 
+  getByBonafideById(id: string) {
+    return this.http.get(`${environment.baseURL}/chapter/bonafide/${id}`);
+  }
   checkName(obj: { name: string }): any {
     return this.http
       .get(`${environment.baseURL}/chapter/CheckName/${obj.name}`)

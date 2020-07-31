@@ -74,7 +74,8 @@
     "PHONE": "Teléfono",
     "EMAIL": "Correo Electrónico",
     "BENEFITS": "Beneficios",
-    "DISCLAIMER": "Relevo de Responsabilidad"
+    "DISCLAIMER": "Relevo de Responsabilidad",
+    "CHAPTER": "Capítulo"
   },
   "CHAPTER": {
     "TITLE": "Capítulos",
@@ -86,8 +87,7 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Crear",
-    "GOBACK": "Regresar",
-    "CHAPTER": "Capítulo"
+    "GOBACK": "Regresar"
   },
   "USER": {
     "TITLE": "Usuario",

@@ -70,6 +70,25 @@ namespace WebApi.Controllers
       }
     }
 
+    [Authorize]
+    [HttpGet("bonafide/{id}")]
+    public async Task<IActionResult> GetByBonafideId(int id)
+    {
+      try
+      {
+        var res = await _service.GetByBonafineId(id);
+        if (res == null)
+        {
+          return NotFound();
+        }
+        return Ok(res);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]

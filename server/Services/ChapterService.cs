@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -16,6 +17,7 @@ namespace WebApi.Services
     Chapters Update(Chapters payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
+    Task<List<Chapters>> GetByBonafineId(int id);
   }
 
   public class ChapterServices : IChapterServices
@@ -133,6 +135,11 @@ namespace WebApi.Services
       return false;
     }
 
+    public async Task<List<Chapters>> GetByBonafineId(int id)
+    {
+      var res = await _context.Chapters.Where(ch => ch.BonaFideId == id).ToListAsync();
+      return res;
+    }
   }
 
 }
