@@ -55,6 +55,26 @@
     "CREATE": "Create",
     "GOBACK": "Return"
   },
+  "BONAFIDE": {
+    "TITLE": "Bona Fide Associations",
+    "BTN_ADD": "Create Bona Fide",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "BONAFIDEEDIT": "Edit Bona Fide",
+    "BONAFIDECREATE": "Create Bona Fide",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "GOBACK": "Return",
+    "CODE": "Code",
+    "SIGLAS": "Acronym",
+    "SEARCH": "Search",
+    "PHONE": "Phone",
+    "EMAIL": "Email",
+    "BENEFITS": "Benefits",
+    "DISCLAIMER": "Disclaimer"
+  },
   "USER": {
     "TITLE": "User",
     "USER": "User",
@@ -97,7 +117,8 @@
     "AGENCIES": "Agencies",
     "CAMPAIGNS": "Campaigns",
     "HOME": "Home",
-    "SETTINGS": "Settings"
+    "SETTINGS": "Settings",
+    "BONAFIDES": "Bonafides Associations"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",

@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgencyService } from '@app/shared/agency.service';
 import { AppService } from '@app/shared/app.service';
+import { merge, fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-agency',
@@ -15,6 +17,10 @@ export class AgencyComponent implements OnInit {
   loading = false;
 
   agency: string;
+
+  Exists: Boolean = true;
+
+  @ViewChild('inputName', { static: true }) inputName: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +47,7 @@ export class AgencyComponent implements OnInit {
         name: ['', [Validators.minLength(2), Validators.required]],
       });
     }
+    this.subscribeEvents();
     this.loading = false;
   }
 
@@ -66,6 +73,32 @@ export class AgencyComponent implements OnInit {
       }
     } finally {
       this.loading = false;
+    }
+  }
+
+  subscribeEvents() {
+    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+        tap(async () => {
+          await !this.checkName(this.inputName.nativeElement.value);
+        })
+      )
+      .subscribe();
+  }
+
+  async checkName(name: string) {
+    try {
+      if (name) {
+        const res: any = await this.agencyApi.checkName({
+          name: name,
+        });
+        console.log(res);
+        this.Exists = res;
+      }
+    } catch (error) {
+      this.Exists = false;
     }
   }
 }
