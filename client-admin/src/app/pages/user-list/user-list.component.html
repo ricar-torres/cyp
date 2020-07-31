@@ -6,20 +6,34 @@
     </mat-card-header>
     <mat-card-content>
       <div fxLayout fxLayoutAlign="end start">
-        <button type="button" mat-raised-button color="primary" (click)="goToNew()" *ngIf="createAccess">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="goToNew()"
+          *ngIf="createAccess"
+        >
           <mat-icon>add</mat-icon> {{ 'USER_LIST.BTN_ADD' | translate }}
         </button>
       </div>
 
       <div fxLayout>
         <mat-form-field class="search-form">
-          <input matInput placeholder="{{ 'USER_LIST.USER' | translate }}" type="text"
-            (keyup)="doFilter($event.target.value)" />
+          <input
+            matInput
+            placeholder="{{ 'USER_LIST.USER' | translate }}"
+            type="text"
+            (keyup)="doFilter($event.target.value)"
+          />
         </mat-form-field>
 
         <mat-form-field class="search-form marging-left">
-          <input matInput placeholder="{{ 'USER_LIST.NAME' | translate }}" type="text"
-            (keyup)="doFilter($event.target.value)" />
+          <input
+            matInput
+            placeholder="{{ 'USER_LIST.NAME' | translate }}"
+            type="text"
+            (keyup)="doFilter($event.target.value)"
+          />
         </mat-form-field>
 
         <mat-form-field class="search-form marging-left">
@@ -37,7 +51,12 @@
         <!-- <button button="submit" mat-raised-button color="primary">Buscar</button> -->
       </div>
 
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
         <!-- checkNo Column -->
         <ng-container matColumnDef="id">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
@@ -95,7 +114,11 @@
       </table>
     </mat-card-content>
     <mat-card-actions>
-      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+      <mat-paginator
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event"
+      >
       </mat-paginator>
     </mat-card-actions>
   </mat-card>
