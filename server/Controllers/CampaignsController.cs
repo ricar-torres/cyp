@@ -1,133 +1,124 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using System;
+using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
 
-namespace WebApi.Controllers
-{
-    [Route("api/[controller]")]
-    [ApiController]
-    public class CampaignsController : BaseController
-    {
-        private ICampaignsService _service;
-        private IMapper _mapper;
-        private readonly AppSettings _appSettings;
+namespace WebApi.Controllers {
+	[Route("api/[controller]")]
+	[ApiController]
+	public class CampaignsController : BaseController {
+		private ICampaignsService _service;
+		private IMapper _mapper;
+		private readonly AppSettings _appSettings;
 
-        public CampaignsController(
-            ICampaignsService service,
-            IMapper mapper,
-            IOptions<AppSettings> appSettings)
-        {
-            _service = service;
-            _mapper = mapper;
-            _appSettings = appSettings.Value;
-        }
+		public CampaignsController(
+			ICampaignsService service,
+			IMapper mapper,
+			IOptions<AppSettings> appSettings) {
+			_service = service;
+			_mapper = mapper;
+			_appSettings = appSettings.Value;
+		}
 
-        [AllowAnonymous]
-        [HttpGet()]
-        public IActionResult GetAll()
-        {
-            try
-            {
-                var res = _service.GetAll();
-                if (res == null)
-                {
-                    return NotFound();
-                }
+		[AllowAnonymous]
+		[HttpGet]
+		public IActionResult GetAll() {
+			try {
+				var res = _service.GetAll();
+				// var campaignList = _mapper.Map<List<CampaignDto>>(res);
+				if (res == null) {
+					return NotFound();
+				}
 
-                return Ok(res);
+				return Ok(res);
 
-            }
-            catch (Exception ex)
-            {
-                return DefaultError(ex);
-            }
-        }
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
 
-        [AllowAnonymous]
-        [HttpGet("{id}")]
-        public IActionResult GetById(int id)
-        {
-            try
-            {
-                var res = _service.GetById(id);
-                if (res == null)
-                {
-                    return NotFound();
-                }
+		[AllowAnonymous]
+		[HttpGet("{id}")]
+		public IActionResult GetById(int id) {
+			try {
+				var res = _service.GetById(id);
+				if (res == null) {
+					return NotFound();
+				}
 
-                return Ok(res);
+				return Ok(res);
 
-            }
-            catch (Exception ex)
-            {
-                return DefaultError(ex);
-            }
-        }
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
 
-        //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
-        [AllowAnonymous]
-        [HttpPost]
-        public IActionResult Create([FromBody] Campaigns payload)
-        {
+		[AllowAnonymous]
+		[HttpGet("[action]/{name}")]
+		public IActionResult CheckCampaignNameExist(string name) {
+			try {
+				return Ok(_service.NameExists(name));
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
 
-            try
-            {
+		//[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
+		[AllowAnonymous]
+		[HttpPost]
+		public IActionResult Create([FromBody] Campaigns payload) {
 
-                _service.Create(payload);
-                return Ok(payload);
+			try {
 
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return DefaultError(ex);
-            }
-        }
+				_service.Create(payload);
+				return Ok(payload);
 
-        //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
-        [AllowAnonymous]
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Campaigns payload)
-        {
-            try
-            {
+			} catch (AppException ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
+		}
 
-                payload.Id = id;
-                var res = _service.Update(payload);
+		//[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
+		[AllowAnonymous]
+		[HttpPut("{id}")]
+		public IActionResult Update(int id, [FromBody] Campaigns payload) {
+			try {
 
-                return Ok(res);
+				payload.Id = id;
+				var res = _service.Update(payload);
 
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return DefaultError(ex);
-            }
-        }
+				return Ok(res);
 
-        //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
-        [AllowAnonymous]
-        [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
-        {
-            try
-            {
+			} catch (AppException ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
+		}
 
-                _service.Delete(id);
-                return Ok();
+		//[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+		[AllowAnonymous]
+		[HttpDelete("{id}")]
+		public IActionResult Delete(int id) {
+			try {
 
-            }
-            catch (Exception ex)
-            {
-                // return error message if there was an exception
-                return DefaultError(ex);
-            }
-        }
-    }
+				_service.Delete(id);
+				return Ok();
+
+			} catch (Exception ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
+		}
+	}
 
 }

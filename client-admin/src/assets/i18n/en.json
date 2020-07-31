@@ -110,5 +110,22 @@
   },
   "ACCESS_DENIED": {
     "CONTENT": "Not this time, access forbidden!"
+  },
+  "CAMPAIGN_LIST": {
+    "NAME": "Name",
+    "ORIGIN": "Origin",
+    "PAGE_TITLE": "Campaigns",
+    "GENERAL_FILTER": "Filter",
+    "ADD_BTN": "Add Campaign",
+    "EDIT_BTN": "Edit",
+    "DEL_BTN": "Delete"
+  },
+  "CAMPAIGN": {
+    "NAME": "Name",
+    "ORIGIN": "Origin",
+    "UPDATE": "Update",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "EXISTS": "Exists a campaign with this name"
   }
 }

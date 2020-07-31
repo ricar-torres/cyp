@@ -73,11 +73,7 @@ export class UserListComponent implements AfterViewInit {
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/user', id]).then((e) => {
-      if (e) {
-      } else {
-      }
-    });
+    this.router.navigate(['/home/user', id]);
   }
 
   doFilter(value: any) {

@@ -73,7 +73,7 @@ export class SideNavComponent implements OnInit {
                 .get('SIDE_NAV.CAMPAIGNS')
                 .toPromise(),
               iconName: 'online_prediction',
-              route: '/home',
+              route: '/home/campaigns',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],

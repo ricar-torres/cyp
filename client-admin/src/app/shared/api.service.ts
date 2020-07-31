@@ -1,3 +1,4 @@
+import { Campaign } from './../models/Campaign';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
