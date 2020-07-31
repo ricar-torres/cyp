@@ -69,6 +69,7 @@ namespace WebApi.Services {
 
 				item.Name = payload.Name;
 				item.UpdatedAt = DateTime.Now;
+				item.Origin = payload.Origin;
 
 				_context.Campaigns.Update(item);
 				_context.SaveChanges();

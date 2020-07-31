@@ -36,25 +36,23 @@ export class CampaignComponent implements OnInit {
 
   async ngOnInit() {
     try {
-      this.reactiveForm = new FormGroup({
-        name: new FormControl('', [
-          Validators.required,
-          Validators.minLength(5),
-        ]),
-        origin: new FormControl('', [Validators.required]),
-      });
       this.loading = true;
       this.editAccess = true;
       this.createAccess = true;
-
+      this.initForm();
       this.id = this.route.snapshot.paramMap.get('id');
 
       if (this.id != '0') {
         this.campaign = await this.campaignApi.getById(this.id);
+        if (this.campaign) {
+          this.reactiveForm.get('name').setValue(this.campaign.name);
+          this.reactiveForm.get('origin').setValue(this.campaign.origin);
+        } else {
+          this.onBack();
+        }
       }
 
       this.initActionLabel();
-      this.initForm();
     } catch (error) {
       this.loading = false;
     } finally {
@@ -63,12 +61,10 @@ export class CampaignComponent implements OnInit {
   }
 
   initForm() {
-    if (this.campaign) {
-      this.reactiveForm.get('name').setValue(this.campaign.name);
-      this.reactiveForm.get('origin').setValue(this.campaign.origin);
-      // this.selectedOption = this.campaign.origin;
-      // this.campaignName = this.campaign.name;
-    }
+    this.reactiveForm = new FormGroup({
+      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      origin: new FormControl('', [Validators.required]),
+    });
   }
 
   initActionLabel() {
