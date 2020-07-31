@@ -115,6 +115,7 @@
     "ORIGIN": "Origen",
     "UPDATE": "Actualizar",
     "SAVE": "Guardar",
-    "BACK": "Atras"
+    "BACK": "Atras",
+    "EXISTS": "Existe una campaña con este nombre"
   }
 }

@@ -4,3 +4,6 @@
 .mat-raised-button {
   margin: 6px 8px 6px 8px;
 }
+.error {
+  color: #ee6363;
+}

@@ -114,6 +114,7 @@
     "ORIGIN": "Origin",
     "UPDATE": "Update",
     "SAVE": "Save",
-    "BACK": "Back"
+    "BACK": "Back",
+    "EXISTS": "Exists a campaign with this name"
   }
 }

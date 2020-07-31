@@ -1,10 +1,18 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  ElementRef,
+} from '@angular/core';
 import { LanguageService } from '@app/shared/Language.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignApiSerivce } from '@app/shared/campaign.api.service';
 import { AppService } from '@app/shared/app.service';
 import { Location } from '@angular/common';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { merge, fromEvent } from 'rxjs';
+import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-campaign',
@@ -14,6 +22,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 export class CampaignComponent implements OnInit {
   readonly _actionTitleCampaign = 'CAMPAIGN_ACTION_TITLE';
   readonly _actionNameCampaign = 'CAMPAIGN_ACTION_NAME';
+  @ViewChild('inputCampaignName', { static: true })
+  inputCampaignName: ElementRef;
+
   loading: boolean;
   campaign: any;
   id: string;
@@ -25,6 +36,8 @@ export class CampaignComponent implements OnInit {
   editAccess: boolean;
   createAccess: boolean;
   reactiveForm: FormGroup;
+  campaignExists: boolean = false;
+  originalName: string;
 
   constructor(
     public languageService: LanguageService,
@@ -45,14 +58,19 @@ export class CampaignComponent implements OnInit {
       if (this.id != '0') {
         this.campaign = await this.campaignApi.getById(this.id);
         if (this.campaign) {
+          this.originalName = this.campaign.name;
           this.reactiveForm.get('name').setValue(this.campaign.name);
           this.reactiveForm.get('origin').setValue(this.campaign.origin);
+          this.campaignName = this.campaign.name;
         } else {
           this.onBack();
         }
+      } else {
+        this.originalName = '';
       }
 
       this.initActionLabel();
+      this.subscribeEvents();
     } catch (error) {
       this.loading = false;
     } finally {
@@ -62,9 +80,14 @@ export class CampaignComponent implements OnInit {
 
   initForm() {
     this.reactiveForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5),
+        Validators.maxLength(250),
+      ]),
       origin: new FormControl('', [Validators.required]),
     });
+    // this.checkCampaignExist(this.reactiveForm.controls.name.value);
   }
 
   initActionLabel() {
@@ -113,5 +136,24 @@ export class CampaignComponent implements OnInit {
     } finally {
       this.loading = false;
     }
+  }
+  subscribeEvents() {
+    merge(fromEvent(this.inputCampaignName.nativeElement, 'keydown'))
+      .pipe(
+        debounceTime(150),
+        distinctUntilChanged(),
+
+        tap(async () => {
+          let value = this.inputCampaignName.nativeElement.value;
+          if (value != this.originalName) {
+            this.checkCampaignExist(value);
+          }
+        })
+      )
+      .subscribe();
+  }
+  async checkCampaignExist(name) {
+    const res = await this.campaignApi.checkCampaignNameExist(name);
+    this.campaignExists = res as boolean;
   }
 }

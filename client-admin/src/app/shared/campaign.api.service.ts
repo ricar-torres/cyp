@@ -51,4 +51,11 @@ export class CampaignApiSerivce {
       .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
       .toPromise();
   }
+  checkCampaignNameExist(name) {
+    return this.http
+      .get(
+        `${environment.baseURL}/${this._apiName}/CheckCampaignNameExist/${name}`
+      )
+      .toPromise();
+  }
 }
