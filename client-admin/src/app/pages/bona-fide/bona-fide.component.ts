@@ -115,7 +115,6 @@ export class BonaFideComponent implements OnInit {
   }
 
   async checkName(name: string) {
-    console.log('Name');
     try {
       if (name) {
         const res: any = await this.bonafideService.checkName({
@@ -129,9 +128,8 @@ export class BonaFideComponent implements OnInit {
   }
 
   async checkEmail(email: string) {
-    console.log('Email');
     try {
-      if (name) {
+      if (email) {
         const res: any = await this.bonafideService.checkEmail({
           name: email,
         });

@@ -50,6 +50,9 @@
         <button mat-stroked-button type="button" (click)="onBack()">
           <mat-icon>list</mat-icon>{{ 'BONAFIDE.GOBACK' | translate }}
         </button>
+        {{!reactiveForm.valid}}
+        {{EmailExists}}
+        {{NameExists}}
       </mat-card-actions>
     </mat-card>
   </md-content>
