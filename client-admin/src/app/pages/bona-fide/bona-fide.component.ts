@@ -31,11 +31,11 @@ export class BonaFideComponent implements OnInit {
     if (this.id) {
       this.reactiveForm = this.fb.group({
         Id: [this.id],
-        Name: ['', [Validators.minLength(2), Validators.required]],
+        Name: ['', [Validators.required]],
         Code: [''],
         Siglas: [''],
         Phone: [''],
-        Email: ['', [Validators.email, Validators.minLength(4)]],
+        Email: ['', [Validators.email]],
         Benefits: [''],
         Disclaimer: [''],
       });
@@ -51,11 +51,11 @@ export class BonaFideComponent implements OnInit {
       this.reactiveForm.get('Disclaimer').setValue(editBonafide.disclaimer);
     } else {
       this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.minLength(2), Validators.required]],
+        Name: ['', [Validators.required]],
         Code: [''],
         Siglas: [''],
         Phone: [''],
-        Email: ['', [Validators.email, Validators.minLength(4)]],
+        Email: ['', [Validators.email]],
         Benefits: [''],
         Disclaimer: [''],
       });
