@@ -73,7 +73,20 @@
     "PHONE": "Phone",
     "EMAIL": "Email",
     "BENEFITS": "Benefits",
-    "DISCLAIMER": "Disclaimer"
+    "DISCLAIMER": "Disclaimer",
+    "CHAPTER": "Chapter"
+  },
+  "CHAPTER": {
+    "TITLE": "Chapers",
+    "BTN_ADD": "New Chaper",
+    "NAME": "Name",
+    "CHAPTEREDIT": "Edit Chapter",
+    "CHAPTERCREATE": "Create Chapter",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "GOBACK": "Return"
   },
   "USER": {
     "TITLE": "User",

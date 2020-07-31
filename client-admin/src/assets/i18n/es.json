@@ -52,7 +52,7 @@
     "AGENCYCREATE": "Crear Agencia",
     "DELETE": "Borrar",
     "EDIT": "Editar",
-    "SAVE": "Guardar",
+    "SAVE": "Grabar",
     "CREATE": "Crear",
     "GOBACK": "Regresar"
   },
@@ -75,6 +75,19 @@
     "EMAIL": "Correo Electrónico",
     "BENEFITS": "Beneficios",
     "DISCLAIMER": "Relevo de Responsabilidad"
+  },
+  "CHAPTER": {
+    "TITLE": "Capítulos",
+    "BTN_ADD": "Nuevo Capítulo",
+    "NAME": "Nombre",
+    "CHAPTEREDIT": "Editar Capítulo",
+    "CHAPTERCREATE": "Crear Capítulo",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Grabar",
+    "CREATE": "Crear",
+    "GOBACK": "Regresar",
+    "CHAPTER": "Capítulo"
   },
   "USER": {
     "TITLE": "Usuario",

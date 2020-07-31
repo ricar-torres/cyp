@@ -11,6 +11,10 @@
         <!-- <mat-card-subtitle># {{ id }}</mat-card-subtitle> -->
       </mat-card-header>
       <mat-card-content>
+        <mat-tab-group>
+          <mat-tab label="{{ 'BONAFIDE.TITLE' | translate }}"> </mat-tab>
+          <mat-tab label="{{ 'BONAFIDE.CHAPTER' | translate }}"> </mat-tab>
+        </mat-tab-group>
         <mat-form-field class="full-width">
           <mat-label>{{ 'BONAFIDE.NAME' | translate }}</mat-label>
           <input matInput formControlName="Name" #inputName />
@@ -50,9 +54,6 @@
         <button mat-stroked-button type="button" (click)="onBack()">
           <mat-icon>list</mat-icon>{{ 'BONAFIDE.GOBACK' | translate }}
         </button>
-        {{!reactiveForm.valid}}
-        {{EmailExists}}
-        {{NameExists}}
       </mat-card-actions>
     </mat-card>
   </md-content>
