@@ -7,18 +7,15 @@
       <mat-card-content fxLayout="row" fxLayoutGap="5px">
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'CAMPAIGN.NAME' | translate }}</mat-label>
-          <input formControlName="campaignName" matInput #inputCampaignName />
+          <input formControlName="name" matInput type="text" />
         </mat-form-field>
         <mat-form-field appearance="outline" class="full-width">
           <mat-label>{{ 'CAMPAIGN.ORIGIN' | translate }}</mat-label>
-          <mat-select formControlName="campaignOrigin" #inputOrigin>
+          <mat-select formControlName="origin" #inputOrigin>
             <!-- <mat-option value="1">Inbound</mat-option>
             <mat-option value="2">Outbound</mat-option></mat-select -->
-            <mat-option
-              *ngFor="let o of origin"
-              value="{{ o }}"
-              [(value)]="selectedOption"
-              >{{ o == 1 ? 'Inbound' : 'Outbound' }}</mat-option
+            <mat-option *ngFor="let o of origin" [value]="o">
+              {{ o == 1 ? 'Inbound' : 'Outbound' }}</mat-option
             >
           </mat-select>
         </mat-form-field>
@@ -29,7 +26,13 @@
         <button mat-stroked-button type="button" (click)="onBack()">
           <mat-icon>list</mat-icon>{{ 'CAMPAIGN.BACK' | translate }}
         </button>
-        <button mat-raised-button color="primary" *ngIf="editAccess">
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          *ngIf="editAccess"
+          [disabled]="!reactiveForm.valid"
+        >
           {{ actionName | translate }}
         </button>
       </mat-card-actions>

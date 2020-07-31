@@ -15,14 +15,15 @@ export class CampaignComponent implements OnInit {
   readonly _actionTitleCampaign = 'CAMPAIGN_ACTION_TITLE';
   readonly _actionNameCampaign = 'CAMPAIGN_ACTION_NAME';
   loading: boolean;
-  campaign?: any;
+  campaign: any;
   id: string;
   actionTitle: string;
   actionName: string;
   campaignName: string;
   origin = [1, 2];
   selectedOption: number;
-  editAccess: boolean = true;
+  editAccess: boolean;
+  createAccess: boolean;
   reactiveForm: FormGroup;
 
   constructor(
@@ -37,6 +38,8 @@ export class CampaignComponent implements OnInit {
     try {
       this.loading = true;
       this.editAccess = true;
+      this.createAccess = true;
+
       this.id = this.route.snapshot.paramMap.get('id');
 
       if (this.id != '0') {
@@ -51,22 +54,20 @@ export class CampaignComponent implements OnInit {
       this.loading = false;
     }
   }
-  onSubmit() {}
 
   initForm() {
     this.reactiveForm = new FormGroup({
-      campaignName: new FormControl(null, [
-        Validators.required,
-        Validators.minLength(5),
-      ]),
-      campaignOrigin: new FormControl(null, [Validators.required]),
+      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
+      origin: new FormControl('', [Validators.required]),
     });
-    this.reactiveForm.get('campaignName').setValue(this.campaign.name);
-    this.reactiveForm.get('campaignOrigin').setValue(this.campaign.origin);
-    this.selectedOption = this.campaign.origin;
-  }
-  onBack() {
-    this.router.navigate(['home/campaigns']);
+
+    if (this.campaign) {
+      console.log(this.campaign.name);
+      this.reactiveForm.get('name').setValue('Ricardo');
+      this.reactiveForm.get('origin').setValue(this.campaign.origin);
+      // this.selectedOption = this.campaign.origin;
+      // this.campaignName = this.campaign.name;
+    }
   }
 
   initActionLabel() {
@@ -91,6 +92,29 @@ export class CampaignComponent implements OnInit {
       this.actionName = localStorage.getItem(this._actionNameCampaign);
     } else {
       localStorage.setItem(this._actionNameCampaign, this.actionName);
+    }
+  }
+  onBack() {
+    this.router.navigate(['home/campaigns']);
+  }
+  async onSubmit() {
+    try {
+      this.loading = true;
+      if (this.id == '0') {
+        await this.campaignApi.create(this.reactiveForm.value);
+        this.onBack();
+      } else {
+        await this.campaignApi.update(this.id, this.reactiveForm.value);
+        this.onBack();
+      }
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.app.showErrorMessage('Error');
+      }
+    } finally {
+      this.loading = false;
     }
   }
 }

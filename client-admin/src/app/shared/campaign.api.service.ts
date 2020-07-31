@@ -41,4 +41,14 @@ export class CampaignApiSerivce {
         .toPromise();
     } catch (error) {}
   }
+  create(campaign) {
+    return this.http
+      .post(`${environment.baseURL}/${this._apiName}`, campaign)
+      .toPromise();
+  }
+  update(id, campaign) {
+    return this.http
+      .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
+      .toPromise();
+  }
 }
