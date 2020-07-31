@@ -1,1 +1,59 @@
-<p>bona-fide works!</p>
+<form class="form" [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+  <md-content layout-margin layout-padding flex="50">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>{{
+            id
+              ? ('BONAFIDE.BONAFIDEEDIT' | translate) + ': ' + bonafide
+              : ('BONAFIDE.BONAFIDECREATE' | translate)
+          }}
+        </mat-card-title>
+        <!-- <mat-card-subtitle># {{ id }}</mat-card-subtitle> -->
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.NAME' | translate }}</mat-label>
+          <input matInput formControlName="Name" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.CODE' | translate }}</mat-label>
+          <input matInput formControlName="Code" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.SIGLAS' | translate }}</mat-label>
+          <input matInput formControlName="Siglas" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.PHONE' | translate }}</mat-label>
+          <input matInput formControlName="Phone" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.EMAIL' | translate }}</mat-label>
+          <input matInput formControlName="Email" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.BENEFITS' | translate }}</mat-label>
+          <input matInput formControlName="Benefits" />
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'BONAFIDE.DISCLAIMER' | translate }}</mat-label>
+          <input matInput formControlName="Disclaimer" />
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+        <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
+        <button mat-raised-button color="primary" type="submit" [disabled]="!reactiveForm.valid">
+          <mat-icon>save</mat-icon>
+          {{ id ? ('BONAFIDE.SAVE' | translate) : ('BONAFIDE.CREATE' | translate) }}
+        </button>
+        <button mat-stroked-button type="button" (click)="onBack()">
+          <mat-icon>list</mat-icon>{{ 'BONAFIDE.GOBACK' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </md-content>
+</form>
+<!-- loader.component.html -->
+<div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div>

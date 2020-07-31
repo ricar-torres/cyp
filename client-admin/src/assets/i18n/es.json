@@ -56,6 +56,26 @@
     "CREATE": "Crear",
     "GOBACK": "Regresar"
   },
+  "BONAFIDE": {
+    "TITLE": "Asociaciones Bonafides",
+    "BTN_ADD": "Crear Bonafides",
+    "NAME": "Nombre",
+    "ACTIONS": "Acciones",
+    "BONAFIDEEDIT": "Editar Bonafides",
+    "BONAFIDECREATE": "Crear Bonafides",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Guardar",
+    "CREATE": "Crear",
+    "GOBACK": "Retroceder",
+    "CODE": "Codigo",
+    "SIGLAS": "Siglas",
+    "SEARCH": "Buscar",
+    "PHONE": "Telefono",
+    "EMAIL": "Correo Electronico",
+    "BENEFITS": "Beneficios",
+    "DISCLAIMER": "Relevo de Responsabilidad"
+  },
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",
@@ -98,7 +118,8 @@
     "AGENCIES": "Agencias",
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
-    "SETTINGS": "Configuraciones"
+    "SETTINGS": "Configuraciones",
+    "BONAFIDES": "Asociaciones Bonafides"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Elementos por página:",

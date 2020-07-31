@@ -13,6 +13,8 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
+import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
+import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 
 const routes: Routes = [
   {
@@ -93,6 +95,30 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'bonafides',
+        component: BonaFideListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_CREATE,
+        },
+      },
+      {
+        path: 'bonafide',
+        component: BonaFideComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_CREATE,
+        },
+      },
+      {
+        path: 'bonafide/:id',
+        component: BonaFideComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
     ],

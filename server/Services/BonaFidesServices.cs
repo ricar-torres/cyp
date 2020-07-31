@@ -112,6 +112,12 @@ namespace WebApi.Services
           throw new AppException("Agency not found");
 
         item.Name = payload.Name;
+        item.Code = payload.Code;
+        item.Siglas = payload.Siglas;
+        item.Phone = payload.Phone;
+        item.Email = payload.Email;
+        item.Benefits = payload.Benefits;
+        item.Disclaimer = payload.Disclaimer;
         item.UpdatedAt = DateTime.Now;
 
         _context.BonaFides.Update(item);

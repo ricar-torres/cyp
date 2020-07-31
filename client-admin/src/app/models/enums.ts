@@ -9,6 +9,10 @@ export const MenuRoles = {
   AGENCIES_UPDATE: ['Agency.Update'],
   AGENCIES_DELETE: ['Agency.Delete'],
 
+  BONAFIDE_UPDATE: ['Bonafide.Update'],
+  BONAFIDE_CREATE: ['Bonafide.Create'],
+  BONAFIDE_DELETE: ['Bonafide.Delete'],
+
   CAMPAIGNS: [
     'Campaign.Read',
     'Campaign.Create',
