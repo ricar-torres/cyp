@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
@@ -27,7 +28,7 @@ namespace WebApi.Controllers
       _appSettings = appSettings.Value;
     }
 
-    [AllowAnonymous]
+    [Authorize]
     [HttpGet()]
     public IActionResult GetAll()
     {
@@ -48,7 +49,7 @@ namespace WebApi.Controllers
       }
     }
 
-    [AllowAnonymous]
+    [Authorize]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -70,7 +71,7 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
-    [AllowAnonymous]
+    [Authorize]
     [HttpPost]
     public IActionResult Create([FromBody] Agencies payload)
     {
@@ -90,7 +91,7 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
-    [AllowAnonymous]
+    [Authorize]
     [HttpPut("{id}")]
     public IActionResult Update(int id, [FromBody] Agencies payload)
     {
@@ -111,7 +112,7 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
-    [AllowAnonymous]
+    [Authorize]
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
@@ -125,6 +126,21 @@ namespace WebApi.Controllers
       catch (Exception ex)
       {
         // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    [Authorize]
+    [HttpGet("CheckName/{name}")]
+    public async Task<IActionResult> checkName(string name)
+    {
+      try
+      {
+        var check = await _service.ChekcName(name);
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
         return DefaultError(ex);
       }
     }

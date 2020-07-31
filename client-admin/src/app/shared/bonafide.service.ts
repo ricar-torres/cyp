@@ -33,4 +33,15 @@ export class bonaFideservice {
       .delete(`${environment.baseURL}/bonaFides/${id}`)
       .toPromise();
   }
+
+  checkName(obj: { name: string }): any {
+    return this.http
+      .get(`${environment.baseURL}/bonaFides/CheckName/${obj.name}`)
+      .toPromise();
+  }
+  checkEmail(obj: { name: string }): any {
+    return this.http
+      .get(`${environment.baseURL}/bonaFides/CheckEmail/${obj.name}`)
+      .toPromise();
+  }
 }

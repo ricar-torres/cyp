@@ -13,6 +13,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading.Tasks;
 using WebApi.Dtos;
 using WebApi.Entities;
 using WebApi.Entities.Identity;
@@ -29,6 +30,8 @@ namespace WebApi.Services
     BonaFides Create(BonaFides payload);
     BonaFides Update(BonaFides payload);
     void Delete(int id);
+    Task<Boolean> ChekcName(string criteria);
+    Task<Boolean> ChekcEmail(string email);
   }
 
   public class BonaFidesServices : Controller, IBonaFidesServices
@@ -131,6 +134,36 @@ namespace WebApi.Services
 
         throw ex;
       }
+    }
+
+    public async Task<Boolean> ChekcName(string criteria)
+    {
+      System.Diagnostics.Debug.Write("checkName");
+      if (!String.IsNullOrEmpty(criteria))
+      {
+        criteria = criteria.ToLower().Trim();
+        var payload = await _context.BonaFides.FirstOrDefaultAsync(bf => bf.Name.ToLower().Trim() == criteria);
+        if (payload != null)
+        {
+          return true;
+        }
+      }
+      return false;
+    }
+
+    public async Task<Boolean> ChekcEmail(string email)
+    {
+      System.Diagnostics.Debug.Write("checkName");
+      if (!String.IsNullOrEmpty(email))
+      {
+        email = email.ToLower().Trim();
+        var payload = await _context.BonaFides.FirstOrDefaultAsync(bf => bf.Email.ToLower().Trim() == email);
+        if (payload != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
   }
 }

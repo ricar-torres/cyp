@@ -13,7 +13,7 @@
       <mat-card-content>
         <mat-form-field class="full-width">
           <mat-label>{{ 'BONAFIDE.NAME' | translate }}</mat-label>
-          <input matInput formControlName="Name" />
+          <input matInput formControlName="Name" #inputName />
         </mat-form-field>
         <mat-form-field class="full-width">
           <mat-label>{{ 'BONAFIDE.CODE' | translate }}</mat-label>
@@ -29,7 +29,7 @@
         </mat-form-field>
         <mat-form-field class="full-width">
           <mat-label>{{ 'BONAFIDE.EMAIL' | translate }}</mat-label>
-          <input matInput formControlName="Email" />
+          <input matInput formControlName="Email" #inputEmail />
         </mat-form-field>
         <mat-form-field class="full-width">
           <mat-label>{{ 'BONAFIDE.BENEFITS' | translate }}</mat-label>
@@ -42,7 +42,8 @@
       </mat-card-content>
       <mat-card-actions>
         <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
-        <button mat-raised-button color="primary" type="submit" [disabled]="!reactiveForm.valid">
+        <button mat-raised-button color="primary" type="submit"
+          [disabled]="!reactiveForm.valid || EmailExists || NameExists">
           <mat-icon>save</mat-icon>
           {{ id ? ('BONAFIDE.SAVE' | translate) : ('BONAFIDE.CREATE' | translate) }}
         </button>

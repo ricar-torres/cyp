@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using System;
+using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
@@ -125,6 +126,37 @@ namespace WebApi.Controllers
       catch (Exception ex)
       {
         // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+
+    [AllowAnonymous]
+    [HttpGet("CheckName/{name}")]
+    public async Task<IActionResult> checkName(string name)
+    {
+      try
+      {
+        var check = await _BonaFidesServices.ChekcName(name);
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [AllowAnonymous]
+    [HttpGet("CheckEmail/{email}")]
+    public async Task<IActionResult> checkEmail(string email)
+    {
+      try
+      {
+        var check = await _BonaFidesServices.ChekcEmail(email);
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
         return DefaultError(ex);
       }
     }
