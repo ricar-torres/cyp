@@ -1,5 +1,4 @@
 import { element } from 'protractor';
-import { CampaignApiSerivce } from '../../shared/campaign.api.service';
 import { map } from 'rxjs/operators';
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -9,7 +8,7 @@ import { LanguageService } from '@app/shared/Language.service';
 import { Router } from '@angular/router';
 import { ApiService } from '@app/shared/api.service';
 import { AppService } from '@app/shared/app.service';
-import { Campaign } from '@app/models/Campaign';
+import { CampaignApiSerivce } from '@app/shared/campaign.api.service';
 
 @Component({
   selector: 'app-campaign-list',
@@ -115,21 +114,11 @@ export class CampaignListComponent implements AfterViewInit {
   //   }
   // }
   goToNew() {
-    this.router.navigate(['/home/campaigns', 0], {
-      state: {
-        actionTitle: 'CAMPAIGN.CAMPAIGN_NEW',
-        actionName: 'CAMPAIGN.SAVE',
-      },
-    });
+    this.router.navigate(['/home/campaigns', 0]);
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/campaigns', id], {
-      state: {
-        actionTitle: 'CAMPAIGN.CAMPAIGN_EDIT',
-        actionName: 'CAMPAIGN.UPDATE',
-      },
-    });
+    this.router.navigate(['/home/campaigns', id]);
   }
 
   doFilter(value: any) {

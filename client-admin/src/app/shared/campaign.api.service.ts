@@ -9,10 +9,6 @@ import {
 } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
-import { map, scan } from 'rxjs/operators';
-import { Task } from '@app/models/task';
-import { saveAs } from 'file-saver';
-import { Download } from '@app/models/document';
 
 @Injectable({
   providedIn: 'root',

@@ -30,7 +30,6 @@ export class CampaignComponent implements OnInit {
   id: string;
   actionTitle: string;
   actionName: string;
-  campaignName: string;
   origin = [1, 2];
   selectedOption: number;
   editAccess: boolean;
@@ -61,7 +60,6 @@ export class CampaignComponent implements OnInit {
           this.originalName = this.campaign.name;
           this.reactiveForm.get('name').setValue(this.campaign.name);
           this.reactiveForm.get('origin').setValue(this.campaign.origin);
-          this.campaignName = this.campaign.name;
         } else {
           this.onBack();
         }
@@ -91,28 +89,26 @@ export class CampaignComponent implements OnInit {
   }
 
   initActionLabel() {
-    this.actionTitle = history.state.actionTitle;
-    this.actionName = history.state.actionName;
-
-    if (
-      this.actionTitle == null ||
-      this.actionTitle == undefined ||
-      this.actionTitle === ''
-    ) {
-      this.actionTitle = localStorage.getItem(this._actionTitleCampaign);
-    } else {
-      localStorage.setItem(this._actionTitleCampaign, this.actionTitle);
-    }
-
-    if (
-      this.actionName == null ||
-      this.actionName == undefined ||
-      this.actionName === ''
-    ) {
-      this.actionName = localStorage.getItem(this._actionNameCampaign);
-    } else {
-      localStorage.setItem(this._actionNameCampaign, this.actionName);
-    }
+    //   this.actionTitle = history.state.actionTitle;
+    //   this.actionName = history.state.actionName;
+    //   if (
+    //     this.actionTitle == null ||
+    //     this.actionTitle == undefined ||
+    //     this.actionTitle === ''
+    //   ) {
+    //     this.actionTitle = localStorage.getItem(this._actionTitleCampaign);
+    //   } else {
+    //     localStorage.setItem(this._actionTitleCampaign, this.actionTitle);
+    //   }
+    //   if (
+    //     this.actionName == null ||
+    //     this.actionName == undefined ||
+    //     this.actionName === ''
+    //   ) {
+    //     this.actionName = localStorage.getItem(this._actionNameCampaign);
+    //   } else {
+    //     localStorage.setItem(this._actionNameCampaign, this.actionName);
+    //   }
   }
   onBack() {
     this.router.navigate(['home/campaigns']);
@@ -147,6 +143,8 @@ export class CampaignComponent implements OnInit {
           let value = this.inputCampaignName.nativeElement.value;
           if (value != this.originalName) {
             this.checkCampaignExist(value);
+          } else {
+            this.campaignExists = false;
           }
         })
       )

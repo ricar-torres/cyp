@@ -1,18 +1,17 @@
-<h4>{{ actionTitle | translate }}</h4>
 <md-content layout-margin layout-padding flex="50">
   <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
     <mat-card>
       <mat-card-header>
         <mat-card-title
-          >{{ campaignName }}
+          >{{ originalName }}
           <caption *ngIf="id != '0'">
             <small> #{{ id }} </small>
           </caption>
         </mat-card-title>
       </mat-card-header>
 
-      <mat-card-content fxLayout="row" fxLayoutGap="5px">
-        <mat-form-field appearance="outline" class="full-width">
+      <mat-card-content fxLayout="column" fxLayoutGap="5px">
+        <mat-form-field class="full-width">
           <mat-label>{{ 'CAMPAIGN.NAME' | translate }}</mat-label>
           <input formControlName="name" matInput #inputCampaignName />
           <mat-icon
@@ -20,11 +19,11 @@
             matSuffix
             >done</mat-icon
           >
-          <mat-hint class="error" *ngIf="campaignExists">
+          <mat-hint #existenceHint class="error" *ngIf="campaignExists">
             {{ 'CAMPAIGN.EXISTS' | translate }}</mat-hint
           >
         </mat-form-field>
-        <mat-form-field appearance="outline" class="full-width">
+        <mat-form-field class="full-width">
           <mat-label>{{ 'CAMPAIGN.ORIGIN' | translate }}</mat-label>
           <mat-select formControlName="origin">
             <!-- <mat-option value="1">Inbound</mat-option>
@@ -47,9 +46,9 @@
           mat-raised-button
           color="primary"
           *ngIf="editAccess"
-          [disabled]="!reactiveForm.valid"
+          [disabled]="!reactiveForm.valid || campaignExists"
         >
-          {{ actionName | translate }}
+          {{ 'CAMPAIGN.SAVE' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>
