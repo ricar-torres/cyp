@@ -13,6 +13,8 @@ import { UserComponent } from './pages/user/user.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
+import { AgencyComponent } from './pages/agencies/agency/agency.component';
 
 const routes: Routes = [
   {
@@ -38,7 +40,7 @@ const routes: Routes = [
         component: DashboardComponent,
         canActivate: [AuthGuardService],
         data: {
-          expectedRoles: MenuRoles.TASKS,
+          //expectedRoles: [],
         },
       },
       {
@@ -58,6 +60,20 @@ const routes: Routes = [
         },
       },
       {
+        path: 'user/:id',
+        component: UserComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          expectedRoles: MenuRoles.USERS_UPDATE,
+        },
+      },
+      {
+        path: 'user/:id/change-password',
+        component: ChangePasswordComponent,
+        canActivate: [AuthGuardService],
+        data: {},
+      },
+      {
         path: 'campaigns',
         component: CampaignListComponent,
         //canActivate: [AuthGuardService],
@@ -74,10 +90,28 @@ const routes: Routes = [
         },
       },
       {
-        path: 'user/:id/change-password',
-        component: ChangePasswordComponent,
+        path: 'agencies',
+        component: AgencyListComponent,
         canActivate: [AuthGuardService],
-        data: {},
+        data: {
+          //expectedRoles: MenuRoles.AGENCIES,
+        },
+      },
+      {
+        path: 'agency',
+        component: AgencyComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.AGENCIES_CREATE,
+        },
+      },
+      {
+        path: 'agency/:id',
+        component: AgencyComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
       },
     ],
   },
