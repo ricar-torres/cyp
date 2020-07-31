@@ -59,6 +59,28 @@
 					"endsPattern": "Compiled .*"
 				}
 			}
+		},
+		{
+			"type": "shell",
+			"command": "cd client-admin | ng serve --aot=true",
+			//"path": "MOS-Web/",
+			"label": "serveOpti",
+			"group": {
+				"kind": "test",
+				"isDefault": true
+			},
+			"isBackground": true,
+			"problemMatcher": {
+				"owner": "custom",
+				"pattern": {
+					"regexp": "^$"
+				},
+				"background": {
+					"activeOnStart": true,
+					"beginsPattern": "Compiling",
+					"endsPattern": "Compiled .*"
+				}
+			}
 		}
 	]
 }

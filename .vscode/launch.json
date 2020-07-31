@@ -43,6 +43,18 @@
 			"breakOnLoad": true,
 			"preLaunchTask": "serve"
 			//"postDebugTask": "kill"
+		},
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Opti Launch Debug Chrome Local",
+			"url": "http://localhost:4200",
+			"webRoot": "${workspaceFolder}/client-admin",
+			"port": 9222,
+			"trace": true,
+			"breakOnLoad": true,
+			"preLaunchTask": "serveOpti"
+			//"postDebugTask": "kill"
 		}
 	]
 }

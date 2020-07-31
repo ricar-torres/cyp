@@ -102,10 +102,19 @@
   "CAMPAIGN_LIST": {
     "NAME": "Nombre",
     "ORIGIN": "Origen",
-    "PAGE_TITLE": "Campaign",
+    "PAGE_TITLE": "Campañas",
     "GENERAL_FILTER": "Filter",
     "ADD_BTN": "Agregar Campaña",
     "EDIT_BTN": "Editar",
     "DEL_BTN": "Borrar"
+  },
+  "CAMPAIGN": {
+    "CAMPAIGN_EDIT": "Editar Campaña",
+    "CAMPAIGN_NEW": "Nueva Campaña",
+    "NAME": "Nombre",
+    "ORIGIN": "Origen",
+    "UPDATE": "Actualizar",
+    "SAVE": "Guardar",
+    "BACK": "Atras"
   }
 }

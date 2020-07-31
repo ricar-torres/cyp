@@ -106,5 +106,14 @@
     "ADD_BTN": "Add Campaign",
     "EDIT_BTN": "Edit",
     "DEL_BTN": "Delete"
+  },
+  "CAMPAIGN": {
+    "CAMPAIGN_EDIT": "Edit Campaign",
+    "CAMPAIGN_NEW": "New Campaign",
+    "NAME": "Name",
+    "ORIGIN": "Origin",
+    "UPDATE": "Update",
+    "SAVE": "Save",
+    "BACK": "Back"
   }
 }

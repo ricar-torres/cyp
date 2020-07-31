@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WebApi.Entities;
@@ -29,7 +30,7 @@ namespace WebApi.Services {
 
 			try {
 
-				payload = _context.Campaigns.AsQueryable();
+				payload = _context.Campaigns.Where(ag => ag.DeletedAt == null).AsQueryable();
 
 			} catch (Exception ex) {
 				throw ex;

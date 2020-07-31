@@ -289,7 +289,4 @@ export class ApiService {
       event.type === HttpEventType.UploadProgress
     );
   }
-  getAllCampaigns(): Observable<any> {
-    return this.http.get(`${environment.baseURL}/Campaigns`);
-  }
 }

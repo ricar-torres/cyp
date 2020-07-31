@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -29,17 +30,16 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
-		[HttpGet()]
+		[HttpGet]
 		public IActionResult GetAll() {
 			try {
-				// var res = Task.Run(async() => await _service.GetAll().ToListAsync());
 				var res = _service.GetAll();
-				var campaignList = _mapper.Map<List<CampaignDto>>(res);
-				if (campaignList == null) {
+				// var campaignList = _mapper.Map<List<CampaignDto>>(res);
+				if (res == null) {
 					return NotFound();
 				}
 
-				return Ok(campaignList);
+				return Ok(res);
 
 			} catch (Exception ex) {
 				return DefaultError(ex);

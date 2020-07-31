@@ -93,6 +93,7 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { PaginatorI18n } from './shared/PaginatorI18n';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { CampaignListComponent } from './pages/campaign-list/campaign-list.component';
+import { CampaignComponent } from './pages/campaign/campaign.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -121,6 +122,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ChangePasswordComponent,
     AccessDeniedComponent,
     CampaignListComponent,
+    CampaignComponent,
   ],
   imports: [
     BrowserModule,
