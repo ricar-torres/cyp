@@ -56,12 +56,12 @@
     "GOBACK": "Return"
   },
   "BONAFIDE": {
-    "TITLE": "Asociaciones Bonafides",
-    "BTN_ADD": "Create Bonafide",
+    "TITLE": "Bona Fide Associations",
+    "BTN_ADD": "Create Bona Fide",
     "NAME": "Name",
     "ACTIONS": "Actions",
-    "BONAFIDEEDIT": "Edit Bonafide",
-    "BONAFIDECREATE": "Create Bonafide",
+    "BONAFIDEEDIT": "Edit Bona Fide",
+    "BONAFIDECREATE": "Create Bona Fide",
     "DELETE": "Delete",
     "EDIT": "Edit",
     "SAVE": "Save",
