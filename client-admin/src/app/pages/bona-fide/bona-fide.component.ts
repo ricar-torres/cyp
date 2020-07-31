@@ -35,7 +35,7 @@ export class BonaFideComponent implements OnInit {
         Code: [''],
         Siglas: [''],
         Phone: [''],
-        Email: [''],
+        Email: ['', [Validators.email, Validators.minLength(4)]],
         Benefits: [''],
         Disclaimer: [''],
       });
@@ -55,7 +55,7 @@ export class BonaFideComponent implements OnInit {
         Code: [''],
         Siglas: [''],
         Phone: [''],
-        Email: [''],
+        Email: ['', [Validators.email, Validators.minLength(4)]],
         Benefits: [''],
         Disclaimer: [''],
       });
