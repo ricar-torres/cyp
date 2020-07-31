@@ -36,6 +36,13 @@ export class CampaignComponent implements OnInit {
 
   async ngOnInit() {
     try {
+      this.reactiveForm = new FormGroup({
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5),
+        ]),
+        origin: new FormControl('', [Validators.required]),
+      });
       this.loading = true;
       this.editAccess = true;
       this.createAccess = true;
@@ -57,13 +64,6 @@ export class CampaignComponent implements OnInit {
 
   initForm() {
     if (this.campaign) {
-      this.reactiveForm = new FormGroup({
-        name: new FormControl('', [
-          Validators.required,
-          Validators.minLength(5),
-        ]),
-        origin: new FormControl('', [Validators.required]),
-      });
       this.reactiveForm.get('name').setValue(this.campaign.name);
       this.reactiveForm.get('origin').setValue(this.campaign.origin);
       // this.selectedOption = this.campaign.origin;
