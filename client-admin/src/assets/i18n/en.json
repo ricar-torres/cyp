@@ -121,8 +121,6 @@
     "DEL_BTN": "Delete"
   },
   "CAMPAIGN": {
-    "CAMPAIGN_EDIT": "Edit Campaign",
-    "CAMPAIGN_NEW": "New Campaign",
     "NAME": "Name",
     "ORIGIN": "Origin",
     "UPDATE": "Update",
