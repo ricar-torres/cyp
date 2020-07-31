@@ -62,6 +62,16 @@ namespace WebApi.Controllers {
 			}
 		}
 
+		[AllowAnonymous]
+		[HttpGet("[action]/{name}")]
+		public IActionResult CheckCampaignNameExist(string name) {
+			try {
+				return Ok(_service.NameExists(name));
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
 		//[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
 		[AllowAnonymous]
 		[HttpPost]

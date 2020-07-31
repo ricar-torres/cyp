@@ -14,6 +14,7 @@ namespace WebApi.Services {
 		Campaigns Create(Campaigns payload);
 		Campaigns Update(Campaigns payload);
 		void Delete(int id);
+		bool NameExists(string name);
 	}
 
 	public class CampaignsService : ICampaignsService {
@@ -42,6 +43,10 @@ namespace WebApi.Services {
 		public Campaigns GetById(int id) {
 			var res = _context.Campaigns.Find(id);
 			return res;
+		}
+		public bool NameExists(string name) {
+			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower()).FirstOrDefault();
+			return res is object;
 		}
 
 		public Campaigns Create(Campaigns payload) {
