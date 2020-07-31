@@ -56,14 +56,15 @@ export class CampaignComponent implements OnInit {
   }
 
   initForm() {
-    this.reactiveForm = new FormGroup({
-      name: new FormControl('', [Validators.required, Validators.minLength(5)]),
-      origin: new FormControl('', [Validators.required]),
-    });
-
     if (this.campaign) {
-      console.log(this.campaign.name);
-      this.reactiveForm.get('name').setValue('Ricardo');
+      this.reactiveForm = new FormGroup({
+        name: new FormControl('', [
+          Validators.required,
+          Validators.minLength(5),
+        ]),
+        origin: new FormControl('', [Validators.required]),
+      });
+      this.reactiveForm.get('name').setValue(this.campaign.name);
       this.reactiveForm.get('origin').setValue(this.campaign.origin);
       // this.selectedOption = this.campaign.origin;
       // this.campaignName = this.campaign.name;

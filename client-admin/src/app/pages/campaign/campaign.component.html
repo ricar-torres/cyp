@@ -15,8 +15,7 @@
             <!-- <mat-option value="1">Inbound</mat-option>
             <mat-option value="2">Outbound</mat-option></mat-select -->
             <mat-option *ngFor="let o of origin" [value]="o">
-              {{ o == 1 ? 'Inbound' : 'Outbound' }}</mat-option
-            >
+              {{ o == 1 ? 'Inbound' : 'Outbound' }}</mat-option>
           </mat-select>
         </mat-form-field>
       </mat-card-content>
@@ -26,13 +25,7 @@
         <button mat-stroked-button type="button" (click)="onBack()">
           <mat-icon>list</mat-icon>{{ 'CAMPAIGN.BACK' | translate }}
         </button>
-        <button
-          type="submit"
-          mat-raised-button
-          color="primary"
-          *ngIf="editAccess"
-          [disabled]="!reactiveForm.valid"
-        >
+        <button type="submit" mat-raised-button color="primary" *ngIf="editAccess" [disabled]="!reactiveForm.valid">
           {{ actionName | translate }}
         </button>
       </mat-card-actions>
@@ -47,5 +40,4 @@
 <div class="loading-indicator" [hidden]="!loading">
   <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
 </div>
-
 <router-outlet></router-outlet>
