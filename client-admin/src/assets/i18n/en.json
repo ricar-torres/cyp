@@ -18,6 +18,10 @@
   "CLOSE_BTN": "CLOSE",
   "GENERIC_ERROR": "An error has occurred please try again later.",
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
+  "YES_BTN": "Yes",
+  "COMFIRMATION": "Confirmation",
+  "NO_BTN": "No",
+
   "LOGIN-FORM": {
     "USER": "User",
     "PASSWORD": "Password",
@@ -55,6 +59,44 @@
     "CREATE": "Create",
     "GOBACK": "Return"
   },
+  "BONAFIDE": {
+    "TITLE": "Bona Fide Associations",
+    "BTN_ADD": "Create Bona Fide",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "BONAFIDEEDIT": "Edit Bona Fide",
+    "BONAFIDECREATE": "Create Bona Fide",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "GOBACK": "Return",
+    "CODE": "Code",
+    "SIGLAS": "Acronym",
+    "SEARCH": "Search",
+    "PHONE": "Phone",
+    "EMAIL": "Email",
+    "BENEFITS": "Benefits",
+    "DISCLAIMER": "Disclaimer",
+    "CHAPTER": "Chapter",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bona Fide?"
+  },
+  "CHAPTER": {
+    "TITLE": "Chapers",
+    "BTN_ADD": "New Chapter",
+    "NAME": "Name",
+    "CHAPTEREDIT": "Edit Chapter",
+    "CHAPTERCREATE": "Create Chapter",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Create",
+    "GOBACK": "Return",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this chapter?",
+    "QUOTA": "Quota",
+    "ACTIONS": "Actions"
+  },
+
   "USER": {
     "TITLE": "User",
     "USER": "User",
@@ -97,7 +139,8 @@
     "AGENCIES": "Agencies",
     "CAMPAIGNS": "Campaigns",
     "HOME": "Home",
-    "SETTINGS": "Settings"
+    "SETTINGS": "Settings",
+    "COMMUNICATION_METHODS": "Commuication Methods"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
@@ -118,7 +161,8 @@
     "GENERAL_FILTER": "Filter",
     "ADD_BTN": "Add Campaign",
     "EDIT_BTN": "Edit",
-    "DEL_BTN": "Delete"
+    "DEL_BTN": "Delete",
+    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Campaign?"
   },
   "CAMPAIGN": {
     "NAME": "Name",
@@ -127,5 +171,20 @@
     "SAVE": "Save",
     "BACK": "Back",
     "EXISTS": "Exists a campaign with this name"
+  },
+  "COMMUNICATION_METHOD_LIST": {
+    "ADD_BTN": "Add",
+    "GENERAL_FILTER": "Filter",
+    "NAME": "Name",
+    "EDIT_BTN": "Edit",
+    "DEL_BTN": "Delete",
+    "PAGE_TITLE": "Communication Methods",
+    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Communication Method?"
+  },
+  "COMMUNICATION_METHOD": {
+    "NAME": "Name",
+    "SAVE": "Save",
+    "BACK": "Back",
+    "EXISTS": "Exists a communication method with this name"
   }
 }

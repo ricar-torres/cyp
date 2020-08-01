@@ -9,30 +9,36 @@ import { Router } from '@angular/router';
 import { ApiService } from '@app/shared/api.service';
 import { AppService } from '@app/shared/app.service';
 import { CampaignApiSerivce } from '@app/shared/campaign.api.service';
+import {
+  ConfirmDialogModel,
+  ConfirmDialogComponent,
+} from '@app/components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-campaign-list',
   templateUrl: './campaign-list.component.html',
   styleUrls: ['./campaign-list.component.css'],
 })
-export class CampaignListComponent implements AfterViewInit {
+export class CampaignListComponent implements OnInit, AfterViewInit {
   loading = false;
-  pageSize = 10;
+
   dataSource: any;
 
-  editAccess: boolean = true;
-  createAccess: boolean = true;
+  editAccess: boolean;
+  createAccess: boolean;
+  deteleAccess: boolean;
 
   displayedColumns: string[] = [
     'id',
     'name',
     'origin',
     // 'updDt',
-    // 'status',
     'action',
   ];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
+  pageSize = 10;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -40,79 +46,55 @@ export class CampaignListComponent implements AfterViewInit {
     public languageService: LanguageService,
     private router: Router,
     private campaignApi: CampaignApiSerivce,
-    private app: AppService
+    private app: AppService,
+    private dialog: MatDialog
   ) {}
-  async ngAfterViewInit() {
-    try {
-      await this.loadCampaings();
-    } catch (error) {
-      this.loading = false;
-    } finally {
-    }
-  }
-
-  async loadCampaings() {
-    this.loading = true;
+  ngOnInit(): void {
     //TODO: Get access priviliges
+    this.createAccess = true;
+    this.editAccess = true;
+    this.deteleAccess = true;
     // this.createAccess = this.app.checkMenuRoleAccess(
     //   MenuRoles.DOCUMENT_TYPES_CREATE
     // );
     // this.editAccess = this.app.checkMenuRoleAccess(
     //   MenuRoles.DOCUMENT_TYPES_UPDATE
     // );
-    // var data: string = [];
-    this.dataSource = new MatTableDataSource();
-    await this.campaignApi.getAll().subscribe(
-      (data: any) => {
-        this.dataSource.data = data;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-
-        this.loading = false;
-      },
-      (error: any) => {
-        this.loading = false;
-
-        if (error.status != 401) {
-          console.error('error', error);
-          this.app.showErrorMessage('Error interno');
-        }
-      }
-    );
+  }
+  async ngAfterViewInit() {
+    try {
+      await this.loadCampaigns();
+    } catch (error) {
+      this.loading = false;
+    } finally {
+    }
   }
 
-  // async ngOnInit() {
-  //   try {
-  //     this.loading = true;
-  //     //TODO: Get access priviliges
-  //     // this.createAccess = this.app.checkMenuRoleAccess(
-  //     //   MenuRoles.DOCUMENT_TYPES_CREATE
-  //     // );
-  //     // this.editAccess = this.app.checkMenuRoleAccess(
-  //     //   MenuRoles.DOCUMENT_TYPES_UPDATE
-  //     // );
-  //     // var data: string = [];
-  //     await this.api.getAllCampaigns().subscribe(
-  //       (data: any) => {
-  //         this.dataSource = new MatTableDataSource();
-  //         this.dataSource.data = data;
-  //         this.dataSource.paginator = this.paginator;
-  //         this.dataSource.sort = this.sort;
-  //         this.loading = false;
-  //       },
-  //       (error: any) => {
-  //         this.loading = false;
+  async loadCampaigns() {
+    try {
+      this.loading = true;
 
-  //         if (error.status != 401) {
-  //           console.error('error', error);
-  //           this.app.showErrorMessage('Error interno');
-  //         }
-  //       }
-  //     );
-  //   } catch (error) {
-  //     this.loading = false;
-  //   }
-  // }
+      // var data: string = [];
+      this.dataSource = new MatTableDataSource();
+      await this.campaignApi.getAll().subscribe(
+        (data: any) => {
+          this.dataSource.data = data;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+
+          this.loading = false;
+        },
+        (error: any) => {
+          this.loading = false;
+
+          if (error.status != 401) {
+            console.error('error', error);
+            this.app.showErrorMessage('Error interno');
+          }
+        }
+      );
+    } catch (error) {}
+  }
   goToNew() {
     this.router.navigate(['/home/campaigns', 0]);
   }
@@ -124,18 +106,41 @@ export class CampaignListComponent implements AfterViewInit {
   doFilter(value: any) {
     this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
   }
-  async deleteCampaignItem(id: number) {
-    try {
-      await this.campaignApi.deleteCampaign(id);
-      await this.loadCampaings();
-    } catch (error) {}
+  async deleteConfirm(id: string) {
+    const message = await this.languageService.translate
+      .get('CAMPAIGN_LIST.ARE_YOU_SURE_DELETE')
+      .toPromise();
+
+    const title = await this.languageService.translate
+      .get('COMFIRMATION')
+      .toPromise();
+
+    const dialogData = new ConfirmDialogModel(
+      title,
+      message,
+      true,
+      true,
+      false
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe(async (dialogResult) => {
+      if (dialogResult) {
+        console.log(id);
+        await this.delete(id);
+        await this.loadCampaigns();
+      }
+    });
   }
 
-  onPageFired(event) {
-    // this.theHttpService.theGetDataFunction(event.pageIndex).subscribe((data)=>{
-    // // then you can assign data to your dataSource like so
-    // this.dataSource = data
-    // })
+  async delete(id: string) {
+    try {
+      await this.campaignApi.delete(id);
+    } catch (error) {}
   }
 
   setPageSizeOptions(setPageSizeOptionsInput: string) {

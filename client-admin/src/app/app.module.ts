@@ -97,6 +97,8 @@ import { CampaignComponent } from './pages/campaign/campaign.component';
 import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
 import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
+import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -129,6 +131,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AgencyListComponent,
     AgencyComponent,
     CommunicationMethodsListComponent,
+    CommunicationMethodComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,

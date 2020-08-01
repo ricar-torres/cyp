@@ -31,7 +31,7 @@ namespace WebApi.Services {
 
 			try {
 
-                payload = _context.Campaigns.Where(ag => ag.DeletedAt == null).AsQueryable();
+				payload = _context.Campaigns.Where(ag => ag.DeletedAt == null).AsQueryable();
 
 			} catch (Exception ex) {
 				throw ex;
@@ -45,7 +45,7 @@ namespace WebApi.Services {
 			return res;
 		}
 		public bool NameExists(string name) {
-			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower()).FirstOrDefault();
+			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower() && c.DeletedAt == null).FirstOrDefault();
 			return res is object;
 		}
 
@@ -70,7 +70,7 @@ namespace WebApi.Services {
 				var item = _context.Campaigns.Find(payload.Id);
 
 				if (item == null)
-					throw new AppException("Agency not found");
+					throw new AppException("Campaign not found");
 
 				item.Name = payload.Name;
 				item.UpdatedAt = DateTime.Now;
@@ -97,7 +97,7 @@ namespace WebApi.Services {
 				_context.Campaigns.Update(item);
 				_context.SaveChanges();
 			} else
-				throw new AppException("Agency not found");
+				throw new AppException("Campaign not found");
 
 		}
 

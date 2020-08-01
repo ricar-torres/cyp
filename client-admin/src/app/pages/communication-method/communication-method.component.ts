@@ -1,28 +1,24 @@
+import { CommunicationMethodsAPIService } from './../../shared/communication-methods.api.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import {
-  Component,
-  OnInit,
-  AfterViewInit,
-  ViewChild,
-  ElementRef,
-} from '@angular/core';
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder,
+} from '@angular/forms';
 import { LanguageService } from '@app/shared/Language.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CampaignApiSerivce } from '@app/shared/campaign.api.service';
 import { AppService } from '@app/shared/app.service';
-import { Location } from '@angular/common';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { merge, fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-campaign',
-  templateUrl: './campaign.component.html',
-  styleUrls: ['./campaign.component.css'],
+  selector: 'app-communication-method',
+  templateUrl: './communication-method.component.html',
+  styleUrls: ['./communication-method.component.css'],
 })
-export class CampaignComponent implements OnInit {
-  @ViewChild('inputCampaignName', { static: true })
-  inputCampaignName: ElementRef;
-
+export class CommunicationMethodComponent implements OnInit {
   loading: boolean;
   campaign: any;
   id: string;
@@ -30,14 +26,15 @@ export class CampaignComponent implements OnInit {
   editAccess: boolean;
   createAccess: boolean;
   reactiveForm: FormGroup;
-  campaignExists: boolean = false;
+  campaignExists: boolean;
   originalName: string;
-
+  @ViewChild('inputName', { static: true })
+  inputName: ElementRef;
   constructor(
-    public languageService: LanguageService,
+    public formBuilder: FormBuilder,
     private router: Router,
     private route: ActivatedRoute,
-    private campaignApi: CampaignApiSerivce,
+    private apicommunicationMethod: CommunicationMethodsAPIService,
     private app: AppService
   ) {}
 
@@ -50,11 +47,10 @@ export class CampaignComponent implements OnInit {
       this.id = this.route.snapshot.paramMap.get('id');
 
       if (this.id != '0') {
-        this.campaign = await this.campaignApi.getById(this.id);
+        this.campaign = await this.apicommunicationMethod.getById(this.id);
         if (this.campaign) {
           this.originalName = this.campaign.name;
           this.reactiveForm.get('name').setValue(this.campaign.name);
-          this.reactiveForm.get('origin').setValue(this.campaign.origin);
         } else {
           this.onBack();
         }
@@ -69,29 +65,29 @@ export class CampaignComponent implements OnInit {
       this.loading = false;
     }
   }
-
   initForm() {
-    this.reactiveForm = new FormGroup({
+    this.reactiveForm = this.formBuilder.group({
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(5),
         Validators.maxLength(250),
       ]),
-      origin: new FormControl('', [Validators.required]),
     });
-    // this.checkCampaignExist(this.reactiveForm.controls.name.value);
   }
   onBack() {
-    this.router.navigate(['home/campaigns']);
+    this.router.navigate(['home/communication-method-list']);
   }
   async onSubmit() {
     try {
       this.loading = true;
       if (this.id == '0') {
-        await this.campaignApi.create(this.reactiveForm.value);
+        await this.apicommunicationMethod.create(this.reactiveForm.value);
         this.onBack();
       } else {
-        await this.campaignApi.update(this.id, this.reactiveForm.value);
+        await this.apicommunicationMethod.update(
+          this.id,
+          this.reactiveForm.value
+        );
         this.onBack();
       }
     } catch (error) {
@@ -105,13 +101,13 @@ export class CampaignComponent implements OnInit {
     }
   }
   subscribeEvents() {
-    merge(fromEvent(this.inputCampaignName.nativeElement, 'keydown'))
+    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
       .pipe(
         debounceTime(150),
         distinctUntilChanged(),
 
         tap(async () => {
-          let value = this.inputCampaignName.nativeElement.value;
+          let value = this.inputName.nativeElement.value;
           if (value != this.originalName) {
             this.checkCampaignExist(value);
           } else {
@@ -122,7 +118,7 @@ export class CampaignComponent implements OnInit {
       .subscribe();
   }
   async checkCampaignExist(name) {
-    const res = await this.campaignApi.checkCampaignNameExist(name);
+    const res = await this.apicommunicationMethod.checkCampaignNameExist(name);
     this.campaignExists = res as boolean;
   }
 }
