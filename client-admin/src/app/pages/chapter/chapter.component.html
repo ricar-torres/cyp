@@ -8,7 +8,7 @@
               : ('CHAPTER.CHAPTERCREATE' | translate)
           }}
         </mat-card-title>
-        <!-- <mat-card-subtitle># {{ chapterid }}</mat-card-subtitle> -->
+        <mat-card-subtitle> {{ chapterid? '#'+chapterid : ''  }}</mat-card-subtitle>
       </mat-card-header>
       <mat-card-content>
         <mat-form-field class="full-width">
