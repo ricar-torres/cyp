@@ -32,6 +32,7 @@ export class BonaFideComponent implements OnInit {
   async ngOnInit() {
     this.loading = true;
     this.id = this.route.snapshot.paramMap.get('id');
+
     if (this.id) {
       this.reactiveForm = this.fb.group({
         Id: [this.id],

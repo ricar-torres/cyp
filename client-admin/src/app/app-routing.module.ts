@@ -17,6 +17,7 @@ import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.com
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 const routes: Routes = [
   {
@@ -132,7 +133,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'chapter',
+        path: 'chapter/:bonafideid',
         component: ChapterComponent,
         canActivate: [AuthGuardService],
         data: {
@@ -140,7 +141,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'chapter/:id',
+        path: 'chapter/:bonafideid/:chapterid',
         component: ChapterComponent,
         canActivate: [AuthGuardService],
         data: {

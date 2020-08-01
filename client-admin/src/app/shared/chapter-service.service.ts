@@ -21,11 +21,13 @@ export class ChapterServiceService {
     return this.http.get(`${environment.baseURL}/chapter`);
   }
 
-  create(agency) {
-    return this.http.post(`${environment.baseURL}/chapter`, agency).toPromise();
+  create(chapter) {
+    return this.http
+      .post(`${environment.baseURL}/chapter`, chapter)
+      .toPromise();
   }
 
-  agency(id: string) {
+  chapter(id: string) {
     return this.http.get(`${environment.baseURL}/chapter/${id}`).toPromise();
   }
 

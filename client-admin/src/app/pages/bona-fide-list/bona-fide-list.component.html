@@ -51,10 +51,10 @@
             {{ 'BONAFIDE.ACTIONS' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-button (click)="editBonafide(element.id)" *ngIf="editAccess">
+            <button type="button" mat-button (click)="editBonafide(element.id)" *ngIf="editAccess">
               <mat-icon>edit</mat-icon> {{ 'BONAFIDE.EDIT' | translate }}
             </button>
-            <button mat-button (click)="deleteBonafide(element.id)" *ngIf="deleteAccess">
+            <button type="button" mat-button (click)="deleteConfirm(element.id)" *ngIf="deleteAccess">
               <mat-icon>delete</mat-icon> {{ 'BONAFIDE.DELETE' | translate }}
             </button>
           </td>

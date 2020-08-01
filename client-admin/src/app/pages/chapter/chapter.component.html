@@ -1,30 +1,29 @@
-<p>chapter works!</p>
 <form class="form" [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
   <md-content layout-margin layout-padding flex="50">
     <mat-card>
       <mat-card-header>
         <mat-card-title>{{
-            id
-              ? ('AGENCY.AGENCYEDIT' | translate) + ': ' + agency
-              : ('AGENCY.AGENCYCREATE' | translate)
+            chapterid
+              ? ('CHAPTER.CHAPTEREDIT' | translate) + ': ' + chapter
+              : ('CHAPTER.CHAPTERCREATE' | translate)
           }}
         </mat-card-title>
-        <!-- <mat-card-subtitle># {{ id }}</mat-card-subtitle> -->
+        <!-- <mat-card-subtitle># {{ chapterid }}</mat-card-subtitle> -->
       </mat-card-header>
       <mat-card-content>
         <mat-form-field class="full-width">
-          <mat-label>{{ 'AGENCY.NAME' | translate }}</mat-label>
+          <mat-label>{{ 'CHAPTER.NAME' | translate }}</mat-label>
           <input matInput formControlName="name" #inputName />
         </mat-form-field>
       </mat-card-content>
       <mat-card-actions>
-        <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
+        <!-- *ngIf="(chapterid && editAccess) || (!chapterid && createAccess)" -->
         <button mat-raised-button color="primary" type="submit" [disabled]="!reactiveForm.valid || Exists">
           <mat-icon>save</mat-icon>
-          {{ id ? ('AGENCY.SAVE' | translate) : ('AGENCY.CREATE' | translate) }}
+          {{ chapterid ? ('CHAPTER.SAVE' | translate) : ('CHAPTER.CREATE' | translate) }}
         </button>
-        <button mat-stroked-button type="button" (click)="onBack()">
-          <mat-icon>list</mat-icon>{{ 'AGENCY.GOBACK' | translate }}
+        <button type="button" mat-stroked-button type="button" (click)="onBack()">
+          <mat-icon>list</mat-icon>{{ 'CHAPTER.GOBACK' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>

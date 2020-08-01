@@ -98,6 +98,7 @@ import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.com
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -131,6 +132,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BonaFideComponent,
     ChapterListComponent,
     ChapterComponent,
+    ConfirmDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -204,6 +206,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DialogGenericErrorComponent,
     SnackBarConfirmationComponent,
     DialogGenericSuccessComponent,
+    ConfirmDialogComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -9,6 +9,8 @@
   "SAVE_BTN": "Grabar",
   "SEND_BTN": "Enviar",
   "OK_BTN": "Ok",
+  "YES_BTN": "Si",
+  "NO_BTN": "No",
   "ADD_BTN": "Agregar",
   "LOGOUT_BTN": "Salir",
   "APPROVE_BTN": "APROBAR",
@@ -87,7 +89,9 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Crear",
-    "GOBACK": "Regresar"
+    "GOBACK": "Regresar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
+    "COMFIRMATION": "Confirmación"
   },
   "USER": {
     "TITLE": "Usuario",

@@ -137,7 +137,7 @@ namespace WebApi.Services
 
     public async Task<List<Chapters>> GetByBonafineId(int id)
     {
-      var res = await _context.Chapters.Where(ch => ch.BonaFideId == id).ToListAsync();
+      var res = await _context.Chapters.Where(ch => ch.BonaFideId == id && ch.DeletedAt == null).ToListAsync();
       return res;
     }
   }
