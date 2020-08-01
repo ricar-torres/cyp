@@ -18,7 +18,7 @@ export class ChapterComponent implements OnInit {
 
   chapter: string;
 
-  Exists: Boolean = true;
+  Exists: Boolean = false;
 
   @ViewChild('inputName', { static: true }) inputName: ElementRef;
   chapterid: string;
@@ -36,24 +36,26 @@ export class ChapterComponent implements OnInit {
     this.loading = true;
     this.chapterid = this.route.snapshot.paramMap.get('chapterid');
     this.bonafideid = this.route.snapshot.paramMap.get('bonafideid');
-    console.log(this.chapterid, this.bonafideid);
     if (this.chapterid) {
       this.reactiveForm = this.fb.group({
-        id: [this.chapterid],
-        name: ['', [Validators.minLength(2), Validators.required]],
+        Id: [this.chapterid],
+        Name: ['', [Validators.minLength(2), Validators.required]],
+        Quota: ['', [Validators.required]],
         BonaFideId: [this.bonafideid],
       });
       var editChapter: any = await this.chapterService.chapter(this.chapterid);
       this.chapter = editChapter.name;
-      this.reactiveForm.get('name').setValue(editChapter.name);
-      this.reactiveForm.get('id').setValue(editChapter.id);
+      this.reactiveForm.get('Name').setValue(editChapter.name);
+      this.reactiveForm.get('Quota').setValue(editChapter.quota);
+      this.reactiveForm.get('Id').setValue(editChapter.id);
     } else {
       this.reactiveForm = this.fb.group({
-        name: ['', [Validators.minLength(2), Validators.required]],
+        Name: ['', [Validators.minLength(2), Validators.required]],
+        Quota: ['', [Validators.required]],
         BonaFideId: [this.bonafideid],
       });
+      this.subscribeEvents();
     }
-    this.subscribeEvents();
     this.loading = false;
   }
 

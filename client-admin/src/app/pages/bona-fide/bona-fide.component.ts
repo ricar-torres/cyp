@@ -64,8 +64,8 @@ export class BonaFideComponent implements OnInit {
         Benefits: [''],
         Disclaimer: [''],
       });
+      this.setUpSubscriptions();
     }
-    this.setUpSubscriptions();
     this.loading = false;
   }
   setUpSubscriptions() {

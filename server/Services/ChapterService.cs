@@ -86,6 +86,7 @@ namespace WebApi.Services
           throw new AppException("Agency not found");
 
         item.Name = payload.Name;
+        item.Quota = payload.Quota;
         item.UpdatedAt = DateTime.Now;
 
         _context.Chapters.Update(item);

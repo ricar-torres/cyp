@@ -36,7 +36,14 @@ export class AgencyComponent implements OnInit {
     if (this.id) {
       this.reactiveForm = this.fb.group({
         id: [this.id],
-        name: ['', [Validators.minLength(2), Validators.required]],
+        name: [
+          '',
+          [
+            Validators.minLength(2),
+            Validators.required,
+            Validators.maxLength(255),
+          ],
+        ],
       });
       var editAgency: any = await this.agencyApi.agency(this.id);
       this.agency = editAgency.name;
@@ -44,10 +51,17 @@ export class AgencyComponent implements OnInit {
       this.reactiveForm.get('id').setValue(editAgency.id);
     } else {
       this.reactiveForm = this.fb.group({
-        name: ['', [Validators.minLength(2), Validators.required]],
+        name: [
+          '',
+          [
+            Validators.minLength(2),
+            Validators.required,
+            Validators.maxLength(255),
+          ],
+        ],
       });
+      this.subscribeEvents();
     }
-    this.subscribeEvents();
     this.loading = false;
   }
 

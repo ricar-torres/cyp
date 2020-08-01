@@ -33,7 +33,7 @@ export class ChapterServiceService {
 
   update(agency: any) {
     return this.http
-      .put(`${environment.baseURL}/chapter/${agency.id}`, agency)
+      .put(`${environment.baseURL}/chapter/${agency.Id}`, agency)
       .toPromise();
   }
 

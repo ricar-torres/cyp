@@ -93,7 +93,9 @@
     "SAVE": "Grabar",
     "CREATE": "Crear",
     "GOBACK": "Regresar",
-    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?"
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
+    "QUOTA": "Cuota",
+    "ACTIONS": "Acciones"
   },
   "USER": {
     "TITLE": "Usuario",
