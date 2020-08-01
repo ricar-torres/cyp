@@ -87,11 +87,11 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
 
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('CHAPTER.ARE_YOU_SURE_DELETE')
+      .get('BONAFIDE.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
-      .get('CHAPTER.COMFIRMATION')
+      .get('COMFIRMATION')
       .toPromise();
 
     const dialogData = new ConfirmDialogModel(

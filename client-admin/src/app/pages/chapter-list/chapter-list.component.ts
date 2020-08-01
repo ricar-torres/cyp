@@ -102,7 +102,7 @@ export class ChapterListComponent implements OnInit {
       .toPromise();
 
     const title = await this.languageService.translate
-      .get('CHAPTER.COMFIRMATION')
+      .get('COMFIRMATION')
       .toPromise();
 
     const dialogData = new ConfirmDialogModel(

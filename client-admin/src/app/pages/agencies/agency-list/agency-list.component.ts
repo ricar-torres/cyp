@@ -6,11 +6,17 @@ import {
   MatTableDataSource,
   MatSort,
   MatPaginator,
+  MatDialog,
 } from '@angular/material';
 import { AgencyService } from '@app/shared/agency.service';
 import { MenuRoles } from '@app/models/enums';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
+import { LanguageService } from '@app/shared/Language.service';
+import {
+  ConfirmDialogModel,
+  ConfirmDialogComponent,
+} from '@app/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-agency-list',
@@ -34,7 +40,9 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
     private app: AppService,
     private fb: FormBuilder,
     private agencyApi: AgencyService,
-    private router: Router
+    private router: Router,
+    private languageService: LanguageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -78,11 +86,6 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async deleteAgency(id: string) {
-    await this.agencyApi.delete(id);
-    this.LoadAgencies();
-  }
-
   editAgency(id: number) {
     this.router.navigate(['/home/agency', id]);
   }
@@ -93,5 +96,36 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
 
   doFilter(value: any) {
     this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
+  }
+
+  async deleteConfirm(id: string) {
+    const message = await this.languageService.translate
+      .get('CHAPTER.ARE_YOU_SURE_DELETE')
+      .toPromise();
+
+    const title = await this.languageService.translate
+      .get('COMFIRMATION')
+      .toPromise();
+
+    const dialogData = new ConfirmDialogModel(
+      title,
+      message,
+      true,
+      true,
+      false
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe(async (dialogResult) => {
+      if (dialogResult) {
+        console.log(id);
+        await this.agencyApi.delete(id);
+        this.LoadAgencies();
+      }
+    });
   }
 }
