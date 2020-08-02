@@ -29,10 +29,10 @@
             <!-- {{ 'AGENCY.ACTIONS' | translate }} -->
           </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-button (click)="editAgency(element.id)" *ngIf="editAccess">
+            <button mat-button color="accent" (click)="editAgency(element.id)" *ngIf="editAccess">
               <mat-icon>edit</mat-icon> {{ 'AGENCY.EDIT' | translate }}
             </button>
-            <button mat-button mat-flat-button color="warn" (click)=" deleteConfirm(element.id)" *ngIf="deleteAccess">
+            <button mat-button color="warn" (click)=" deleteConfirm(element.id)" *ngIf="deleteAccess">
               <mat-icon>delete</mat-icon> {{ 'AGENCY.DELETE' | translate }}
             </button>
           </td>

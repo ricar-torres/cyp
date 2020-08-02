@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { merge, fromEvent } from 'rxjs';
@@ -39,8 +44,8 @@ export class ChapterComponent implements OnInit {
     if (this.chapterid) {
       this.reactiveForm = this.fb.group({
         Id: [this.chapterid],
-        Name: ['', [Validators.minLength(2), Validators.required]],
-        Quota: ['', [Validators.required]],
+        Name: ['', [Validators.required]],
+        Quota: [''],
         BonaFideId: [this.bonafideid],
       });
       var editChapter: any = await this.chapterService.chapter(this.chapterid);
@@ -50,11 +55,10 @@ export class ChapterComponent implements OnInit {
       this.reactiveForm.get('Id').setValue(editChapter.id);
     } else {
       this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.minLength(2), Validators.required]],
-        Quota: ['', [Validators.required]],
+        Name: ['', [Validators.required], this.uniqueName.bind(this)],
+        Quota: [''],
         BonaFideId: [this.bonafideid],
       });
-      this.subscribeEvents();
     }
     this.loading = false;
   }
@@ -84,29 +88,14 @@ export class ChapterComponent implements OnInit {
     }
   }
 
-  subscribeEvents() {
-    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(async () => {
-          await !this.checkName(this.inputName.nativeElement.value);
-        })
-      )
-      .subscribe();
-  }
-
-  async checkName(name: string) {
-    try {
-      if (name) {
-        const res: any = await this.chapterService.checkName({
-          name: name,
-        });
-        console.log(res);
-        this.Exists = res;
+  async uniqueName(ctrl: FormControl) {
+    if (ctrl.value) {
+      const res: any = await this.chapterService.checkName({
+        name: ctrl.value,
+      });
+      if (res) {
+        return { nameTaken: true };
       }
-    } catch (error) {
-      this.Exists = false;
     }
   }
 }

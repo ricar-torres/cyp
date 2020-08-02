@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { bonaFideservice } from '@app/shared/bonafide.service';
@@ -16,10 +21,6 @@ export class BonaFideComponent implements OnInit {
   loading = false;
 
   bonafide: string;
-  NameExists: boolean = false;
-  EmailExists: boolean = false;
-  @ViewChild('inputEmail', { static: true }) inputEmail: ElementRef;
-  @ViewChild('inputName', { static: true }) inputName: ElementRef;
 
   constructor(
     private fb: FormBuilder,
@@ -56,38 +57,16 @@ export class BonaFideComponent implements OnInit {
       this.reactiveForm.get('Disclaimer').setValue(editBonafide.disclaimer);
     } else {
       this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.required]],
+        Name: ['', [Validators.required], this.checkName.bind(this)],
         Code: [''],
         Siglas: [''],
         Phone: [''],
-        Email: ['', [Validators.email]],
+        Email: ['', [Validators.email], this.checkEmail.bind(this)],
         Benefits: [''],
         Disclaimer: [''],
       });
-      this.setUpSubscriptions();
     }
     this.loading = false;
-  }
-  setUpSubscriptions() {
-    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(async () => {
-          await !this.checkName(this.inputName.nativeElement.value);
-        })
-      )
-      .subscribe();
-
-    merge(fromEvent(this.inputEmail.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(async () => {
-          await !this.checkEmail(this.inputEmail.nativeElement.value);
-        })
-      )
-      .subscribe();
   }
 
   onBack() {
@@ -115,29 +94,21 @@ export class BonaFideComponent implements OnInit {
     }
   }
 
-  async checkName(name: string) {
-    try {
-      if (name) {
-        const res: any = await this.bonafideService.checkName({
-          name: name,
-        });
-        this.NameExists = res;
-      }
-    } catch (error) {
-      this.NameExists = false;
+  async checkName(name: FormControl) {
+    if (name.value) {
+      const res: any = await this.bonafideService.checkName({
+        name: name.value,
+      });
+      if (res) return { nameTaken: true };
     }
   }
 
-  async checkEmail(email: string) {
-    try {
-      if (email) {
-        const res: any = await this.bonafideService.checkEmail({
-          name: email,
-        });
-        this.EmailExists = res;
-      }
-    } catch (error) {
-      this.EmailExists = false;
+  async checkEmail(email: FormControl) {
+    if (email.value) {
+      const res: any = await this.bonafideService.checkEmail({
+        name: email.value,
+      });
+      if (res) return { emailTaken: true };
     }
   }
 }

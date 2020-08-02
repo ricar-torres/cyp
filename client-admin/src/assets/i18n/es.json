@@ -22,6 +22,8 @@
   "CHANGE_PASSWORD_BTN": "Cambiar contraseña",
   "GENERIC_ERROR": "Se ha producido un error, intente nuevamente más tarde.",
   "PASSWORD_POLICY": "La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+  "REQUIRED": "Este Campo es requerido",
+  "VALIDEMAIL": "Porfavor provea una dirección de email valida",
   "LOGIN-FORM": {
     "USER": "Usuario",
     "PASSWORD": "Contraseña",
@@ -80,7 +82,9 @@
     "BENEFITS": "Beneficios",
     "DISCLAIMER": "Relevo de Responsabilidad",
     "CHAPTER": "Capítulo",
-    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?"
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?",
+    "TAKENNAME": "Este Nombre ya existe",
+    "TAKENEMAIL": "Este correo electrónico ya existe"
   },
   "CHAPTER": {
     "TITLE": "Capítulos",
@@ -95,7 +99,9 @@
     "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
     "QUOTA": "Cuota",
-    "ACTIONS": "Acciones"
+    "ACTIONS": "Acciones",
+    "TAKENNAME": "Un Capítulo ya existe con este nombre.",
+    "REQUIRED": "Campo Nombre es requerido"
   },
   "USER": {
     "TITLE": "Usuario",

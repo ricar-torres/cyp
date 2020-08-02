@@ -138,7 +138,6 @@ namespace WebApi.Services
 
     public async Task<Boolean> ChekcName(string criteria)
     {
-      System.Diagnostics.Debug.Write("checkName");
       if (!String.IsNullOrEmpty(criteria))
       {
         criteria = criteria.ToLower().Trim();
@@ -153,7 +152,6 @@ namespace WebApi.Services
 
     public async Task<Boolean> ChekcEmail(string email)
     {
-      System.Diagnostics.Debug.Write("checkName");
       if (!String.IsNullOrEmpty(email))
       {
         email = email.ToLower().Trim();

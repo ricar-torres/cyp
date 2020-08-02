@@ -21,6 +21,8 @@
   "CLOSE_BTN": "CLOSE",
   "GENERIC_ERROR": "An error has occurred please try again later.",
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
+  "REQUIRED": "This Field is required",
+  "VALIDEMAIL": "Please provide a valid eail address",
   "LOGIN-FORM": {
     "USER": "User",
     "PASSWORD": "Password",
@@ -79,7 +81,9 @@
     "BENEFITS": "Benefits",
     "DISCLAIMER": "Disclaimer",
     "CHAPTER": "Chapter",
-    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bona Fide?"
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bona Fide?",
+    "TAKENNAME": "this Name is already taken",
+    "TAKENEMAIL": "This Email is Already taken"
   },
   "CHAPTER": {
     "TITLE": "Chapers",
@@ -94,7 +98,9 @@
     "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this chapter?",
     "QUOTA": "Quota",
-    "ACTIONS": "Actions"
+    "ACTIONS": "Actions",
+    "TAKENNAME": "This Chapter name already exist.",
+    "REQUIRED": "Field Name is required"
   },
   "USER": {
     "TITLE": "User",

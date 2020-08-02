@@ -16,7 +16,11 @@
             <br>
             <mat-form-field class="full-width">
               <mat-label>{{ 'BONAFIDE.NAME' | translate }}</mat-label>
-              <input matInput formControlName="Name" #inputName />
+              <input matInput formControlName="Name" />
+              <mat-hint *ngIf="reactiveForm.get('Name').status != 'VALID' && reactiveForm.get('Name').touched"
+                align="start">
+                {{reactiveForm.get('Name')?.errors?.nameTaken? ('BONAFIDE.TAKENNAME' | translate) : ('REQUIRED' | translate)}}
+              </mat-hint>
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>{{ 'BONAFIDE.CODE' | translate }}</mat-label>
@@ -32,7 +36,15 @@
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>{{ 'BONAFIDE.EMAIL' | translate }}</mat-label>
-              <input matInput formControlName="Email" #inputEmail />
+              <input matInput formControlName="Email" />
+              <mat-hint *ngIf="reactiveForm.get('Email')?.errors?.emailTaken && reactiveForm.get('Email').touched"
+                align="start">
+                {{'BONAFIDE.TAKENEMAIL' | translate}}
+              </mat-hint>
+              <mat-hint *ngIf="reactiveForm.get('Email')?.errors?.email && reactiveForm.get('Email').touched"
+                align="start">
+                {{'VALIDEMAIL' | translate}}
+              </mat-hint>
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>{{ 'BONAFIDE.BENEFITS' | translate }}</mat-label>
@@ -50,8 +62,7 @@
       </mat-card-content>
       <mat-card-actions>
         <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
-        <button mat-raised-button color="primary" type="submit"
-          [disabled]="!reactiveForm.valid || EmailExists || NameExists">
+        <button mat-raised-button color="primary" type="submit" [disabled]="!reactiveForm.valid">
           <mat-icon>save</mat-icon>
           {{ id ? ('BONAFIDE.SAVE' | translate) : ('BONAFIDE.CREATE' | translate) }}
         </button>
