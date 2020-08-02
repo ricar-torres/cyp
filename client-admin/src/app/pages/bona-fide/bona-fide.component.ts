@@ -35,26 +35,18 @@ export class BonaFideComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
 
     if (this.id) {
-      this.reactiveForm = this.fb.group({
-        Id: [this.id],
-        Name: ['', [Validators.required]],
-        Code: [''],
-        Siglas: [''],
-        Phone: [''],
-        Email: ['', [Validators.email]],
-        Benefits: [''],
-        Disclaimer: [''],
-      });
       var editBonafide: any = await this.bonafideService.bonafide(this.id);
       this.bonafide = editBonafide.name;
-      this.reactiveForm.get('Id').setValue(editBonafide.id);
-      this.reactiveForm.get('Name').setValue(editBonafide.name);
-      this.reactiveForm.get('Code').setValue(editBonafide.code);
-      this.reactiveForm.get('Siglas').setValue(editBonafide.siglas);
-      this.reactiveForm.get('Phone').setValue(editBonafide.phone);
-      this.reactiveForm.get('Email').setValue(editBonafide.email);
-      this.reactiveForm.get('Benefits').setValue(editBonafide.benefits);
-      this.reactiveForm.get('Disclaimer').setValue(editBonafide.disclaimer);
+      this.reactiveForm = this.fb.group({
+        Id: [editBonafide.id],
+        Name: [editBonafide.name, [Validators.required]],
+        Code: [editBonafide.code],
+        Siglas: [editBonafide.siglas],
+        Phone: [editBonafide.phone],
+        Email: [editBonafide.email, [Validators.email]],
+        Benefits: [editBonafide.benefits],
+        Disclaimer: [editBonafide.disclaimer],
+      });
     } else {
       this.reactiveForm = this.fb.group({
         Name: ['', [Validators.required], this.checkName.bind(this)],

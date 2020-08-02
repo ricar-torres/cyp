@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgencyService } from '@app/shared/agency.service';
 import { AppService } from '@app/shared/app.service';
@@ -18,15 +23,11 @@ export class AgencyComponent implements OnInit {
 
   agency: string;
 
-  Exists: Boolean = true;
-
-  @ViewChild('inputName', { static: true }) inputName: ElementRef;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private agencyApi: AgencyService,
+    private agencyService: AgencyService,
     private app: AppService
   ) {}
 
@@ -34,10 +35,12 @@ export class AgencyComponent implements OnInit {
     this.loading = true;
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
+      var editAgency: any = await this.agencyService.agency(this.id);
+      this.agency = editAgency.name;
       this.reactiveForm = this.fb.group({
-        id: [this.id],
-        name: [
-          '',
+        Id: [editAgency.id],
+        Name: [
+          editAgency.name,
           [
             Validators.minLength(2),
             Validators.required,
@@ -45,22 +48,18 @@ export class AgencyComponent implements OnInit {
           ],
         ],
       });
-      var editAgency: any = await this.agencyApi.agency(this.id);
-      this.agency = editAgency.name;
-      this.reactiveForm.get('name').setValue(editAgency.name);
-      this.reactiveForm.get('id').setValue(editAgency.id);
     } else {
       this.reactiveForm = this.fb.group({
-        name: [
+        Name: [
           '',
           [
             Validators.minLength(2),
             Validators.required,
             Validators.maxLength(255),
           ],
+          this.checkName.bind(this),
         ],
       });
-      this.subscribeEvents();
     }
     this.loading = false;
   }
@@ -73,10 +72,10 @@ export class AgencyComponent implements OnInit {
     try {
       this.loading = true;
       if (this.id) {
-        await this.agencyApi.update(this.reactiveForm.value);
+        await this.agencyService.update(this.reactiveForm.value);
         this.onBack();
       } else {
-        await this.agencyApi.create(this.reactiveForm.value);
+        await this.agencyService.create(this.reactiveForm.value);
         this.onBack();
       }
     } catch (error) {
@@ -90,29 +89,12 @@ export class AgencyComponent implements OnInit {
     }
   }
 
-  subscribeEvents() {
-    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(async () => {
-          await !this.checkName(this.inputName.nativeElement.value);
-        })
-      )
-      .subscribe();
-  }
-
-  async checkName(name: string) {
-    try {
-      if (name) {
-        const res: any = await this.agencyApi.checkName({
-          name: name,
-        });
-        console.log(res);
-        this.Exists = res;
-      }
-    } catch (error) {
-      this.Exists = false;
+  async checkName(name: FormControl) {
+    if (name.value) {
+      const res: any = await this.agencyService.checkName({
+        name: name.value,
+      });
+      if (res) return { nameTaken: true };
     }
   }
 }
