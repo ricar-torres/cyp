@@ -44,7 +44,7 @@ export class ChapterComponent implements OnInit {
     if (this.chapterid) {
       this.reactiveForm = this.fb.group({
         Id: [this.chapterid],
-        Name: ['', [Validators.required]],
+        Name: ['', [Validators.required, Validators.maxLength(255)]],
         Quota: [''],
         BonaFideId: [this.bonafideid],
       });
@@ -55,7 +55,11 @@ export class ChapterComponent implements OnInit {
       this.reactiveForm.get('Id').setValue(editChapter.id);
     } else {
       this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.required], this.uniqueName.bind(this)],
+        Name: [
+          '',
+          [Validators.required, Validators.maxLength(255)],
+          this.uniqueName.bind(this),
+        ],
         Quota: [''],
         BonaFideId: [this.bonafideid],
       });

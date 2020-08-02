@@ -99,6 +99,7 @@ import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -186,6 +187,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlexLayoutModule,
     BrowserModule,
     HttpClientModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     {

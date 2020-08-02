@@ -40,22 +40,29 @@ export class BonaFideComponent implements OnInit {
       this.reactiveForm = this.fb.group({
         Id: [editBonafide.id],
         Name: [editBonafide.name, [Validators.required]],
-        Code: [editBonafide.code],
-        Siglas: [editBonafide.siglas],
-        Phone: [editBonafide.phone],
-        Email: [editBonafide.email, [Validators.email]],
-        Benefits: [editBonafide.benefits],
-        Disclaimer: [editBonafide.disclaimer],
+        Code: [editBonafide.code, [Validators.maxLength(255)]],
+        Siglas: [editBonafide.siglas, [Validators.maxLength(255)]],
+        Phone: [editBonafide.phone, [Validators.maxLength(255)]],
+        Email: [
+          editBonafide.email,
+          [Validators.email, Validators.maxLength(255)],
+        ],
+        Benefits: [editBonafide.benefits, [Validators.maxLength(255)]],
+        Disclaimer: [editBonafide.disclaimer, [Validators.maxLength(255)]],
       });
     } else {
       this.reactiveForm = this.fb.group({
         Name: ['', [Validators.required], this.checkName.bind(this)],
-        Code: [''],
-        Siglas: [''],
-        Phone: [''],
-        Email: ['', [Validators.email], this.checkEmail.bind(this)],
-        Benefits: [''],
-        Disclaimer: [''],
+        Code: ['', [Validators.maxLength(255)]],
+        Siglas: ['', [Validators.maxLength(255)]],
+        Phone: ['', [Validators.maxLength(255)]],
+        Email: [
+          '',
+          [Validators.email, Validators.maxLength(255)],
+          this.checkEmail.bind(this),
+        ],
+        Benefits: ['', [Validators.maxLength(255)]],
+        Disclaimer: ['', [Validators.maxLength(255)]],
       });
     }
     this.loading = false;
