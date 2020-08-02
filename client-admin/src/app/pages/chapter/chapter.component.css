@@ -2,6 +2,6 @@
   width: 100%;
 }
 
-mat-hint {
+.error {
   color: red;
 }

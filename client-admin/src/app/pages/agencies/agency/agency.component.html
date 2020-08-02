@@ -15,8 +15,8 @@
           <mat-form-field class="full-width">
             <mat-label>{{ 'AGENCY.NAME' | translate }}</mat-label>
             <input matInput formControlName="Name" />
-            <mat-hint *ngIf="reactiveForm.get('Name').status != 'VALID' && reactiveForm.get('Name').touched"
-              align="start">
+            <mat-hint class="error"
+              *ngIf="reactiveForm.get('Name').status != 'VALID' && reactiveForm.get('Name').touched" align="start">
               {{reactiveForm.get('Name')?.errors?.nameTaken? ('BONAFIDE.TAKENNAME' | translate) : ('REQUIRED' | translate)}}
             </mat-hint>
           </mat-form-field>
