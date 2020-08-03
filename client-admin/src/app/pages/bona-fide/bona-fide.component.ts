@@ -10,6 +10,7 @@ import { AppService } from '@app/shared/app.service';
 import { bonaFideservice } from '@app/shared/bonafide.service';
 import { merge, fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { LanguageService } from '@app/shared/Language.service';
 @Component({
   selector: 'app-bona-fide',
   templateUrl: './bona-fide.component.html',
@@ -27,15 +28,30 @@ export class BonaFideComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private bonafideService: bonaFideservice,
-    private app: AppService
+    private app: AppService,
+    private languageService: LanguageService
   ) {}
 
   async ngOnInit() {
     this.loading = true;
     this.id = this.route.snapshot.paramMap.get('id');
-
     if (this.id) {
-      var editBonafide: any = await this.bonafideService.bonafide(this.id);
+      try {
+        var editBonafide: any = await this.bonafideService.bonafide(this.id);
+      } catch (error) {
+        this.loading = false;
+        if (error.status != 401) {
+          console.error('error', error);
+          this.languageService.translate
+            .get('GENERIC_ERROR')
+            .subscribe((res) => {
+              this.app.showErrorMessage(res);
+            });
+        }
+      } finally {
+        this.loading = false;
+      }
+
       this.bonafide = editBonafide.name;
       this.reactiveForm = this.fb.group({
         Id: [editBonafide.id],
@@ -86,7 +102,9 @@ export class BonaFideComponent implements OnInit {
       this.loading = false;
       if (error.status != 401) {
         console.error('error', error);
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
     } finally {
       this.loading = false;
@@ -94,20 +112,44 @@ export class BonaFideComponent implements OnInit {
   }
 
   async checkName(name: FormControl) {
-    if (name.value) {
-      const res: any = await this.bonafideService.checkName({
-        name: name.value,
-      });
-      if (res) return { nameTaken: true };
+    try {
+      if (name.value) {
+        const res: any = await this.bonafideService.checkName({
+          name: name.value,
+        });
+        if (res) return { nameTaken: true };
+      }
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    } finally {
+      this.loading = false;
     }
   }
 
   async checkEmail(email: FormControl) {
-    if (email.value) {
-      const res: any = await this.bonafideService.checkEmail({
-        name: email.value,
-      });
-      if (res) return { emailTaken: true };
+    try {
+      if (email.value) {
+        const res: any = await this.bonafideService.checkEmail({
+          name: email.value,
+        });
+        if (res) return { emailTaken: true };
+      }
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    } finally {
+      this.loading = false;
     }
   }
 }

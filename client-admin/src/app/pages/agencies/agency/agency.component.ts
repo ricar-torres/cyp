@@ -10,6 +10,7 @@ import { AgencyService } from '@app/shared/agency.service';
 import { AppService } from '@app/shared/app.service';
 import { merge, fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { LanguageService } from '@app/shared/Language.service';
 
 @Component({
   selector: 'app-agency',
@@ -28,7 +29,8 @@ export class AgencyComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private agencyService: AgencyService,
-    private app: AppService
+    private app: AppService,
+    private languageService: LanguageService
   ) {}
 
   async ngOnInit() {
@@ -82,7 +84,9 @@ export class AgencyComponent implements OnInit {
       this.loading = false;
       if (error.status != 401) {
         console.error('error', error);
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
     } finally {
       this.loading = false;

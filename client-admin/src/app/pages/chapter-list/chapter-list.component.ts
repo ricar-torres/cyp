@@ -81,7 +81,9 @@ export class ChapterListComponent implements OnInit {
       },
       (error) => {
         this.loading = false;
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
     );
   }
@@ -117,17 +119,25 @@ export class ChapterListComponent implements OnInit {
       maxWidth: '400px',
       data: dialogData,
     });
-
-    dialogRef.afterClosed().subscribe(async (dialogResult) => {
-      if (dialogResult) {
-        console.log(id);
-        await this.chapterService.delete(id);
-        this.LoadChapters();
+    try {
+      dialogRef.afterClosed().subscribe(async (dialogResult) => {
+        if (dialogResult) {
+          console.log(id);
+          await this.chapterService.delete(id);
+          this.LoadChapters();
+        }
+      });
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
-    });
-  }
-  onSubmit(task: any) {
-    throw new Error('Method not implemented.');
+    } finally {
+      this.loading = false;
+    }
   }
 
   editChapter(chapterId: number) {

@@ -54,7 +54,7 @@
               </mat-form-field>
               <mat-form-field class="full-width">
                 <mat-label>{{ 'BONAFIDE.DISCLAIMER' | translate }}</mat-label>
-                <input matInput formControlName="Disclaimer" />
+                <textarea class="area-height" matInput formControlName="Disclaimer"></textarea>
               </mat-form-field>
             </mat-tab>
             <mat-tab [disabled]="this.id == undefined" label="{{ 'BONAFIDE.CHAPTER' | translate }}">

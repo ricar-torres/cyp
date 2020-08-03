@@ -71,7 +71,12 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.loading = false;
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      },
+      () => {
+        this.loading = false;
       }
     );
   }
@@ -119,13 +124,24 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
       maxWidth: '400px',
       data: dialogData,
     });
-
-    dialogRef.afterClosed().subscribe(async (dialogResult) => {
-      if (dialogResult) {
-        console.log(id);
-        await this.agencyApi.delete(id);
-        this.LoadAgencies();
+    try {
+      dialogRef.afterClosed().subscribe(async (dialogResult) => {
+        if (dialogResult) {
+          console.log(id);
+          await this.agencyApi.delete(id);
+          this.LoadAgencies();
+        }
+      });
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
-    });
+    } finally {
+      this.loading = false;
+    }
   }
 }

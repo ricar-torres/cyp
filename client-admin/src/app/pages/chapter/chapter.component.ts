@@ -10,6 +10,7 @@ import { AppService } from '@app/shared/app.service';
 import { merge, fromEvent } from 'rxjs';
 import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { ChapterServiceService } from '@app/shared/chapter-service.service';
+import { LanguageService } from '@app/shared/Language.service';
 
 @Component({
   selector: 'app-chapter',
@@ -34,7 +35,8 @@ export class ChapterComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private chapterService: ChapterServiceService,
-    private app: AppService
+    private app: AppService,
+    private languageService: LanguageService
   ) {}
 
   async ngOnInit() {
@@ -48,7 +50,23 @@ export class ChapterComponent implements OnInit {
         Quota: [''],
         BonaFideId: [this.bonafideid],
       });
-      var editChapter: any = await this.chapterService.chapter(this.chapterid);
+      try {
+        var editChapter: any = await this.chapterService.chapter(
+          this.chapterid
+        );
+      } catch (error) {
+        this.loading = false;
+        if (error.status != 401) {
+          console.error('error', error);
+          this.languageService.translate
+            .get('GENERIC_ERROR')
+            .subscribe((res) => {
+              this.app.showErrorMessage(res);
+            });
+        }
+      } finally {
+        this.loading = false;
+      }
       this.chapter = editChapter.name;
       this.reactiveForm.get('Name').setValue(editChapter.name);
       this.reactiveForm.get('Quota').setValue(editChapter.quota);
@@ -85,7 +103,9 @@ export class ChapterComponent implements OnInit {
       this.loading = false;
       if (error.status != 401) {
         console.error('error', error);
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
     } finally {
       this.loading = false;
@@ -93,13 +113,25 @@ export class ChapterComponent implements OnInit {
   }
 
   async uniqueName(ctrl: FormControl) {
-    if (ctrl.value) {
-      const res: any = await this.chapterService.checkName({
-        name: ctrl.value,
-      });
-      if (res) {
-        return { nameTaken: true };
+    try {
+      if (ctrl.value) {
+        const res: any = await this.chapterService.checkName({
+          name: ctrl.value,
+        });
+        if (res) {
+          return { nameTaken: true };
+        }
       }
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    } finally {
+      this.loading = false;
     }
   }
 }
