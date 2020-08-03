@@ -84,6 +84,14 @@ export class SideNavComponent implements OnInit {
               route: '/home/communication-method-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.BONAFIDES')
+                .toPromise(),
+              iconName: 'group_work',
+              route: '/home/bonafides',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
           ],
         },
       ];

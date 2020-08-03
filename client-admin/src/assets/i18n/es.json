@@ -140,7 +140,8 @@
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
-    "COMMUNICATION_METHODS": "Métodos de Comunicación"
+    "COMMUNICATION_METHODS": "Métodos de Comunicación",
+    "BONAFIDES": "Asociaciones Bonafides"
   },
 
   "PAGINATOR": {
@@ -166,6 +167,7 @@
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar ésta Campaña?"
   },
   "CAMPAIGN": {
+    "PAGE_TITLE": "Campaña",
     "NAME": "Nombre",
     "ORIGIN": "Origen",
     "UPDATE": "Actualizar",
@@ -183,6 +185,7 @@
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Método de Comunicación?"
   },
   "COMMUNICATION_METHOD": {
+    "PAGE_TITLE": "Método de Comunicación",
     "NAME": "Nombre",
     "SAVE": "Guardar",
     "BACK": "Atras",

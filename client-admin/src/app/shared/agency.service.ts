@@ -6,6 +6,12 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class AgencyService {
+  checkName(obj: { name: string }): any {
+    return this.http
+      .get(`${environment.baseURL}/agencies/CheckName/${obj.name}`)
+      .toPromise();
+  }
+
   constructor(private http: HttpClient) {}
 
   getAll() {
