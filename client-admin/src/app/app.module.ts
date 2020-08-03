@@ -92,13 +92,17 @@ import { SpeedDialFabComponent } from './components/speed-dial-fab/speed-dial-fa
 import { ChangePasswordComponent } from './pages/change-password/change-password.component';
 import { PaginatorI18n } from './shared/PaginatorI18n';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
+import { CampaignListComponent } from './pages/campaign-list/campaign-list.component';
+import { CampaignComponent } from './pages/campaign/campaign.component';
 import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
+import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
+import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
@@ -129,8 +133,13 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SpeedDialFabComponent,
     ChangePasswordComponent,
     AccessDeniedComponent,
+    CampaignListComponent,
+    CampaignComponent,
     AgencyListComponent,
     AgencyComponent,
+    CommunicationMethodsListComponent,
+    CommunicationMethodComponent,
+    ConfirmDialogComponent,
     BonaFideListComponent,
     BonaFideComponent,
     ChapterListComponent,
