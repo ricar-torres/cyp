@@ -83,6 +83,7 @@ namespace WebApi
       services.AddScoped<ICampaignsService, CampaignsService>();
       services.AddScoped<IBonaFidesServices, BonaFidesServices>();
       services.AddScoped<IChapterServices, ChapterServices>();
+      services.AddScoped<IQualifyingEventsSerivie, QualifyingEventsSerivie>();
 
     }
 
