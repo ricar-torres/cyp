@@ -166,6 +166,7 @@
     "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Campaign?"
   },
   "CAMPAIGN": {
+    "PAGE_TITLE": "Campaign",
     "NAME": "Name",
     "ORIGIN": "Origin",
     "UPDATE": "Update",
@@ -183,6 +184,7 @@
     "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Communication Method?"
   },
   "COMMUNICATION_METHOD": {
+    "PAGE_TITLE": "Communication Method",
     "NAME": "Name",
     "SAVE": "Save",
     "BACK": "Back",
