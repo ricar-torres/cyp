@@ -24,6 +24,7 @@
   "PASSWORD_POLICY": "La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
   "REQUIRED": "Este Campo es requerido",
   "VALIDEMAIL": "Porfavor provea una dirección de email valida",
+  "SEARCH": "Buscar",
   "LOGIN-FORM": {
     "USER": "Usuario",
     "PASSWORD": "Contraseña",
@@ -50,7 +51,7 @@
   },
   "AGENCY": {
     "TITLE": "Agencias",
-    "BTN_ADD": "Nueva Agencia",
+    "BTN_ADD": "Crear Agencia",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "AGENCYEDIT": "Agencia",
@@ -68,7 +69,7 @@
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "QUALIFYINGEVENTEDIT": "Evento Calificativo",
-    "QUALIFYINGEVENTCREATE": "Crear Evento Calificativo",
+    "QUALIFYINGEVENTCREATE": "Evento Calificativo",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Guardar",
@@ -103,10 +104,10 @@
   },
   "CHAPTER": {
     "TITLE": "Capítulos",
-    "BTN_ADD": "Nuevo Capítulo",
+    "BTN_ADD": "Crear Capítulo",
     "NAME": "Nombre",
     "CHAPTEREDIT": "Capítulo",
-    "CHAPTERCREATE": "Crear Capítulo",
+    "CHAPTERCREATE": "Capítulo",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Grabar",

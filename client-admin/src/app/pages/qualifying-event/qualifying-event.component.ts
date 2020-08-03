@@ -43,11 +43,7 @@ export class QualifyingEventComponent implements OnInit {
         Id: [editQualifyingEvent.id],
         Name: [
           editQualifyingEvent.name,
-          [
-            Validators.minLength(2),
-            Validators.required,
-            Validators.maxLength(255),
-          ],
+          [Validators.required, Validators.maxLength(255)],
         ],
         Requirements: [editQualifyingEvent.requirements, [Validators.required]],
       });
@@ -55,11 +51,7 @@ export class QualifyingEventComponent implements OnInit {
       this.reactiveForm = this.fb.group({
         Name: [
           '',
-          [
-            Validators.minLength(2),
-            Validators.required,
-            Validators.maxLength(255),
-          ],
+          [Validators.required, Validators.maxLength(255)],
           this.checkName.bind(this),
         ],
         Requirements: ['', [Validators.required]],
