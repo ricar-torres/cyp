@@ -22,8 +22,6 @@ export class AgencyComponent implements OnInit {
   id: string;
   loading = false;
 
-  agency: string;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -38,7 +36,6 @@ export class AgencyComponent implements OnInit {
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
       var editAgency: any = await this.agencyService.agency(this.id);
-      this.agency = editAgency.name;
       this.reactiveForm = this.fb.group({
         Id: [editAgency.id],
         Name: [

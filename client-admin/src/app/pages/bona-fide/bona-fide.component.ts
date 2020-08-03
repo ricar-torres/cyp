@@ -20,9 +20,6 @@ export class BonaFideComponent implements OnInit {
   reactiveForm: FormGroup;
   id: string;
   loading = false;
-
-  bonafide: string;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -51,8 +48,6 @@ export class BonaFideComponent implements OnInit {
       } finally {
         this.loading = false;
       }
-
-      this.bonafide = editBonafide.name;
       this.reactiveForm = this.fb.group({
         Id: [editBonafide.id],
         Name: [editBonafide.name, [Validators.required]],
