@@ -1,3 +1,4 @@
+import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
 import { CampaignListComponent } from './pages/campaign-list/campaign-list.component';
 import { NgModule } from '@angular/core';
@@ -128,6 +129,22 @@ const routes: Routes = [
       {
         path: 'communication-method/:id',
         component: CommunicationMethodComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'retirement-list',
+        component: RetirementListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'retirement/:id',
+        component: RetirementListComponent,
         canActivate: [AuthGuardService],
         data: {
           //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
