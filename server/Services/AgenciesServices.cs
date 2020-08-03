@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using WebApi.Entities;
@@ -14,6 +15,7 @@ namespace WebApi.Services
     Agencies Create(Agencies payload);
     Agencies Update(Agencies payload);
     void Delete(int id);
+    Task<Boolean> ChekcName(string criteria);
   }
 
   public class AgenciesServices : IAgenciesServices
@@ -114,6 +116,21 @@ namespace WebApi.Services
       else
         throw new AppException("Agency not found");
 
+    }
+
+
+    public async Task<Boolean> ChekcName(string criteria)
+    {
+      if (!String.IsNullOrEmpty(criteria))
+      {
+        criteria = criteria.ToLower().Trim();
+        var payload = await _context.Agencies.FirstOrDefaultAsync(ag => ag.Name.ToLower().Trim() == criteria);
+        if (payload != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
 
   }

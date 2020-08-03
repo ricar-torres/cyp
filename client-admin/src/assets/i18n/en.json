@@ -140,7 +140,8 @@
     "CAMPAIGNS": "Campaigns",
     "HOME": "Home",
     "SETTINGS": "Settings",
-    "COMMUNICATION_METHODS": "Commuication Methods"
+    "COMMUNICATION_METHODS": "Commuication Methods",
+    "BONAFIDES": "Bonafides Associations"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
