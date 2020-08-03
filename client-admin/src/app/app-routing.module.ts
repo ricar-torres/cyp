@@ -15,6 +15,8 @@ import { ChangePasswordComponent } from './pages/change-password/change-password
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
+import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
+import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
@@ -101,7 +103,7 @@ const routes: Routes = [
         component: AgencyListComponent,
         canActivate: [AuthGuardService],
         data: {
-          //expectedRoles: MenuRoles.AGENCIES,
+          //TODO: expectedRoles: MenuRoles.AGENCIES,
         },
       },
       {
@@ -109,7 +111,7 @@ const routes: Routes = [
         component: AgencyComponent,
         canActivate: [AuthGuardService],
         data: {
-          //expectedRoles: MenuRoles.AGENCIES_CREATE,
+          //TODO: expectedRoles: MenuRoles.AGENCIES_CREATE,
         },
       },
       {
@@ -117,7 +119,23 @@ const routes: Routes = [
         component: AgencyComponent,
         canActivate: [AuthGuardService],
         data: {
-          //expectedRoles: MenuRoles.AGENCIES_UPDATE,
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'communication-method-list',
+        component: CommunicationMethodsListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'communication-method/:id',
+        component: CommunicationMethodComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
         },
       },
       {
@@ -194,12 +212,6 @@ const routes: Routes = [
       },
     ],
   },
-  // {
-  //   path: 'campaignlist/',
-  //   component: CampaignListComponent,
-  //   canActivate: [AuthGuardService],
-  //   data: {},
-  // },
 ];
 
 @NgModule({

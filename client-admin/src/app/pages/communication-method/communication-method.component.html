@@ -3,7 +3,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title
-          >{{ 'CAMPAIGN.PAGE_TITLE' | translate }}
+          >{{ 'COMMUNICATION_METHOD.PAGE_TITLE' | translate }}
           <caption *ngIf="id != '0'">
             <small> #{{ id }} </small>
           </caption>
@@ -12,26 +12,16 @@
 
       <mat-card-content fxLayout="column" fxLayoutGap="5px">
         <mat-form-field class="full-width">
-          <mat-label>{{ 'CAMPAIGN.NAME' | translate }}</mat-label>
-          <input formControlName="name" matInput #inputCampaignName />
+          <mat-label>{{ 'COMMUNICATION_METHOD.NAME' | translate }}</mat-label>
+          <input formControlName="name" matInput #inputName />
           <mat-icon
             *ngIf="reactiveForm.controls.name.valid && !campaignExists"
             matSuffix
             >done</mat-icon
           >
           <mat-hint #existenceHint class="error" *ngIf="campaignExists">
-            {{ 'CAMPAIGN.EXISTS' | translate }}</mat-hint
+            {{ 'COMMUNICATION_METHOD.EXISTS' | translate }}</mat-hint
           >
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <mat-label>{{ 'CAMPAIGN.ORIGIN' | translate }}</mat-label>
-          <mat-select formControlName="origin">
-            <!-- <mat-option value="1">Inbound</mat-option>
-            <mat-option value="2">Outbound</mat-option></mat-select -->
-            <mat-option *ngFor="let o of origin" [value]="o">
-              {{ o == 1 ? 'Inbound' : 'Outbound' }}</mat-option
-            >
-          </mat-select>
         </mat-form-field>
       </mat-card-content>
 
@@ -39,7 +29,7 @@
         <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
 
         <button mat-stroked-button type="button" (click)="onBack()">
-          <mat-icon>list</mat-icon>{{ 'CAMPAIGN.BACK' | translate }}
+          <mat-icon>list</mat-icon>{{ 'COMMUNICATION_METHOD.BACK' | translate }}
         </button>
         <button
           type="submit"
@@ -48,7 +38,7 @@
           *ngIf="editAccess"
           [disabled]="!reactiveForm.valid || campaignExists"
         >
-          {{ 'CAMPAIGN.SAVE' | translate }}
+          {{ 'COMMUNICATION_METHOD.SAVE' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>

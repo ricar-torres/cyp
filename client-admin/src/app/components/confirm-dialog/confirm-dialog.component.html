@@ -10,10 +10,20 @@
   <button mat-button (click)="onDismiss()" *ngIf="noButton">
     {{ 'NO_BTN' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="onConfirm()" *ngIf="yesButton">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onConfirm()"
+    *ngIf="yesButton"
+  >
     {{ 'YES_BTN' | translate }}
   </button>
-  <button mat-raised-button color="primary" (click)="onConfirm()" *ngIf="okButton">
+  <button
+    mat-raised-button
+    color="primary"
+    (click)="onConfirm()"
+    *ngIf="okButton"
+  >
     {{ 'OK_BTN' | translate }}
   </button>
 </div>

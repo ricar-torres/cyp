@@ -74,7 +74,15 @@ export class SideNavComponent implements OnInit {
                 .toPromise(),
               iconName: 'online_prediction',
               route: '/home/campaigns',
-              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+              visible: true, //TODO:this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.COMMUNICATION_METHODS')
+                .toPromise(),
+              iconName: 'settings_input_antenna',
+              route: '/home/communication-method-list',
+              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {
               displayName: await this.languageService.translate

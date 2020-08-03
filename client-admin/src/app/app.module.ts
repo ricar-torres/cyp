@@ -96,6 +96,9 @@ import { CampaignListComponent } from './pages/campaign-list/campaign-list.compo
 import { CampaignComponent } from './pages/campaign/campaign.component';
 import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.component';
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
+import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
+import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
@@ -135,6 +138,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CampaignComponent,
     AgencyListComponent,
     AgencyComponent,
+    CommunicationMethodsListComponent,
+    CommunicationMethodComponent,
+    ConfirmDialogComponent,
     BonaFideListComponent,
     BonaFideComponent,
     ChapterListComponent,
