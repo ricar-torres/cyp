@@ -18,6 +18,8 @@ import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
+import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
 
 const routes: Routes = [
   {
@@ -146,6 +148,30 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.CHAPTER_UPDATE,
+        },
+      },
+      {
+        path: 'qualifyingevents',
+        component: QualifyingEventListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.QUALIFYING_EVENT_CREATE,
+        },
+      },
+      {
+        path: 'qualifyingevent',
+        component: QualifyingEventComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.QUALIFYING_EVENT_CREATE,
+        },
+      },
+      {
+        path: 'qualifyingevent/:id',
+        component: QualifyingEventComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.QUALIFYING_EVENT_UPDATE,
         },
       },
     ],

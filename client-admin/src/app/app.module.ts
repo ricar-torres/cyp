@@ -100,6 +100,8 @@ import { ChapterListComponent } from './pages/chapter-list/chapter-list.componen
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
+import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -134,6 +136,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ChapterListComponent,
     ChapterComponent,
     ConfirmDialogComponent,
+    QualifyingEventComponent,
+    QualifyingEventListComponent,
   ],
   imports: [
     BrowserModule,

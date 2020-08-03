@@ -61,6 +61,21 @@
     "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?"
   },
+  "QUALIFYINGEVENT": {
+    "TITLE": "Qualifying Events",
+    "BTN_ADD": "Create Qualifying Event",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "QUALIFYINGEVENTEDIT": "Qualifying Event",
+    "QUALIFYINGEVENTCREATE": "Create Qualifying Event",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Save",
+    "GOBACK": "Return",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Qualifying Event?",
+    "REQUIREMENTS": "Requirements"
+  },
   "BONAFIDE": {
     "TITLE": "Bona Fide Associations",
     "BTN_ADD": "Create Bona Fide",
@@ -145,7 +160,8 @@
     "CAMPAIGNS": "Campaigns",
     "HOME": "Home",
     "SETTINGS": "Settings",
-    "BONAFIDES": "Bonafides Associations"
+    "BONAFIDES": "Bonafides Associations",
+    "QUALIFYIN_EVENTS": "Qualifying Events"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",

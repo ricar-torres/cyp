@@ -62,6 +62,21 @@
     "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Agencia?"
   },
+  "QUALIFYINGEVENT": {
+    "TITLE": "Eventos Calificativos",
+    "BTN_ADD": "Crear Eventos Calificativos",
+    "NAME": "Nombre",
+    "ACTIONS": "Acciones",
+    "QUALIFYINGEVENTEDIT": "Evento Calificativo",
+    "QUALIFYINGEVENTCREATE": "Crear Evento Calificativo",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Guardar",
+    "CREATE": "Guardar",
+    "GOBACK": "Regresar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Evento Clasificativo?",
+    "REQUIREMENTS": "Requisitos"
+  },
   "BONAFIDE": {
     "TITLE": "Asociaciones Bona fides",
     "BTN_ADD": "Crear Bona fides",
@@ -146,7 +161,8 @@
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
-    "BONAFIDES": "Asociaciones Bonafides"
+    "BONAFIDES": "Asociaciones Bonafides",
+    "QUALIFYIN_EVENTS": "Eventos Calificativos"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Elementos por página:",
