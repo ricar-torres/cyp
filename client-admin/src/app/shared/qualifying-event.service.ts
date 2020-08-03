@@ -33,7 +33,7 @@ export class QualifyingEventService {
   update(qualifyingevent: any) {
     return this.http
       .put(
-        `${environment.baseURL}/qualifyingevents/${qualifyingevent.id}`,
+        `${environment.baseURL}/qualifyingevents/${qualifyingevent.Id}`,
         qualifyingevent
       )
       .toPromise();

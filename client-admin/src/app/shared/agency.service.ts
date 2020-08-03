@@ -30,7 +30,7 @@ export class AgencyService {
 
   update(agency: any) {
     return this.http
-      .put(`${environment.baseURL}/agencies/${agency.id}`, agency)
+      .put(`${environment.baseURL}/agencies/${agency.Id}`, agency)
       .toPromise();
   }
 
