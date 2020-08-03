@@ -44,12 +44,6 @@ export class ChapterComponent implements OnInit {
     this.chapterid = this.route.snapshot.paramMap.get('chapterid');
     this.bonafideid = this.route.snapshot.paramMap.get('bonafideid');
     if (this.chapterid) {
-      this.reactiveForm = this.fb.group({
-        Id: [this.chapterid],
-        Name: ['', [Validators.required, Validators.maxLength(255)]],
-        Quota: [''],
-        BonaFideId: [this.bonafideid],
-      });
       try {
         var editChapter: any = await this.chapterService.chapter(
           this.chapterid
@@ -67,10 +61,16 @@ export class ChapterComponent implements OnInit {
       } finally {
         this.loading = false;
       }
+      this.reactiveForm = this.fb.group({
+        Id: [editChapter.id],
+        Name: [
+          editChapter.name,
+          [Validators.required, Validators.maxLength(255)],
+        ],
+        Quota: [editChapter.quota],
+        BonaFideId: [this.bonafideid],
+      });
       this.chapter = editChapter.name;
-      this.reactiveForm.get('Name').setValue(editChapter.name);
-      this.reactiveForm.get('Quota').setValue(editChapter.quota);
-      this.reactiveForm.get('Id').setValue(editChapter.id);
     } else {
       this.reactiveForm = this.fb.group({
         Name: [
