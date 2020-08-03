@@ -12,3 +12,7 @@ table {
 .search-form {
   width: 30%;
 }
+
+tr:nth-child(even) {
+  background-color: rgb(242, 242, 242);
+}

@@ -101,6 +101,11 @@ import { CommunicationMethodComponent } from './pages/communication-method/commu
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
+import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
+import { ChapterComponent } from './pages/chapter/chapter.component';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
+import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -137,6 +142,11 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ConfirmDialogComponent,
     BonaFideListComponent,
     BonaFideComponent,
+    ChapterListComponent,
+    ChapterComponent,
+    ConfirmDialogComponent,
+    QualifyingEventComponent,
+    QualifyingEventListComponent,
   ],
   imports: [
     BrowserModule,
@@ -190,6 +200,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlexLayoutModule,
     BrowserModule,
     HttpClientModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     {
@@ -210,6 +221,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DialogGenericErrorComponent,
     SnackBarConfirmationComponent,
     DialogGenericSuccessComponent,
+    ConfirmDialogComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -40,6 +40,7 @@
     "moment": "^2.24.0",
     "morgan": "^1.9.1",
     "ng-recaptcha": "^5.0.0",
+    "ngx-mask": "^9.1.2",
     "ngx-moment": "^3.5.0",
     "ngx-spinner": "^8.1.0",
     "rxjs": "~6.5.3",

@@ -80,7 +80,7 @@ export class SideNavComponent implements OnInit {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.COMMUNICATION_METHODS')
                 .toPromise(),
-              iconName: 'online_prediction',
+              iconName: 'settings_input_antenna',
               route: '/home/communication-method-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
@@ -90,6 +90,14 @@ export class SideNavComponent implements OnInit {
                 .toPromise(),
               iconName: 'group_work',
               route: '/home/bonafides',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.QUALIFYIN_EVENTS')
+                .toPromise(),
+              iconName: 'check_circle_outline',
+              route: '/home/qualifyingevents',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],

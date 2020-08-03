@@ -1,5 +1,5 @@
 {
-  "APP": "eFileHub",
+  "APP": "Cyprus",
   "TITLE": "Portal Administrativo",
   "SPANISH": "Español",
   "ENGLISH": "Ingles",
@@ -9,6 +9,9 @@
   "SAVE_BTN": "Grabar",
   "SEND_BTN": "Enviar",
   "OK_BTN": "Ok",
+  "YES_BTN": "Si",
+  "COMFIRMATION": "Confirmar",
+  "NO_BTN": "No",
   "ADD_BTN": "Agregar",
   "LOGOUT_BTN": "Salir",
   "APPROVE_BTN": "APROBAR",
@@ -19,9 +22,9 @@
   "CHANGE_PASSWORD_BTN": "Cambiar contraseña",
   "GENERIC_ERROR": "Se ha producido un error, intente nuevamente más tarde.",
   "PASSWORD_POLICY": "La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
-  "YES_BTN": "Sí",
-  "COMFIRMATION": "Confirmación",
-  "NO_BTN": "No",
+  "REQUIRED": "Este Campo es requerido",
+  "VALIDEMAIL": "Porfavor provea una dirección de email valida",
+  "SEARCH": "Buscar",
   "LOGIN-FORM": {
     "USER": "Usuario",
     "PASSWORD": "Contraseña",
@@ -48,28 +51,44 @@
   },
   "AGENCY": {
     "TITLE": "Agencias",
-    "BTN_ADD": "Nueva Agencia",
+    "BTN_ADD": "Crear Agencia",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
-    "AGENCYEDIT": "Editar Agencia",
-    "AGENCYCREATE": "Crear Agencia",
+    "AGENCYEDIT": "Agencia",
+    "AGENCYCREATE": "Agencia",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Grabar",
+    "CREATE": "Grabar",
+    "GOBACK": "Regresar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Agencia?"
+  },
+  "QUALIFYINGEVENT": {
+    "TITLE": "Eventos Calificativos",
+    "BTN_ADD": "Crear Eventos Calificativos",
+    "NAME": "Nombre",
+    "ACTIONS": "Acciones",
+    "QUALIFYINGEVENTEDIT": "Evento Calificativo",
+    "QUALIFYINGEVENTCREATE": "Evento Calificativo",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Guardar",
-    "CREATE": "Crear",
-    "GOBACK": "Regresar"
+    "CREATE": "Guardar",
+    "GOBACK": "Regresar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Evento Clasificativo?",
+    "REQUIREMENTS": "Requisitos"
   },
   "BONAFIDE": {
     "TITLE": "Asociaciones Bona fides",
     "BTN_ADD": "Crear Bona fides",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
-    "BONAFIDEEDIT": "Editar Bona fides",
-    "BONAFIDECREATE": "Crear Bona fides",
+    "BONAFIDEEDIT": "Bona fides",
+    "BONAFIDECREATE": "Bona fides",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Guardar",
-    "CREATE": "Crear",
+    "CREATE": "Guardar",
     "GOBACK": "Regresar",
     "CODE": "Código",
     "SIGLAS": "Siglas",
@@ -79,22 +98,26 @@
     "BENEFITS": "Beneficios",
     "DISCLAIMER": "Relevo de Responsabilidad",
     "CHAPTER": "Capítulo",
-    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?"
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?",
+    "TAKENNAME": "Este Nombre ya existe",
+    "TAKENEMAIL": "Este correo electrónico ya existe"
   },
   "CHAPTER": {
     "TITLE": "Capítulos",
-    "BTN_ADD": "Nuevo Capítulo",
+    "BTN_ADD": "Crear Capítulo",
     "NAME": "Nombre",
-    "CHAPTEREDIT": "Editar Capítulo",
-    "CHAPTERCREATE": "Crear Capítulo",
+    "CHAPTEREDIT": "Capítulo",
+    "CHAPTERCREATE": "Capítulo",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Grabar",
-    "CREATE": "Crear",
+    "CREATE": "Grabar",
     "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
     "QUOTA": "Cuota",
-    "ACTIONS": "Acciones"
+    "ACTIONS": "Acciones",
+    "TAKENNAME": "Un Capítulo ya existe con este nombre.",
+    "REQUIRED": "Campo Nombre es requerido"
   },
 
   "USER": {
@@ -140,8 +163,9 @@
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
-    "COMMUNICATION_METHODS": "Métodos de Comunicación",
-    "BONAFIDES": "Asociaciones Bonafides"
+    "BONAFIDES": "Asociaciones Bonafides",
+    "QUALIFYIN_EVENTS": "Eventos Calificativos",
+    "COMMUNICATION_METHODS": "Métodos de Comunicación"
   },
 
   "PAGINATOR": {
