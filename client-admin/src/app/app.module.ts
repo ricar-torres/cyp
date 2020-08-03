@@ -103,7 +103,6 @@ import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.com
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
-import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
