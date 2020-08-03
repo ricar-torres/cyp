@@ -80,7 +80,7 @@ export class SideNavComponent implements OnInit {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.COMMUNICATION_METHODS')
                 .toPromise(),
-              iconName: 'online_prediction',
+              iconName: 'settings_input_antenna',
               route: '/home/communication-method-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
