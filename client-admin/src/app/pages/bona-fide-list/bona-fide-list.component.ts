@@ -29,11 +29,11 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
   dataSource;
   displayedColumns: string[] = [
     'id',
-    'Name',
-    'Code',
-    'Siglas',
-    'Phone',
-    'Actions',
+    'name',
+    'code',
+    'siglas',
+    'phone',
+    'actions',
   ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
