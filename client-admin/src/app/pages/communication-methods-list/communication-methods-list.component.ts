@@ -1,26 +1,28 @@
-import { element } from 'protractor';
-import { map } from 'rxjs/operators';
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
-import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
+import { CommunicationMethodsAPIService } from './../../shared/communication-methods.api.service';
+import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  PageEvent,
+  MatSort,
+  MatPaginator,
+  MatTableDataSource,
+  MatDialog,
+} from '@angular/material';
 import { LanguageService } from '@app/shared/Language.service';
 import { Router } from '@angular/router';
-import { ApiService } from '@app/shared/api.service';
-import { AppService } from '@app/shared/app.service';
 import { CampaignApiSerivce } from '@app/shared/campaign.api.service';
+import { AppService } from '@app/shared/app.service';
 import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
-import { MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-campaign-list',
-  templateUrl: './campaign-list.component.html',
-  styleUrls: ['./campaign-list.component.css'],
+  selector: 'app-communication-methods-list',
+  templateUrl: './communication-methods-list.component.html',
+  styleUrls: ['./communication-methods-list.component.css'],
 })
-export class CampaignListComponent implements OnInit, AfterViewInit {
+export class CommunicationMethodsListComponent
+  implements OnInit, AfterViewInit {
   loading = false;
 
   dataSource: any;
@@ -32,7 +34,6 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = [
     'id',
     'name',
-    'origin',
     // 'updDt',
     'action',
   ];
@@ -45,7 +46,7 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private campaignApi: CampaignApiSerivce,
+    private apiCommunicationMethod: CommunicationMethodsAPIService,
     private app: AppService,
     private dialog: MatDialog
   ) {}
@@ -63,20 +64,18 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCampaigns();
+      await this.loadCommunicationMethods();
     } catch (error) {
       this.loading = false;
     } finally {
     }
   }
 
-  async loadCampaigns() {
+  async loadCommunicationMethods() {
     try {
       this.loading = true;
-
-      // var data: string = [];
       this.dataSource = new MatTableDataSource();
-      await this.campaignApi.getAll().subscribe(
+      await this.apiCommunicationMethod.getAll().subscribe(
         (data: any) => {
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
@@ -93,14 +92,16 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
           }
         }
       );
-    } catch (error) {}
+    } catch (error) {
+      this.loading = false;
+    }
   }
   goToNew() {
-    this.router.navigate(['/home/campaigns', 0]);
+    this.router.navigate(['/home/communication-method', 0]);
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/campaigns', id]);
+    this.router.navigate(['/home/communication-method', id]);
   }
 
   doFilter(value: any) {
@@ -108,7 +109,7 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
   }
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('CAMPAIGN_LIST.ARE_YOU_SURE_DELETE')
+      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -132,14 +133,14 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
       if (dialogResult) {
         console.log(id);
         await this.delete(id);
-        await this.loadCampaigns();
+        await this.loadCommunicationMethods();
       }
     });
   }
 
   async delete(id: string) {
     try {
-      await this.campaignApi.delete(id);
+      await this.apiCommunicationMethod.delete(id);
     } catch (error) {}
   }
 

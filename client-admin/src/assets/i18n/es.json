@@ -19,6 +19,9 @@
   "CHANGE_PASSWORD_BTN": "Cambiar contraseña",
   "GENERIC_ERROR": "Se ha producido un error, intente nuevamente más tarde.",
   "PASSWORD_POLICY": "La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
+  "YES_BTN": "Sí",
+  "COMFIRMATION": "Confirmación",
+  "NO_BTN": "No",
   "LOGIN-FORM": {
     "USER": "Usuario",
     "PASSWORD": "Contraseña",
@@ -74,8 +77,26 @@
     "PHONE": "Teléfono",
     "EMAIL": "Correo Electrónico",
     "BENEFITS": "Beneficios",
-    "DISCLAIMER": "Relevo de Responsabilidad"
+    "DISCLAIMER": "Relevo de Responsabilidad",
+    "CHAPTER": "Capítulo",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?"
   },
+  "CHAPTER": {
+    "TITLE": "Capítulos",
+    "BTN_ADD": "Nuevo Capítulo",
+    "NAME": "Nombre",
+    "CHAPTEREDIT": "Editar Capítulo",
+    "CHAPTERCREATE": "Crear Capítulo",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Grabar",
+    "CREATE": "Crear",
+    "GOBACK": "Regresar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
+    "QUOTA": "Cuota",
+    "ACTIONS": "Acciones"
+  },
+
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",
@@ -119,8 +140,10 @@
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
+    "COMMUNICATION_METHODS": "Métodos de Comunicación",
     "BONAFIDES": "Asociaciones Bonafides"
   },
+
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Elementos por página:",
     "NEXT_PAGE_LABEL": "Próximo ",
@@ -140,14 +163,32 @@
     "GENERAL_FILTER": "Filter",
     "ADD_BTN": "Agregar Campaña",
     "EDIT_BTN": "Editar",
-    "DEL_BTN": "Borrar"
+    "DEL_BTN": "Borrar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar ésta Campaña?"
   },
   "CAMPAIGN": {
+    "PAGE_TITLE": "Campaña",
     "NAME": "Nombre",
     "ORIGIN": "Origen",
     "UPDATE": "Actualizar",
     "SAVE": "Guardar",
     "BACK": "Atras",
     "EXISTS": "Existe una campaña con este nombre"
+  },
+  "COMMUNICATION_METHOD_LIST": {
+    "ADD_BTN": "Agregar",
+    "GENERAL_FILTER": "Filtro",
+    "NAME": "Nombre",
+    "EDIT_BTN": "Editar",
+    "DEL_BTN": "Borrar",
+    "PAGE_TITLE": "Métodos de Comunicación",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Método de Comunicación?"
+  },
+  "COMMUNICATION_METHOD": {
+    "PAGE_TITLE": "Método de Comunicación",
+    "NAME": "Nombre",
+    "SAVE": "Guardar",
+    "BACK": "Atras",
+    "EXISTS": "Existe un método de comunicación con este nombre"
   }
 }

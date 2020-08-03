@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using server.Services;
 using WebApi.Helpers;
 using WebApi.Services;
 
@@ -70,6 +71,7 @@ namespace WebApi {
 			services.AddScoped<AuthorizationService>();
 			services.AddScoped<IAgenciesServices, AgenciesServices>();
 			services.AddScoped<ICampaignsService, CampaignsService>();
+			services.AddScoped<ICommunicationMethodService, CommunicationMethodService>();
 
 		}
 
