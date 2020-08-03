@@ -5,19 +5,28 @@
         <mat-card-header>
           <mat-card-title>{{
             id
-              ? ('AGENCY.AGENCYEDIT' | translate) + ': ' + agency
-              : ('AGENCY.AGENCYCREATE' | translate)
+              ? ('QUALIFYINGEVENT.QUALIFYINGEVENTEDIT' | translate) + ': ' + qualifyingevent
+              : ('QUALIFYINGEVENT.QUALIFYINGEVENTCREATE' | translate)
           }}
           </mat-card-title>
           <mat-card-subtitle> {{ id? '# '+id:'' }}</mat-card-subtitle>
         </mat-card-header>
         <mat-card-content>
           <mat-form-field class="full-width">
-            <mat-label>{{ 'AGENCY.NAME' | translate }}</mat-label>
+            <mat-label>{{ 'QUALIFYINGEVENT.NAME' | translate }}</mat-label>
             <input matInput formControlName="Name" />
             <mat-hint class="error"
               *ngIf="reactiveForm.get('Name').status != 'VALID' && reactiveForm.get('Name').touched" align="start">
               {{reactiveForm.get('Name')?.errors?.nameTaken? ('BONAFIDE.TAKENNAME' | translate) : ('REQUIRED' | translate)}}
+            </mat-hint>
+          </mat-form-field>
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'QUALIFYINGEVENT.REQUIREMENTS' | translate }}</mat-label>
+            <input matInput formControlName="Requirements" />
+            <mat-hint class="error"
+              *ngIf="reactiveForm.get('Requirements').status != 'VALID' && reactiveForm.get('Name').touched"
+              align="start">
+              {{ 'REQUIRED' | translate}}
             </mat-hint>
           </mat-form-field>
         </mat-card-content>
@@ -25,10 +34,10 @@
           <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
           <button mat-raised-button color="primary" type="submit" [disabled]="!reactiveForm.valid">
             <mat-icon>save</mat-icon>
-            {{ id ? ('AGENCY.SAVE' | translate) : ('AGENCY.CREATE' | translate) }}
+            {{ id ? ('QUALIFYINGEVENT.SAVE' | translate) : ('QUALIFYINGEVENT.CREATE' | translate) }}
           </button>
           <button mat-stroked-button type="button" (click)="onBack()">
-            <mat-icon>list</mat-icon>{{ 'AGENCY.GOBACK' | translate }}
+            <mat-icon>list</mat-icon>{{ 'QUALIFYINGEVENT.GOBACK' | translate }}
           </button>
         </mat-card-actions>
       </mat-card>

@@ -84,6 +84,14 @@ export class SideNavComponent implements OnInit {
               route: '/home/bonafides',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.QUALIFYIN_EVENTS')
+                .toPromise(),
+              iconName: 'check_circle_outline',
+              route: '/home/qualifyingevents',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
           ],
         },
       ];

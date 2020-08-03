@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -6,29 +6,27 @@ import {
   FormControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AgencyService } from '@app/shared/agency.service';
 import { AppService } from '@app/shared/app.service';
-import { merge, fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { LanguageService } from '@app/shared/Language.service';
+import { QualifyingEventService } from '@app/shared/qualifying-event.service';
 
 @Component({
-  selector: 'app-agency',
-  templateUrl: './agency.component.html',
-  styleUrls: ['./agency.component.css'],
+  selector: 'app-qualifying-event',
+  templateUrl: './qualifying-event.component.html',
+  styleUrls: ['./qualifying-event.component.css'],
 })
-export class AgencyComponent implements OnInit {
+export class QualifyingEventComponent implements OnInit {
   reactiveForm: FormGroup;
   id: string;
   loading = false;
 
-  agency: string;
+  qualifyingEvent: string;
 
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private agencyService: AgencyService,
+    private qualifyingEventService: QualifyingEventService,
     private app: AppService,
     private languageService: LanguageService
   ) {}
@@ -37,47 +35,43 @@ export class AgencyComponent implements OnInit {
     this.loading = true;
     this.id = this.route.snapshot.paramMap.get('id');
     if (this.id) {
-      var editAgency: any = await this.agencyService.agency(this.id);
-      this.agency = editAgency.name;
+      var editQualifyingEvent: any = await this.qualifyingEventService.qualifyingevent(
+        this.id
+      );
+      this.qualifyingEvent = editQualifyingEvent.name;
       this.reactiveForm = this.fb.group({
-        Id: [editAgency.id],
+        Id: [editQualifyingEvent.id],
         Name: [
-          editAgency.name,
-          [
-            Validators.minLength(2),
-            Validators.required,
-            Validators.maxLength(255),
-          ],
+          editQualifyingEvent.name,
+          [Validators.required, Validators.maxLength(255)],
         ],
+        Requirements: [editQualifyingEvent.requirements, [Validators.required]],
       });
     } else {
       this.reactiveForm = this.fb.group({
         Name: [
           '',
-          [
-            Validators.minLength(2),
-            Validators.required,
-            Validators.maxLength(255),
-          ],
+          [Validators.required, Validators.maxLength(255)],
           this.checkName.bind(this),
         ],
+        Requirements: ['', [Validators.required]],
       });
     }
     this.loading = false;
   }
 
   onBack() {
-    this.router.navigate(['home/agencies']);
+    this.router.navigate(['home/qualifyingevents']);
   }
 
   async onSubmit() {
     try {
       this.loading = true;
       if (this.id) {
-        await this.agencyService.update(this.reactiveForm.value);
+        await this.qualifyingEventService.update(this.reactiveForm.value);
         this.onBack();
       } else {
-        await this.agencyService.create(this.reactiveForm.value);
+        await this.qualifyingEventService.create(this.reactiveForm.value);
         this.onBack();
       }
     } catch (error) {
@@ -95,7 +89,7 @@ export class AgencyComponent implements OnInit {
 
   async checkName(name: FormControl) {
     if (name.value) {
-      const res: any = await this.agencyService.checkName({
+      const res: any = await this.qualifyingEventService.checkName({
         name: name.value,
       });
       if (res) return { nameTaken: true };

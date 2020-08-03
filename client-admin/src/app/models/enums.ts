@@ -13,6 +13,14 @@ export const MenuRoles = {
   BONAFIDE_CREATE: ['Bonafide.Create'],
   BONAFIDE_DELETE: ['Bonafide.Delete'],
 
+  CHAPTER_UPDATE: ['Chapter.Update'],
+  CHAPTER_CREATE: ['Chapter.Create'],
+  CHAPTER_DELETE: ['Chapter.Delete'],
+
+  QUALIFYING_EVENT_UPDATE: ['QualifyingEvent.Update'],
+  QUALIFYING_EVENT_CREATE: ['QualifyingEvent.Create'],
+  QUALIFYING_EVENT_DELETE: ['QualifyingEvent.Delete'],
+
   CAMPAIGNS: [
     'Campaign.Read',
     'Campaign.Create',
