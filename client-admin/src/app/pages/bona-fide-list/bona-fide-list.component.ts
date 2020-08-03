@@ -27,7 +27,14 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['Name', 'Code', 'Siglas', 'Phone', 'Actions'];
+  displayedColumns: string[] = [
+    'id',
+    'Name',
+    'Code',
+    'Siglas',
+    'Phone',
+    'Actions',
+  ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;

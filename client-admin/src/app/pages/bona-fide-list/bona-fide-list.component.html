@@ -18,6 +18,11 @@
       </div>
       <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
 
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
+
         <ng-container matColumnDef="Name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ 'BONAFIDE.NAME' | translate }}

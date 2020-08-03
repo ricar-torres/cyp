@@ -33,7 +33,7 @@ export class ChapterListComponent implements OnInit {
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['Name', 'Quota', 'Actions'];
+  displayedColumns: string[] = ['id', 'Name', 'Quota', 'Actions'];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
