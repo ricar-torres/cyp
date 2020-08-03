@@ -20,8 +20,6 @@ export class QualifyingEventComponent implements OnInit {
   id: string;
   loading = false;
 
-  qualifyingEvent: string;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
@@ -38,7 +36,6 @@ export class QualifyingEventComponent implements OnInit {
       var editQualifyingEvent: any = await this.qualifyingEventService.qualifyingevent(
         this.id
       );
-      this.qualifyingEvent = editQualifyingEvent.name;
       this.reactiveForm = this.fb.group({
         Id: [editQualifyingEvent.id],
         Name: [

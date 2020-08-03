@@ -22,8 +22,6 @@ export class ChapterComponent implements OnInit {
 
   loading = false;
 
-  chapter: string;
-
   Exists: Boolean = false;
 
   @ViewChild('inputName', { static: true }) inputName: ElementRef;
@@ -70,7 +68,6 @@ export class ChapterComponent implements OnInit {
         Quota: [editChapter.quota],
         BonaFideId: [this.bonafideid],
       });
-      this.chapter = editChapter.name;
     } else {
       this.reactiveForm = this.fb.group({
         Name: [
