@@ -13,6 +13,7 @@ namespace server.Services {
 		Retirements Update(Retirements payload);
 		void Delete(int id);
 		bool NameExists(string name);
+		public bool CodeExists(string code);
 	}
 	public class RetirementService : IRetirementService {
 		private readonly DataContext _context;
@@ -37,13 +38,13 @@ namespace server.Services {
 		}
 
 		public void Delete(int id) {
-			var item = _context.CommunicationMethods.Find(id);
+			var item = _context.Retirements.Find(id);
 
 			if (item != null) {
 
 				item.DeletedAt = DateTime.Now;
 
-				_context.CommunicationMethods.Update(item);
+				_context.Retirements.Update(item);
 				_context.SaveChanges();
 			} else
 				throw new AppException("Retirement not found");
@@ -88,6 +89,10 @@ namespace server.Services {
 		}
 		public bool NameExists(string name) {
 			var res = _context.Retirements.Where(c => c.Name.ToLower() == name.ToLower()).FirstOrDefault();
+			return res is object;
+		}
+		public bool CodeExists(string code) {
+			var res = _context.Retirements.Where(c => c.Code.ToLower() == code.ToLower()).FirstOrDefault();
 			return res is object;
 		}
 	}

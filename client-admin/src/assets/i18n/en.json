@@ -141,7 +141,8 @@
     "HOME": "Home",
     "SETTINGS": "Settings",
     "COMMUNICATION_METHODS": "Commuication Methods",
-    "BONAFIDES": "Bonafides Associations"
+    "BONAFIDES": "Bonafides Associations",
+    "RETIREMENTS": "Retirements"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
@@ -189,5 +190,23 @@
     "SAVE": "Save",
     "BACK": "Back",
     "EXISTS": "Exists a communication method with this name"
+  },
+  "RETIREMENT_LIST": {
+    "PAGE_TITLE": "Retirements",
+    "NAME": "Name",
+    "CODE": "Code",
+    "EDIT_BTN": "Edit",
+    "DEL_BTN": "Delete",
+    "ADD_BTN": "Add",
+    "GENERAL_FILTER": "Filter"
+  },
+  "RETIREMENT": {
+    "PAGE_TITLE": "Retirement",
+    "NAME": "Name",
+    "CODE": "Code",
+    "BACK": "Back",
+    "SAVE": "Save",
+    "EXISTS_NAME": "Exists a retirement with this name",
+    "EXISTS_CODE": "Exists a retirement with this code"
   }
 }

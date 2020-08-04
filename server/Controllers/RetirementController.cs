@@ -37,7 +37,7 @@ namespace WebApi.Controllers {
 
 		// GET: api/CommunicationMethod/5
 		[AllowAnonymous]
-		[HttpGet("{id}", Name = "Get")]
+		[HttpGet("{id}")]
 		public IActionResult Get(int id) {
 			try {
 				var res = _service.GetById(id);
@@ -105,6 +105,16 @@ namespace WebApi.Controllers {
 		public IActionResult CheckNameExist(string name) {
 			try {
 				return Ok(_service.NameExists(name));
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
+		[HttpGet("[action]/{code}")]
+		public IActionResult CheckCodeExist(string code) {
+			try {
+				return Ok(_service.CodeExists(code));
 			} catch (Exception ex) {
 				return DefaultError(ex);
 			}

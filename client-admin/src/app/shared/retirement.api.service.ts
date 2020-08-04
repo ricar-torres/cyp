@@ -52,4 +52,9 @@ export class RetirementAPIService {
       .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/${name}`)
       .toPromise();
   }
+  checkCodeExist(code) {
+    return this.http
+      .get(`${environment.baseURL}/${this._apiName}/CheckCodeExist/${code}`)
+      .toPromise();
+  }
 }

@@ -30,12 +30,7 @@ export class RetirementListComponent implements OnInit {
   createAccess: boolean;
   deteleAccess: boolean;
 
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    // 'updDt',
-    'action',
-  ];
+  displayedColumns: string[] = ['id', 'name', 'code', 'action'];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
@@ -63,7 +58,7 @@ export class RetirementListComponent implements OnInit {
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCommunicationMethods();
+      await this.loadData();
     } catch (error) {
       this.loading = false;
     } finally {

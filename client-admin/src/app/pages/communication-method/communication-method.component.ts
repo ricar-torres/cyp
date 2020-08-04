@@ -69,7 +69,7 @@ export class CommunicationMethodComponent implements OnInit {
     this.reactiveForm = this.formBuilder.group({
       name: new FormControl('', [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(2),
         Validators.maxLength(250),
       ]),
     });

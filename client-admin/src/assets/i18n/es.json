@@ -141,7 +141,8 @@
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
     "COMMUNICATION_METHODS": "Métodos de Comunicación",
-    "BONAFIDES": "Asociaciones Bonafides"
+    "BONAFIDES": "Asociaciones Bonafides",
+    "RETIREMENTS": "Retiros"
   },
 
   "PAGINATOR": {
@@ -190,5 +191,23 @@
     "SAVE": "Guardar",
     "BACK": "Atras",
     "EXISTS": "Existe un método de comunicación con este nombre"
+  },
+  "RETIREMENT_LIST": {
+    "PAGE_TITLE": "Retiros",
+    "NAME": "Nombre",
+    "CODE": "Código",
+    "EDIT_BTN": "Editar",
+    "DEL_BTN": "Borrar",
+    "ADD_BTN": "Añadir",
+    "GENERAL_FILTER": "Filtro"
+  },
+  "RETIREMENT": {
+    "PAGE_TITLE": "Retiro",
+    "NAME": "Nombre",
+    "CODE": "Código",
+    "BACK": "Atras",
+    "SAVE": "Guardar",
+    "EXISTS_NAME": "Existe un retiro con este nombre",
+    "EXISTS_CODE": "Existe un retiro con este código"
   }
 }

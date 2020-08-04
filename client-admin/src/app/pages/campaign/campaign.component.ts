@@ -74,7 +74,7 @@ export class CampaignComponent implements OnInit {
     this.reactiveForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(2),
         Validators.maxLength(250),
       ]),
       origin: new FormControl('', [Validators.required]),
