@@ -1,34 +1,43 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
-import { AppService } from '@app/shared/app.service';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import {
   PageEvent,
-  MatTableDataSource,
   MatSort,
   MatPaginator,
   MatDialog,
+  MatTableDataSource,
 } from '@angular/material';
-import { AgencyService } from '@app/shared/agency.service';
-import { MenuRoles } from '@app/models/enums';
-import { Route } from '@angular/compiler/src/core';
+import { AppService } from '@app/shared/app.service';
+import { FormBuilder } from '@angular/forms';
+
 import { Router } from '@angular/router';
 import { LanguageService } from '@app/shared/Language.service';
 import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
+import { MenuRoles } from '@app/models/enums';
+import { ClientService } from '@app/shared/client.service';
 
 @Component({
-  selector: 'app-agency-list',
-  templateUrl: './agency-list.component.html',
-  styleUrls: ['./agency-list.component.css'],
+  selector: 'app-client-list',
+  templateUrl: './client-list.component.html',
+  styleUrls: ['./client-list.component.css'],
 })
-export class AgencyListComponent implements OnInit, AfterViewInit {
+export class ClientListComponent implements OnInit, OnDestroy {
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['id', 'name', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'ssn',
+    'gender',
+    'phone1',
+    'phone2',
+    'contract',
+    'actions',
+  ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
@@ -39,17 +48,20 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
   constructor(
     private app: AppService,
     private fb: FormBuilder,
-    private agencyApi: AgencyService,
+    private clientService: ClientService,
     private router: Router,
     private languageService: LanguageService,
     private dialog: MatDialog
   ) {}
+  ngOnDestroy(): void {
+    this.dataSource = undefined;
+  }
 
   ngOnInit(): void {
     //TODO: Acces
-    //this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_UPDATE);
-    //this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_CREATE);
-    //this.deleteAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_DELETE);
+    // this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.CLIENT_UPDATE);
+    // this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE);
+    // this.deleteAccess = this.app.checkMenuRoleAccess(MenuRoles.CLIENT_DELETE);
     this.editAccess = true;
     this.createAccess = true;
     this.deleteAccess = true;
@@ -60,7 +72,7 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
   }
 
   private LoadAgencies() {
-    this.agencyApi.getAll().subscribe(
+    this.clientService.getAll().subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();
@@ -91,12 +103,12 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editAgency(id: number) {
-    this.router.navigate(['/home/agency', id]);
+  editClient(id: number) {
+    this.router.navigate(['/home/client', id]);
   }
 
   goToNew() {
-    this.router.navigate(['/home/agency']);
+    this.router.navigate(['/home/clients']);
   }
 
   doFilter(value: any) {
@@ -105,7 +117,7 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
 
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('AGENCY.ARE_YOU_SURE_DELETE')
+      .get('CLIENT.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -128,7 +140,7 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
           console.log(id);
-          await this.agencyApi.delete(id);
+          await this.clientService.delete(id);
           this.LoadAgencies();
         }
       });

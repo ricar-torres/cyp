@@ -24,6 +24,8 @@
   "REQUIRED": "This Field is required",
   "VALIDEMAIL": "Please provide a valid eail address",
   "SEARCH": "Search",
+  "MALE": "Male",
+  "FEMALE": "Female",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -62,6 +64,24 @@
     "CREATE": "Save",
     "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?"
+  },
+  "CLIENTS": {
+    "TITLE": "Agencies",
+    "BTN_ADD": "Create Agency",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "AGENCYEDIT": "Agency",
+    "AGENCYCREATE": "Agency",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Save",
+    "GOBACK": "Return",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?",
+    "SSN": "SSN",
+    "PHONE1": "Primary Phone",
+    "PHONE2": "Secondary Phone",
+    "CONTRACTNUMBER": "Contract Number"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
@@ -165,7 +185,8 @@
     "SETTINGS": "Settings",
     "BONAFIDES": "Bonafides Associations",
     "QUALIFYIN_EVENTS": "Qualifying Events",
-    "COMMUNICATION_METHODS": "Commuication Methods"
+    "COMMUNICATION_METHODS": "Commuication Methods",
+    "CLIENTS": "Clients"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",

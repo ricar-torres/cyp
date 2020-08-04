@@ -24,6 +24,7 @@ import { ChapterListComponent } from './pages/chapter-list/chapter-list.componen
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
+import { ClientListComponent } from './pages/client-list/client-list.component';
 
 const routes: Routes = [
   {
@@ -208,6 +209,30 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.QUALIFYING_EVENT_UPDATE,
+        },
+      },
+      {
+        path: 'clients',
+        component: ClientListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.CLIENT_CREATE,
+        },
+      },
+      {
+        path: 'client',
+        component: ClientListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.CLIENT_CREATE,
+        },
+      },
+      {
+        path: 'client/:id',
+        component: ClientListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.CLIENT_CREATE,
         },
       },
     ],

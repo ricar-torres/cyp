@@ -100,6 +100,14 @@ export class SideNavComponent implements OnInit {
               route: '/home/qualifyingevents',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.CLIENTS')
+                .toPromise(),
+              iconName: 'account_circle',
+              route: '/home/clients',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
           ],
         },
       ];

@@ -25,6 +25,9 @@
   "REQUIRED": "Este Campo es requerido",
   "VALIDEMAIL": "Porfavor provea una dirección de email valida",
   "SEARCH": "Buscar",
+  "MALE": "Hombre",
+  "FEMALE": "Mujer",
+
   "LOGIN-FORM": {
     "USER": "Usuario",
     "PASSWORD": "Contraseña",
@@ -61,7 +64,25 @@
     "SAVE": "Grabar",
     "CREATE": "Grabar",
     "GOBACK": "Regresar",
-    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Agencia?"
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar esta Agencia?"
+  },
+  "CLIENTS": {
+    "TITLE": "Agencies",
+    "BTN_ADD": "Create Agency",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "AGENCYEDIT": "Agency",
+    "AGENCYCREATE": "Agency",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Save",
+    "GOBACK": "Return",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?",
+    "SSN": "SSN",
+    "PHONE1": "Teléfono Primario",
+    "PHONE2": "Teléfono Secundario",
+    "CONTRACTNUMBER": "Numero de Contrato"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
@@ -165,7 +186,8 @@
     "SETTINGS": "Configuraciones",
     "BONAFIDES": "Asociaciones Bonafides",
     "QUALIFYIN_EVENTS": "Eventos Calificativos",
-    "COMMUNICATION_METHODS": "Métodos de Comunicación"
+    "COMMUNICATION_METHODS": "Métodos de Comunicación",
+    "CLIENTS": "Clientes"
   },
 
   "PAGINATOR": {
