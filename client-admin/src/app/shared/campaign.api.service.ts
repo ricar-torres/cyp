@@ -49,9 +49,9 @@ export class CampaignApiSerivce {
   }
   checkCampaignNameExist(name) {
     return this.http
-      .get(
-        `${environment.baseURL}/${this._apiName}/CheckCampaignNameExist/${name}`
-      )
+      .get(`${environment.baseURL}/${this._apiName}/CheckCampaignNameExist/`, {
+        params: new HttpParams().set('name', name),
+      })
       .toPromise();
   }
 }
