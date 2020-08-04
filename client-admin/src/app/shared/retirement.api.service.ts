@@ -13,8 +13,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CommunicationMethodsAPIService {
-  private readonly _apiName = 'CommunicationMethod';
+export class RetirementAPIService {
+  private readonly _apiName = 'Retirement';
   /**
    *
    */
@@ -37,17 +37,17 @@ export class CommunicationMethodsAPIService {
         .toPromise();
     } catch (error) {}
   }
-  create(communicationiMethod) {
+  create(retirement) {
     return this.http
-      .post(`${environment.baseURL}/${this._apiName}`, communicationiMethod)
+      .post(`${environment.baseURL}/${this._apiName}`, retirement)
       .toPromise();
   }
-  update(id, campaign) {
+  update(id, retirement) {
     return this.http
-      .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
+      .put(`${environment.baseURL}/${this._apiName}/${id}`, retirement)
       .toPromise();
   }
-  checkCampaignNameExist(name) {
+  checkNameExist(name) {
     return this.http
       .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/${name}`)
       .toPromise();
