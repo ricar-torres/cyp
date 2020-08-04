@@ -101,8 +101,8 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
-		[HttpGet("[action]/{name}")]
-		public IActionResult CheckNameExist(string name) {
+		[HttpGet("[action]")]
+		public IActionResult CheckNameExist([FromQuery] string name) {
 			try {
 				return Ok(_service.NameExists(name));
 			} catch (Exception ex) {
@@ -111,8 +111,8 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
-		[HttpGet("[action]/{code}")]
-		public IActionResult CheckCodeExist(string code) {
+		[HttpGet("[action]")]
+		public IActionResult CheckCodeExist([FromQuery] string code) {
 			try {
 				return Ok(_service.CodeExists(code));
 			} catch (Exception ex) {

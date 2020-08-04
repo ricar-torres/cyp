@@ -49,12 +49,16 @@ export class RetirementAPIService {
   }
   checkNameExist(name) {
     return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/${name}`)
+      .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/`, {
+        params: new HttpParams().set('name', name),
+      })
       .toPromise();
   }
   checkCodeExist(code) {
     return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckCodeExist/${code}`)
+      .get(`${environment.baseURL}/${this._apiName}/CheckCodeExist/`, {
+        params: new HttpParams().set('code', code),
+      })
       .toPromise();
   }
 }

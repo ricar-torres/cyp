@@ -77,16 +77,19 @@ export class RetirementComponent implements OnInit {
   }
 
   initForm() {
+    const regexString = new RegExp(
+      `^[A-Za-z0-9\u00C0-\u00FF]{1}[A-Za-z0-9\u00C0-\u00FF/_.\-\\s\]*$`
+    );
     this.reactiveForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
         Validators.maxLength(250),
-        Validators.pattern('^[A-Za-z0-9]*$'),
+        Validators.pattern(regexString),
       ]),
       code: new FormControl('', [
         Validators.required,
         Validators.maxLength(250),
-        Validators.pattern('^[A-Za-z0-9]*$'),
+        Validators.pattern(regexString),
       ]),
     });
   }
