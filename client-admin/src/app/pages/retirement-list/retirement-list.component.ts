@@ -22,7 +22,7 @@ import {
   styleUrls: ['./retirement-list.component.css'],
 })
 export class RetirementListComponent implements OnInit {
-  loading = false;
+  loading = true;
 
   dataSource: any;
 
@@ -68,9 +68,9 @@ export class RetirementListComponent implements OnInit {
   async loadData() {
     try {
       this.loading = true;
-      this.dataSource = new MatTableDataSource();
       await this.apiRetirement.getAll().subscribe(
         (data: any) => {
+          this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;

@@ -21,7 +21,7 @@ import { MatDialog } from '@angular/material';
   styleUrls: ['./campaign-list.component.css'],
 })
 export class CampaignListComponent implements OnInit, AfterViewInit {
-  loading = false;
+  loading = true;
 
   dataSource: any;
 
@@ -75,9 +75,9 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
       this.loading = true;
 
       // var data: string = [];
-      this.dataSource = new MatTableDataSource();
       await this.campaignApi.getAll().subscribe(
         (data: any) => {
+          this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
