@@ -108,7 +108,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   goToNew() {
-    this.router.navigate(['/home/clients']);
+    this.router.navigate(['/home/client']);
   }
 
   doFilter(value: any) {

@@ -25,6 +25,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
 import { ClientListComponent } from './pages/client-list/client-list.component';
+import { ClientComponent } from './pages/client/client.component';
 
 const routes: Routes = [
   {
@@ -221,7 +222,7 @@ const routes: Routes = [
       },
       {
         path: 'client',
-        component: ClientListComponent,
+        component: ClientComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.CLIENT_CREATE,
@@ -229,7 +230,7 @@ const routes: Routes = [
       },
       {
         path: 'client/:id',
-        component: ClientListComponent,
+        component: ClientComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.CLIENT_CREATE,
