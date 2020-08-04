@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -12,29 +12,29 @@ namespace WebApi.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class AgenciesController : BaseController
+  public class BonaFidesController : BaseController
   {
-    private IAgenciesServices _service;
+    private IBonaFidesServices _BonaFidesServices;
     private IMapper _mapper;
     private readonly AppSettings _appSettings;
-
-    public AgenciesController(
-        IAgenciesServices service,
-        IMapper mapper,
-        IOptions<AppSettings> appSettings)
+    public BonaFidesController(
+      IBonaFidesServices bonaFidesServices,
+      IMapper mapper,
+      IOptions<AppSettings> appSettings)
     {
-      _service = service;
+      _BonaFidesServices = bonaFidesServices;
       _mapper = mapper;
       _appSettings = appSettings.Value;
     }
 
-    [Authorize]
+
+    [AllowAnonymous]
     [HttpGet()]
     public IActionResult GetAll()
     {
       try
       {
-        var res = _service.GetAll();
+        var res = _BonaFidesServices.GetAll();
         if (res == null)
         {
           return NotFound();
@@ -49,13 +49,13 @@ namespace WebApi.Controllers
       }
     }
 
-    [Authorize]
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
       try
       {
-        var res = _service.GetById(id);
+        var res = _BonaFidesServices.GetById(id);
         if (res == null)
         {
           return NotFound();
@@ -71,15 +71,15 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
-    [Authorize]
+    [AllowAnonymous]
     [HttpPost]
-    public IActionResult Create([FromBody] Agencies payload)
+    public IActionResult Create([FromBody] BonaFides payload)
     {
 
       try
       {
 
-        _service.Create(payload);
+        _BonaFidesServices.Create(payload);
         return Ok(payload);
 
       }
@@ -91,15 +91,15 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
-    [Authorize]
+    [AllowAnonymous]
     [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Agencies payload)
+    public IActionResult Update(int id, [FromBody] BonaFides payload)
     {
       try
       {
 
         payload.Id = id;
-        var res = _service.Update(payload);
+        var res = _BonaFidesServices.Update(payload);
 
         return Ok(res);
 
@@ -112,14 +112,14 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
-    [Authorize]
+    [AllowAnonymous]
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {
       try
       {
 
-        _service.Delete(id);
+        _BonaFidesServices.Delete(id);
         return Ok();
 
       }
@@ -130,13 +130,14 @@ namespace WebApi.Controllers
       }
     }
 
-    [Authorize]
+
+    [AllowAnonymous]
     [HttpGet("CheckName/{name}")]
     public async Task<IActionResult> checkName(string name)
     {
       try
       {
-        var check = await _service.ChekcName(name);
+        var check = await _BonaFidesServices.ChekcName(name);
         return Ok(check);
       }
       catch (Exception ex)
@@ -144,6 +145,21 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
-  }
 
+    [AllowAnonymous]
+    [HttpGet("CheckEmail/{email}")]
+    public async Task<IActionResult> checkEmail(string email)
+    {
+      try
+      {
+        var check = await _BonaFidesServices.ChekcEmail(email);
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+  }
 }

@@ -1,3 +1,5 @@
+import { RetirementComponent } from './pages/retirement/retirement.component';
+import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
 import { CampaignListComponent } from './pages/campaign-list/campaign-list.component';
 import { NgModule } from '@angular/core';
@@ -17,6 +19,8 @@ import { AgencyListComponent } from './pages/agencies/agency-list/agency-list.co
 import { AgencyComponent } from './pages/agencies/agency/agency.component';
 import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
 import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
+import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
+import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 
 const routes: Routes = [
   {
@@ -129,6 +133,46 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'retirement-list',
+        component: RetirementListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'retirement/:id',
+        component: RetirementComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'bonafides',
+        component: BonaFideListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_CREATE,
+        },
+      },
+      {
+        path: 'bonafide',
+        component: BonaFideComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_CREATE,
+        },
+      },
+      {
+        path: 'bonafide/:id',
+        component: BonaFideComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
     ],

@@ -12,10 +12,10 @@ using WebApi.Helpers;
 namespace WebApi.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class CommunicationMethodController : BaseController {
+	public class RetirementController : BaseController {
 
-		readonly ICommunicationMethodService _service;
-		public CommunicationMethodController(ICommunicationMethodService service) {
+		readonly IRetirementService _service;
+		public RetirementController(IRetirementService service) {
 			this._service = service;
 		}
 		// GET: api/CommunicationMethod
@@ -37,7 +37,7 @@ namespace WebApi.Controllers {
 
 		// GET: api/CommunicationMethod/5
 		[AllowAnonymous]
-		[HttpGet("{id}", Name = "Get")]
+		[HttpGet("{id}")]
 		public IActionResult Get(int id) {
 			try {
 				var res = _service.GetById(id);
@@ -55,7 +55,7 @@ namespace WebApi.Controllers {
 		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Create([FromBody] CommunicationMethods payload) {
+		public IActionResult Create([FromBody] Retirements payload) {
 
 			try {
 
@@ -71,7 +71,7 @@ namespace WebApi.Controllers {
 		// PUT: api/CommunicationMethod/5
 		[AllowAnonymous]
 		[HttpPut("{id}")]
-		public IActionResult Put(int id, [FromBody] CommunicationMethods payload) {
+		public IActionResult Put(int id, [FromBody] Retirements payload) {
 			try {
 
 				payload.Id = id;
@@ -101,10 +101,20 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
-		[HttpGet("[action]/{name}")]
-		public IActionResult CheckNameExist(string name) {
+		[HttpGet("[action]")]
+		public IActionResult CheckNameExist([FromQuery] string name) {
 			try {
 				return Ok(_service.NameExists(name));
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
+		[HttpGet("[action]")]
+		public IActionResult CheckCodeExist([FromQuery] string code) {
+			try {
+				return Ok(_service.CodeExists(code));
 			} catch (Exception ex) {
 				return DefaultError(ex);
 			}

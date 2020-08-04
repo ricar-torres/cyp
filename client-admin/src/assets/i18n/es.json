@@ -140,7 +140,9 @@
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
-    "COMMUNICATION_METHODS": "Métodos de Comunicación"
+    "COMMUNICATION_METHODS": "Métodos de Comunicación",
+    "BONAFIDES": "Asociaciones Bonafides",
+    "RETIREMENTS": "Retiros"
   },
 
   "PAGINATOR": {
@@ -166,6 +168,7 @@
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar ésta Campaña?"
   },
   "CAMPAIGN": {
+    "PAGE_TITLE": "Campaña",
     "NAME": "Nombre",
     "ORIGIN": "Origen",
     "UPDATE": "Actualizar",
@@ -183,9 +186,29 @@
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Método de Comunicación?"
   },
   "COMMUNICATION_METHOD": {
+    "PAGE_TITLE": "Método de Comunicación",
     "NAME": "Nombre",
     "SAVE": "Guardar",
     "BACK": "Atras",
     "EXISTS": "Existe un método de comunicación con este nombre"
+  },
+  "RETIREMENT_LIST": {
+    "PAGE_TITLE": "Retiros",
+    "NAME": "Nombre",
+    "CODE": "Código",
+    "EDIT_BTN": "Editar",
+    "DEL_BTN": "Borrar",
+    "ADD_BTN": "Añadir",
+    "GENERAL_FILTER": "Filtro",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Retiro?"
+  },
+  "RETIREMENT": {
+    "PAGE_TITLE": "Retiro",
+    "NAME": "Nombre",
+    "CODE": "Código",
+    "BACK": "Atras",
+    "SAVE": "Guardar",
+    "EXISTS_NAME": "Existe un retiro con este nombre",
+    "EXISTS_CODE": "Existe un retiro con este código"
   }
 }

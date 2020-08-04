@@ -8,4 +8,9 @@ docs/*
 scripts/*
 .vscode/*
 server/.vscode
+<<<<<<< HEAD
 appsettings.development.json
+=======
+
+
+>>>>>>> devRic
