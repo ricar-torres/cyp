@@ -103,7 +103,7 @@ export class RetirementListComponent implements OnInit {
   }
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
+      .get('RETIREMENT_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate

@@ -57,7 +57,7 @@ export class RetirementComponent implements OnInit {
         this.retirement = await this.apiRetirement.getById(this.id);
         if (this.retirement) {
           this.originalName = this.retirement.name;
-          this.checkCodeExist = this.retirement.code;
+          this.originalCode = this.retirement.code;
           this.reactiveForm.get('name').setValue(this.retirement.name);
           this.reactiveForm.get('code').setValue(this.retirement.code);
         } else {
@@ -81,13 +81,14 @@ export class RetirementComponent implements OnInit {
       name: new FormControl('', [
         Validators.required,
         Validators.maxLength(250),
+        Validators.pattern('^[A-Za-z0-9]*$'),
       ]),
       code: new FormControl('', [
         Validators.required,
         Validators.maxLength(250),
+        Validators.pattern('^[A-Za-z0-9]*$'),
       ]),
     });
-    // this.checkCampaignExist(this.reactiveForm.controls.name.value);
   }
   onBack() {
     this.router.navigate(['home/retirement-list']);
@@ -146,40 +147,7 @@ export class RetirementComponent implements OnInit {
     // this.subsName();
     // this.subsCode();
   }
-  subsName() {
-    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
 
-        tap(async () => {
-          let value = this.inputName.nativeElement.value;
-          if (value != this.originalName) {
-            this.checkNameExist(value);
-          } else {
-            this.nameExists = false;
-          }
-        })
-      )
-      .subscribe();
-  }
-  subsCode() {
-    merge(fromEvent(this.inputCode.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-
-        tap(async () => {
-          let value = this.inputCode.nativeElement.value;
-          if (value != this.originalCode) {
-            this.checkCodeExist(value);
-          } else {
-            this.codeExists = false;
-          }
-        })
-      )
-      .subscribe();
-  }
   async checkNameExist(name) {
     const res = await this.apiRetirement.checkNameExist(name);
     this.nameExists = res as boolean;

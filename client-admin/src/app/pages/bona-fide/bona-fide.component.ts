@@ -1,5 +1,10 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { bonaFideservice } from '@app/shared/bonafide.service';
@@ -137,6 +142,10 @@ export class BonaFideComponent implements OnInit {
       }
     } catch (error) {
       this.EmailExists = false;
+    }
+  }
+  async validate(ctrl: FormControl) {
+    if (ctrl.value) {
     }
   }
 }

@@ -199,7 +199,8 @@
     "EDIT_BTN": "Editar",
     "DEL_BTN": "Borrar",
     "ADD_BTN": "Añadir",
-    "GENERAL_FILTER": "Filtro"
+    "GENERAL_FILTER": "Filtro",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Retiro?"
   },
   "RETIREMENT": {
     "PAGE_TITLE": "Retiro",
