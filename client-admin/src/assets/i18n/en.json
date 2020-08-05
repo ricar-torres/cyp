@@ -1,5 +1,5 @@
 {
-  "APP": "eFileHub",
+  "APP": "Cyprus",
   "TITLE": "Admin Portal",
   "SPANISH": "Spanish",
   "ENGLISH": "English",
@@ -9,6 +9,9 @@
   "ADD_BTN": "Add",
   "SEND_BTN": "Send",
   "OK_BTN": "Ok",
+  "YES_BTN": "Yes",
+  "COMFIRMATION": "Confirmation",
+  "NO_BTN": "No",
   "LOGOUT_BTN": "Logout",
   "CHANGE_PASSWORD_BTN": "Change password",
   "APPROVE_BTN": "APPROVE",
@@ -18,9 +21,9 @@
   "CLOSE_BTN": "CLOSE",
   "GENERIC_ERROR": "An error has occurred please try again later.",
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
-  "YES_BTN": "Yes",
-  "COMFIRMATION": "Confirmation",
-  "NO_BTN": "No",
+  "REQUIRED": "This Field is required",
+  "VALIDEMAIL": "Please provide a valid eail address",
+  "SEARCH": "Search",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -51,25 +54,41 @@
     "BTN_ADD": "Create Agency",
     "NAME": "Name",
     "ACTIONS": "Actions",
-    "AGENCYEDIT": "Edit Agency",
-    "AGENCYCREATE": "Create Agency",
+    "AGENCYEDIT": "Agency",
+    "AGENCYCREATE": "Agency",
     "DELETE": "Delete",
     "EDIT": "Edit",
     "SAVE": "Save",
-    "CREATE": "Create",
-    "GOBACK": "Return"
+    "CREATE": "Save",
+    "GOBACK": "Return",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?"
+  },
+  "QUALIFYINGEVENT": {
+    "TITLE": "Qualifying Events",
+    "BTN_ADD": "Create Qualifying Event",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "QUALIFYINGEVENTEDIT": "Qualifying Event",
+    "QUALIFYINGEVENTCREATE": "Qualifying Event",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Save",
+    "GOBACK": "Return",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Qualifying Event?",
+    "REQUIREMENTS": "Requirements"
   },
   "BONAFIDE": {
     "TITLE": "Bona Fide Associations",
     "BTN_ADD": "Create Bona Fide",
     "NAME": "Name",
     "ACTIONS": "Actions",
-    "BONAFIDEEDIT": "Edit Bona Fide",
-    "BONAFIDECREATE": "Create Bona Fide",
+    "BONAFIDEEDIT": "Bona Fide",
+    "BONAFIDECREATE": "Bona Fide",
     "DELETE": "Delete",
     "EDIT": "Edit",
     "SAVE": "Save",
-    "CREATE": "Create",
+    "CREATE": "Save",
     "GOBACK": "Return",
     "CODE": "Code",
     "SIGLAS": "Acronym",
@@ -79,22 +98,26 @@
     "BENEFITS": "Benefits",
     "DISCLAIMER": "Disclaimer",
     "CHAPTER": "Chapter",
-    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bona Fide?"
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bona Fide?",
+    "TAKENNAME": "this Name is already taken",
+    "TAKENEMAIL": "This Email is Already taken"
   },
   "CHAPTER": {
     "TITLE": "Chapers",
-    "BTN_ADD": "New Chapter",
+    "BTN_ADD": "New Chaper",
     "NAME": "Name",
-    "CHAPTEREDIT": "Edit Chapter",
-    "CHAPTERCREATE": "Create Chapter",
+    "CHAPTEREDIT": "Chapter",
+    "CHAPTERCREATE": "Chapter",
     "DELETE": "Delete",
     "EDIT": "Edit",
     "SAVE": "Save",
-    "CREATE": "Create",
+    "CREATE": "Save",
     "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this chapter?",
     "QUOTA": "Quota",
-    "ACTIONS": "Actions"
+    "ACTIONS": "Actions",
+    "TAKENNAME": "This Chapter name already exist.",
+    "REQUIRED": "Field Name is required"
   },
 
   "USER": {
@@ -142,7 +165,8 @@
     "SETTINGS": "Settings",
     "COMMUNICATION_METHODS": "Commuication Methods",
     "BONAFIDES": "Bonafides Associations",
-    "RETIREMENTS": "Retirements"
+    "RETIREMENTS": "Retirements",
+    "QUALIFYIN_EVENTS": "Qualifying Events"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
