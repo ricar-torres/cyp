@@ -8,6 +8,7 @@ import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 import { MatDatepicker, MatDatepickerToggle } from '@angular/material';
 import { AppService } from '@app/shared/app.service';
 import { MenuRoles, PERMISSION } from '@app/models/enums';
+import { LanguageService } from '@app/shared/Language.service';
 
 @Component({
   selector: 'app-client',
@@ -16,7 +17,6 @@ import { MenuRoles, PERMISSION } from '@app/models/enums';
 })
 export class ClientComponent implements OnInit {
   clientid: string;
-  reactiveForm: FormGroup;
   birthDateDisabled: boolean = true;
 
   editSaveToggle: boolean = false;
@@ -29,22 +29,37 @@ export class ClientComponent implements OnInit {
     upload: true,
   };
 
+  reactiveForm: FormGroup;
+
   fabMenuButtons = {
     visible: false,
     buttons: [],
   };
+  loading: boolean;
   constructor(
     private fb: FormBuilder,
     private clientsService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
-    private app: AppService
+    private app: AppService,
+    private languageService: LanguageService
   ) {}
 
   async onSubmit() {
+    try {
+      console.log(this.reactiveForm.value);
+      await this.clientsService.update(this.reactiveForm.value);
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    }
     this.disableControls();
     this.editSaveToggle = !this.editSaveToggle;
-    await this.clientsService.update(this.reactiveForm.value);
   }
 
   async ngOnInit() {
@@ -53,8 +68,9 @@ export class ClientComponent implements OnInit {
     var client: any = await this.clientsService.client(this.clientid);
     if (this.clientid) {
       this.reactiveForm = this.fb.group({
+        Id: [client.id],
         Name: [client.name, [Validators.required]],
-        LastName1: [client.lastName1],
+        LastName1: [client.lastName1, [Validators.required]],
         LastName2: [client.lastName2],
         Email: [client.email, [Validators.email]],
         Initial: [client.initial],
@@ -67,7 +83,7 @@ export class ClientComponent implements OnInit {
     } else {
       this.reactiveForm = this.fb.group({
         Name: ['', [Validators.required]],
-        LastName1: [''],
+        LastName1: ['', [Validators.required]],
         LastName2: [''],
         Email: ['', [Validators.email]],
         Initial: [client.initial],
@@ -111,7 +127,17 @@ export class ClientComponent implements OnInit {
   }
 
   onSpeedDialFabClicked(ev) {
-    console.log(ev);
+    switch (ev) {
+      case 'bonafide':
+        break;
+      case 'Call':
+        break;
+      case 'Dependant':
+        break;
+
+      default:
+        break;
+    }
   }
 
   setupFabButton() {
