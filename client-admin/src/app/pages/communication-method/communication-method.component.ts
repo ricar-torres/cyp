@@ -26,7 +26,7 @@ export class CommunicationMethodComponent implements OnInit {
   editAccess: boolean;
   createAccess: boolean;
   reactiveForm: FormGroup;
-  campaignExists: boolean;
+  exist: boolean;
   originalName: string;
   @ViewChild('inputName', { static: true })
   inputName: ElementRef;
@@ -69,8 +69,13 @@ export class CommunicationMethodComponent implements OnInit {
     this.reactiveForm = this.formBuilder.group({
       name: new FormControl('', [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(2),
         Validators.maxLength(250),
+        Validators.pattern(
+          new RegExp(
+            `^[A-Za-z0-9\u00C0-\u00FF]{1}[A-Za-z0-9\u00C0-\u00FF/_.\-\\s\]*$`
+          )
+        ),
       ]),
     });
   }
@@ -109,16 +114,16 @@ export class CommunicationMethodComponent implements OnInit {
         tap(async () => {
           let value = this.inputName.nativeElement.value;
           if (value != this.originalName) {
-            this.checkCampaignExist(value);
+            this.checkNameExist(value);
           } else {
-            this.campaignExists = false;
+            this.exist = false;
           }
         })
       )
       .subscribe();
   }
-  async checkCampaignExist(name) {
-    const res = await this.apicommunicationMethod.checkCampaignNameExist(name);
-    this.campaignExists = res as boolean;
+  async checkNameExist(name) {
+    const res = await this.apicommunicationMethod.checkNameExist(name);
+    this.exist = res as boolean;
   }
 }

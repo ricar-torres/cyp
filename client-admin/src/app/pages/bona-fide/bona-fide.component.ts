@@ -147,4 +147,8 @@ export class BonaFideComponent implements OnInit {
       this.loading = false;
     }
   }
+  async validate(ctrl: FormControl) {
+    if (ctrl.value) {
+    }
+  }
 }

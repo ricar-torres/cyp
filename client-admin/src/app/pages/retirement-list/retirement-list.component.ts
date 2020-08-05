@@ -1,15 +1,15 @@
-import { CommunicationMethodsAPIService } from './../../shared/communication-methods.api.service';
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { RetirementAPIService } from './../../shared/retirement.api.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   PageEvent,
   MatSort,
   MatPaginator,
-  MatTableDataSource,
   MatDialog,
+  MatTableDataSource,
 } from '@angular/material';
 import { LanguageService } from '@app/shared/Language.service';
 import { Router } from '@angular/router';
-import { CampaignApiSerivce } from '@app/shared/campaign.api.service';
+import { CommunicationMethodsAPIService } from '@app/shared/communication-methods.api.service';
 import { AppService } from '@app/shared/app.service';
 import {
   ConfirmDialogModel,
@@ -17,12 +17,11 @@ import {
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
-  selector: 'app-communication-methods-list',
-  templateUrl: './communication-methods-list.component.html',
-  styleUrls: ['./communication-methods-list.component.css'],
+  selector: 'app-retirement-list',
+  templateUrl: './retirement-list.component.html',
+  styleUrls: ['./retirement-list.component.css'],
 })
-export class CommunicationMethodsListComponent
-  implements OnInit, AfterViewInit {
+export class RetirementListComponent implements OnInit {
   loading = true;
 
   dataSource: any;
@@ -31,12 +30,7 @@ export class CommunicationMethodsListComponent
   createAccess: boolean;
   deteleAccess: boolean;
 
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    // 'updDt',
-    'action',
-  ];
+  displayedColumns: string[] = ['id', 'name', 'code', 'action'];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
@@ -46,7 +40,7 @@ export class CommunicationMethodsListComponent
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private apiCommunicationMethod: CommunicationMethodsAPIService,
+    private apiRetirement: RetirementAPIService,
     private app: AppService,
     private dialog: MatDialog
   ) {}
@@ -64,17 +58,17 @@ export class CommunicationMethodsListComponent
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCommunicationMethods();
+      await this.loadData();
     } catch (error) {
       this.loading = false;
     } finally {
     }
   }
 
-  async loadCommunicationMethods() {
+  async loadData() {
     try {
       this.loading = true;
-      await this.apiCommunicationMethod.getAll().subscribe(
+      await this.apiRetirement.getAll().subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -97,11 +91,11 @@ export class CommunicationMethodsListComponent
     }
   }
   goToNew() {
-    this.router.navigate(['/home/communication-method', 0]);
+    this.router.navigate(['/home/retirement', 0]);
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/communication-method', id]);
+    this.router.navigate(['/home/retirement', id]);
   }
 
   doFilter(value: any) {
@@ -109,7 +103,7 @@ export class CommunicationMethodsListComponent
   }
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
+      .get('RETIREMENT_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -133,14 +127,14 @@ export class CommunicationMethodsListComponent
       if (dialogResult) {
         console.log(id);
         await this.delete(id);
-        await this.loadCommunicationMethods();
+        await this.loadData();
       }
     });
   }
 
   async delete(id: string) {
     try {
-      await this.apiCommunicationMethod.delete(id);
+      await this.apiRetirement.delete(id);
     } catch (error) {}
   }
 

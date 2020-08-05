@@ -85,6 +85,7 @@ namespace WebApi
       services.AddScoped<IQualifyingEventsSerivie, QualifyingEventsSerivie>();
       services.AddScoped<ICampaignsService, CampaignsService>();
 			services.AddScoped<ICommunicationMethodService, CommunicationMethodService>();
+			services.AddScoped<IRetirementService, RetirementService>();
 
     }
 

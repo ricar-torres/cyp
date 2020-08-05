@@ -45,7 +45,7 @@ namespace WebApi.Services {
 			return res;
 		}
 		public bool NameExists(string name) {
-			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower() && c.DeletedAt == null).FirstOrDefault();
+			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower()).FirstOrDefault();
 			return res is object;
 		}
 

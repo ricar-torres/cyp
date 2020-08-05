@@ -13,8 +13,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CampaignApiSerivce {
-  private readonly _apiName = 'Campaigns';
+export class RetirementAPIService {
+  private readonly _apiName = 'Retirement';
   /**
    *
    */
@@ -37,20 +37,27 @@ export class CampaignApiSerivce {
         .toPromise();
     } catch (error) {}
   }
-  create(campaign) {
+  create(retirement) {
     return this.http
-      .post(`${environment.baseURL}/${this._apiName}`, campaign)
+      .post(`${environment.baseURL}/${this._apiName}`, retirement)
       .toPromise();
   }
-  update(id, campaign) {
+  update(id, retirement) {
     return this.http
-      .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
+      .put(`${environment.baseURL}/${this._apiName}/${id}`, retirement)
       .toPromise();
   }
-  checkCampaignNameExist(name) {
+  checkNameExist(name) {
     return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckCampaignNameExist/`, {
+      .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/`, {
         params: new HttpParams().set('name', name),
+      })
+      .toPromise();
+  }
+  checkCodeExist(code) {
+    return this.http
+      .get(`${environment.baseURL}/${this._apiName}/CheckCodeExist/`, {
+        params: new HttpParams().set('code', code),
       })
       .toPromise();
   }

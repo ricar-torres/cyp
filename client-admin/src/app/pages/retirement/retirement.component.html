@@ -3,7 +3,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title
-          >{{ 'COMMUNICATION_METHOD.PAGE_TITLE' | translate }}
+          >{{ 'RETIREMENT.PAGE_TITLE' | translate }}
           <caption *ngIf="id != '0'">
             <small> #{{ id }} </small>
           </caption>
@@ -12,13 +12,27 @@
 
       <mat-card-content fxLayout="column" fxLayoutGap="5px">
         <mat-form-field class="full-width">
-          <mat-label>{{ 'COMMUNICATION_METHOD.NAME' | translate }}</mat-label>
+          <mat-label>{{ 'RETIREMENT.NAME' | translate }}</mat-label>
           <input formControlName="name" matInput #inputName />
-          <mat-icon *ngIf="reactiveForm.controls.name.valid && !exist" matSuffix
+          <mat-icon
+            *ngIf="reactiveForm.controls.name.valid && !nameExists"
+            matSuffix
             >done</mat-icon
           >
-          <mat-hint #existenceHint class="error" *ngIf="exist">
-            {{ 'COMMUNICATION_METHOD.EXISTS' | translate }}</mat-hint
+          <mat-hint class="error" *ngIf="nameExists">
+            {{ 'RETIREMENT.EXISTS_NAME' | translate }}</mat-hint
+          >
+        </mat-form-field>
+        <mat-form-field class="full-width">
+          <mat-label>{{ 'RETIREMENT.CODE' | translate }}</mat-label>
+          <input formControlName="code" matInput #inputCode />
+          <mat-icon
+            *ngIf="reactiveForm.controls.code.valid && !codeExists"
+            matSuffix
+            >done</mat-icon
+          >
+          <mat-hint class="error" *ngIf="codeExists">
+            {{ 'RETIREMENT.EXISTS_CODE' | translate }}</mat-hint
           >
         </mat-form-field>
       </mat-card-content>
@@ -27,16 +41,16 @@
         <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
 
         <button mat-stroked-button type="button" (click)="onBack()">
-          <mat-icon>list</mat-icon>{{ 'COMMUNICATION_METHOD.BACK' | translate }}
+          <mat-icon>list</mat-icon>{{ 'RETIREMENT.BACK' | translate }}
         </button>
         <button
           type="submit"
           mat-raised-button
           color="primary"
           *ngIf="editAccess"
-          [disabled]="!reactiveForm.valid || exist"
+          [disabled]="!reactiveForm.valid || nameExists || codeExists"
         >
-          {{ 'COMMUNICATION_METHOD.SAVE' | translate }}
+          {{ 'RETIREMENT.SAVE' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>

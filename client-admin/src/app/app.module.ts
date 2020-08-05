@@ -99,8 +99,10 @@ import { AgencyComponent } from './pages/agencies/agency/agency.component';
 import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
 import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
+import { RetirementComponent } from './pages/retirement/retirement.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
@@ -140,8 +142,10 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CommunicationMethodsListComponent,
     CommunicationMethodComponent,
     ConfirmDialogComponent,
+    RetirementListComponent,
     BonaFideListComponent,
     BonaFideComponent,
+    RetirementComponent,
     ChapterListComponent,
     ChapterComponent,
     ConfirmDialogComponent,
