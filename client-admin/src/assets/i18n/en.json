@@ -82,7 +82,18 @@
     "PHONE1": "Primary Phone",
     "PHONE2": "Secondary Phone",
     "CONTRACTNUMBER": "Contract Number",
-    "EMAIL": "Email"
+    "EMAIL": "Email",
+    "FAMILY_NAME_1": "Family Name 1",
+    "FAMILY_NAME_2": "Family Name 2",
+    "INITIAL": "Initial",
+    "GENDER": "Gender",
+    "BIRTHDATE": "Birth Date",
+    "MARITALSTATUS": "Marital Status",
+    "BONAFIDES": "BonaFides",
+    "DEPENDANTS": "Dependants",
+    "ALLIANCE": "Alliance",
+    "CALLHISTORY": "Call History",
+    "DIRECTIONS": "Directions"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",

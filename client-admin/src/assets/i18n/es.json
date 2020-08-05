@@ -83,7 +83,18 @@
     "PHONE1": "Teléfono Primario",
     "PHONE2": "Teléfono Secundario",
     "CONTRACTNUMBER": "Numero de Contrato",
-    "EMAIL": "Correo Electronico"
+    "EMAIL": "Correo Electronico",
+    "FAMILY_NAME_1": "Apellido 1",
+    "FAMILY_NAME_2": "Apellido 2",
+    "INITIAL": "Inicial",
+    "GENDER": "Genero",
+    "BIRTHDATE": "Fecha de nacimiento",
+    "MARITALSTATUS": "Estatus Marital",
+    "BONAFIDES": "Bona Fides",
+    "DEPENDANTS": "Dependientes",
+    "ALLIANCE": "Alianzas",
+    "CALLHISTORY": "Historial de llamadas",
+    "DIRECTIONS": "Direcciones"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

@@ -1,41 +1,193 @@
 <md-content layout-margin layout-padding flex="50">
   <mat-card>
     <mat-card-header>
-      {{ 'CLIENTS.TITLE' | translate }}
+      <mat-card-title>
+        {{ 'CLIENTS.TITLE' | translate }}
+      </mat-card-title>
+      <mat-card-subtitle>
+        {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
+      >
     </mat-card-header>
-    <mat-card-subtitle> {{ clientid? '#'+ clientid : ''  }}</mat-card-subtitle>
     <mat-card-content>
       <div *ngIf="reactiveForm">
-        <form [formGroup]="reactiveForm" (onsubmit)="onSubmit()">
+        <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+          <div fxLayout="row wrap" fxLayoutAlign="flex-start">
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
+                <input matInput formControlName="Name" />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.FAMILY_NAME_1' | translate }}</mat-label>
+                <input matInput formControlName="LastName1" />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.FAMILY_NAME_2' | translate }}</mat-label>
+                <input matInput formControlName="LastName2" />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.INITIAL' | translate }}</mat-label>
+                <input matInput formControlName="Initial" />
+              </mat-form-field>
+            </div>
 
-          <mat-form-field class="full-width">
-            <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
-            <input matInput formControlName="Name" />
-          </mat-form-field>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.MARITALSTATUS' | translate }}</mat-label>
+                <input matInput formControlName="MaritalStatus" />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
+                <input matInput formControlName="Ssn" />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.GENDER' | translate }}</mat-label>
+                <input matInput formControlName="Gender" />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.BIRTHDATE' | translate }}</mat-label>
+                <input
+                  [matDatepicker]="birthDatePiker"
+                  matInput
+                  formControlName="BirthDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="birthDatePiker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker
+                  disabled="birthDateEnabled"
+                  #birthDatePiker
+                ></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center"
+              fxLayoutAlign="center"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.EMAIL' | translate }}</mat-label>
+                <input matInput formControlName="Email" />
+              </mat-form-field>
+            </div>
+          </div>
 
-          <mat-form-field class="full-width">
-            <mat-label>{{ 'USER.FAMILY_NAME' | translate }}</mat-label>
-            <input matInput formControlName="LastName1" />
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-            <mat-label>{{ 'USER.FAMILY_NAME' | translate }}</mat-label>
-            <input matInput formControlName="LastName2" />
-          </mat-form-field>
-
-          <mat-form-field class="full-width">
-            <mat-label>{{ 'CLIENTS.EMAIL' | translate }}</mat-label>
-            <input matInput formControlName="Email" />
-          </mat-form-field>
-
+          <mat-card-actions>
+            <button
+              *ngIf="!editSaveToggle"
+              mat-raised-button
+              color="primary"
+              type="button"
+              (click)="enableControls()"
+            >
+              <mat-icon>create</mat-icon>
+              {{ 'CLIENTS.EDIT' | translate }}
+            </button>
+            <button
+              *ngIf="editSaveToggle"
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!reactiveForm.valid"
+            >
+              <mat-icon>save</mat-icon>
+              {{ 'CLIENTS.SAVE' | translate }}
+            </button>
+            <button
+              type="button"
+              mat-stroked-button
+              type="button"
+              (click)="onBack()"
+            >
+              <mat-icon>list</mat-icon>{{ 'CLIENTS.GOBACK' | translate }}
+            </button>
+          </mat-card-actions>
         </form>
       </div>
       <mat-tab-group mat-stretch-tabs>
-        <mat-tab label="First"> Content 1 </mat-tab>
-        <mat-tab label="Second"> Content 2 </mat-tab>
-        <mat-tab label="Third"> Content 3 </mat-tab>
-        <mat-tab label="Fourth"> Content 4 </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
+          Content 1
+        </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.BONAFIDES' | translate }}">
+          Content 2
+        </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
+          Content 3
+        </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
+          Content 4
+        </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
+          Content 4
+        </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
+          Content 4
+        </mat-tab>
       </mat-tab-group>
     </mat-card-content>
   </mat-card>
 </md-content>
+<app-speed-dial-fab
+  *ngIf="fabMenuButtons.visible"
+  (fabClick)="onSpeedDialFabClicked($event)"
+  [buttons]="fabMenuButtons.buttons"
+></app-speed-dial-fab>

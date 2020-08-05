@@ -1,0 +1,11 @@
+.width-with-space {
+  width: 90%;
+}
+.full-width {
+  width: 100%;
+}
+
+.form-padding {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
