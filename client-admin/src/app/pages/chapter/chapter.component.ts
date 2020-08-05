@@ -114,6 +114,7 @@ export class ChapterComponent implements OnInit {
       if (ctrl.value) {
         const res: any = await this.chapterService.checkName({
           name: ctrl.value,
+          bonafideid: Number.parseInt(this.bonafideid),
         });
         if (res) {
           return { nameTaken: true };

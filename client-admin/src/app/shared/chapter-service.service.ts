@@ -11,9 +11,11 @@ export class ChapterServiceService {
   getByBonafideById(id: string) {
     return this.http.get(`${environment.baseURL}/chapter/bonafide/${id}`);
   }
-  checkName(obj: { name: string }): any {
+  checkName(obj: { name: string; bonafideid: number }): any {
     return this.http
-      .get(`${environment.baseURL}/chapter/CheckName/${obj.name}`)
+      .get(
+        `${environment.baseURL}/chapter/CheckName/${obj.bonafideid}/${obj.name}`
+      )
       .toPromise();
   }
 

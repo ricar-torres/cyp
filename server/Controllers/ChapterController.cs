@@ -150,12 +150,12 @@ namespace WebApi.Controllers
     }
 
     [Authorize]
-    [HttpGet("CheckName/{name}")]
-    public async Task<IActionResult> checkName(string name)
+    [HttpGet("CheckName/{bonafideid}/{name}")]
+    public async Task<IActionResult> checkName(string name, int bonafideid)
     {
       try
       {
-        var check = await _service.ChekcName(name);
+        var check = await _service.ChekcName(name, bonafideid);
         return Ok(check);
       }
       catch (Exception ex)

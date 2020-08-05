@@ -1,8 +1,35 @@
 <md-content layout-margin layout-padding flex="50">
   <mat-card>
     <mat-card-header>
+      {{ 'CLIENTS.TITLE' | translate }}
     </mat-card-header>
+    <mat-card-subtitle> {{ clientid? '#'+ clientid : ''  }}</mat-card-subtitle>
     <mat-card-content>
+      <div *ngIf="reactiveForm">
+        <form [formGroup]="reactiveForm" (onsubmit)="onSubmit()">
+
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
+            <input matInput formControlName="Name" />
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'USER.FAMILY_NAME' | translate }}</mat-label>
+            <input matInput formControlName="LastName1" />
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'USER.FAMILY_NAME' | translate }}</mat-label>
+            <input matInput formControlName="LastName2" />
+          </mat-form-field>
+
+          <mat-form-field class="full-width">
+            <mat-label>{{ 'CLIENTS.EMAIL' | translate }}</mat-label>
+            <input matInput formControlName="Email" />
+          </mat-form-field>
+
+        </form>
+      </div>
       <mat-tab-group mat-stretch-tabs>
         <mat-tab label="First"> Content 1 </mat-tab>
         <mat-tab label="Second"> Content 2 </mat-tab>

@@ -16,7 +16,7 @@ namespace WebApi.Services
     Chapters Create(Chapters payload);
     Chapters Update(Chapters payload);
     void Delete(int id);
-    Task<Boolean> ChekcName(string criteria);
+    Task<Boolean> ChekcName(string name, int? bonafideid);
     Task<List<Chapters>> GetByBonafineId(int id);
   }
 
@@ -122,12 +122,18 @@ namespace WebApi.Services
     }
 
 
-    public async Task<Boolean> ChekcName(string criteria)
+    public async Task<Boolean> ChekcName(string name, int? bonafideid)
     {
-      if (!String.IsNullOrEmpty(criteria))
+      if (!String.IsNullOrEmpty(name) && bonafideid != null)
       {
-        criteria = criteria.ToLower().Trim();
-        var payload = await _context.Chapters.FirstOrDefaultAsync(ag => ag.Name.ToLower().Trim() == criteria);
+        name = name.ToLower().Trim();
+        var payload = await _context.Chapters.FirstOrDefaultAsync(ag =>
+        ag.Name.ToLower().Trim() == name
+        &&
+        ag.BonaFideId == bonafideid
+        &&
+        ag.DeletedAt == null
+        );
         if (payload != null)
         {
           return true;

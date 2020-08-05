@@ -66,22 +66,23 @@
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?"
   },
   "CLIENTS": {
-    "TITLE": "Agencies",
-    "BTN_ADD": "Create Agency",
+    "TITLE": "Client",
+    "BTN_ADD": "Create Client",
     "NAME": "Name",
     "ACTIONS": "Actions",
-    "AGENCYEDIT": "Agency",
-    "AGENCYCREATE": "Agency",
+    "AGENCYEDIT": "Client",
+    "AGENCYCREATE": "Client",
     "DELETE": "Delete",
     "EDIT": "Edit",
     "SAVE": "Save",
     "CREATE": "Save",
     "GOBACK": "Return",
-    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Client?",
     "SSN": "SSN",
     "PHONE1": "Primary Phone",
     "PHONE2": "Secondary Phone",
-    "CONTRACTNUMBER": "Contract Number"
+    "CONTRACTNUMBER": "Contract Number",
+    "EMAIL": "Email"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",

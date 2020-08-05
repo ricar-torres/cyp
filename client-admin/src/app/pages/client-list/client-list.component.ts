@@ -36,6 +36,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
     'phone1',
     'phone2',
     'contract',
+    'email',
     'actions',
   ];
   pageSize = 5;
