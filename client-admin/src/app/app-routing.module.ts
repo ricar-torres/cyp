@@ -21,6 +21,7 @@ import { CommunicationMethodsListComponent } from './pages/communication-methods
 import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
+import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 
 const routes: Routes = [
   {
@@ -170,6 +171,14 @@ const routes: Routes = [
       {
         path: 'bonafide/:id',
         component: BonaFideComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+        },
+      },
+      {
+        path: 'documentation-call/:id',
+        component: DocumentationCallComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,

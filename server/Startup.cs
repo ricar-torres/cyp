@@ -73,7 +73,7 @@ namespace WebApi {
 			services.AddScoped<ICampaignsService, CampaignsService>();
 			services.AddScoped<ICommunicationMethodService, CommunicationMethodService>();
 			services.AddScoped<IRetirementService, RetirementService>();
-
+			services.AddScoped<IDocumentationCallService, DocumentationCallService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
