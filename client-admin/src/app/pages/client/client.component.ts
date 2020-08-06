@@ -17,7 +17,6 @@ import { LanguageService } from '@app/shared/Language.service';
 })
 export class ClientComponent implements OnInit {
   clientid: string;
-  birthDateDisabled: boolean = true;
 
   editSaveToggle: boolean = false;
 
@@ -105,7 +104,6 @@ export class ClientComponent implements OnInit {
     this.reactiveForm.get('Gender').disable();
     this.reactiveForm.get('BirthDate').disable();
     this.reactiveForm.get('MaritalStatus').disable();
-    this.birthDateDisabled = !this.birthDateDisabled;
   }
   private enableControls() {
     this.editSaveToggle = !this.editSaveToggle;
@@ -117,9 +115,8 @@ export class ClientComponent implements OnInit {
     this.reactiveForm.get('Ssn').enable();
     this.reactiveForm.get('Gender').enable();
     //uncoment to allow user to enter characters
-    //this.reactiveForm.get('BirthDate').enable();
+    this.reactiveForm.get('BirthDate').enable();
     this.reactiveForm.get('MaritalStatus').enable();
-    this.birthDateDisabled = !this.birthDateDisabled;
   }
 
   onBack() {
