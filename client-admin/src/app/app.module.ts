@@ -108,6 +108,8 @@ import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-ev
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 import { ClientListComponent } from './pages/client-list/client-list.component';
 import { ClientComponent } from './pages/client/client.component';
+import { ClientWizardComponent } from './pages/client-wizard/client-wizard.component';
+import { MatStepperModule } from '@angular/material/stepper';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -151,6 +153,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     QualifyingEventListComponent,
     ClientListComponent,
     ClientComponent,
+    ClientWizardComponent,
   ],
   imports: [
     BrowserModule,
@@ -204,6 +207,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlexLayoutModule,
     BrowserModule,
     HttpClientModule,
+    MatStepperModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [
@@ -226,6 +230,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     SnackBarConfirmationComponent,
     DialogGenericSuccessComponent,
     ConfirmDialogComponent,
+    ClientWizardComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

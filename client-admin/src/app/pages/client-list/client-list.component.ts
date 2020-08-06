@@ -17,6 +17,7 @@ import {
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 import { MenuRoles } from '@app/models/enums';
 import { ClientService } from '@app/shared/client.service';
+import { ClientWizardComponent } from '../client-wizard/client-wizard.component';
 
 @Component({
   selector: 'app-client-list',
@@ -111,7 +112,12 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   goToNew() {
-    this.router.navigate(['/home/client']);
+    const dialogRef = this.dialog.open(ClientWizardComponent, {
+      width: '90%',
+      height: '90%',
+      data: {},
+    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   doFilter(value: any) {
