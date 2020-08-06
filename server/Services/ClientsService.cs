@@ -101,6 +101,7 @@ namespace WebApi.Services
         item.LastName2 = payload.LastName2;
         item.MaritalStatus = payload.MaritalStatus;
         item.BirthDate = payload.BirthDate;
+        item.Gender = payload.Gender;
         item.UpdatedAt = DateTime.Now;
 
         _context.Clients.Update(item);
