@@ -28,6 +28,8 @@
   "FEMALE": "Female",
   "UPDATEDAT": "Updated",
   "CREATEDAT": "Created",
+  "MARRIED": "Married",
+  "SINGLE": "Single",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -95,7 +97,15 @@
     "DEPENDANTS": "Dependants",
     "ALLIANCE": "Alliance",
     "CALLHISTORY": "Call History",
-    "DIRECTIONS": "Directions"
+    "DIRECTIONS": "Directions",
+    "PHYSICALADDRESS": "Physical Address",
+    "PHOSTALADDRESS": "Postal Address",
+    "ADDRESSLINE1": "Address line 1",
+    "ADDRESSLINE2": "Address line 2",
+    "COUNTRY": "Country",
+    "CITY": "City",
+    "POSTALCODE": "Postal Code",
+    "COMMENTS": "Comments"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",

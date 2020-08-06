@@ -29,6 +29,8 @@
   "FEMALE": "Mujer",
   "UPDATEDAT": "Actualizado",
   "CREATEDAT": "Creado",
+  "MARRIED": "Married",
+  "SINGLE": "Single",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -96,7 +98,15 @@
     "DEPENDANTS": "Dependientes",
     "ALLIANCE": "Alianzas",
     "CALLHISTORY": "Historial de llamadas",
-    "DIRECTIONS": "Direcciones"
+    "DIRECTIONS": "Direcciones",
+    "PHYSICALADDRESS": "Dirección Física",
+    "PHOSTALADDRESS": "Dirección Postal",
+    "ADDRESSLINE1": "Dirección 1",
+    "ADDRESSLINE2": "Dirección 2",
+    "COUNTRY": "Pais",
+    "CITY": "Ciudad",
+    "POSTALCODE": "Código Postal",
+    "COMMENTS": "Comentarios"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

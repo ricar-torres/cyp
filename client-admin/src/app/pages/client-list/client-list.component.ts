@@ -113,8 +113,8 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
   goToNew() {
     const dialogRef = this.dialog.open(ClientWizardComponent, {
-      width: '90%',
-      height: '90%',
+      width: '95%',
+      height: '95%',
       data: {},
     });
     dialogRef.afterClosed().subscribe((result) => {});

@@ -65,7 +65,14 @@
             >
               <mat-form-field class="width-with-space">
                 <mat-label>{{ 'CLIENTS.MARITALSTATUS' | translate }}</mat-label>
-                <input matInput formControlName="MaritalStatus" />
+                <mat-select formControlName="MaritalStatus">
+                  <mat-option [value]="1">{{
+                    'MARRIED' | translate
+                  }}</mat-option>
+                  <mat-option [value]="0">{{
+                    'SINGLE' | translate
+                  }}</mat-option>
+                </mat-select>
               </mat-form-field>
             </div>
             <div
@@ -76,7 +83,7 @@
             >
               <mat-form-field class="width-with-space">
                 <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
-                <input matInput formControlName="Ssn" />
+                <input matInput formControlName="Ssn" mask="000-00-0000" />
               </mat-form-field>
             </div>
             <div
@@ -126,9 +133,145 @@
                 <input matInput formControlName="Email" />
               </mat-form-field>
             </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center end"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.PHONE1' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="Phone1"
+                  mask="(000)-000-0000"
+                />
+              </mat-form-field>
+            </div>
+            <div
+              fxFlex="0 1 25%"
+              fxFlex.lt-md="0 1 50%"
+              fxFlex.lt-sm="100%"
+              fxLayoutAlign="center end"
+            >
+              <mat-form-field class="width-with-space">
+                <mat-label>{{ 'CLIENTS.PHONE2' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="Phone2"
+                  mask="(000)-000-0000"
+                />
+              </mat-form-field>
+            </div>
+          </div>
+          <div
+            fxLayout="row wrap"
+            *ngIf="fromWizard"
+            class="directions margin-top-20"
+          >
+            <div
+              fxFlex="0 1 50%"
+              fxFlex.lt-md="100%"
+              fxLayoutAlign="center"
+              formGroupName="PhysicalAddress"
+            >
+              <mat-card class="width-with-space">
+                <mat-card-header>
+                  <mat-card-title>
+                    {{ 'CLIENTS.PHYSICALADDRESS' | translate }}
+                  </mat-card-title>
+                  <!-- <mat-card-subtitle>
+                    {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
+                  > -->
+                </mat-card-header>
+                <mat-card-content>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{
+                      'CLIENTS.ADDRESSLINE1' | translate
+                    }}</mat-label>
+                    <input matInput formControlName="AddressLine1" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{
+                      'CLIENTS.ADDRESSLINE2' | translate
+                    }}</mat-label>
+                    <input matInput formControlName="AddressLine2" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{ 'CLIENTS.COUNTRY' | translate }}</mat-label>
+                    <input matInput formControlName="Country" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{ 'CLIENTS.CITY' | translate }}</mat-label>
+                    <input matInput formControlName="City" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{
+                      'CLIENTS.POSTALCODE' | translate
+                    }}</mat-label>
+                    <input matInput formControlName="PostalCode" />
+                  </mat-form-field>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div
+              fxFlex="0 1 50%"
+              fxFlex.lt-md="100%"
+              fxLayoutAlign="center"
+              formGroupName="PostalAddress"
+            >
+              <mat-card class="width-with-space">
+                <mat-card-header>
+                  <mat-card-title>
+                    {{ 'CLIENTS.PHOSTALADDRESS' | translate }}
+                  </mat-card-title>
+                  <!-- <mat-card-subtitle>
+                    {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
+                  > -->
+                </mat-card-header>
+                <mat-card-content>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{
+                      'CLIENTS.ADDRESSLINE1' | translate
+                    }}</mat-label>
+                    <input matInput formControlName="AddressLine1" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{
+                      'CLIENTS.ADDRESSLINE2' | translate
+                    }}</mat-label>
+                    <input matInput formControlName="AddressLine2" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{ 'CLIENTS.COUNTRY' | translate }}</mat-label>
+                    <input matInput formControlName="Country" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{ 'CLIENTS.CITY' | translate }}</mat-label>
+                    <input matInput formControlName="City" />
+                  </mat-form-field>
+                  <mat-form-field class="width-with-space">
+                    <mat-label>{{
+                      'CLIENTS.POSTALCODE' | translate
+                    }}</mat-label>
+                    <input matInput formControlName="PostalCode" />
+                  </mat-form-field>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div fxFlex="100%" fxLayoutAlign="center">
+              <mat-form-field class="full-width margin-top-20">
+                <mat-label>{{ 'CLIENTS.COMMENTS' | translate }}</mat-label>
+                <textarea
+                  class="text-area-height"
+                  matInput
+                  formControlName="Comments"
+                ></textarea>
+              </mat-form-field>
+            </div>
           </div>
 
-          <mat-card-actions>
+          <mat-card-actions *ngIf="!fromWizard">
             <button
               *ngIf="!editSaveToggle"
               mat-raised-button
@@ -160,7 +303,7 @@
           </mat-card-actions>
         </form>
       </div>
-      <mat-tab-group mat-stretch-tabs>
+      <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
         <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
           Content 1
         </mat-tab>

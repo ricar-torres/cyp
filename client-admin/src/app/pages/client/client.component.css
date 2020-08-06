@@ -9,3 +9,11 @@
   padding-left: 10px !important;
   padding-right: 10px !important;
 }
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.text-area-height {
+  height: 100px;
+}

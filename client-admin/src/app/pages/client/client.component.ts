@@ -1,5 +1,10 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  FormControl,
+} from '@angular/forms';
 import { ClientService } from '@app/shared/client.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debug } from 'console';
@@ -9,6 +14,7 @@ import { MatDatepicker, MatDatepickerToggle } from '@angular/material';
 import { AppService } from '@app/shared/app.service';
 import { MenuRoles, PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
 
 @Component({
   selector: 'app-client',
@@ -17,8 +23,9 @@ import { LanguageService } from '@app/shared/Language.service';
 })
 export class ClientComponent implements OnInit {
   clientid: string;
-
   editSaveToggle: boolean = false;
+
+  @Input() fromWizard: boolean = false;
 
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -41,8 +48,55 @@ export class ClientComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private app: AppService,
-    private languageService: LanguageService
+    private languageService: LanguageService,
+    private clientWizard: ClientWizardService
   ) {}
+
+  async ngOnInit() {
+    /*
+      if the component is called from the wizard
+      the formGroup holder will reside in the service
+      for the wizard
+    */
+    if (!this.fromWizard) {
+      this.setupFabButton();
+      this.clientid = this.route.snapshot.paramMap.get('id');
+      if (this.clientid) {
+        var client: any = await this.clientsService.client(this.clientid);
+        this.reactiveForm = this.fb.group({
+          Id: [client.id],
+          Name: [client.name, [Validators.required]],
+          LastName1: [client.lastName1, [Validators.required]],
+          LastName2: [client.lastName2],
+          Email: [client.email, [Validators.email]],
+          Initial: [client.initial],
+          Ssn: [client.ssn, Validators.required],
+          Gender: [client.gender],
+          BirthDate: [client.birthDate, Validators.required],
+          MaritalStatus: [client.maritalStatus],
+          Phone1: [client.phone1],
+          Phone2: [client.phone2],
+        });
+        this.disableControls();
+      } else {
+        this.reactiveForm = this.fb.group({
+          Name: ['', [Validators.required]],
+          LastName1: ['', [Validators.required]],
+          LastName2: [''],
+          Email: ['', [Validators.email]],
+          Initial: [''],
+          Ssn: ['', Validators.required],
+          Gender: [''],
+          BirthDate: ['', Validators.required],
+          MaritalStatus: [''],
+          Phone1: [''],
+          Phone2: [''],
+        });
+      }
+    } else {
+      this.reactiveForm = this.clientWizard.clientDemographic;
+    }
+  }
 
   async onSubmit() {
     try {
@@ -61,62 +115,24 @@ export class ClientComponent implements OnInit {
     this.editSaveToggle = !this.editSaveToggle;
   }
 
-  async ngOnInit() {
-    this.setupFabButton();
-    this.clientid = this.route.snapshot.paramMap.get('id');
-    var client: any = await this.clientsService.client(this.clientid);
-    if (this.clientid) {
-      this.reactiveForm = this.fb.group({
-        Id: [client.id],
-        Name: [client.name, [Validators.required]],
-        LastName1: [client.lastName1, [Validators.required]],
-        LastName2: [client.lastName2],
-        Email: [client.email, [Validators.email]],
-        Initial: [client.initial],
-        Ssn: [client.ssn, Validators.required],
-        Gender: [client.gender],
-        BirthDate: [client.birthDate, Validators.required],
-        MaritalStatus: [client.maritalStatus],
-      });
-      this.disableControls();
-    } else {
-      this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.required]],
-        LastName1: ['', [Validators.required]],
-        LastName2: [''],
-        Email: ['', [Validators.email]],
-        Initial: [client.initial],
-        Ssn: ['', Validators.required],
-        Gender: [''],
-        BirthDate: ['', Validators.required],
-        MaritalStatus: [''],
-      });
-    }
-  }
-
   private disableControls() {
-    this.reactiveForm.get('Name').disable();
-    this.reactiveForm.get('LastName1').disable();
-    this.reactiveForm.get('LastName2').disable();
-    this.reactiveForm.get('Email').disable();
-    this.reactiveForm.get('Initial').disable();
-    this.reactiveForm.get('Ssn').disable();
-    this.reactiveForm.get('Gender').disable();
-    this.reactiveForm.get('BirthDate').disable();
-    this.reactiveForm.get('MaritalStatus').disable();
+    this.toggleControls(true);
   }
   private enableControls() {
     this.editSaveToggle = !this.editSaveToggle;
-    this.reactiveForm.get('Name').enable();
-    this.reactiveForm.get('LastName1').enable();
-    this.reactiveForm.get('LastName2').enable();
-    this.reactiveForm.get('Email').enable();
-    this.reactiveForm.get('Initial').enable();
-    this.reactiveForm.get('Ssn').enable();
-    this.reactiveForm.get('Gender').enable();
-    //uncoment to allow user to enter characters
-    this.reactiveForm.get('BirthDate').enable();
-    this.reactiveForm.get('MaritalStatus').enable();
+    this.toggleControls(false);
+  }
+
+  toggleControls(disable: boolean) {
+    for (var property in this.reactiveForm.controls) {
+      if (this.reactiveForm.controls.hasOwnProperty(property)) {
+        if (disable) {
+          this.reactiveForm.get(property).disable();
+        } else {
+          this.reactiveForm.get(property).enable();
+        }
+      }
+    }
   }
 
   onBack() {

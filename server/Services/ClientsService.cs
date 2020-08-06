@@ -95,6 +95,7 @@ namespace WebApi.Services
           throw new AppException("Agency not found");
 
         item.Name = payload.Name;
+        item.Initial = payload.Initial;
         item.Ssn = payload.Ssn;
         item.Email = payload.Email;
         item.LastName1 = payload.LastName1;
@@ -102,13 +103,13 @@ namespace WebApi.Services
         item.MaritalStatus = payload.MaritalStatus;
         item.BirthDate = payload.BirthDate;
         item.Gender = payload.Gender;
+        item.Phone1 = payload.Phone1;
+        item.Phone2 = payload.Phone2;
         item.UpdatedAt = DateTime.Now;
 
         _context.Clients.Update(item);
         _context.SaveChanges();
-
         return item;
-
       }
       catch (Exception ex)
       {
