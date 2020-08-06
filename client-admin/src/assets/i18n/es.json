@@ -27,6 +27,8 @@
   "SEARCH": "Buscar",
   "MALE": "Hombre",
   "FEMALE": "Mujer",
+  "UPDATEDAT": "Actualizado",
+  "CREATEDAT": "Creado",
 
   "LOGIN-FORM": {
     "USER": "Usuario",

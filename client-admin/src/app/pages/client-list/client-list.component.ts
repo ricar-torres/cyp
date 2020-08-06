@@ -31,12 +31,14 @@ export class ClientListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'name',
-    'ssn',
-    'gender',
+    //'ssn',
+    //'gender',
     'phone1',
-    'phone2',
+    //'phone2',
     'contract',
     'email',
+    'createdAt',
+    'updatedAt',
     'actions',
   ];
   pageSize = 5;
@@ -118,7 +120,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
 
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('CLIENT.ARE_YOU_SURE_DELETE')
+      .get('CLIENTS.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate

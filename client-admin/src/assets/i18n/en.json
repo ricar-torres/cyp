@@ -26,6 +26,8 @@
   "SEARCH": "Search",
   "MALE": "Male",
   "FEMALE": "Female",
+  "UPDATEDAT": "Updated",
+  "CREATEDAT": "Created",
 
   "LOGIN-FORM": {
     "USER": "User",

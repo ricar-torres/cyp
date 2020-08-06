@@ -59,17 +59,14 @@ namespace WebApi.Services
     {
       try
       {
-
         payload.CreatedAt = DateTime.Now;
+        payload.UpdatedAt = DateTime.Now;
         _context.Chapters.Add(payload);
         _context.SaveChanges();
-
         return payload;
-
       }
       catch (Exception ex)
       {
-
         throw ex;
       }
 

@@ -33,6 +33,8 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
     'code',
     'siglas',
     'phone',
+    'createdAt',
+    'updatedAt',
     'actions',
   ];
   pageSize = 5;
