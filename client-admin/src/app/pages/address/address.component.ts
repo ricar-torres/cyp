@@ -25,44 +25,77 @@ export class AddressComponent implements OnInit {
   onSubmit() {}
 
   async ngOnInit() {
-    /*
-      if the component is called from the wizard
-      the formGroup holder will reside in the service
-      for the wizard
-    */
+    this.reactiveForm = this.clientWizard.clientAddress;
     if (!this.fromWizard) {
       var addresses: any = await this.addressService.getClientAddress(
         this.clientid
       );
+
       var physicalAddress = addresses.find((addr) => addr.type == 1);
       var postalAddress = addresses.find((addr) => addr.type == 2);
+      if (physicalAddress) {
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('Type')
+          .setValue(physicalAddress.type);
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('Line1')
+          .setValue(physicalAddress.line1);
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('Line2')
+          .setValue(physicalAddress.line2);
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('State')
+          .setValue(physicalAddress.state);
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('City')
+          .setValue(physicalAddress.city);
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('Zipcode')
+          .setValue(physicalAddress.zipcode);
+        this.reactiveForm
+          .get('PhysicalAddress')
+          .get('Zip4')
+          .setValue(physicalAddress.zip4);
+      }
 
-      this.reactiveForm = this.fb.group({
-        Id: [addresses.id],
-        PhysicalAddress: this.fb.group({
-          Type: [1],
-          Line1: [physicalAddress.line1],
-          Line2: [physicalAddress.line2],
-          State: [physicalAddress.state],
-          City: [physicalAddress.city],
-          Zipcode: [physicalAddress.zipcode],
-          Zip4: [physicalAddress.zip4],
-        }),
-        PostalAddress: this.fb.group({
-          Type: [2],
-          Line1: [postalAddress.line1],
-          Line2: [postalAddress.line2],
-          State: [postalAddress.state],
-          City: [postalAddress.city],
-          Zipcode: [postalAddress.zipcode],
-          Zip4: [postalAddress.zip4],
-        }),
-      });
-      this.toggleControls(true);
-    } else {
-      this.toggleControls(false);
-      this.reactiveForm = this.clientWizard.clientAddress;
+      if (postalAddress) {
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('Type')
+          .setValue(postalAddress.type);
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('Line1')
+          .setValue(postalAddress.line1);
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('Line2')
+          .setValue(postalAddress.line2);
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('State')
+          .setValue(postalAddress.state);
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('City')
+          .setValue(postalAddress.city);
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('Zipcode')
+          .setValue(postalAddress.zipcode);
+        this.reactiveForm
+          .get('PostalAddress')
+          .get('Zip4')
+          .setValue(postalAddress.zip4);
+      }
     }
+
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
     });

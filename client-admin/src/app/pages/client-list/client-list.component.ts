@@ -18,6 +18,7 @@ import {
 import { MenuRoles } from '@app/models/enums';
 import { ClientService } from '@app/shared/client.service';
 import { ClientWizardComponent } from '../client-wizard/client-wizard.component';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
 
 @Component({
   selector: 'app-client-list',
@@ -55,7 +56,8 @@ export class ClientListComponent implements OnInit, OnDestroy {
     private router: Router,
     private languageService: LanguageService,
     private dialog: MatDialog,
-    private clientService: ClientService
+    private clientService: ClientService,
+    private wizardService: ClientWizardService
   ) {}
   ngOnDestroy(): void {
     this.dataSource = undefined;
@@ -112,7 +114,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   goToNew() {
-    this.clientService.toggleEditControl.emit(false);
+    this.wizardService.resetFormGroups();
     const dialogRef = this.dialog.open(ClientWizardComponent, {
       width: '95%',
       height: '95%',

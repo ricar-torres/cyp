@@ -5,42 +5,53 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   providedIn: 'root',
 })
 export class ClientWizardService {
+  constructor(private formBuilder: FormBuilder) {}
+
+  resetFormGroups() {
+    this.clientDemographic.reset();
+    this.clientAddress.reset();
+    this.secondFormGroup.reset();
+  }
+
   clientDemographic = this.formBuilder.group({
-    Name: ['', [Validators.required]],
-    LastName1: ['', [Validators.required]],
-    LastName2: [''],
-    Email: ['', [Validators.email]],
-    Initial: [''],
-    Ssn: ['', Validators.required],
-    Gender: [''],
-    BirthDate: ['', Validators.required],
-    MaritalStatus: [''],
-    Phone1: [''],
-    Phone2: [''],
+    Id: [null],
+    Name: [null, [Validators.required]],
+    LastName1: [null, [Validators.required]],
+    LastName2: [null],
+    Email: [null, [Validators.email]],
+    Initial: [null],
+    Ssn: [null, Validators.required],
+    Gender: [null],
+    BirthDate: [null, Validators.required],
+    MaritalStatus: [null],
+    Phone1: [null],
+    Phone2: [null],
   });
 
   clientAddress = this.formBuilder.group({
     PhysicalAddress: this.formBuilder.group({
-      Line1: [''],
-      Line2: [''],
-      State: [''],
-      City: [''],
-      Zipcode: [''],
-      Zipcode4: [''],
+      Id: [null],
+      Line1: [null],
+      Type: [null],
+      Line2: [null],
+      State: [null],
+      City: [null],
+      Zipcode: [null],
+      Zip4: [null],
     }),
     PostalAddress: this.formBuilder.group({
-      Line1: [''],
-      Line2: [''],
-      State: [''],
-      City: [''],
-      Zipcode: [''],
-      Zip4: [''],
+      Id: [null],
+      Line1: [null],
+      Type: [null],
+      Line2: [null],
+      State: [null],
+      City: [null],
+      Zipcode: [null],
+      Zip4: [null],
     }),
   });
 
   secondFormGroup = this.formBuilder.group({
-    secondCtrl: ['', Validators.required],
+    secondCtrl: [null, Validators.required],
   });
-
-  constructor(private formBuilder: FormBuilder) {}
 }

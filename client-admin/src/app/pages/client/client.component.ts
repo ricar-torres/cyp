@@ -54,50 +54,24 @@ export class ClientComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    /*
-      if the component is called from the wizard
-      the formGroup holder will reside in the service
-      for the wizard
-    */
+    this.reactiveForm = this.clientWizard.clientDemographic;
     if (!this.fromWizard) {
       this.setupFabButton();
       this.clientid = this.route.snapshot.paramMap.get('id');
-      if (this.clientid) {
-        var client: any = await this.clientsService.client(this.clientid);
-        console.log(client);
-        this.reactiveForm = this.fb.group({
-          Id: [client.id],
-          Name: [client.name, [Validators.required]],
-          LastName1: [client.lastName1, [Validators.required]],
-          LastName2: [client.lastName2],
-          Email: [client.email, [Validators.email]],
-          Initial: [client.initial],
-          Ssn: [client.ssn, Validators.required],
-          Gender: [client.gender],
-          BirthDate: [client.birthDate, Validators.required],
-          MaritalStatus: [client.maritalStatus],
-          Phone1: [client.phone1],
-          Phone2: [client.phone2],
-        });
-      } else {
-        this.reactiveForm = this.fb.group({
-          Name: ['', [Validators.required]],
-          LastName1: ['', [Validators.required]],
-          LastName2: [''],
-          Email: ['', [Validators.email]],
-          Initial: [''],
-          Ssn: ['', Validators.required],
-          Gender: [''],
-          BirthDate: ['', Validators.required],
-          MaritalStatus: [''],
-          Phone1: [''],
-          Phone2: [''],
-        });
-      }
-      this.toggleControls(true);
-    } else {
-      this.toggleControls(false);
-      this.reactiveForm = this.clientWizard.clientDemographic;
+      var client: any = await this.clientsService.client(this.clientid);
+
+      this.reactiveForm.get('Id').setValue(this.clientid);
+      this.reactiveForm.get('Name').setValue(client.name);
+      this.reactiveForm.get('LastName1').setValue(client.lastName1);
+      this.reactiveForm.get('LastName2').setValue(client.lastName2);
+      this.reactiveForm.get('Email').setValue(client.email);
+      this.reactiveForm.get('Initial').setValue(client.initial);
+      this.reactiveForm.get('Ssn').setValue(client.ssn);
+      this.reactiveForm.get('Gender').setValue(client.gender);
+      this.reactiveForm.get('BirthDate').setValue(client.birthDate);
+      this.reactiveForm.get('MaritalStatus').setValue(client.maritalStatus);
+      this.reactiveForm.get('Phone1').setValue(client.phone1);
+      this.reactiveForm.get('Phone2').setValue(client.phone2);
     }
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
@@ -129,20 +103,6 @@ export class ClientComponent implements OnInit {
     this.clientsService.toggleEditControl.emit(false);
   }
 
-  toggleControls(disable: boolean) {
-    if (this.reactiveForm) {
-      for (var property in this.reactiveForm.controls) {
-        if (this.reactiveForm.controls.hasOwnProperty(property)) {
-          if (disable) {
-            this.reactiveForm.get(property).disable();
-          } else {
-            this.reactiveForm.get(property).enable();
-          }
-        }
-      }
-    }
-  }
-
   onBack() {
     this.router.navigate(['home/clients']);
   }
@@ -170,5 +130,19 @@ export class ClientComponent implements OnInit {
 
     this.fabMenuButtons.visible =
       this.fabMenuButtons.buttons.length > 0 ? true : false;
+  }
+
+  toggleControls(disable: boolean) {
+    if (this.reactiveForm) {
+      for (var property in this.reactiveForm.controls) {
+        if (this.reactiveForm.controls.hasOwnProperty(property)) {
+          if (disable) {
+            this.reactiveForm.get(property).disable();
+          } else {
+            this.reactiveForm.get(property).enable();
+          }
+        }
+      }
+    }
   }
 }
