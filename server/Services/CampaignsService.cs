@@ -78,7 +78,6 @@ namespace WebApi.Services {
 
 				_context.Campaigns.Update(item);
 				_context.SaveChanges();
-
 				return item;
 
 			} catch (Exception ex) {
@@ -100,6 +99,5 @@ namespace WebApi.Services {
 				throw new AppException("Campaign not found");
 
 		}
-
 	}
 }

@@ -23,13 +23,7 @@ export class DocumentationCallAPIService {
   getAll(): Observable<any> {
     return this.http.get(`${environment.baseURL}/${this._apiName}`);
   }
-  delete(id: string) {
-    try {
-      return this.http
-        .delete(`${environment.baseURL}/${this._apiName}/${id}`)
-        .toPromise();
-    } catch (error) {}
-  }
+
   getById(id: string): Promise<any> {
     try {
       return this.http
@@ -37,28 +31,15 @@ export class DocumentationCallAPIService {
         .toPromise();
     } catch (error) {}
   }
-  create(retirement) {
+  create(payload) {
     return this.http
-      .post(`${environment.baseURL}/${this._apiName}`, retirement)
+      .post(`${environment.baseURL}/${this._apiName}`, payload)
       .toPromise();
   }
-  update(id, retirement) {
+
+  getCallTypes(): Promise<any> {
     return this.http
-      .put(`${environment.baseURL}/${this._apiName}/${id}`, retirement)
-      .toPromise();
-  }
-  checkNameExist(name) {
-    return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/`, {
-        params: new HttpParams().set('name', name),
-      })
-      .toPromise();
-  }
-  checkCodeExist(code) {
-    return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckCodeExist/`, {
-        params: new HttpParams().set('code', code),
-      })
+      .get(`${environment.baseURL}/${this._apiName}/GetCallTypes`)
       .toPromise();
   }
 }

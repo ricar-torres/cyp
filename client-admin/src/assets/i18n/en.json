@@ -209,5 +209,11 @@
     "SAVE": "Save",
     "EXISTS_NAME": "Exists a retirement with this name",
     "EXISTS_CODE": "Exists a retirement with this code"
+  },
+  "DOCUMENTATION_CALL": {
+    "PAGE_TITLE": "Document Call",
+    "CONFIRM_NUM": "Confirmation Number",
+    "CALL_TYPE": "Call Type",
+    "COMMENT": "Comment"
   }
 }

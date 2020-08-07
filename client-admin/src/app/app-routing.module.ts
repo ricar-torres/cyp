@@ -177,7 +177,7 @@ const routes: Routes = [
         },
       },
       {
-        path: 'documentation-call/:id',
+        path: 'documentation-call',
         component: DocumentationCallComponent,
         canActivate: [AuthGuardService],
         data: {

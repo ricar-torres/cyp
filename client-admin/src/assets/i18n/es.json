@@ -210,5 +210,11 @@
     "SAVE": "Guardar",
     "EXISTS_NAME": "Existe un retiro con este nombre",
     "EXISTS_CODE": "Existe un retiro con este código"
+  },
+  "DOCUMENTATION_CALL": {
+    "PAGE_TITLE": "Documentar Llamada",
+    "CONFIRM_NUM": "Número de Confiramción",
+    "CALL_TYPE": "Típo de Llamada",
+    "COMMENT": "Commentario"
   }
 }

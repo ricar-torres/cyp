@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using server.Services;
@@ -41,7 +42,6 @@ namespace server.Controllers {
 				if (res == null) {
 					return NotFound();
 				}
-
 				return Ok(res);
 
 			} catch (Exception ex) {
@@ -52,10 +52,11 @@ namespace server.Controllers {
 		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Create([FromBody] ClientUser payload) {
+		public async Task<IActionResult> Create([FromBody] ClientUser payload) {
 
 			try {
 
+				payload.ConfirmationNumber = await this._service.CreateConfirmationCode();
 				_service.Create(payload);
 				return Ok(payload);
 
@@ -65,9 +66,26 @@ namespace server.Controllers {
 			}
 		}
 
+		[AllowAnonymous]
+		[HttpGet]
 		public IActionResult GetAllByClient(int clientId) {
 			try {
 				var res = _service.GetAllByClient(clientId);
+				if (res == null) {
+					return NotFound();
+				}
+				return Ok(res);
+
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
+		[HttpGet("[action]")]
+		public IActionResult GetCallTypes() {
+			try {
+				var res = _service.GetCallReasons();
 				if (res == null) {
 					return NotFound();
 				}
