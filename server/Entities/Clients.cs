@@ -44,12 +44,6 @@ namespace WebApi.Entities
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
     public bool? PreRegister { get; set; }
-    [NotMapped]
-    public string Comments { get; set; }
-    [NotMapped]
-    public Addresses PhysicalAddress { get; set; }
-    [NotMapped]
-    public Addresses PostalAddress { get; set; }
     public virtual Agencies Agency { get; set; }
     public virtual Campaigns Campaign { get; set; }
     public virtual Covers Cover { get; set; }

@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ClientService } from '@app/shared/client.service';
 import { Validators, FormBuilder, FormGroup } from '@angular/forms';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { AddressService } from '@app/shared/address.service';
 
 @Component({
   selector: 'app-client-address',
@@ -15,6 +16,7 @@ export class AddressComponent implements OnInit {
   reactiveForm: FormGroup;
   constructor(
     private route: ActivatedRoute,
+    private addressService: AddressService,
     private clientsService: ClientService,
     private fb: FormBuilder,
     private clientWizard: ClientWizardService
@@ -29,32 +31,37 @@ export class AddressComponent implements OnInit {
       for the wizard
     */
     if (!this.fromWizard) {
-      var client: any = await this.clientsService.client(this.clientid);
+      var addresses: any = await this.addressService.getClientAddress(
+        this.clientid
+      );
+      var physicalAddress = addresses.find((addr) => addr.type == 1);
+      var postalAddress = addresses.find((addr) => addr.type == 2);
+
       this.reactiveForm = this.fb.group({
-        Id: [client.id],
+        Id: [addresses.id],
         PhysicalAddress: this.fb.group({
           Type: [1],
-          Line1: [client.physicalAddress.line1],
-          Line2: [client.physicalAddress.line2],
-          State: [client.physicalAddress.state],
-          City: [client.physicalAddress.city],
-          Zipcode: [client.physicalAddress.zipcode],
-          Zip4: [client.physicalAddress.zip4],
+          Line1: [physicalAddress.line1],
+          Line2: [physicalAddress.line2],
+          State: [physicalAddress.state],
+          City: [physicalAddress.city],
+          Zipcode: [physicalAddress.zipcode],
+          Zip4: [physicalAddress.zip4],
         }),
         PostalAddress: this.fb.group({
           Type: [2],
-          Line1: [client.postalAddress.line1],
-          Line2: [client.postalAddress.line2],
-          State: [client.postalAddress.state],
-          City: [client.postalAddress.city],
-          Zipcode: [client.postalAddress.zipcode],
-          Zip4: [client.postalAddress.zip4],
+          Line1: [postalAddress.line1],
+          Line2: [postalAddress.line2],
+          State: [postalAddress.state],
+          City: [postalAddress.city],
+          Zipcode: [postalAddress.zipcode],
+          Zip4: [postalAddress.zip4],
         }),
       });
       this.toggleControls(true);
     } else {
       this.toggleControls(false);
-      this.reactiveForm = this.clientWizard.clientDemographic;
+      this.reactiveForm = this.clientWizard.clientAddress;
     }
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);

@@ -17,6 +17,7 @@ namespace WebApi.Services
     Clients Update(Clients payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
+    Task<List<Addresses>> GetClientAddress(int clientId);
   }
 
   public class ClientService : IClientService
@@ -60,10 +61,6 @@ namespace WebApi.Services
     public Clients GetById(int id)
     {
       var res = _context.Clients.FirstOrDefault(c => c.Id == id);
-      var physicalAddress = _context.Addresses.FirstOrDefault(a => a.ClientId == res.Id && a.Type == 1);
-      var postalAddress = _context.Addresses.FirstOrDefault(a => a.ClientId == res.Id && a.Type == 2);
-      res.PhysicalAddress = physicalAddress;
-      res.PostalAddress = postalAddress;
       return res;
     }
 
@@ -94,8 +91,8 @@ namespace WebApi.Services
       {
 
         var item = _context.Clients.FirstOrDefault(c => c.Id == payload.Id);
-        var physicalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 1);
-        var postalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 2);
+        // var physicalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 1);
+        // var postalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 2);
 
         if (item == null)
           throw new AppException("Client not found");
@@ -112,48 +109,48 @@ namespace WebApi.Services
         item.Phone1 = payload.Phone1;
         item.Phone2 = payload.Phone2;
 
-        if (payload.PhysicalAddress != null)
-        {
-          if (physicalAddress != null)
-          {
-            physicalAddress.City = payload.PhysicalAddress.City;
-            physicalAddress.State = payload.PhysicalAddress.State;
-            physicalAddress.Line1 = payload.PhysicalAddress.Line1;
-            physicalAddress.Line2 = payload.PhysicalAddress.Line2;
-            physicalAddress.Zipcode = payload.PhysicalAddress.Zipcode;
-            physicalAddress.Zip4 = payload.PhysicalAddress.Zip4;
-            physicalAddress.UpdatedAt = DateTime.Now;
-          }
-          else
-          {
-            _context.Addresses.Add(payload.PhysicalAddress);
-          }
-        }
+        // if (payload.PhysicalAddress != null)
+        // {
+        //   if (physicalAddress != null)
+        //   {
+        //     physicalAddress.City = payload.PhysicalAddress.City;
+        //     physicalAddress.State = payload.PhysicalAddress.State;
+        //     physicalAddress.Line1 = payload.PhysicalAddress.Line1;
+        //     physicalAddress.Line2 = payload.PhysicalAddress.Line2;
+        //     physicalAddress.Zipcode = payload.PhysicalAddress.Zipcode;
+        //     physicalAddress.Zip4 = payload.PhysicalAddress.Zip4;
+        //     physicalAddress.UpdatedAt = DateTime.Now;
+        //   }
+        //   else
+        //   {
+        //     _context.Addresses.Add(payload.PhysicalAddress);
+        //   }
+        // }
 
-        if (payload.PostalAddress != null)
-        {
-          if (postalAddress != null)
-          {
-            postalAddress.City = payload.PostalAddress.City;
-            postalAddress.State = payload.PostalAddress.State;
-            postalAddress.Line1 = payload.PostalAddress.Line1;
-            postalAddress.Line2 = payload.PostalAddress.Line2;
-            postalAddress.Zipcode = payload.PostalAddress.Zipcode;
-            postalAddress.Zip4 = payload.PostalAddress.Zip4;
-            postalAddress.UpdatedAt = DateTime.Now;
-          }
-          else
-          {
-            _context.Addresses.Add(payload.PostalAddress);
-          }
-        }
+        // if (payload.PostalAddress != null)
+        // {
+        //   if (postalAddress != null)
+        //   {
+        //     postalAddress.City = payload.PostalAddress.City;
+        //     postalAddress.State = payload.PostalAddress.State;
+        //     postalAddress.Line1 = payload.PostalAddress.Line1;
+        //     postalAddress.Line2 = payload.PostalAddress.Line2;
+        //     postalAddress.Zipcode = payload.PostalAddress.Zipcode;
+        //     postalAddress.Zip4 = payload.PostalAddress.Zip4;
+        //     postalAddress.UpdatedAt = DateTime.Now;
+        //   }
+        //   else
+        //   {
+        //     _context.Addresses.Add(payload.PostalAddress);
+        //   }
+        // }
 
         item.UpdatedAt = DateTime.Now;
 
 
 
-        _context.Addresses.Update(physicalAddress);
-        _context.Addresses.Update(postalAddress);
+        // _context.Addresses.Update(physicalAddress);
+        // _context.Addresses.Update(postalAddress);
         _context.Clients.Update(item);
         _context.SaveChanges();
         return item;
@@ -199,6 +196,17 @@ namespace WebApi.Services
       return false;
     }
 
+    public async Task<List<Addresses>> GetClientAddress(int clientId)
+    {
+      try
+      {
+        var address = await _context.Addresses.Where(addr => addr.ClientId == clientId && addr.DeletedAt == null).ToListAsync();
+        return address;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
   }
-
 }

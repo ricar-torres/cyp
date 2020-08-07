@@ -17,13 +17,16 @@ export class ClientWizardService {
     MaritalStatus: [''],
     Phone1: [''],
     Phone2: [''],
+  });
+
+  clientAddress = this.formBuilder.group({
     PhysicalAddress: this.formBuilder.group({
       Line1: [''],
       Line2: [''],
       State: [''],
       City: [''],
       Zipcode: [''],
-      Zip4: [''],
+      Zipcode4: [''],
     }),
     PostalAddress: this.formBuilder.group({
       Line1: [''],
@@ -34,6 +37,7 @@ export class ClientWizardService {
       Zip4: [''],
     }),
   });
+
   secondFormGroup = this.formBuilder.group({
     secondCtrl: ['', Validators.required],
   });
