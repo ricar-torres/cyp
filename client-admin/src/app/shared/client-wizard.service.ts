@@ -7,12 +7,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class ClientWizardService {
   constructor(private formBuilder: FormBuilder) {}
 
-  resetFormGroups() {
-    this.clientDemographic.reset();
-    this.clientAddress.reset();
-    this.secondFormGroup.reset();
-  }
-
   clientDemographic = this.formBuilder.group({
     Id: [null],
     Name: [null, [Validators.required]],
@@ -54,4 +48,10 @@ export class ClientWizardService {
   secondFormGroup = this.formBuilder.group({
     secondCtrl: [null, Validators.required],
   });
+
+  resetFormGroups() {
+    this.clientDemographic.reset();
+    this.clientAddress.reset();
+    this.secondFormGroup.reset();
+  }
 }
