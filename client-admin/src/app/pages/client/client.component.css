@@ -16,4 +16,5 @@
 
 .text-area-height {
   height: 100px;
+  resize: none;
 }
