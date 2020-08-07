@@ -14,7 +14,7 @@ namespace server.Services {
     ClientUser GetById(int id);
     ClientUser Create(ClientUser payload);
     IQueryable<CallReasons> GetCallReasons();
-    Task<string> CreateConfirmationCode();
+    string CreateConfirmationCode();
 
   }
   public class DocumentationCallService : IDocumentationCallService {
@@ -67,7 +67,7 @@ namespace server.Services {
     public IQueryable<CallReasons> GetCallReasons() {
       return _context.CallReasons.AsNoTracking();
     }
-    public async Task<string> CreateConfirmationCode() {
+    public string CreateConfirmationCode() {
       bool exist = true;
       Random random;
       int pin;
@@ -77,14 +77,18 @@ namespace server.Services {
       date = DateTime.Now;
       random = new Random(date.TimeOfDay.Milliseconds);
       do {
-        pin = random.Next(1000, 9999);
-        code = date.ToString("yy") +
-          date.ToString("MM") +
-          date.ToString("dd") +
-          pin;
-        //Check if code exist
-        exist = await _context.ClientUser.Where(cu => cu.ConfirmationNumber == code).FirstOrDefaultAsync() is object;
-        System.Console.WriteLine("Exist: {0}, code: {1}", exist.ToString(), code);
+        try {
+          pin = random.Next(1000, 9999);
+          code = date.ToString("yy") +
+            date.ToString("MM") +
+            date.ToString("dd") +
+            pin;
+          //Check if code exist
+          exist = _context.ClientUser.Where(cu => cu.ConfirmationNumber == code).FirstOrDefault() is object;
+          System.Console.WriteLine("Exist: {0}, code: {1}", exist.ToString(), code);
+        } catch (System.Exception ex) {
+          throw ex;
+        }
       } while (exist);
 
       return code;

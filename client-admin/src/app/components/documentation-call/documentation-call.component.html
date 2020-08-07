@@ -53,6 +53,7 @@
           mat-raised-button
           color="primary"
           *ngIf="editAccess"
+          [disabled]="!reactiveForm.valid"
         >
           {{ 'RETIREMENT.SAVE' | translate }}
         </button>

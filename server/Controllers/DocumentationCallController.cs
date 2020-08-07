@@ -52,11 +52,11 @@ namespace server.Controllers {
 		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public async Task<IActionResult> Create([FromBody] ClientUser payload) {
+		public IActionResult Create([FromBody] ClientUser payload) {
 
 			try {
 
-				payload.ConfirmationNumber = await this._service.CreateConfirmationCode();
+				payload.ConfirmationNumber = this._service.CreateConfirmationCode();
 				_service.Create(payload);
 				return Ok(payload);
 

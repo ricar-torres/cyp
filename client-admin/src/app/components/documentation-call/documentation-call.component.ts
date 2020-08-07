@@ -1,3 +1,4 @@
+import { DialogGenericSuccessComponent } from './../dialog-generic-success/dialog-generic-success.component';
 import { DocCall } from './../../models/DocCall';
 import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
 import { Component, OnInit } from '@angular/core';
@@ -10,6 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { LanguageService } from '@app/shared/Language.service';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-documentation-call',
@@ -31,7 +33,8 @@ export class DocumentationCallComponent implements OnInit {
     private formBuilder: FormBuilder,
     private router: Router,
     private apiDocCall: DocumentationCallAPIService,
-    private app: AppService
+    private app: AppService,
+    public dialog: MatDialog
   ) {}
 
   async ngOnInit() {
@@ -73,10 +76,24 @@ export class DocumentationCallComponent implements OnInit {
   onBack() {
     this.router.navigate(['home/retirement-list']);
   }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogGenericSuccessComponent, {
+      width: '250px',
+      data: {
+        message: 'Success',
+        html: '<h4>' + this.reactiveForm.get('num').value + '</h4>',
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      console.log('The dialog was closed');
+    });
+  }
+
   async onSubmit() {
     try {
       this.loading = true;
-      const res = await this.apiDocCall.create(
+      const res: any = await this.apiDocCall.create(
         new DocCall(
           this.reactiveForm.get('type').value.id,
           this.reactiveForm.get('comment').value,
@@ -84,6 +101,8 @@ export class DocumentationCallComponent implements OnInit {
           1 //this.app.getLoggedInUser().Id
         )
       );
+      //this.reactiveForm.get('num').setValue(res.confirmationNumber);
+      //this.openDialog();
       this.onBack();
     } catch (error) {
       this.loading = false;
