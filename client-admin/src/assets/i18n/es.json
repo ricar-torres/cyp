@@ -29,8 +29,8 @@
   "FEMALE": "Mujer",
   "UPDATEDAT": "Actualizado",
   "CREATEDAT": "Creado",
-  "MARRIED": "Married",
-  "SINGLE": "Single",
+  "MARRIED": "Casado",
+  "SINGLE": "Soltero",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
