@@ -82,7 +82,7 @@ namespace WebApi.Services
         var item = _context.QualifyingEvents.Find(payload.Id);
 
         if (item == null)
-          throw new AppException("Agency not found");
+          throw new AppException("Qualifying Event not found");
 
         item.Name = payload.Name;
         item.UpdatedAt = DateTime.Now;

@@ -102,9 +102,10 @@
     "PHOSTALADDRESS": "Postal Address",
     "ADDRESSLINE1": "Address line 1",
     "ADDRESSLINE2": "Address line 2",
-    "COUNTRY": "Country",
+    "STATE": "State",
     "CITY": "City",
     "POSTALCODE": "Postal Code",
+    "POSTALCODE4": "Postal Code +4",
     "COMMENTS": "Comments"
   },
   "QUALIFYINGEVENT": {

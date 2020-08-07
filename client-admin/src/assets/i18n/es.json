@@ -103,9 +103,10 @@
     "PHOSTALADDRESS": "Dirección Postal",
     "ADDRESSLINE1": "Dirección 1",
     "ADDRESSLINE2": "Dirección 2",
-    "COUNTRY": "Pais",
+    "STATE": "Estado",
     "CITY": "Ciudad",
     "POSTALCODE": "Código Postal",
+    "POSTALCODE4": "Código Postal +4",
     "COMMENTS": "Comentarios"
   },
   "QUALIFYINGEVENT": {

@@ -78,7 +78,7 @@ namespace WebApi.Services
         _context.SaveChanges();
       }
       else
-        throw new AppException("Agency not found");
+        throw new AppException("Bonafide not found");
     }
 
     public IQueryable<BonaFides> GetAll()

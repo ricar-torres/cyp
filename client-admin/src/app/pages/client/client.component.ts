@@ -1,9 +1,10 @@
-import { Component, OnInit, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
   Validators,
   FormControl,
+  FormArray,
 } from '@angular/forms';
 import { ClientService } from '@app/shared/client.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -63,6 +64,7 @@ export class ClientComponent implements OnInit {
       this.clientid = this.route.snapshot.paramMap.get('id');
       if (this.clientid) {
         var client: any = await this.clientsService.client(this.clientid);
+        console.log(client);
         this.reactiveForm = this.fb.group({
           Id: [client.id],
           Name: [client.name, [Validators.required]],
@@ -77,7 +79,6 @@ export class ClientComponent implements OnInit {
           Phone1: [client.phone1],
           Phone2: [client.phone2],
         });
-        this.disableControls();
       } else {
         this.reactiveForm = this.fb.group({
           Name: ['', [Validators.required]],
@@ -93,9 +94,14 @@ export class ClientComponent implements OnInit {
           Phone2: [''],
         });
       }
+      this.toggleControls(true);
     } else {
+      this.toggleControls(false);
       this.reactiveForm = this.clientWizard.clientDemographic;
     }
+    this.clientsService.toggleEditControl.subscribe((val) => {
+      this.toggleControls(val);
+    });
   }
 
   async onSubmit() {
@@ -116,20 +122,22 @@ export class ClientComponent implements OnInit {
   }
 
   private disableControls() {
-    this.toggleControls(true);
+    this.clientsService.toggleEditControl.emit(true);
   }
   private enableControls() {
     this.editSaveToggle = !this.editSaveToggle;
-    this.toggleControls(false);
+    this.clientsService.toggleEditControl.emit(false);
   }
 
   toggleControls(disable: boolean) {
-    for (var property in this.reactiveForm.controls) {
-      if (this.reactiveForm.controls.hasOwnProperty(property)) {
-        if (disable) {
-          this.reactiveForm.get(property).disable();
-        } else {
-          this.reactiveForm.get(property).enable();
+    if (this.reactiveForm) {
+      for (var property in this.reactiveForm.controls) {
+        if (this.reactiveForm.controls.hasOwnProperty(property)) {
+          if (disable) {
+            this.reactiveForm.get(property).disable();
+          } else {
+            this.reactiveForm.get(property).enable();
+          }
         }
       }
     }

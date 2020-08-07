@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, EventEmitter } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
 
@@ -6,6 +6,9 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class ClientService {
+  toggleEditControl: EventEmitter<boolean> = new EventEmitter<boolean>();
+  saveClientEdits: EventEmitter<boolean> = new EventEmitter<boolean>();
+
   checkName(obj: { name: string }): any {
     return this.http
       .get(`${environment.baseURL}/clients/CheckName/${obj.name}`)

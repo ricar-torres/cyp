@@ -59,7 +59,11 @@ namespace WebApi.Services
 
     public Clients GetById(int id)
     {
-      var res = _context.Clients.Find(id);
+      var res = _context.Clients.FirstOrDefault(c => c.Id == id);
+      var physicalAddress = _context.Addresses.FirstOrDefault(a => a.ClientId == res.Id && a.Type == 1);
+      var postalAddress = _context.Addresses.FirstOrDefault(a => a.ClientId == res.Id && a.Type == 2);
+      res.PhysicalAddress = physicalAddress;
+      res.PostalAddress = postalAddress;
       return res;
     }
 
@@ -89,10 +93,12 @@ namespace WebApi.Services
       try
       {
 
-        var item = _context.Clients.Find(payload.Id);
+        var item = _context.Clients.FirstOrDefault(c => c.Id == payload.Id);
+        var physicalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 1);
+        var postalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 2);
 
         if (item == null)
-          throw new AppException("Agency not found");
+          throw new AppException("Client not found");
 
         item.Name = payload.Name;
         item.Initial = payload.Initial;
@@ -105,8 +111,49 @@ namespace WebApi.Services
         item.Gender = payload.Gender;
         item.Phone1 = payload.Phone1;
         item.Phone2 = payload.Phone2;
+
+        if (payload.PhysicalAddress != null)
+        {
+          if (physicalAddress != null)
+          {
+            physicalAddress.City = payload.PhysicalAddress.City;
+            physicalAddress.State = payload.PhysicalAddress.State;
+            physicalAddress.Line1 = payload.PhysicalAddress.Line1;
+            physicalAddress.Line2 = payload.PhysicalAddress.Line2;
+            physicalAddress.Zipcode = payload.PhysicalAddress.Zipcode;
+            physicalAddress.Zip4 = payload.PhysicalAddress.Zip4;
+            physicalAddress.UpdatedAt = DateTime.Now;
+          }
+          else
+          {
+            _context.Addresses.Add(payload.PhysicalAddress);
+          }
+        }
+
+        if (payload.PostalAddress != null)
+        {
+          if (postalAddress != null)
+          {
+            postalAddress.City = payload.PostalAddress.City;
+            postalAddress.State = payload.PostalAddress.State;
+            postalAddress.Line1 = payload.PostalAddress.Line1;
+            postalAddress.Line2 = payload.PostalAddress.Line2;
+            postalAddress.Zipcode = payload.PostalAddress.Zipcode;
+            postalAddress.Zip4 = payload.PostalAddress.Zip4;
+            postalAddress.UpdatedAt = DateTime.Now;
+          }
+          else
+          {
+            _context.Addresses.Add(payload.PostalAddress);
+          }
+        }
+
         item.UpdatedAt = DateTime.Now;
 
+
+
+        _context.Addresses.Update(physicalAddress);
+        _context.Addresses.Update(postalAddress);
         _context.Clients.Update(item);
         _context.SaveChanges();
         return item;

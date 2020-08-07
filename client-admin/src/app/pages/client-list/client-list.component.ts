@@ -52,10 +52,10 @@ export class ClientListComponent implements OnInit, OnDestroy {
   constructor(
     private app: AppService,
     private fb: FormBuilder,
-    private clientService: ClientService,
     private router: Router,
     private languageService: LanguageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private clientService: ClientService
   ) {}
   ngOnDestroy(): void {
     this.dataSource = undefined;
@@ -112,6 +112,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   goToNew() {
+    this.clientService.toggleEditControl.emit(false);
     const dialogRef = this.dialog.open(ClientWizardComponent, {
       width: '95%',
       height: '95%',

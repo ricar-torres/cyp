@@ -1,6 +1,7 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="this.wizardForms.clientDemographic">
     <app-client [fromWizard]="true"></app-client>
+    <app-client-address [fromWizard]="true"></app-client-address>
     <button mat-button matStepperNext>Next</button>
   </mat-step>
   <mat-step [stepControl]="this.wizardForms.secondFormGroup">

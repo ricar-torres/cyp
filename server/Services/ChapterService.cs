@@ -80,7 +80,7 @@ namespace WebApi.Services
         var item = _context.Chapters.Find(payload.Id);
 
         if (item == null)
-          throw new AppException("Agency not found");
+          throw new AppException("Chapter not found");
 
         item.Name = payload.Name;
         item.Quota = payload.Quota;

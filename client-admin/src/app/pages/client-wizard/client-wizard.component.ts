@@ -9,8 +9,6 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
   styleUrls: ['./client-wizard.component.css'],
 })
 export class ClientWizardComponent implements OnInit {
-  firstFormGroup: FormGroup;
-  secondFormGroup: FormGroup;
   isLinear: boolean = true;
 
   constructor(
