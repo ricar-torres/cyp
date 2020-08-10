@@ -69,7 +69,35 @@ namespace WebApi.Services
     {
       try
       {
-        await Task.Delay(100);
+        var newClient = new Clients();
+        if (payload.PreRegister)
+        {
+          newClient.Email = payload.Demographic?.Email;
+          newClient.Gender = payload.Demographic?.Gender;
+          newClient.Initial = payload.Demographic?.Initial;
+          newClient.LastName1 = payload.Demographic?.LastName1;
+          newClient.LastName2 = payload.Demographic?.LastName2;
+          newClient.MaritalStatus = payload.Demographic?.MaritalStatus;
+          newClient.Name = payload.Demographic?.Name;
+          newClient.Phone1 = payload.Demographic?.Phone1;
+          newClient.Phone2 = payload.Demographic?.Phone2;
+          newClient.Phone2 = payload.Demographic?.Phone2;
+          newClient.Ssn = payload.Demographic?.Ssn;
+          newClient.AgencyId = 17;
+          newClient.RetirementId = 6;
+          newClient.CoverId = 206;
+          newClient.CampaignId = 17;
+          newClient.PreRegister = true;
+
+          newClient.UpdatedAt = DateTime.Now;
+          newClient.CreatedAt = DateTime.Now;
+          await _context.Clients.AddAsync(newClient);
+        }
+        else
+        {
+
+        }
+        await _context.SaveChangesAsync();
         return payload;
       }
       catch (Exception ex)
@@ -82,53 +110,89 @@ namespace WebApi.Services
     {
       try
       {
-        if (payload.Demograpic != null)
+        if (payload.Demographic != null)
         {
-          var client = await _context.Clients.AsNoTracking().FirstOrDefaultAsync(cl => cl.Id == payload.Demograpic.Id);
-          client.Email = payload.Demograpic.Email;
-          client.Gender = payload.Demograpic.Gender;
-          client.Initial = payload.Demograpic.Initial;
-          client.LastName1 = payload.Demograpic.LastName1;
-          client.LastName2 = payload.Demograpic.LastName2;
-          client.MaritalStatus = payload.Demograpic.MaritalStatus;
-          client.Name = payload.Demograpic.Name;
-          client.Phone1 = payload.Demograpic.Phone1;
-          client.Phone2 = payload.Demograpic.Phone2;
-          client.Phone2 = payload.Demograpic.Phone2;
-          client.Ssn = payload.Demograpic.Ssn;
+          var client = await _context.Clients.AsNoTracking().FirstOrDefaultAsync(cl => cl.Id == payload.Demographic.Id);
+          client.Email = payload.Demographic?.Email;
+          client.Gender = payload.Demographic?.Gender;
+          client.Initial = payload.Demographic?.Initial;
+          client.LastName1 = payload.Demographic?.LastName1;
+          client.LastName2 = payload.Demographic?.LastName2;
+          client.MaritalStatus = payload.Demographic?.MaritalStatus;
+          client.Name = payload.Demographic?.Name;
+          client.Phone1 = payload.Demographic?.Phone1;
+          client.Phone2 = payload.Demographic?.Phone2;
+          client.Phone2 = payload.Demographic?.Phone2;
+          client.Ssn = payload.Demographic?.Ssn;
 
           client.UpdatedAt = DateTime.Now;
           _context.Clients.Update(client);
         }
 
-        if (payload.Address.PhysicalAddress != null)
+        if (payload.Address?.PhysicalAddress != null)
         {
-          var physicalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Address.PhysicalAddress.ClientId && cl.Type == payload.Address.PhysicalAddress.Type);
-          physicalAddress.Line1 = payload.Address.PhysicalAddress.Line1;
-          physicalAddress.Line2 = payload.Address.PhysicalAddress.Line2;
-          physicalAddress.State = payload.Address.PhysicalAddress.State;
-          physicalAddress.City = payload.Address.PhysicalAddress.City;
-          physicalAddress.Type = payload.Address.PhysicalAddress.Type;
-          physicalAddress.Zip4 = payload.Address.PhysicalAddress.Zip4;
-          physicalAddress.Zipcode = payload.Address.PhysicalAddress.Zipcode;
+          var physicalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 1);
+
+          if (physicalAddress != null)
+          {
+            physicalAddress.Line1 = payload.Address?.PhysicalAddress.Line1;
+            physicalAddress.Line2 = payload.Address?.PhysicalAddress.Line2;
+            physicalAddress.State = payload.Address?.PhysicalAddress.State;
+            physicalAddress.City = payload.Address?.PhysicalAddress.City;
+            physicalAddress.Type = payload.Address?.PhysicalAddress.Type;
+            physicalAddress.Zip4 = payload.Address?.PhysicalAddress.Zip4;
+            physicalAddress.Zipcode = payload.Address?.PhysicalAddress.Zipcode;
+            physicalAddress.ClientId = payload.Demographic.Id;
+            _context.Addresses.Update(physicalAddress);
+          }
+          else
+          {
+            physicalAddress = new Addresses();
+            physicalAddress.Line1 = payload.Address?.PhysicalAddress.Line1;
+            physicalAddress.Line2 = payload.Address?.PhysicalAddress.Line2;
+            physicalAddress.State = payload.Address?.PhysicalAddress.State;
+            physicalAddress.City = payload.Address?.PhysicalAddress.City;
+            physicalAddress.Type = payload.Address?.PhysicalAddress.Type;
+            physicalAddress.Zip4 = payload.Address?.PhysicalAddress.Zip4;
+            physicalAddress.Zipcode = payload.Address?.PhysicalAddress.Zipcode;
+            physicalAddress.ClientId = payload.Demographic.Id;
+            physicalAddress.CreatedAt = DateTime.Now;
+            await _context.Addresses.AddAsync(physicalAddress);
+          }
 
           physicalAddress.UpdatedAt = DateTime.Now;
-          _context.Addresses.Update(physicalAddress);
+
         }
 
-        if (payload.Address.PostalAddress != null)
+        if (payload.Address?.PostalAddress != null)
         {
-          var postalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Address.PostalAddress.ClientId && cl.Type == payload.Address.PostalAddress.Type);
-          postalAddress.Line1 = payload.Address.PostalAddress.Line1;
-          postalAddress.Line2 = payload.Address.PostalAddress.Line2;
-          postalAddress.State = payload.Address.PostalAddress.State;
-          postalAddress.City = payload.Address.PostalAddress.City;
-          postalAddress.Type = payload.Address.PostalAddress.Type;
-          postalAddress.Zip4 = payload.Address.PostalAddress.Zip4;
-          postalAddress.Zipcode = payload.Address.PostalAddress.Zipcode;
+          var postalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 2);
+          if (postalAddress != null)
+          {
+            postalAddress.Line1 = payload.Address?.PostalAddress.Line1;
+            postalAddress.Line2 = payload.Address?.PostalAddress.Line2;
+            postalAddress.State = payload.Address?.PostalAddress.State;
+            postalAddress.City = payload.Address?.PostalAddress.City;
+            postalAddress.Type = payload.Address?.PostalAddress.Type;
+            postalAddress.Zip4 = payload.Address?.PostalAddress.Zip4;
+            postalAddress.Zipcode = payload.Address?.PostalAddress.Zipcode;
+            _context.Addresses.Update(postalAddress);
+          }
+          else
+          {
+            postalAddress = new Addresses();
+            postalAddress.Line1 = payload.Address?.PostalAddress.Line1;
+            postalAddress.Line2 = payload.Address?.PostalAddress.Line2;
+            postalAddress.State = payload.Address?.PostalAddress.State;
+            postalAddress.City = payload.Address?.PostalAddress.City;
+            postalAddress.Type = payload.Address?.PostalAddress.Type;
+            postalAddress.Zip4 = payload.Address?.PostalAddress.Zip4;
+            postalAddress.Zipcode = payload.Address?.PostalAddress.Zipcode;
+            postalAddress.ClientId = payload.Demographic.Id;
+            await _context.Addresses.AddAsync(postalAddress);
+          }
 
           postalAddress.UpdatedAt = DateTime.Now;
-          _context.Addresses.Update(postalAddress);
         }
         await _context.SaveChangesAsync();
         return payload;

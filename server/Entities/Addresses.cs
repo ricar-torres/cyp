@@ -5,8 +5,8 @@ namespace WebApi.Entities
 {
   public partial class Addresses
   {
-    public int Id { get; set; }
-    public int ClientId { get; set; }
+    public int? Id { get; set; }
+    public int? ClientId { get; set; }
     public byte? Type { get; set; }
     public string Line1 { get; set; }
     public string Line2 { get; set; }

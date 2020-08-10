@@ -30,6 +30,8 @@
   "CREATEDAT": "Created",
   "MARRIED": "Married",
   "SINGLE": "Single",
+  "NEXT": "Next",
+  "BACK": "Back",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -164,7 +166,9 @@
     "TAKENNAME": "This Chapter name already exist.",
     "REQUIRED": "Field Name is required"
   },
-
+  "CLIENTWIZARD": {
+    "PREREGISTER": "Pre Register"
+  },
   "USER": {
     "TITLE": "User",
     "USER": "User",

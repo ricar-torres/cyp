@@ -59,7 +59,7 @@ export class ClientComponent implements OnInit {
       this.clientid = this.route.snapshot.paramMap.get('id');
       var client: any = await this.clientsService.client(this.clientid);
 
-      this.reactiveForm.get('Id').setValue(this.clientid);
+      this.reactiveForm.get('Id').setValue(client.id);
       this.reactiveForm.get('Name').setValue(client.name);
       this.reactiveForm.get('LastName1').setValue(client.lastName1);
       this.reactiveForm.get('LastName2').setValue(client.lastName2);

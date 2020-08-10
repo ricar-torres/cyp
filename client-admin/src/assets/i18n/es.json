@@ -31,6 +31,8 @@
   "CREATEDAT": "Creado",
   "MARRIED": "Casado",
   "SINGLE": "Soltero",
+  "NEXT": "Siguiente",
+  "BACK": "Regresar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -165,7 +167,9 @@
     "TAKENNAME": "Un Capítulo ya existe con este nombre.",
     "REQUIRED": "Campo Nombre es requerido"
   },
-
+  "CLIENTWIZARD": {
+    "PREREGISTER": "Pre Registro"
+  },
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",

@@ -27,14 +27,14 @@ export class ClientWizardService {
     Id: [null],
     Name: [null, [Validators.required]],
     LastName1: [null, [Validators.required]],
-    LastName2: [null],
+    LastName2: [null, [Validators.required]],
     Email: [null, [Validators.email]],
     Initial: [null],
     Ssn: [null, Validators.required],
     Gender: [null],
-    BirthDate: [null, Validators.required],
+    BirthDate: [null],
     MaritalStatus: [null],
-    Phone1: [null],
+    Phone1: [null, [Validators.required]],
     Phone2: [null],
   });
 
@@ -126,10 +126,48 @@ export class ClientWizardService {
     }
   }
 
-  async UpdateClientInformation() {
+  async preRegister() {
+    try {
+      console.log(this.clientAddressFormGroup);
+      var ClientInforation = {
+        PreRegister: true,
+        Demographic: this.clientDemographic.value,
+        Address: this.clientAddressFormGroup.value,
+      };
+      await this.clientService.create(ClientInforation);
+    } catch (error) {
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    }
+  }
+
+  async register() {
     try {
       var ClientInforation = {
-        Demograpic: this.clientDemographic.value,
+        PreRegister: false,
+        Demographic: this.clientDemographic.value,
+        Address: this.clientAddressFormGroup.value,
+      };
+      await this.clientService.create(ClientInforation);
+    } catch (error) {
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    }
+  }
+
+  async UpdateClientInformation() {
+    try {
+      //this.newAddressInUpdate();
+      var ClientInforation = {
+        Demographic: this.clientDemographic.value,
         Address: this.clientAddressFormGroup.value,
       };
       await this.clientService.update(ClientInforation);

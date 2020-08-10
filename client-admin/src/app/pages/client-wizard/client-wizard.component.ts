@@ -22,4 +22,8 @@ export class ClientWizardComponent implements OnInit {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+  async preRegister() {
+    await this.wizardForms.preRegister();
+  }
 }

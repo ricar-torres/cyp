@@ -2,7 +2,16 @@
   <mat-step [stepControl]="this.wizardForms.clientDemographic">
     <app-client [fromWizard]="true"></app-client>
     <app-client-address [fromWizard]="true"></app-client-address>
-    <button mat-button matStepperNext>Next</button>
+    <button
+      [disabled]="wizardForms.clientDemographic.invalid"
+      mat-raised-button
+      (click)="preRegister()"
+    >
+      {{ 'CLIENTWIZARD.PREREGISTER' | translate }}
+    </button>
+    <button mat-button matStepperNext>
+      {{ 'NEXT' | translate }}
+    </button>
   </mat-step>
   <mat-step [stepControl]="this.wizardForms.secondFormGroup">
     <form [formGroup]="this.wizardForms.secondFormGroup">
@@ -17,8 +26,12 @@
         />
       </mat-form-field>
       <div>
-        <button mat-flat-button matStepperPrevious>Back</button>
-        <button mat-flat-button matStepperNext>Next</button>
+        <button mat-flat-button matStepperPrevious>
+          {{ 'BACK' | translate }}
+        </button>
+        <button mat-flat-button matStepperNext>
+          {{ 'NEXT' | translate }}
+        </button>
       </div>
     </form>
   </mat-step>
