@@ -34,11 +34,19 @@
         </mat-form-field>
         <mat-form-field class="width-with-space">
           <mat-label>{{ 'CLIENTS.STATE' | translate }}</mat-label>
-          <input matInput formControlName="State" />
+          <mat-select formControlName="State">
+            <mat-option *ngFor="let ct of countries" [value]="ct.code">{{
+              ct.name
+            }}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field class="width-with-space">
           <mat-label>{{ 'CLIENTS.CITY' | translate }}</mat-label>
-          <input matInput formControlName="City" />
+          <mat-select formControlName="City">
+            <mat-option *ngFor="let ct of cities" [value]="ct.name">{{
+              ct.name
+            }}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field class="width-with-space">
           <mat-label>{{ 'CLIENTS.POSTALCODE' | translate }}</mat-label>
@@ -71,11 +79,19 @@
         </mat-form-field>
         <mat-form-field class="width-with-space">
           <mat-label>{{ 'CLIENTS.STATE' | translate }}</mat-label>
-          <input matInput formControlName="State" />
+          <mat-select formControlName="State">
+            <mat-option *ngFor="let ct of countries" [value]="ct.code">{{
+              ct.name
+            }}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field class="width-with-space">
           <mat-label>{{ 'CLIENTS.CITY' | translate }}</mat-label>
-          <input matInput formControlName="City" />
+          <mat-select formControlName="City">
+            <mat-option *ngFor="let ct of cities" [value]="ct.name">{{
+              ct.name
+            }}</mat-option>
+          </mat-select>
         </mat-form-field>
         <mat-form-field class="width-with-space">
           <mat-label>{{ 'CLIENTS.POSTALCODE' | translate }}</mat-label>

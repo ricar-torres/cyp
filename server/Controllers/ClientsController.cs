@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using System;
 using System.Threading.Tasks;
 using WebApi.Entities;
@@ -73,7 +74,7 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]
-    public IActionResult Create([FromBody] Clients payload)
+    public IActionResult Create([FromBody] ClientInformationDto payload)
     {
 
       try
@@ -92,21 +93,16 @@ namespace WebApi.Controllers
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
     [Authorize]
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Clients payload)
+    [HttpPut()]
+    public async Task<IActionResult> Update(ClientInformationDto payload)
     {
       try
       {
-
-        payload.Id = id;
-        var res = _service.Update(payload);
-
-        return Ok(res);
-
+        var res = await _service.Update(payload);
+        return Ok();
       }
       catch (AppException ex)
       {
-        // return error message if there was an exception
         return DefaultError(ex);
       }
     }

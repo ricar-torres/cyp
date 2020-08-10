@@ -24,7 +24,6 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
 })
 export class ClientComponent implements OnInit {
   clientid: string;
-  editSaveToggle: boolean = false;
 
   @Input() fromWizard: boolean = false;
 
@@ -80,8 +79,10 @@ export class ClientComponent implements OnInit {
 
   async onSubmit() {
     try {
-      console.log(this.reactiveForm.value);
-      await this.clientsService.update(this.reactiveForm.value);
+      if (this.fromWizard) {
+        //  await this.clientWizard.CreateClient();
+      }
+      await this.clientWizard.UpdateClientInformation();
     } catch (error) {
       this.loading = false;
       if (error.status != 401) {
@@ -91,16 +92,6 @@ export class ClientComponent implements OnInit {
         });
       }
     }
-    this.disableControls();
-    this.editSaveToggle = !this.editSaveToggle;
-  }
-
-  private disableControls() {
-    this.clientsService.toggleEditControl.emit(true);
-  }
-  private enableControls() {
-    this.editSaveToggle = !this.editSaveToggle;
-    this.clientsService.toggleEditControl.emit(false);
   }
 
   onBack() {

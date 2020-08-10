@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -46,12 +47,44 @@ namespace WebApi.Controllers
     }
 
     [Authorize]
-    [HttpPut("{clientId}")]
-    public async Task<IActionResult> UpdateClientService([FromBody] List<Addresses> addresses, int clientId)
+    [HttpGet("cities")]
+    public async Task<IActionResult> GetCities()
     {
       try
       {
-        var check = await _service.UpdateClientAddress(addresses, clientId);
+        var check = await _service.GetCities();
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+
+    [Authorize]
+    [HttpGet("states")]
+    public async Task<IActionResult> GetStates()
+    {
+      try
+      {
+        var check = await _service.GetStates();
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+
+    [Authorize]
+    [HttpGet("countries")]
+    public async Task<IActionResult> GetCountries()
+    {
+      try
+      {
+        var check = await _service.GetCountries();
         return Ok(check);
       }
       catch (Exception ex)

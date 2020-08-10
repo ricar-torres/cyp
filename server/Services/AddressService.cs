@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -12,7 +13,10 @@ namespace WebApi.Services
   public interface IAddressService
   {
     Task<List<Addresses>> GetClientAddress(int clientId);
-    Task<List<Addresses>> UpdateClientAddress(List<Addresses> addresses, int cientId);
+    Task<List<Cities>> GetCities();
+
+    Task<List<States>> GetStates();
+    Task<List<Countries>> GetCountries();
   }
 
   public class AddressService : IAddressService
@@ -24,6 +28,19 @@ namespace WebApi.Services
     {
       _context = context;
       _appSettings = appSettings.Value;
+    }
+
+    public async Task<List<Cities>> GetCities()
+    {
+      try
+      {
+        var cities = await _context.Cities.Where(ct => ct.DeletedAt == null).ToListAsync();
+        return cities;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
 
     public async Task<List<Addresses>> GetClientAddress(int clientId)
@@ -39,28 +56,25 @@ namespace WebApi.Services
       }
     }
 
-    public async Task<List<Addresses>> UpdateClientAddress(List<Addresses> addresses, int clientId)
+    public async Task<List<Countries>> GetCountries()
     {
       try
       {
-        var physicalAddress = await _context.Addresses.FirstOrDefaultAsync(addr => addr.ClientId == clientId && addr.Type == 1);
-        var postalAddress = await _context.Addresses.FirstOrDefaultAsync(addr => addr.ClientId == clientId && addr.Type == 2);
+        var countries = await _context.Countries.Where(ct => ct.DeletedAt == null).ToListAsync();
+        return countries;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
 
-        var UpdatePhysicalAddress = addresses.FirstOrDefault(addr => addr.Type == 1);
-        var UpdatePostalAddress = addresses.FirstOrDefault(addr => addr.Type == 2);
-
-        physicalAddress = UpdatePhysicalAddress != null ? UpdatePhysicalAddress : physicalAddress;
-        postalAddress = UpdatePostalAddress != null ? UpdatePostalAddress : postalAddress;
-
-        var resolve = new List<Addresses>
-        {physicalAddress,postalAddress};
-
-        _context.Addresses.Update(physicalAddress);
-        _context.Addresses.Update(postalAddress);
-        await _context.SaveChangesAsync();
-
-        return resolve;
-
+    public async Task<List<States>> GetStates()
+    {
+      try
+      {
+        var states = await _context.States.Where(ct => ct.DeletedAt == null).ToListAsync();
+        return states;
       }
       catch (Exception ex)
       {

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -13,8 +14,8 @@ namespace WebApi.Services
   {
     List<Clients> GetAll();
     Clients GetById(int id);
-    Clients Create(Clients payload);
-    Clients Update(Clients payload);
+    Task<ClientInformationDto> Create(ClientInformationDto payload);
+    Task<ClientInformationDto> Update(ClientInformationDto payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
     Task<List<Addresses>> GetClientAddress(int clientId);
@@ -64,104 +65,78 @@ namespace WebApi.Services
       return res;
     }
 
-    public Clients Create(Clients payload)
+    public async Task<ClientInformationDto> Create(ClientInformationDto payload)
     {
       try
       {
-
-        payload.CreatedAt = DateTime.Now;
-        payload.UpdatedAt = DateTime.Now;
-        _context.Clients.Add(payload);
-        _context.SaveChanges();
-
+        await Task.Delay(100);
         return payload;
-
       }
       catch (Exception ex)
       {
-
         throw ex;
       }
-
     }
 
-    public Clients Update(Clients payload)
+    public async Task<ClientInformationDto> Update(ClientInformationDto payload)
     {
       try
       {
+        if (payload.Demograpic != null)
+        {
+          var client = await _context.Clients.AsNoTracking().FirstOrDefaultAsync(cl => cl.Id == payload.Demograpic.Id);
+          client.Email = payload.Demograpic.Email;
+          client.Gender = payload.Demograpic.Gender;
+          client.Initial = payload.Demograpic.Initial;
+          client.LastName1 = payload.Demograpic.LastName1;
+          client.LastName2 = payload.Demograpic.LastName2;
+          client.MaritalStatus = payload.Demograpic.MaritalStatus;
+          client.Name = payload.Demograpic.Name;
+          client.Phone1 = payload.Demograpic.Phone1;
+          client.Phone2 = payload.Demograpic.Phone2;
+          client.Phone2 = payload.Demograpic.Phone2;
+          client.Ssn = payload.Demograpic.Ssn;
 
-        var item = _context.Clients.FirstOrDefault(c => c.Id == payload.Id);
-        // var physicalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 1);
-        // var postalAddress = _context.Addresses.FirstOrDefault(p => p.ClientId == item.Id && p.Type == 2);
+          client.UpdatedAt = DateTime.Now;
+          _context.Clients.Update(client);
+        }
 
-        if (item == null)
-          throw new AppException("Client not found");
+        if (payload.Address.PhysicalAddress != null)
+        {
+          var physicalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Address.PhysicalAddress.ClientId && cl.Type == payload.Address.PhysicalAddress.Type);
+          physicalAddress.Line1 = payload.Address.PhysicalAddress.Line1;
+          physicalAddress.Line2 = payload.Address.PhysicalAddress.Line2;
+          physicalAddress.State = payload.Address.PhysicalAddress.State;
+          physicalAddress.City = payload.Address.PhysicalAddress.City;
+          physicalAddress.Type = payload.Address.PhysicalAddress.Type;
+          physicalAddress.Zip4 = payload.Address.PhysicalAddress.Zip4;
+          physicalAddress.Zipcode = payload.Address.PhysicalAddress.Zipcode;
 
-        item.Name = payload.Name;
-        item.Initial = payload.Initial;
-        item.Ssn = payload.Ssn;
-        item.Email = payload.Email;
-        item.LastName1 = payload.LastName1;
-        item.LastName2 = payload.LastName2;
-        item.MaritalStatus = payload.MaritalStatus;
-        item.BirthDate = payload.BirthDate;
-        item.Gender = payload.Gender;
-        item.Phone1 = payload.Phone1;
-        item.Phone2 = payload.Phone2;
+          physicalAddress.UpdatedAt = DateTime.Now;
+          _context.Addresses.Update(physicalAddress);
+        }
 
-        // if (payload.PhysicalAddress != null)
-        // {
-        //   if (physicalAddress != null)
-        //   {
-        //     physicalAddress.City = payload.PhysicalAddress.City;
-        //     physicalAddress.State = payload.PhysicalAddress.State;
-        //     physicalAddress.Line1 = payload.PhysicalAddress.Line1;
-        //     physicalAddress.Line2 = payload.PhysicalAddress.Line2;
-        //     physicalAddress.Zipcode = payload.PhysicalAddress.Zipcode;
-        //     physicalAddress.Zip4 = payload.PhysicalAddress.Zip4;
-        //     physicalAddress.UpdatedAt = DateTime.Now;
-        //   }
-        //   else
-        //   {
-        //     _context.Addresses.Add(payload.PhysicalAddress);
-        //   }
-        // }
+        if (payload.Address.PostalAddress != null)
+        {
+          var postalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Address.PostalAddress.ClientId && cl.Type == payload.Address.PostalAddress.Type);
+          postalAddress.Line1 = payload.Address.PostalAddress.Line1;
+          postalAddress.Line2 = payload.Address.PostalAddress.Line2;
+          postalAddress.State = payload.Address.PostalAddress.State;
+          postalAddress.City = payload.Address.PostalAddress.City;
+          postalAddress.Type = payload.Address.PostalAddress.Type;
+          postalAddress.Zip4 = payload.Address.PostalAddress.Zip4;
+          postalAddress.Zipcode = payload.Address.PostalAddress.Zipcode;
 
-        // if (payload.PostalAddress != null)
-        // {
-        //   if (postalAddress != null)
-        //   {
-        //     postalAddress.City = payload.PostalAddress.City;
-        //     postalAddress.State = payload.PostalAddress.State;
-        //     postalAddress.Line1 = payload.PostalAddress.Line1;
-        //     postalAddress.Line2 = payload.PostalAddress.Line2;
-        //     postalAddress.Zipcode = payload.PostalAddress.Zipcode;
-        //     postalAddress.Zip4 = payload.PostalAddress.Zip4;
-        //     postalAddress.UpdatedAt = DateTime.Now;
-        //   }
-        //   else
-        //   {
-        //     _context.Addresses.Add(payload.PostalAddress);
-        //   }
-        // }
-
-        item.UpdatedAt = DateTime.Now;
-
-
-
-        // _context.Addresses.Update(physicalAddress);
-        // _context.Addresses.Update(postalAddress);
-        _context.Clients.Update(item);
-        _context.SaveChanges();
-        return item;
+          postalAddress.UpdatedAt = DateTime.Now;
+          _context.Addresses.Update(postalAddress);
+        }
+        await _context.SaveChangesAsync();
+        return payload;
       }
       catch (Exception ex)
       {
-
         throw ex;
       }
-
-
     }
 
     public void Delete(int id)

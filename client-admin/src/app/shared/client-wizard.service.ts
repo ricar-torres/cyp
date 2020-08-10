@@ -1,11 +1,27 @@
 import { Injectable } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  Validators,
+  FormControl,
+} from '@angular/forms';
+import { LanguageService } from './Language.service';
+import { AppService } from './app.service';
+import { bonaFideservice } from './bonafide.service';
+import { ClientService } from './client.service';
+import { debug } from 'console';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClientWizardService {
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    private languageService: LanguageService,
+    private app: AppService,
+    private bonafideService: bonaFideservice,
+    private clientService: ClientService
+  ) {}
 
   clientDemographic = this.formBuilder.group({
     Id: [null],
@@ -22,9 +38,10 @@ export class ClientWizardService {
     Phone2: [null],
   });
 
-  clientAddress = this.formBuilder.group({
+  clientAddressFormGroup = this.formBuilder.group({
     PhysicalAddress: this.formBuilder.group({
       Id: [null],
+      ClientId: [null],
       Line1: [null],
       Type: [null],
       Line2: [null],
@@ -35,6 +52,7 @@ export class ClientWizardService {
     }),
     PostalAddress: this.formBuilder.group({
       Id: [null],
+      ClientId: [null],
       Line1: [null],
       Type: [null],
       Line2: [null],
@@ -49,9 +67,81 @@ export class ClientWizardService {
     secondCtrl: [null, Validators.required],
   });
 
+  bonafidesFormGroup = this.formBuilder.group({
+    Id: [null],
+    Name: [null, [Validators.required], this.bonafideCheckName.bind(this)],
+    Code: [null, [Validators.maxLength(255)]],
+    Siglas: [null, [Validators.maxLength(255)]],
+    Phone: [null, [Validators.maxLength(255)]],
+    Email: [
+      null,
+      [Validators.email, Validators.maxLength(255)],
+      this.bonafideCheckEmail.bind(this),
+    ],
+    Benefits: [null, [Validators.maxLength(255)]],
+    Disclaimer: [null, [Validators.maxLength(255)]],
+  });
+
   resetFormGroups() {
     this.clientDemographic.reset();
-    this.clientAddress.reset();
+    this.clientAddressFormGroup.reset();
     this.secondFormGroup.reset();
   }
+
+  //#region bonafide Checks
+
+  async bonafideCheckName(name: FormControl) {
+    try {
+      if (name.value) {
+        const res: any = await this.bonafideService.checkName({
+          name: name.value,
+        });
+        if (res) return { nameTaken: true };
+      }
+    } catch (error) {
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    }
+  }
+
+  async bonafideCheckEmail(email: FormControl) {
+    try {
+      if (email.value) {
+        const res: any = await this.bonafideService.checkEmail({
+          name: email.value,
+        });
+        if (res) return { emailTaken: true };
+      }
+    } catch (error) {
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    }
+  }
+
+  async UpdateClientInformation() {
+    try {
+      var ClientInforation = {
+        Demograpic: this.clientDemographic.value,
+        Address: this.clientAddressFormGroup.value,
+      };
+      await this.clientService.update(ClientInforation);
+    } catch (error) {
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    }
+  }
+
+  //#endregion
 }

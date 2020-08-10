@@ -123,19 +123,12 @@
               <input matInput formControlName="Commnets" />
             </mat-form-field> -->
           </div>
-          <mat-card-actions *ngIf="!fromWizard">
+          <mat-card-actions
+            fxLayout="row"
+            fxLayoutAlign="end"
+            *ngIf="!fromWizard"
+          >
             <button
-              *ngIf="!editSaveToggle"
-              mat-raised-button
-              color="primary"
-              type="button"
-              (click)="enableControls()"
-            >
-              <mat-icon>create</mat-icon>
-              {{ 'CLIENTS.EDIT' | translate }}
-            </button>
-            <button
-              *ngIf="editSaveToggle"
               mat-raised-button
               color="primary"
               type="submit"

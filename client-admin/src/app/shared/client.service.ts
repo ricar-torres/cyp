@@ -29,10 +29,8 @@ export class ClientService {
     return this.http.get(`${environment.baseURL}/clients/${id}`).toPromise();
   }
 
-  update(client: any) {
-    return this.http
-      .put(`${environment.baseURL}/clients/${client.Id}`, client)
-      .toPromise();
+  update(payload: any) {
+    return this.http.put(`${environment.baseURL}/clients`, payload).toPromise();
   }
 
   delete(id: string) {
