@@ -128,7 +128,6 @@ export class ClientWizardService {
 
   async preRegister() {
     try {
-      console.log(this.clientAddressFormGroup);
       var ClientInforation = {
         PreRegister: true,
         Demographic: this.clientDemographic.value,

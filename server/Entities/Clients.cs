@@ -17,7 +17,7 @@ namespace WebApi.Entities
       Tutors = new HashSet<Tutors>();
     }
 
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string Name { get; set; }
     public string Initial { get; set; }
     public string LastName1 { get; set; }

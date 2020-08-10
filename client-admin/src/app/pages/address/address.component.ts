@@ -33,12 +33,14 @@ export class AddressComponent implements OnInit {
 
   async ngOnInit() {
     try {
+      this.countries = await this.addressService.getCoutries();
+      this.cities = await this.addressService.getCities();
+
       this.reactiveForm = this.clientWizard.clientAddressFormGroup;
       if (!this.fromWizard) {
         var addresses: any = await this.addressService.getClientAddress(
           this.clientid
         );
-
         var physicalAddress = addresses.find((addr) => addr.type == 1);
         var postalAddress = addresses.find((addr) => addr.type == 2);
         if (physicalAddress) {
@@ -118,9 +120,6 @@ export class AddressComponent implements OnInit {
             .get('Id')
             .setValue(postalAddress.id);
         }
-
-        this.countries = await this.addressService.getCoutries();
-        this.cities = await this.addressService.getCities();
       }
 
       this.clientsService.toggleEditControl.subscribe((val) => {

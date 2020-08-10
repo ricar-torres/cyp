@@ -24,6 +24,8 @@ export class ClientWizardComponent implements OnInit {
   }
 
   async preRegister() {
-    await this.wizardForms.preRegister();
+    await this.wizardForms.preRegister().then((res) => {
+      this.dialogRef.close();
+    });
   }
 }

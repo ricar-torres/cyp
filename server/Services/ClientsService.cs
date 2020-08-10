@@ -81,8 +81,8 @@ namespace WebApi.Services
           newClient.Name = payload.Demographic?.Name;
           newClient.Phone1 = payload.Demographic?.Phone1;
           newClient.Phone2 = payload.Demographic?.Phone2;
-          newClient.Phone2 = payload.Demographic?.Phone2;
           newClient.Ssn = payload.Demographic?.Ssn;
+          newClient.BirthDate = payload.Demographic?.BirthDate;
           newClient.AgencyId = 17;
           newClient.RetirementId = 6;
           newClient.CoverId = 206;
