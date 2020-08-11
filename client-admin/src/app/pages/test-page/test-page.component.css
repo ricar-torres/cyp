@@ -1,0 +1,29 @@
+mat-card {
+  padding: 5px;
+  margin: 5px;
+}
+.example-header-image {
+  background-image: url('../../../call18dp.svg');
+  background-size: cover;
+  width: 18px;
+  height: 18px;
+}
+
+.mat-card {
+  background-color: transparent;
+  width: 100%;
+  display: inline-block;
+}
+
+/* .mat-expansion-panel {
+  height: 75px;
+} */
+.mat-expansion-panel {
+  height: 100%;
+}
+.mat-accordion {
+  height: 100%;
+}
+.mat-card-header {
+  height: 100%;
+}

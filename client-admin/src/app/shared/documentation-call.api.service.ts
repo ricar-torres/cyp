@@ -1,3 +1,5 @@
+import { DocCall } from './../models/DocCall';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -41,5 +43,10 @@ export class DocumentationCallAPIService {
     return this.http
       .get(`${environment.baseURL}/${this._apiName}/GetCallTypes`)
       .toPromise();
+  }
+  getClientDocCalls(clientId: string | number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.baseURL}/${this._apiName}/GetClientCalls/${clientId}`
+    );
   }
 }

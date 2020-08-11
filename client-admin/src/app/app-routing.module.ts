@@ -1,3 +1,4 @@
+import { TestPageComponent } from './pages/test-page/test-page.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
@@ -176,9 +177,17 @@ const routes: Routes = [
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
+      // {
+      //   path: 'documentation-call',
+      //   component: DocumentationCallComponent,
+      //   canActivate: [AuthGuardService],
+      //   data: {
+      //     //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+      //   },
+      // },
       {
-        path: 'documentation-call',
-        component: DocumentationCallComponent,
+        path: 'test-page',
+        component: TestPageComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,

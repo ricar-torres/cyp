@@ -9,7 +9,7 @@ namespace WebApi.Helpers {
 	//public class DataContext : IdentityDbContext<User, Role, int>
 	public class DataContext : DbContext {
 		public DataContext(DbContextOptions<DataContext> options) : base(options) {
-			Database.SetCommandTimeout(5000);
+			Database.SetCommandTimeout(500);
 		}
 
 		#region TABLES

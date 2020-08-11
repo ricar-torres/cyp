@@ -104,6 +104,7 @@ import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.com
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
+import { TestPageComponent } from './pages/test-page/test-page.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -143,6 +144,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BonaFideComponent,
     RetirementComponent,
     DocumentationCallComponent,
+    TestPageComponent,
   ],
   imports: [
     BrowserModule,

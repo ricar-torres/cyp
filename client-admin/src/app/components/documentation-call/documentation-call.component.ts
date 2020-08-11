@@ -1,7 +1,7 @@
 import { DialogGenericSuccessComponent } from './../dialog-generic-success/dialog-generic-success.component';
 import { DocCall } from './../../models/DocCall';
 import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -11,7 +11,7 @@ import {
 import { Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { LanguageService } from '@app/shared/Language.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-documentation-call',
@@ -26,15 +26,17 @@ export class DocumentationCallComponent implements OnInit {
   createAccess: boolean;
   reactiveForm: FormGroup;
   typesOfCall: any[] = [];
-  clientId: number = 1;
 
+  @Input()
+  clientId: number = 1;
   constructor(
     public languageService: LanguageService,
     private formBuilder: FormBuilder,
     private router: Router,
     private apiDocCall: DocumentationCallAPIService,
     private app: AppService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    public dialogRef: MatDialogRef<DocumentationCallComponent>
   ) {}
 
   async ngOnInit() {
@@ -74,7 +76,7 @@ export class DocumentationCallComponent implements OnInit {
     });
   }
   onBack() {
-    this.router.navigate(['home/retirement-list']);
+    this.dialogRef.close();
   }
   openDialog(): void {
     const dialogRef = this.dialog.open(DialogGenericSuccessComponent, {
@@ -95,15 +97,17 @@ export class DocumentationCallComponent implements OnInit {
       this.loading = true;
       const res: any = await this.apiDocCall.create(
         new DocCall(
-          this.reactiveForm.get('type').value.id,
+          null,
+          Number(this.reactiveForm.get('type').value.id),
+          null,
+          null,
           this.reactiveForm.get('comment').value,
+          null,
           this.clientId,
           1 //this.app.getLoggedInUser().Id
         )
       );
-      //this.reactiveForm.get('num').setValue(res.confirmationNumber);
-      //this.openDialog();
-      this.onBack();
+      this.dialogRef.close(res.confirmationNumber);
     } catch (error) {
       this.loading = false;
       if (error.status != 401) {

@@ -1,0 +1,63 @@
+<p>test-page works!</p>
+
+<button type="button" (click)="onClick()">New Call Doc</button>
+
+<mat-accordion *ngFor="let call of calls">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header
+      (opened)="panelOpenState = true"
+      (closed)="panelOpenState = false"
+      fxLayout="col wrap"
+      class="container"
+    >
+      <mat-card class="mat-elevation-z0">
+        <mat-card-header>
+          <img mat-card-avatar class="example-header-image" />
+          <!-- <div mat-card-avatar class="example-header-image"></div> -->
+          <h5>#{{ call.confirmationNumber }}</h5>
+          <caption>
+            {{
+              call.createdAt
+            }}
+          </caption>
+        </mat-card-header>
+        <mat-card-content>
+          {{ call.comment }}
+        </mat-card-content>
+        <mat-card-actions>
+          <button>Thread</button>
+        </mat-card-actions>
+      </mat-card>
+    </mat-expansion-panel-header>
+
+    <!-- <div *ngFor="let thread of call.threads" fxLayout="row wrap">
+      <mat-divider></mat-divider>
+      <mat-card class="mat-elevation-z0">
+        <mat-card-header>
+          <div mat-card-avatar class="example-header-image"></div>
+          <div>{{ thread.comment }}</div>
+        </mat-card-header>
+      </mat-card>
+    </div> -->
+  </mat-expansion-panel>
+</mat-accordion>
+<div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div>
+
+<!-- <mat-card *ngFor="let call of calls">
+  <mat-card-header>
+    <div mat-card-avatar class="example-header-image"></div>
+    <mat-card-title>#{{ call.confirmationNumber }}</mat-card-title>
+    <mat-card-subtitle>{{
+      call.createdDate | date: 'yyyy-MM-dd hh:mm:ss'
+    }}</mat-card-subtitle>
+  </mat-card-header>
+  <mat-card-content> </mat-card-content>
+</mat-card>
+
+<div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div> -->
+
+<router-outlet></router-outlet>
