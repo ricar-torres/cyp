@@ -1,63 +1,81 @@
 <p>test-page works!</p>
 
-<button type="button" (click)="onClick()">New Call Doc</button>
+<button
+  mat-raised-button
+  class="mat-raised-button mg-10"
+  color="primary"
+  (click)="newDocCall()"
+>
+  New Call Doc
+</button>
 
-<mat-accordion *ngFor="let call of calls">
-  <mat-expansion-panel>
+<mat-accordion>
+  <mat-expansion-panel
+    *ngFor="let masterThread of threads"
+    [togglePosition]="'after'"
+  >
     <mat-expansion-panel-header
+      collapsedHeight="*"
+      expandedHeight="*"
       (opened)="panelOpenState = true"
       (closed)="panelOpenState = false"
-      fxLayout="col wrap"
-      class="container"
     >
       <mat-card class="mat-elevation-z0">
         <mat-card-header>
-          <img mat-card-avatar class="example-header-image" />
-          <!-- <div mat-card-avatar class="example-header-image"></div> -->
-          <h5>#{{ call.confirmationNumber }}</h5>
-          <caption>
-            {{
-              call.createdAt
-            }}
-          </caption>
+          <div fxLayout="row" fxFlex="50">
+            <div mat-card-avatar class="avatarImage"></div>
+            <mat-card-title
+              >#{{ masterThread.confirmationNumber }}
+              <mat-card-subtitle>{{
+                masterThread.createdAt | date: 'yyyy-MM-dd HH:ss'
+              }}</mat-card-subtitle></mat-card-title
+            >
+          </div>
+          <div fxLayout="column" fxLayoutAlign="center end" fxFlex="40">
+            <mat-card-subtitle>
+              Tipo de Llamada: {{ masterThread.callType }}
+            </mat-card-subtitle>
+          </div>
         </mat-card-header>
         <mat-card-content>
-          {{ call.comment }}
+          {{ masterThread.comment }}
         </mat-card-content>
         <mat-card-actions>
-          <button>Thread</button>
+          <button mat-raised-button color="accent">Thread</button>
         </mat-card-actions>
+        <mat-card-footer> </mat-card-footer>
       </mat-card>
     </mat-expansion-panel-header>
-
-    <!-- <div *ngFor="let thread of call.threads" fxLayout="row wrap">
-      <mat-divider></mat-divider>
-      <mat-card class="mat-elevation-z0">
-        <mat-card-header>
-          <div mat-card-avatar class="example-header-image"></div>
-          <div>{{ thread.comment }}</div>
-        </mat-card-header>
-      </mat-card>
-    </div> -->
+    <mat-divider></mat-divider>
+    <mat-card
+      class="mat-elevation-z0"
+      *ngFor="let thread of masterThread.threads; last as isLast"
+    >
+      <mat-card-header>
+        <div fxLayout="row" fxFlex="50">
+          <div mat-card-avatar class="avatarImage"></div>
+          <mat-card-title
+            >#{{ thread.confirmationNumber }}
+            <mat-card-subtitle>{{
+              thread.createdAt | date: 'yyyy-MM-dd HH:ss'
+            }}</mat-card-subtitle></mat-card-title
+          >
+        </div>
+        <div fxLayout="column" fxLayoutAlign="center end" fxFlex="50">
+          <mat-card-subtitle>
+            Tipo de Llamada: {{ thread.callType }}
+          </mat-card-subtitle>
+        </div>
+      </mat-card-header>
+      <mat-card-content>
+        {{ thread.comment }}
+      </mat-card-content>
+      <mat-divider *ngIf="!isLast"></mat-divider>
+    </mat-card>
   </mat-expansion-panel>
 </mat-accordion>
 <div class="loading-indicator" [hidden]="!loading">
   <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
 </div>
-
-<!-- <mat-card *ngFor="let call of calls">
-  <mat-card-header>
-    <div mat-card-avatar class="example-header-image"></div>
-    <mat-card-title>#{{ call.confirmationNumber }}</mat-card-title>
-    <mat-card-subtitle>{{
-      call.createdDate | date: 'yyyy-MM-dd hh:mm:ss'
-    }}</mat-card-subtitle>
-  </mat-card-header>
-  <mat-card-content> </mat-card-content>
-</mat-card>
-
-<div class="loading-indicator" [hidden]="!loading">
-  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
-</div> -->
 
 <router-outlet></router-outlet>

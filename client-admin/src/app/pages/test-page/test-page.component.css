@@ -1,23 +1,24 @@
-mat-card {
+.mat-card {
   padding: 5px;
   margin: 5px;
-}
-.example-header-image {
-  background-image: url('../../../call18dp.svg');
-  background-size: cover;
-  width: 18px;
-  height: 18px;
-}
-
-.mat-card {
   background-color: transparent;
-  width: 100%;
+  width: 98%;
   display: inline-block;
 }
+.avatarImage {
+  background-image: url('../../../call18dp.svg');
+  background-size: cover;
+  width: 24px;
+  height: 24px;
+  margin-right: 5px;
+}
 
-/* .mat-expansion-panel {
-  height: 75px;
-} */
+:host ::ng-deep mat-expansion-panel-header .ng-tns-c134-6 {
+  display: inline-block !important;
+}
+:host ::ng-deep mat-card-header .mat-card-header-text {
+  margin: 0px !important;
+}
 .mat-expansion-panel {
   height: 100%;
 }
@@ -26,4 +27,7 @@ mat-card {
 }
 .mat-card-header {
   height: 100%;
+}
+.mat-card-content {
+  word-break: break-all !important;
 }

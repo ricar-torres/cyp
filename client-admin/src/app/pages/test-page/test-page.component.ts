@@ -22,13 +22,9 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./test-page.component.css'],
 })
 export class TestPageComponent implements OnInit {
-  calls: any[] = [];
+  threads: any[] = [];
   loading: boolean;
   clientId: string;
-  displayedColumns: string[] = ['id', 'name', 'code', 'action'];
-  pageSizeOptions: number[] = [5, 10, 25, 100];
-  pageEvent: PageEvent;
-  pageSize = 10;
   constructor(
     private dialog: MatDialog,
     private apiDocCall: DocumentationCallAPIService,
@@ -39,8 +35,13 @@ export class TestPageComponent implements OnInit {
     this.loadData();
   }
 
-  onClick() {
-    const dialogRef = this.dialog.open(DocumentationCallComponent, {});
+  newDocCall() {
+    const dialogRef = this.dialog.open(DocumentationCallComponent, {
+      data: {
+        confirmationNumber: '000000000000',
+        clientId: 1,
+      },
+    });
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
@@ -63,7 +64,7 @@ export class TestPageComponent implements OnInit {
       this.apiDocCall.getClientDocCalls('1').subscribe(
         (data: any) => {
           //this.dataSource = new MatTableDataSource();
-          this.calls = data;
+          this.threads = data;
           this.loading = false;
         },
         (error: any) => {

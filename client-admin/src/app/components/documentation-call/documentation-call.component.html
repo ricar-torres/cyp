@@ -14,7 +14,7 @@
               <mat-label>{{
                 'DOCUMENTATION_CALL.CONFIRM_NUM' | translate
               }}</mat-label>
-              <input matInput value="##########" readonly />
+              <input matInput [value]="confirmationNumber" readonly />
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>{{

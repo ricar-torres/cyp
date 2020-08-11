@@ -1,7 +1,14 @@
 import { DialogGenericSuccessComponent } from './../dialog-generic-success/dialog-generic-success.component';
 import { DocCall } from './../../models/DocCall';
 import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  Input,
+  Inject,
+} from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -11,7 +18,7 @@ import {
 import { Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { LanguageService } from '@app/shared/Language.service';
-import { MatDialog, MatDialogRef } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-documentation-call',
@@ -29,6 +36,7 @@ export class DocumentationCallComponent implements OnInit {
 
   @Input()
   clientId: number = 1;
+  confirmationNumber: string;
   constructor(
     public languageService: LanguageService,
     private formBuilder: FormBuilder,
@@ -36,8 +44,12 @@ export class DocumentationCallComponent implements OnInit {
     private apiDocCall: DocumentationCallAPIService,
     private app: AppService,
     public dialog: MatDialog,
-    public dialogRef: MatDialogRef<DocumentationCallComponent>
-  ) {}
+    public dialogRef: MatDialogRef<DocumentationCallComponent>,
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
+    this.id = data.clientId;
+    this.confirmationNumber = data.confirmationNumber;
+  }
 
   async ngOnInit() {
     try {
@@ -46,7 +58,6 @@ export class DocumentationCallComponent implements OnInit {
       this.createAccess = true;
       this.initForm();
       await this.loadCallTypes();
-      //this.id = this.route.snapshot.paramMap.get('id');
 
       if (this.id != '0') {
         //this.retirement = await this.apiDocCall.getById(this.id);

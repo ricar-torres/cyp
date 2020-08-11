@@ -1,31 +1,31 @@
 import { title } from 'process';
 export class DocCall {
   id: number;
-  callTypeId: number;
-  callType: string;
+  callType: number;
+  callTypeName: string;
   comments: string;
   confirmationNumber: string;
   clientId: number;
   userId: number;
-  createdDate: string;
+  createdAt: string;
   /**
    *
    */
   constructor(
     id?: number,
-    calltypeId?: number,
-    callType?: string,
-    createddate?: string,
+    calltype?: number,
+    callTypeName?: string,
+    creadtedAt?: string,
     comment?: string,
     confirmationNumber?: string,
     clientid?: number,
     userId?: number
   ) {
     this.id = id;
-    this.callType = callType;
-    this.callTypeId = calltypeId;
+    this.callTypeName = callTypeName;
+    this.callType = calltype;
     this.comments = comment;
-    this.createdDate = createddate;
+    this.createdAt = creadtedAt;
     this.confirmationNumber = confirmationNumber;
     this.clientId = clientid;
     this.userId = userId;
