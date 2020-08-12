@@ -27,7 +27,7 @@ export class ClientWizardService {
     Id: [null],
     Name: [null, [Validators.required]],
     LastName1: [null, [Validators.required]],
-    LastName2: [null, [Validators.required]],
+    LastName2: [null],
     Email: [null, [Validators.email]],
     Initial: [null],
     Ssn: [null, Validators.required],
@@ -68,6 +68,8 @@ export class ClientWizardService {
     CoverId: [null],
     EffectiveDate: [null],
     HealthPlan: [null],
+    MedicareA: [null],
+    MedicareB: [null],
   });
 
   secondFormGroup = this.formBuilder.group({
@@ -136,12 +138,18 @@ export class ClientWizardService {
 
   async preRegister() {
     try {
+      var agency = this.adaptInfoForAPI();
+      var clientDemographic = Object.assign(
+        this.clientDemographic.value,
+        this.generalInformationForm.value
+      );
       var ClientInforation = {
         PreRegister: true,
-        Demographic: this.clientDemographic.value,
+        Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
       };
       await this.clientService.create(ClientInforation);
+      this.adaptInfoForGUI(agency);
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -154,12 +162,18 @@ export class ClientWizardService {
 
   async register() {
     try {
+      var agency = this.adaptInfoForAPI();
+      var clientDemographic = Object.assign(
+        this.clientDemographic.value,
+        this.generalInformationForm.value
+      );
       var ClientInforation = {
         PreRegister: false,
-        Demographic: this.clientDemographic.value,
+        Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
       };
       await this.clientService.create(ClientInforation);
+      this.adaptInfoForGUI(agency);
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -172,12 +186,17 @@ export class ClientWizardService {
 
   async UpdateClientInformation() {
     try {
-      //this.newAddressInUpdate();
+      var agency = this.adaptInfoForAPI();
+      var clientDemographic = Object.assign(
+        this.clientDemographic.value,
+        this.generalInformationForm.value
+      );
       var ClientInforation = {
-        Demographic: this.clientDemographic.value,
+        Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
       };
       await this.clientService.update(ClientInforation);
+      this.adaptInfoForGUI(agency);
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -186,6 +205,17 @@ export class ClientWizardService {
         });
       }
     }
+  }
+
+  private adaptInfoForGUI(agency: any) {
+    console.log(agency);
+    this.generalInformationForm.get('AgencyId').setValue(agency);
+  }
+
+  private adaptInfoForAPI() {
+    var Agency = this.generalInformationForm.get('AgencyId').value;
+    this.generalInformationForm.get('AgencyId').setValue(Agency.id);
+    return Agency;
   }
 
   //#endregion

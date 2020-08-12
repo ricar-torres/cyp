@@ -116,11 +116,13 @@
     "PARTICIPANT": "Participante",
     "TUTOR": "Tutor",
     "AUTORIZEDPERSON": "Persona autorizada a realizar cambios en su cubierta médica?",
-    "HASMEDICARE": "Tiene Medicare?",
+    "HASMEDICARE": "De poseer medicare, escoja el/los correspondientes:",
     "AGENCY": "Agencia",
     "AMEDICALPLAN": "Plan Medico Actual",
     "ACOVER": "Cubierta Actual",
-    "EFFECTIVEDATE": "Fecha de Efectividad"
+    "EFFECTIVEDATE": "Fecha de Efectividad",
+    "MEDICAREA": "Medicare A",
+    "MEDICAREB": "Medicare B"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
