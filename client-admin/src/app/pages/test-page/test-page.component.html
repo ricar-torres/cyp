@@ -31,6 +31,10 @@
             <div fxLayout="row" fxFlex="50">
               <div mat-card-avatar class="avatarImage"></div>
               <mat-card-title
+                class="mt-1"
+                matBadge="{{ masterThread.threads.length }}"
+                [matBadgeHidden]="masterThread.threads.length < 1"
+                matBadgeOverlap="false"
                 >#{{ masterThread.confirmationNumber }}
                 <mat-card-subtitle>{{
                   masterThread.createdAt | date: 'yyyy-MM-dd HH:ss'
@@ -50,9 +54,7 @@
           <mat-card-actions>
             <button
               mat-raised-button
-              matBadge="{{ masterThread.threads.length }}"
               color="accent"
-              [matBadgeHidden]="masterThread.threads.length < 1"
               (click)="createThread(masterThread.confirmationNumber)"
             >
               {{ 'DOCUMENTATION_CALL_LIST.THREAD' | translate }}
@@ -62,7 +64,6 @@
         </mat-card>
       </mat-expansion-panel-header>
       <mat-divider *ngIf="masterThread.threads.length > 0"></mat-divider>
-
       <mat-card
         class="mat-elevation-z0"
         *ngFor="let thread of masterThread.threads; last as isLast"
