@@ -1,7 +1,7 @@
 import { title } from 'process';
 export class DocCall {
   id: number;
-  callType: number;
+  callType: string;
   callTypeName: string;
   comments: string;
   confirmationNumber: string;
@@ -12,8 +12,8 @@ export class DocCall {
    *
    */
   constructor(
-    id?: number,
-    calltype?: number,
+    id: number,
+    calltype?: string,
     callTypeName?: string,
     creadtedAt?: string,
     comment?: string,

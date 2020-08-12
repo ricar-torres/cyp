@@ -8,6 +8,8 @@ import {
   EventEmitter,
   Input,
   Inject,
+  ViewChild,
+  ElementRef,
 } from '@angular/core';
 import {
   FormGroup,
@@ -26,6 +28,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
   styleUrls: ['./documentation-call.component.css'],
 })
 export class DocumentationCallComponent implements OnInit {
+  @ViewChild('num') num: ElementRef;
   loading: boolean;
   retirement: any;
   id: string;
@@ -59,13 +62,13 @@ export class DocumentationCallComponent implements OnInit {
       this.initForm();
       await this.loadCallTypes();
 
-      if (this.id != '0') {
-        //this.retirement = await this.apiDocCall.getById(this.id);
-        if (this.retirement) {
-          this.reactiveForm.get('type').setValue(this.retirement.name);
-          this.reactiveForm.get('comment').setValue(this.retirement.code);
-        }
-      }
+      // if (this.id != '0') {
+      //   //this.retirement = await this.apiDocCall.getById(this.id);
+      //   if (this.retirement) {
+      //     this.reactiveForm.get('type').setValue(this.retirement.name);
+      //     this.reactiveForm.get('comment').setValue(this.retirement.code);
+      //   }
+      // }
     } catch (error) {
       this.loading = false;
     } finally {
@@ -75,6 +78,7 @@ export class DocumentationCallComponent implements OnInit {
 
   initForm() {
     this.reactiveForm = this.formBuilder.group({
+      num: new FormControl(),
       type: new FormControl('', [Validators.required]),
       comment: new FormControl('', [Validators.required]),
     });
@@ -106,18 +110,17 @@ export class DocumentationCallComponent implements OnInit {
   async onSubmit() {
     try {
       this.loading = true;
-      const res: any = await this.apiDocCall.create(
-        new DocCall(
-          null,
-          Number(this.reactiveForm.get('type').value.id),
-          null,
-          null,
-          this.reactiveForm.get('comment').value,
-          null,
-          this.clientId,
-          1 //this.app.getLoggedInUser().Id
-        )
+      var payload = new DocCall(
+        0,
+        this.reactiveForm.get('type').value.id,
+        null,
+        null,
+        this.reactiveForm.get('comment').value,
+        this.num.nativeElement.value,
+        this.clientId,
+        1 //this.app.getLoggedInUser().Id
       );
+      const res: any = await this.apiDocCall.create(payload);
       this.dialogRef.close(res.confirmationNumber);
     } catch (error) {
       this.loading = false;

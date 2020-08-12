@@ -35,17 +35,42 @@ export class TestPageComponent implements OnInit {
     this.loadData();
   }
 
-  newDocCall() {
+  // newDocCall() {
+  //   const dialogRef = this.dialog.open(DocumentationCallComponent, {
+  //     data: {
+  //       confirmationNumber: '000000000000',
+  //       clientId: 1,
+  //     },
+  //   });
+
+  //   dialogRef.afterClosed().subscribe((dialogResult) => {
+  //     if (dialogResult) {
+  //       console.log(dialogResult);
+  //       this.dialog.open(DialogGenericSuccessComponent, {
+  //         width: '250px',
+  //         height: '250px',
+  //         data: new GenericSucessModel(
+  //           'Success',
+  //           '<h4>' + dialogResult + '</h4>'
+  //         ),
+  //       });
+  //     }
+  //   });
+  // }
+  createThread(masterThreadId) {
+    if (masterThreadId == null) {
+      masterThreadId = '000000000000';
+    }
     const dialogRef = this.dialog.open(DocumentationCallComponent, {
       data: {
-        confirmationNumber: '000000000000',
+        confirmationNumber: masterThreadId,
         clientId: 1,
       },
     });
 
     dialogRef.afterClosed().subscribe((dialogResult) => {
       if (dialogResult) {
-        console.log(dialogResult);
+        this.loadData();
         this.dialog.open(DialogGenericSuccessComponent, {
           width: '250px',
           height: '250px',

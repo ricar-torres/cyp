@@ -4,7 +4,7 @@
   mat-raised-button
   class="mat-raised-button mg-10"
   color="primary"
-  (click)="newDocCall()"
+  (click)="createThread(null)"
 >
   New Call Doc
 </button>
@@ -43,7 +43,13 @@
           {{ masterThread.comment }}
         </mat-card-content>
         <mat-card-actions>
-          <button mat-raised-button color="accent">Thread</button>
+          <button
+            mat-raised-button
+            color="accent"
+            (click)="createThread(masterThread.confirmationNumber)"
+          >
+            Thread
+          </button>
         </mat-card-actions>
         <mat-card-footer> </mat-card-footer>
       </mat-card>

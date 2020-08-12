@@ -64,8 +64,8 @@ namespace server.Controllers {
 		public IActionResult Create([FromBody] ClientUser payload) {
 
 			try {
-
-				payload.ConfirmationNumber = CreateConfirmationCode();
+				payload.ConfirmationNumber = payload.ConfirmationNumber.Contains("000000000000") ?
+					CreateConfirmationCode() : payload.ConfirmationNumber;
 				_service.Create(payload);
 				return Ok(payload);
 
@@ -122,7 +122,7 @@ namespace server.Controllers {
 			List<DocCallThread> masterThreads = new List<DocCallThread>();
 			List<CallReasons> callReasons = _context.CallReasons.ToList();
 			try {
-				var table = _context.ClientUser.Where(x => x.ClientId == clientId && x.ConfirmationNumber == "111111111111" || x.ConfirmationNumber == "222222222222" || x.ConfirmationNumber == "333333333333" || x.ConfirmationNumber == "444444444444" || x.ConfirmationNumber == "555555555555" || x.ConfirmationNumber == "666666666666").ToList();
+				var table = _context.ClientUser.Where(x => x.ClientId == clientId).ToList();
 				var res =
 					from row in table
 				group row by row.ConfirmationNumber into ConfirmationNumbers
