@@ -63,6 +63,13 @@ export class ClientWizardService {
     }),
   });
 
+  generalInformationForm = this.formBuilder.group({
+    AgencyId: [null],
+    CoverId: [null],
+    EffectiveDate: [null],
+    HealthPlan: [null],
+  });
+
   secondFormGroup = this.formBuilder.group({
     secondCtrl: [null, Validators.required],
   });
@@ -86,6 +93,7 @@ export class ClientWizardService {
     this.clientDemographic.reset();
     this.clientAddressFormGroup.reset();
     this.secondFormGroup.reset();
+    this.generalInformationForm.reset();
   }
 
   //#region bonafide Checks

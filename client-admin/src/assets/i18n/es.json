@@ -33,6 +33,8 @@
   "SINGLE": "Soltero",
   "NEXT": "Siguiente",
   "BACK": "Regresar",
+  "YES": "Si",
+  "NO": "No",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -98,6 +100,7 @@
     "MARITALSTATUS": "Estatus Marital",
     "BONAFIDES": "Bona Fides",
     "DEPENDANTS": "Dependientes",
+    "GENERALINFORMATION": "Información General",
     "ALLIANCE": "Alianzas",
     "CALLHISTORY": "Historial de llamadas",
     "DIRECTIONS": "Direcciones",
@@ -109,7 +112,15 @@
     "CITY": "Ciudad",
     "POSTALCODE": "Código Postal",
     "POSTALCODE4": "Código Postal +4",
-    "COMMENTS": "Comentarios"
+    "COMMENTS": "Comentarios",
+    "PARTICIPANT": "Participante",
+    "TUTOR": "Tutor",
+    "AUTORIZEDPERSON": "Persona autorizada a realizar cambios en su cubierta médica?",
+    "HASMEDICARE": "Tiene Medicare?",
+    "AGENCY": "Agencia",
+    "AMEDICALPLAN": "Plan Medico Actual",
+    "ACOVER": "Cubierta Actual",
+    "EFFECTIVEDATE": "Fecha de Efectividad"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

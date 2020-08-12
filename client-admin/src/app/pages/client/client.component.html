@@ -149,20 +149,23 @@
         </form>
       </div>
       <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
+        <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
+          <app-general-information [client]="client"></app-general-information>
+        </mat-tab>
         <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
           <app-client-address [clientid]="clientid"></app-client-address>
         </mat-tab>
         <mat-tab label="{{ 'CLIENTS.BONAFIDES' | translate }}">
-          Content 2
+          <app-bona-fide-list [cientId]="clientid"></app-bona-fide-list>
         </mat-tab>
         <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
-          Content 3
-        </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
           Content 4
         </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
+        <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
           Content 5
+        </mat-tab>
+        <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
+          Content 6
         </mat-tab>
       </mat-tab-group>
     </mat-card-content>

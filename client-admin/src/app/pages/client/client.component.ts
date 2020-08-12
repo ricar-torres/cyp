@@ -24,7 +24,7 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
 })
 export class ClientComponent implements OnInit {
   clientid: string;
-
+  client;
   @Input() fromWizard: boolean = false;
 
   taskPermissions: PERMISSION = {
@@ -57,20 +57,21 @@ export class ClientComponent implements OnInit {
     if (!this.fromWizard) {
       this.setupFabButton();
       this.clientid = this.route.snapshot.paramMap.get('id');
-      var client: any = await this.clientsService.client(this.clientid);
-
-      this.reactiveForm.get('Id').setValue(client.id);
-      this.reactiveForm.get('Name').setValue(client.name);
-      this.reactiveForm.get('LastName1').setValue(client.lastName1);
-      this.reactiveForm.get('LastName2').setValue(client.lastName2);
-      this.reactiveForm.get('Email').setValue(client.email);
-      this.reactiveForm.get('Initial').setValue(client.initial);
-      this.reactiveForm.get('Ssn').setValue(client.ssn);
-      this.reactiveForm.get('Gender').setValue(client.gender);
-      this.reactiveForm.get('BirthDate').setValue(client.birthDate);
-      this.reactiveForm.get('MaritalStatus').setValue(client.maritalStatus);
-      this.reactiveForm.get('Phone1').setValue(client.phone1);
-      this.reactiveForm.get('Phone2').setValue(client.phone2);
+      this.client = await this.clientsService.client(this.clientid);
+      this.reactiveForm.get('Id').setValue(this.client.id);
+      this.reactiveForm.get('Name').setValue(this.client.name);
+      this.reactiveForm.get('LastName1').setValue(this.client.lastName1);
+      this.reactiveForm.get('LastName2').setValue(this.client.lastName2);
+      this.reactiveForm.get('Email').setValue(this.client.email);
+      this.reactiveForm.get('Initial').setValue(this.client.initial);
+      this.reactiveForm.get('Ssn').setValue(this.client.ssn);
+      this.reactiveForm.get('Gender').setValue(this.client.gender);
+      this.reactiveForm.get('BirthDate').setValue(this.client.birthDate);
+      this.reactiveForm
+        .get('MaritalStatus')
+        .setValue(this.client.maritalStatus);
+      this.reactiveForm.get('Phone1').setValue(this.client.phone1);
+      this.reactiveForm.get('Phone2').setValue(this.client.phone2);
     }
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);

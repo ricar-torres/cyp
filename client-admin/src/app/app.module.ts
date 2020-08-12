@@ -111,6 +111,7 @@ import { ClientComponent } from './pages/client/client.component';
 import { ClientWizardComponent } from './pages/client-wizard/client-wizard.component';
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddressComponent } from './pages/address/address.component';
+import { GeneralInformationComponent } from './pages/general-information/general-information.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -156,6 +157,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ClientComponent,
     ClientWizardComponent,
     AddressComponent,
+    GeneralInformationComponent,
   ],
   imports: [
     BrowserModule,

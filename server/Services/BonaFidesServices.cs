@@ -25,7 +25,7 @@ namespace WebApi.Services
 
   public interface IBonaFidesServices
   {
-    IQueryable<BonaFides> GetAll();
+    IQueryable<BonaFides> GetAll(int? clientId);
     BonaFides GetById(int id);
     BonaFides Create(BonaFides payload);
     BonaFides Update(BonaFides payload);
@@ -81,15 +81,25 @@ namespace WebApi.Services
         throw new AppException("Bonafide not found");
     }
 
-    public IQueryable<BonaFides> GetAll()
+    public IQueryable<BonaFides> GetAll(int? clientId)
     {
       IQueryable<BonaFides> payload = null;
 
       try
       {
-
-        payload = _context.BonaFides.Where(ag => ag.DeletedAt == null).AsQueryable();
-
+        if (clientId != null)
+        {
+          payload = (from cu in _context.ChapterClient
+                     join ch in _context.Chapters on cu.ChapterId equals ch.Id
+                     join bn in _context.BonaFides on ch.BonaFideId equals bn.Id
+                     where clientId == cu.ClientId
+                     select bn
+                    );
+        }
+        else
+        {
+          payload = _context.BonaFides.Where(ag => ag.DeletedAt == null).AsQueryable();
+        }
       }
       catch (Exception ex)
       {

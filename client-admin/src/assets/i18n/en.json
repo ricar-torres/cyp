@@ -32,6 +32,8 @@
   "SINGLE": "Single",
   "NEXT": "Next",
   "BACK": "Back",
+  "YES": "Yes",
+  "NO": "No",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -97,6 +99,7 @@
     "MARITALSTATUS": "Marital Status",
     "BONAFIDES": "BonaFides",
     "DEPENDANTS": "Dependants",
+    "GENERALINFORMATION": "General Information",
     "ALLIANCE": "Alliance",
     "CALLHISTORY": "Call History",
     "DIRECTIONS": "Directions",
@@ -108,7 +111,15 @@
     "CITY": "City",
     "POSTALCODE": "Postal Code",
     "POSTALCODE4": "Postal Code +4",
-    "COMMENTS": "Comments"
+    "COMMENTS": "Comments",
+    "PARTICIPANT": "Participant",
+    "TUTOR": "Tutor",
+    "AUTORIZEDPERSON": "Authorized person to perform changes in medical plan?",
+    "HASMEDICARE": "Has Medicare?",
+    "AGENCY": "Agency",
+    "AMEDICALPLAN": "Actual Medical Plan",
+    "ACOVER": "Actual Cover",
+    "EFFECTIVEDATE": "Effective Date"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",

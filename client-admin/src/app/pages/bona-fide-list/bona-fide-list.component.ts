@@ -1,4 +1,10 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  Input,
+} from '@angular/core';
 import {
   PageEvent,
   MatSort,
@@ -22,7 +28,7 @@ import {
   templateUrl: './bona-fide-list.component.html',
   styleUrls: ['./bona-fide-list.component.css'],
 })
-export class BonaFideListComponent implements OnInit, AfterViewInit {
+export class BonaFideListComponent implements OnInit {
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
@@ -42,6 +48,7 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
   pageEvent: PageEvent;
   loading = true;
 
+  @Input() cientId: string;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -61,14 +68,11 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
     this.editAccess = true;
     this.createAccess = true;
     this.deleteAccess = true;
-  }
-
-  ngAfterViewInit(): void {
     this.LoadAgencies();
   }
 
   private LoadAgencies() {
-    this.bonafidesService.getAll().subscribe(
+    this.bonafidesService.getAll(this.cientId).subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();
@@ -143,11 +147,17 @@ export class BonaFideListComponent implements OnInit, AfterViewInit {
   }
 
   editBonafide(id: number) {
-    this.router.navigate(['/home/bonafide', id]);
+    if (this.cientId) {
+    } else {
+      this.router.navigate(['/home/bonafide', id]);
+    }
   }
 
   goToNew() {
-    this.router.navigate(['/home/bonafide']);
+    if (this.cientId) {
+    } else {
+      this.router.navigate(['/home/bonafide']);
+    }
   }
 
   doFilter(value: any) {

@@ -1,17 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { bonaFideservice } from '@app/shared/bonafide.service';
-import { merge, fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-bona-fide',
   templateUrl: './bona-fide.component.html',
@@ -19,7 +13,7 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
 })
 export class BonaFideComponent implements OnInit {
   reactiveForm: FormGroup;
-  id: string;
+  @Input() bonafideId: string;
   loading = false;
   constructor(
     private fb: FormBuilder,
@@ -34,10 +28,12 @@ export class BonaFideComponent implements OnInit {
   async ngOnInit() {
     try {
       this.loading = true;
-      this.id = this.route.snapshot.paramMap.get('id');
+      this.bonafideId = this.route.snapshot.paramMap.get('id');
       this.reactiveForm = this.clientWizard.bonafidesFormGroup;
-      if (this.id) {
-        var bonafide: any = await this.bonafideService.bonafide(this.id);
+      if (this.bonafideId) {
+        var bonafide: any = await this.bonafideService.bonafide(
+          this.bonafideId
+        );
         this.reactiveForm.get('Id').setValue(bonafide.id);
         this.reactiveForm.get('Name').setValue(bonafide.name);
         this.reactiveForm.get('Code').setValue(bonafide.code);
@@ -69,7 +65,7 @@ export class BonaFideComponent implements OnInit {
   async onSubmit() {
     try {
       this.loading = true;
-      if (this.id) {
+      if (this.bonafideId) {
         await this.bonafideService.update(this.reactiveForm.value);
         this.onBack();
       } else {
