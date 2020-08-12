@@ -299,6 +299,13 @@
     "PAGE_TITLE": "Document Call",
     "CONFIRM_NUM": "Confirmation Number",
     "CALL_TYPE": "Call Type",
-    "COMMENT": "Comment"
+    "COMMENT": "Comment",
+    "CONFIRMATION_NAME": "Confirmation Number",
+    "SUCCESS": "Success"
+  },
+  "DOCUMENTATION_CALL_LIST": {
+    "ADD_BTN": "Add",
+    "TYPE_CALL": "Type of Call",
+    "THREAD": "Add to Thread"
   }
 }

@@ -116,6 +116,7 @@ import { GeneralInformationComponent } from './pages/general-information/general
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 import { TestPageComponent } from './pages/test-page/test-page.component';
+import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -166,6 +167,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RetirementComponent,
     DocumentationCallComponent,
     TestPageComponent,
+    DialogSuccessComponent,
   ],
   imports: [
     BrowserModule,

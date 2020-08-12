@@ -1,0 +1,30 @@
+<!-- <mat-dialog-content>
+  <div fxLayout="row" fxLayoutAlign="start center">
+    <mat-icon color="primary">check_circle_outline</mat-icon>
+    <span>{{ title | translate }}</span>
+  </div>
+  <div fxLayout="column">
+    <mat-label>{{ message | translate }}</mat-label>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-flat-button>Ok</button>
+</mat-dialog-actions> -->
+
+<mat-card class="mat-elevation-z0">
+  <mat-card-header fxLayout="row">
+    <mat-icon color="primary">check_circle_outline</mat-icon>
+    <h3 class="mx-2">{{ title | translate }}</h3>
+  </mat-card-header>
+  <mat-card-content>
+    <h5>{{ 'DOCUMENTATION_CALL.CONFIRMATION_NAME' | translate }}</h5>
+    <h6>
+      <strong>{{ message }}</strong>
+    </h6>
+  </mat-card-content>
+  <mat-card-actions fxLayout="column" fxLayoutAlign="end end">
+    <button mat-raised-button color="primary" [mat-dialog-close]="true">
+      {{ 'OK_BTN' | translate }}
+    </button>
+  </mat-card-actions>
+</mat-card>

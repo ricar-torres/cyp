@@ -1,10 +1,11 @@
+import { LanguageService } from './../../shared/Language.service';
 import { DocCall } from './../../models/DocCall';
 import { Observable } from 'rxjs';
 import { AppService } from '@app/shared/app.service';
 import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
 import { GenericSucessModel } from './../../models/GenericSuccessModel';
 import { DocumentationCallComponent } from './../../components/documentation-call/documentation-call.component';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmDialogModel,
@@ -15,49 +16,32 @@ import { Console } from 'console';
 import { DialogGenericSuccessComponent } from '@app/components/dialog-generic-success/dialog-generic-success.component';
 import { MatTableDataSource, PageEvent } from '@angular/material';
 import { map } from 'rxjs/operators';
+import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-success.component';
 
 @Component({
   selector: 'app-test-page',
   templateUrl: './test-page.component.html',
   styleUrls: ['./test-page.component.css'],
 })
-export class TestPageComponent implements OnInit {
+export class TestPageComponent implements OnInit, AfterViewInit {
   threads: any[] = [];
   loading: boolean;
+
+  @Input()
   clientId: string;
   constructor(
     private dialog: MatDialog,
     private apiDocCall: DocumentationCallAPIService,
-    private app: AppService
+    private app: AppService,
+    private lang: LanguageService
   ) {}
-
-  ngOnInit() {
-    this.loadData();
+  async ngAfterViewInit() {
+    await this.loadData();
   }
 
-  // newDocCall() {
-  //   const dialogRef = this.dialog.open(DocumentationCallComponent, {
-  //     data: {
-  //       confirmationNumber: '000000000000',
-  //       clientId: 1,
-  //     },
-  //   });
+  ngOnInit() {}
 
-  //   dialogRef.afterClosed().subscribe((dialogResult) => {
-  //     if (dialogResult) {
-  //       console.log(dialogResult);
-  //       this.dialog.open(DialogGenericSuccessComponent, {
-  //         width: '250px',
-  //         height: '250px',
-  //         data: new GenericSucessModel(
-  //           'Success',
-  //           '<h4>' + dialogResult + '</h4>'
-  //         ),
-  //       });
-  //     }
-  //   });
-  // }
-  createThread(masterThreadId) {
+  async createThread(masterThreadId) {
     if (masterThreadId == null) {
       masterThreadId = '000000000000';
     }
@@ -67,34 +51,31 @@ export class TestPageComponent implements OnInit {
         clientId: 1,
       },
     });
-
-    dialogRef.afterClosed().subscribe((dialogResult) => {
+    dialogRef.afterClosed().subscribe(async (dialogResult) => {
+      await this.loadData();
       if (dialogResult) {
-        this.loadData();
-        this.dialog.open(DialogGenericSuccessComponent, {
-          width: '250px',
-          height: '250px',
+        this.dialog.open(DialogSuccessComponent, {
+          width: '300px',
+          height: '200px',
           data: new GenericSucessModel(
-            'Success',
-            '<h4>' + dialogResult + '</h4>'
+            'DOCUMENTATION_CALL.SUCCESS',
+            dialogResult
           ),
         });
       }
     });
   }
 
-  loadData() {
+  async loadData() {
     try {
       this.loading = true;
       this.apiDocCall.getClientDocCalls('1').subscribe(
         (data: any) => {
-          //this.dataSource = new MatTableDataSource();
           this.threads = data;
           this.loading = false;
         },
         (error: any) => {
           this.loading = false;
-
           if (error.status != 401) {
             console.error('error', error);
             this.app.showErrorMessage('Error interno');
@@ -103,7 +84,14 @@ export class TestPageComponent implements OnInit {
       );
     } catch (error) {
       this.loading = false;
-    } finally {
     }
+  }
+
+  callSuccessDialog() {
+    this.dialog.open(DialogSuccessComponent, {
+      width: '350px',
+      height: '200px',
+      data: new GenericSucessModel('SUCCESS', '0000000000'),
+    });
   }
 }

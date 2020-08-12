@@ -301,6 +301,13 @@
     "PAGE_TITLE": "Documentar Llamada",
     "CONFIRM_NUM": "Número de Confiramción",
     "CALL_TYPE": "Típo de Llamada",
-    "COMMENT": "Commentario"
+    "COMMENT": "Commentario",
+    "CONFIRMATION_NAME": "Número de Confirmación",
+    "SUCCESS": "Exitoso"
+  },
+  "DOCUMENTATION_CALL_LIST": {
+    "ADD_BTN": "Agregar",
+    "TYPE_CALL": "Tipo de llamada",
+    "THREAD": "Añadir al Hilo"
   }
 }
