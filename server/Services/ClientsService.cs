@@ -14,7 +14,7 @@ namespace WebApi.Services
   {
     List<Clients> GetAll();
     Clients GetById(int id);
-    Task<ClientInformationDto> Create(ClientInformationDto payload);
+    ClientInformationDto Create(ClientInformationDto payload);
     Task<ClientInformationDto> Update(ClientInformationDto payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
@@ -65,39 +65,24 @@ namespace WebApi.Services
       return res;
     }
 
-    public async Task<ClientInformationDto> Create(ClientInformationDto payload)
+    public ClientInformationDto Create(ClientInformationDto payload)
     {
       try
       {
         var newClient = new Clients();
         if (payload.PreRegister)
         {
-          newClient.Email = payload.Demographic?.Email;
-          newClient.Gender = payload.Demographic?.Gender;
-          newClient.Initial = payload.Demographic?.Initial;
-          newClient.LastName1 = payload.Demographic?.LastName1;
-          newClient.LastName2 = payload.Demographic?.LastName2;
-          newClient.MaritalStatus = payload.Demographic?.MaritalStatus;
-          newClient.Name = payload.Demographic?.Name;
-          newClient.Phone1 = payload.Demographic?.Phone1;
-          newClient.Phone2 = payload.Demographic?.Phone2;
-          newClient.Ssn = payload.Demographic?.Ssn;
-          newClient.BirthDate = payload.Demographic?.BirthDate;
-          newClient.AgencyId = 17;
-          newClient.RetirementId = 6;
-          newClient.CoverId = 206;
-          newClient.CampaignId = 17;
+          GeneralInformationBuilder(ref payload, ref newClient);
           newClient.PreRegister = true;
-
           newClient.UpdatedAt = DateTime.Now;
           newClient.CreatedAt = DateTime.Now;
-          await _context.Clients.AddAsync(newClient);
+          _context.Clients.Add(newClient);
+          _context.SaveChanges();
         }
         else
         {
 
         }
-        await _context.SaveChangesAsync();
         return payload;
       }
       catch (Exception ex)
@@ -113,18 +98,7 @@ namespace WebApi.Services
         if (payload.Demographic != null)
         {
           var client = await _context.Clients.AsNoTracking().FirstOrDefaultAsync(cl => cl.Id == payload.Demographic.Id);
-          client.Email = payload.Demographic?.Email;
-          client.Gender = payload.Demographic?.Gender;
-          client.Initial = payload.Demographic?.Initial;
-          client.LastName1 = payload.Demographic?.LastName1;
-          client.LastName2 = payload.Demographic?.LastName2;
-          client.MaritalStatus = payload.Demographic?.MaritalStatus;
-          client.Name = payload.Demographic?.Name;
-          client.Phone1 = payload.Demographic?.Phone1;
-          client.Phone2 = payload.Demographic?.Phone2;
-          client.Phone2 = payload.Demographic?.Phone2;
-          client.Ssn = payload.Demographic?.Ssn;
-
+          GeneralInformationBuilder(ref payload, ref client);
           client.UpdatedAt = DateTime.Now;
           _context.Clients.Update(client);
         }
@@ -135,26 +109,14 @@ namespace WebApi.Services
 
           if (physicalAddress != null)
           {
-            physicalAddress.Line1 = payload.Address?.PhysicalAddress.Line1;
-            physicalAddress.Line2 = payload.Address?.PhysicalAddress.Line2;
-            physicalAddress.State = payload.Address?.PhysicalAddress.State;
-            physicalAddress.City = payload.Address?.PhysicalAddress.City;
-            physicalAddress.Type = payload.Address?.PhysicalAddress.Type;
-            physicalAddress.Zip4 = payload.Address?.PhysicalAddress.Zip4;
-            physicalAddress.Zipcode = payload.Address?.PhysicalAddress.Zipcode;
+            PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
             physicalAddress.ClientId = payload.Demographic.Id;
             _context.Addresses.Update(physicalAddress);
           }
           else
           {
             physicalAddress = new Addresses();
-            physicalAddress.Line1 = payload.Address?.PhysicalAddress.Line1;
-            physicalAddress.Line2 = payload.Address?.PhysicalAddress.Line2;
-            physicalAddress.State = payload.Address?.PhysicalAddress.State;
-            physicalAddress.City = payload.Address?.PhysicalAddress.City;
-            physicalAddress.Type = payload.Address?.PhysicalAddress.Type;
-            physicalAddress.Zip4 = payload.Address?.PhysicalAddress.Zip4;
-            physicalAddress.Zipcode = payload.Address?.PhysicalAddress.Zipcode;
+            PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
             physicalAddress.ClientId = payload.Demographic.Id;
             physicalAddress.CreatedAt = DateTime.Now;
             await _context.Addresses.AddAsync(physicalAddress);
@@ -169,25 +131,13 @@ namespace WebApi.Services
           var postalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 2);
           if (postalAddress != null)
           {
-            postalAddress.Line1 = payload.Address?.PostalAddress.Line1;
-            postalAddress.Line2 = payload.Address?.PostalAddress.Line2;
-            postalAddress.State = payload.Address?.PostalAddress.State;
-            postalAddress.City = payload.Address?.PostalAddress.City;
-            postalAddress.Type = payload.Address?.PostalAddress.Type;
-            postalAddress.Zip4 = payload.Address?.PostalAddress.Zip4;
-            postalAddress.Zipcode = payload.Address?.PostalAddress.Zipcode;
+            PostalAddressInformationBuilder(ref payload, ref postalAddress);
             _context.Addresses.Update(postalAddress);
           }
           else
           {
             postalAddress = new Addresses();
-            postalAddress.Line1 = payload.Address?.PostalAddress.Line1;
-            postalAddress.Line2 = payload.Address?.PostalAddress.Line2;
-            postalAddress.State = payload.Address?.PostalAddress.State;
-            postalAddress.City = payload.Address?.PostalAddress.City;
-            postalAddress.Type = payload.Address?.PostalAddress.Type;
-            postalAddress.Zip4 = payload.Address?.PostalAddress.Zip4;
-            postalAddress.Zipcode = payload.Address?.PostalAddress.Zipcode;
+            PostalAddressInformationBuilder(ref payload, ref postalAddress);
             postalAddress.ClientId = payload.Demographic.Id;
             await _context.Addresses.AddAsync(postalAddress);
           }
@@ -200,6 +150,89 @@ namespace WebApi.Services
       catch (Exception ex)
       {
         throw ex;
+      }
+    }
+
+    private static void PhysicalAddressInformationBuilder(ref ClientInformationDto payload, ref Addresses Address)
+    {
+      Address.Line1 = payload.Address?.PhysicalAddress.Line1;
+      Address.Line2 = payload.Address?.PhysicalAddress.Line2;
+      Address.State = payload.Address?.PhysicalAddress.State;
+      Address.City = payload.Address?.PhysicalAddress.City;
+      Address.Type = payload.Address?.PhysicalAddress.Type;
+      Address.Zip4 = payload.Address?.PhysicalAddress.Zip4;
+      Address.Zipcode = payload.Address?.PhysicalAddress.Zipcode;
+    }
+
+    private static void PostalAddressInformationBuilder(ref ClientInformationDto payload, ref Addresses Address)
+    {
+      Address.Line1 = payload.Address?.PostalAddress.Line1;
+      Address.Line2 = payload.Address?.PostalAddress.Line2;
+      Address.State = payload.Address?.PostalAddress.State;
+      Address.City = payload.Address?.PostalAddress.City;
+      Address.Type = payload.Address?.PostalAddress.Type;
+      Address.Zip4 = payload.Address?.PostalAddress.Zip4;
+      Address.Zipcode = payload.Address?.PostalAddress.Zipcode;
+    }
+
+    private static void GeneralInformationBuilder(ref ClientInformationDto payload, ref Clients client)
+    {
+      client.Email = payload.Demographic?.Email;
+      client.Gender = payload.Demographic?.Gender;
+      client.Initial = payload.Demographic?.Initial;
+      client.LastName1 = payload.Demographic?.LastName1;
+      client.LastName2 = payload.Demographic?.LastName2;
+      client.MaritalStatus = payload.Demographic?.MaritalStatus;
+      client.Name = payload.Demographic?.Name;
+      client.Phone1 = payload.Demographic?.Phone1;
+      client.Phone2 = payload.Demographic?.Phone2;
+      client.Phone2 = payload.Demographic?.Phone2;
+      client.Ssn = payload.Demographic?.Ssn;
+      client.CoverId = payload.Demographic.CoverId;
+      client.AgencyId = payload.Demographic.AgencyId;
+      client.EffectiveDate = payload.Demographic.EffectiveDate;
+      client.MedicareA = payload.Demographic.MedicareA;
+      client.MedicareB = payload.Demographic.MedicareB;
+
+
+      var AgencyId = payload.Demographic.AgencyId;
+      if (AgencyId != 0)
+      {
+        client.AgencyId = AgencyId;
+      }
+      else
+      {
+        client.AgencyId = 17;
+      }
+
+      var RetirementId = payload.Demographic.RetirementId;
+      if (RetirementId != 0)
+      {
+        client.RetirementId = RetirementId;
+      }
+      else
+      {
+        client.RetirementId = 6;
+      }
+
+      var CoverId = payload.Demographic.CoverId;
+      if (CoverId != 0)
+      {
+        client.CoverId = CoverId;
+      }
+      else
+      {
+        client.CoverId = 206;
+      }
+
+      var CampaignId = payload.Demographic.CampaignId;
+      if (CampaignId != 0)
+      {
+        client.CampaignId = CampaignId;
+      }
+      else
+      {
+        client.CampaignId = 17;
       }
     }
 

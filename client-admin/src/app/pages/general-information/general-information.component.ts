@@ -30,7 +30,9 @@ export class GeneralInformationComponent implements OnInit {
     this.reactiveForm = this.wizadFormGroups.generalInformationForm;
     this.heathPlans = await this.hps.GetAll();
     this.agencies = await this.ag.getAll().toPromise();
-    await this.fillForm();
+    if (this.client) {
+      await this.fillForm();
+    }
   }
 
   private async fillForm() {
@@ -40,8 +42,9 @@ export class GeneralInformationComponent implements OnInit {
     this.healthPlan.setValue(plan);
     await this.loadCovers(plan.id);
     this.reactiveForm.get('CoverId').setValue(this.client.coverId);
-    console.log(this.client);
     this.reactiveForm.get('EffectiveDate').setValue(this.client.effectiveDate);
+    this.reactiveForm.get('MedicareA').setValue(this.client.medicareA);
+    this.reactiveForm.get('MedicareB').setValue(this.client.medicareB);
   }
 
   async loadCovers(selection) {

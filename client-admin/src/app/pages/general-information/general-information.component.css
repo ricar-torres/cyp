@@ -14,3 +14,11 @@ mat-label {
 mat-radio-button {
   margin-right: 5px;
 }
+
+mat-checkbox {
+  margin-right: 10px;
+}
+
+mat-card {
+  margin-top: 20px;
+}

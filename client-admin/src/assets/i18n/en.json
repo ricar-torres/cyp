@@ -115,11 +115,13 @@
     "PARTICIPANT": "Participant",
     "TUTOR": "Tutor",
     "AUTORIZEDPERSON": "Authorized person to perform changes in medical plan?",
-    "HASMEDICARE": "Has Medicare?",
+    "HASMEDICARE": "In case of medicare, select the correspondiong option",
     "AGENCY": "Agency",
     "AMEDICALPLAN": "Actual Medical Plan",
     "ACOVER": "Actual Cover",
-    "EFFECTIVEDATE": "Effective Date"
+    "EFFECTIVEDATE": "Effective Date",
+    "MEDICAREA": "Medicare A",
+    "MEDICAREB": "Medicare B"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
