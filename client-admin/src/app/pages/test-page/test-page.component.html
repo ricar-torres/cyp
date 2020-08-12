@@ -11,8 +11,8 @@
 
 <mat-accordion>
   <mat-expansion-panel
-    *ngFor="let masterThread of threads"
     [togglePosition]="'after'"
+    *ngFor="let masterThread of threads"
   >
     <mat-expansion-panel-header
       collapsedHeight="*"
@@ -22,20 +22,22 @@
     >
       <mat-card class="mat-elevation-z0">
         <mat-card-header>
+          <!-- <div fxLayout="row" fxFill> -->
           <div fxLayout="row" fxFlex="50">
             <div mat-card-avatar class="avatarImage"></div>
             <mat-card-title
               >#{{ masterThread.confirmationNumber }}
               <mat-card-subtitle>{{
                 masterThread.createdAt | date: 'yyyy-MM-dd HH:ss'
-              }}</mat-card-subtitle></mat-card-title
-            >
+              }}</mat-card-subtitle>
+            </mat-card-title>
           </div>
-          <div fxLayout="column" fxLayoutAlign="center end" fxFlex="40">
+          <div fxLayout="column" fxLayoutAlign="start end" fxFlex="50">
             <mat-card-subtitle>
               Tipo de Llamada: {{ masterThread.callType }}
             </mat-card-subtitle>
           </div>
+          <!-- </div> -->
         </mat-card-header>
         <mat-card-content>
           {{ masterThread.comment }}
@@ -47,6 +49,7 @@
       </mat-card>
     </mat-expansion-panel-header>
     <mat-divider></mat-divider>
+
     <mat-card
       class="mat-elevation-z0"
       *ngFor="let thread of masterThread.threads; last as isLast"
@@ -61,7 +64,7 @@
             }}</mat-card-subtitle></mat-card-title
           >
         </div>
-        <div fxLayout="column" fxLayoutAlign="center end" fxFlex="50">
+        <div fxLayout="column" fxLayoutAlign="start end" fxFlex="50">
           <mat-card-subtitle>
             Tipo de Llamada: {{ thread.callType }}
           </mat-card-subtitle>
