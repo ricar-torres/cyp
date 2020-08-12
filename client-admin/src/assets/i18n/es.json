@@ -227,7 +227,8 @@
     "BONAFIDES": "Asociaciones Bonafides",
     "QUALIFYIN_EVENTS": "Eventos Calificativos",
     "COMMUNICATION_METHODS": "Métodos de Comunicación",
-    "CLIENTS": "Clientes"
+    "CLIENTS": "Clientes",
+    "RETIREMENTS": "Retiros"
   },
 
   "PAGINATOR": {
@@ -276,5 +277,30 @@
     "SAVE": "Guardar",
     "BACK": "Atras",
     "EXISTS": "Existe un método de comunicación con este nombre"
+  },
+  "RETIREMENT_LIST": {
+    "PAGE_TITLE": "Retiros",
+    "NAME": "Nombre",
+    "CODE": "Código",
+    "EDIT_BTN": "Editar",
+    "DEL_BTN": "Borrar",
+    "ADD_BTN": "Añadir",
+    "GENERAL_FILTER": "Filtro",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Retiro?"
+  },
+  "RETIREMENT": {
+    "PAGE_TITLE": "Retiro",
+    "NAME": "Nombre",
+    "CODE": "Código",
+    "BACK": "Atras",
+    "SAVE": "Guardar",
+    "EXISTS_NAME": "Existe un retiro con este nombre",
+    "EXISTS_CODE": "Existe un retiro con este código"
+  },
+  "DOCUMENTATION_CALL": {
+    "PAGE_TITLE": "Documentar Llamada",
+    "CONFIRM_NUM": "Número de Confiramción",
+    "CALL_TYPE": "Típo de Llamada",
+    "COMMENT": "Commentario"
   }
 }

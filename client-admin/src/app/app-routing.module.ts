@@ -1,3 +1,6 @@
+import { TestPageComponent } from './pages/test-page/test-page.component';
+import { RetirementComponent } from './pages/retirement/retirement.component';
+import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
 import { CampaignListComponent } from './pages/campaign-list/campaign-list.component';
 import { NgModule } from '@angular/core';
@@ -26,6 +29,7 @@ import { QualifyingEventListComponent } from './pages/qualifying-event-list/qual
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
 import { ClientListComponent } from './pages/client-list/client-list.component';
 import { ClientComponent } from './pages/client/client.component';
+import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 
 const routes: Routes = [
   {
@@ -141,6 +145,22 @@ const routes: Routes = [
         },
       },
       {
+        path: 'retirement-list',
+        component: RetirementListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
+        path: 'retirement/:id',
+        component: RetirementComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.AGENCIES_UPDATE,
+        },
+      },
+      {
         path: 'bonafides',
         component: BonaFideListComponent,
         canActivate: [AuthGuardService],
@@ -234,6 +254,22 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.CLIENT_CREATE,
+          // {
+          //   path: 'documentation-call',
+          //   component: DocumentationCallComponent,
+          //   canActivate: [AuthGuardService],
+          //   data: {
+          //     //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+          //   },
+          // },
+        },
+      },
+      {
+        path: 'test-page',
+        component: TestPageComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
     ],

@@ -8,4 +8,4 @@ docs/*
 scripts/*
 .vscode/*
 server/.vscode
-
+server\appsettings.development.json

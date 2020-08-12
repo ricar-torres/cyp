@@ -226,7 +226,8 @@
     "BONAFIDES": "Bonafides Associations",
     "QUALIFYIN_EVENTS": "Qualifying Events",
     "COMMUNICATION_METHODS": "Commuication Methods",
-    "CLIENTS": "Clients"
+    "CLIENTS": "Clients",
+    "RETIREMENTS": "Retirements"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
@@ -274,5 +275,30 @@
     "SAVE": "Save",
     "BACK": "Back",
     "EXISTS": "Exists a communication method with this name"
+  },
+  "RETIREMENT_LIST": {
+    "PAGE_TITLE": "Retirements",
+    "NAME": "Name",
+    "CODE": "Code",
+    "EDIT_BTN": "Edit",
+    "DEL_BTN": "Delete",
+    "ADD_BTN": "Add",
+    "GENERAL_FILTER": "Filter",
+    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Retirement?"
+  },
+  "RETIREMENT": {
+    "PAGE_TITLE": "Retirement",
+    "NAME": "Name",
+    "CODE": "Code",
+    "BACK": "Back",
+    "SAVE": "Save",
+    "EXISTS_NAME": "Exists a retirement with this name",
+    "EXISTS_CODE": "Exists a retirement with this code"
+  },
+  "DOCUMENTATION_CALL": {
+    "PAGE_TITLE": "Document Call",
+    "CONFIRM_NUM": "Confirmation Number",
+    "CALL_TYPE": "Call Type",
+    "COMMENT": "Comment"
   }
 }

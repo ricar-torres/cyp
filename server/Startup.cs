@@ -89,6 +89,8 @@ namespace WebApi
       services.AddScoped<IAddressService, AddressService>();
       services.AddScoped<IHealthPlanService, HealthPlanService>();
       services.AddScoped<ICoverService, CoverService>();
+      services.AddScoped<IRetirementService, RetirementService>();
+      services.AddScoped<IDocumentationCallService, DocumentationCallService>();
 
     }
 

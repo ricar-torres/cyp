@@ -1,3 +1,5 @@
+import { DocCall } from './../models/DocCall';
+import { map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import {
   HttpClient,
@@ -13,8 +15,8 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CampaignApiSerivce {
-  private readonly _apiName = 'Campaigns';
+export class DocumentationCallAPIService {
+  private readonly _apiName = 'DocumentationCall';
   /**
    *
    */
@@ -23,13 +25,7 @@ export class CampaignApiSerivce {
   getAll(): Observable<any> {
     return this.http.get(`${environment.baseURL}/${this._apiName}`);
   }
-  delete(id: string) {
-    try {
-      return this.http
-        .delete(`${environment.baseURL}/${this._apiName}/${id}`)
-        .toPromise();
-    } catch (error) {}
-  }
+
   getById(id: string): Promise<any> {
     try {
       return this.http
@@ -37,21 +33,20 @@ export class CampaignApiSerivce {
         .toPromise();
     } catch (error) {}
   }
-  create(campaign) {
+  create(payload) {
     return this.http
-      .post(`${environment.baseURL}/${this._apiName}`, campaign)
+      .post(`${environment.baseURL}/${this._apiName}`, payload)
       .toPromise();
   }
-  update(id, campaign) {
+
+  getCallTypes(): Promise<any> {
     return this.http
-      .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
+      .get(`${environment.baseURL}/${this._apiName}/GetCallTypes`)
       .toPromise();
   }
-  checkCampaignNameExist(name) {
-    return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckCampaignNameExist/`, {
-        params: new HttpParams().set('name', name),
-      })
-      .toPromise();
+  getClientDocCalls(clientId: string | number): Observable<any[]> {
+    return this.http.get<any[]>(
+      `${environment.baseURL}/${this._apiName}/GetClientCalls/${clientId}`
+    );
   }
 }

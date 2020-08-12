@@ -108,6 +108,20 @@ export class SideNavComponent implements OnInit {
               route: '/home/qualifyingevents',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.RETIREMENTS')
+                .toPromise(),
+              iconName: 'group_work',
+              route: '/home/retirement-list',
+              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: 'Documentation Call',
+              iconName: 'group_work',
+              route: '/home/test-page',
+              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
           ],
         },
       ];

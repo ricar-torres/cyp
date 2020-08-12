@@ -99,11 +99,12 @@ import { AgencyComponent } from './pages/agencies/agency/agency.component';
 import { CommunicationMethodsListComponent } from './pages/communication-methods-list/communication-methods-list.component';
 import { CommunicationMethodComponent } from './pages/communication-method/communication-method.component';
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { NgxMaskModule } from 'ngx-mask';
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 import { ClientListComponent } from './pages/client-list/client-list.component';
@@ -112,6 +113,9 @@ import { ClientWizardComponent } from './pages/client-wizard/client-wizard.compo
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddressComponent } from './pages/address/address.component';
 import { GeneralInformationComponent } from './pages/general-information/general-information.component';
+import { RetirementComponent } from './pages/retirement/retirement.component';
+import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
+import { TestPageComponent } from './pages/test-page/test-page.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -146,6 +150,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     CommunicationMethodsListComponent,
     CommunicationMethodComponent,
     ConfirmDialogComponent,
+    RetirementListComponent,
     BonaFideListComponent,
     BonaFideComponent,
     ChapterListComponent,
@@ -158,6 +163,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ClientWizardComponent,
     AddressComponent,
     GeneralInformationComponent,
+    RetirementComponent,
+    DocumentationCallComponent,
+    TestPageComponent,
   ],
   imports: [
     BrowserModule,

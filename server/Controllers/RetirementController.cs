@@ -1,40 +1,29 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
-using server.Dtos;
+using server.Services;
 using WebApi.Entities;
 using WebApi.Helpers;
-using WebApi.Services;
 
 namespace WebApi.Controllers {
 	[Route("api/[controller]")]
 	[ApiController]
-	public class CampaignsController : BaseController {
-		private ICampaignsService _service;
-		private IMapper _mapper;
-		private readonly AppSettings _appSettings;
+	public class RetirementController : BaseController {
 
-		public CampaignsController(
-			ICampaignsService service,
-			IMapper mapper,
-			IOptions<AppSettings> appSettings) {
-			_service = service;
-			_mapper = mapper;
-			_appSettings = appSettings.Value;
+		readonly IRetirementService _service;
+		public RetirementController(IRetirementService service) {
+			this._service = service;
 		}
-
+		// GET: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpGet]
 		public IActionResult GetAll() {
 			try {
 				var res = _service.GetAll();
-				// var campaignList = _mapper.Map<List<CampaignDto>>(res);
 				if (res == null) {
 					return NotFound();
 				}
@@ -46,9 +35,10 @@ namespace WebApi.Controllers {
 			}
 		}
 
+		// GET: api/CommunicationMethod/5
 		[AllowAnonymous]
 		[HttpGet("{id}")]
-		public IActionResult GetById(int id) {
+		public IActionResult Get(int id) {
 			try {
 				var res = _service.GetById(id);
 				if (res == null) {
@@ -62,20 +52,10 @@ namespace WebApi.Controllers {
 			}
 		}
 
-		[AllowAnonymous]
-		[HttpGet("[action]")]
-		public IActionResult CheckCampaignNameExist([FromQuery] string name) {
-			try {
-				return Ok(_service.NameExists(name));
-			} catch (Exception ex) {
-				return DefaultError(ex);
-			}
-		}
-
-		//[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
+		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Create([FromBody] Campaigns payload) {
+		public IActionResult Create([FromBody] Retirements payload) {
 
 			try {
 
@@ -88,10 +68,10 @@ namespace WebApi.Controllers {
 			}
 		}
 
-		//[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
+		// PUT: api/CommunicationMethod/5
 		[AllowAnonymous]
 		[HttpPut("{id}")]
-		public IActionResult Update(int id, [FromBody] Campaigns payload) {
+		public IActionResult Put(int id, [FromBody] Retirements payload) {
 			try {
 
 				payload.Id = id;
@@ -105,7 +85,7 @@ namespace WebApi.Controllers {
 			}
 		}
 
-		//[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+		// DELETE: api/ApiWithActions/5
 		[AllowAnonymous]
 		[HttpDelete("{id}")]
 		public IActionResult Delete(int id) {
@@ -119,6 +99,25 @@ namespace WebApi.Controllers {
 				return DefaultError(ex);
 			}
 		}
-	}
 
+		[AllowAnonymous]
+		[HttpGet("[action]")]
+		public IActionResult CheckNameExist([FromQuery] string name) {
+			try {
+				return Ok(_service.NameExists(name));
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
+		[HttpGet("[action]")]
+		public IActionResult CheckCodeExist([FromQuery] string code) {
+			try {
+				return Ok(_service.CodeExists(code));
+			} catch (Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+	}
 }

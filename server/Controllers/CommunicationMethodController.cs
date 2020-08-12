@@ -101,8 +101,8 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
-		[HttpGet("[action]/{name}")]
-		public IActionResult CheckCampaignNameExist(string name) {
+		[HttpGet("[action]")]
+		public IActionResult CheckNameExist([FromQuery] string name) {
 			try {
 				return Ok(_service.NameExists(name));
 			} catch (Exception ex) {
