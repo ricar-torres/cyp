@@ -88,7 +88,7 @@ namespace server.Services {
 			}
 		}
 		public bool NameExists(string name) {
-			var res = _context.CommunicationMethods.Where(c => c.Name.ToLower() == name.ToLower() && c.DeletedAt == null).FirstOrDefault();
+			var res = _context.CommunicationMethods.Where(c => c.Name.ToLower() == name.ToLower()).FirstOrDefault();
 			return res is object;
 		}
 	}

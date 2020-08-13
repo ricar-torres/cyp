@@ -76,6 +76,11 @@ export class CampaignComponent implements OnInit {
         Validators.required,
         Validators.minLength(2),
         Validators.maxLength(250),
+        Validators.pattern(
+          new RegExp(
+            `^[A-Za-z0-9\u00C0-\u00FF]{1}[A-Za-z0-9\u00C0-\u00FF/_.\-\\s\]*$`
+          )
+        ),
       ]),
       origin: new FormControl('', [Validators.required]),
     });

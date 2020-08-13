@@ -14,12 +14,10 @@
         <mat-form-field class="full-width">
           <mat-label>{{ 'COMMUNICATION_METHOD.NAME' | translate }}</mat-label>
           <input formControlName="name" matInput #inputName />
-          <mat-icon
-            *ngIf="reactiveForm.controls.name.valid && !campaignExists"
-            matSuffix
+          <mat-icon *ngIf="reactiveForm.controls.name.valid && !exist" matSuffix
             >done</mat-icon
           >
-          <mat-hint #existenceHint class="error" *ngIf="campaignExists">
+          <mat-hint #existenceHint class="error" *ngIf="exist">
             {{ 'COMMUNICATION_METHOD.EXISTS' | translate }}</mat-hint
           >
         </mat-form-field>
@@ -36,7 +34,7 @@
           mat-raised-button
           color="primary"
           *ngIf="editAccess"
-          [disabled]="!reactiveForm.valid || campaignExists"
+          [disabled]="!reactiveForm.valid || exist"
         >
           {{ 'COMMUNICATION_METHOD.SAVE' | translate }}
         </button>

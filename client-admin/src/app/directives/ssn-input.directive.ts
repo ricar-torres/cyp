@@ -12,7 +12,6 @@ export class SsnInputDirective {
 
     entryString = this.element.nativeElement.value as string;
     currentIndex = entryString.length;
-    // debugger;
 
     if (currentIndex === 4 || currentIndex === 7) {
       this.element.nativeElement.style.type = 'text';

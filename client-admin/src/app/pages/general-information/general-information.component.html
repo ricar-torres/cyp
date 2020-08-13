@@ -1,0 +1,126 @@
+<mat-card>
+  <form
+    fxLayout="column"
+    fxLayoutAlign="center"
+    class="full-width"
+    [formGroup]="reactiveForm"
+  >
+    <mat-form-field class="example-full-width">
+      <mat-label>{{ 'CLIENTS.AGENCY' | translate }}</mat-label>
+
+      <input
+        type="text"
+        placeholder="{{ 'CLIENTS.AGENCY' | translate }}"
+        matInput
+        [formControl]="reactiveForm.get('AgencyId')"
+        [matAutocomplete]="agencyAutoComplete"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        [displayWith]="displayFnAgencies"
+        #agencyAutoComplete="matAutocomplete"
+      >
+        <mat-option *ngFor="let ag of agencies" [value]="ag">
+          {{ ag.name }}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <div
+      fxLayout
+      fxLayout.lt-md="column"
+      fxLayoutGap="10px"
+      fxLayoutAlign="center"
+    >
+      <mat-form-field fxFlex="75%" class="example-full-width">
+        <mat-label>{{ 'CLIENTS.AMEDICALPLAN' | translate }}</mat-label>
+        <input
+          type="text"
+          placeholder="{{ 'CLIENTS.AMEDICALPLAN' | translate }}"
+          matInput
+          [formControl]="healthPlan"
+          [matAutocomplete]="healthPlanAutoComplete"
+        />
+        <mat-autocomplete
+          (optionSelected)="loadCovers($event.option.value.id)"
+          autoActiveFirstOption
+          [displayWith]="displayFnMedicalPlan"
+          #healthPlanAutoComplete="matAutocomplete"
+        >
+          <mat-option *ngFor="let plans of heathPlans" [value]="plans">
+            {{ plans.name }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="75%">
+        <mat-label>{{ 'CLIENTS.ACOVER' | translate }}</mat-label>
+        <mat-select formControlName="CoverId">
+          <mat-option *ngFor="let cover of covers" [value]="cover.id">
+            {{ cover.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="75%">
+        <mat-label>{{ 'CLIENTS.EFFECTIVEDATE' | translate }}</mat-label>
+        <input
+          [matDatepicker]="effectiveDatePiker"
+          matInput
+          formControlName="EffectiveDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="effectiveDatePiker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #effectiveDatePiker></mat-datepicker>
+      </mat-form-field>
+    </div>
+    <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="flex-start">
+      <div fxLayout="column">
+        <mat-label>{{ 'CLIENTS.AUTORIZEDPERSON' | translate }}</mat-label>
+        <mat-radio-group [formControl]="hasTutor">
+          <mat-radio-button [value]="0">{{
+            'CLIENTS.PARTICIPANT' | translate
+          }}</mat-radio-button>
+          <mat-radio-button [value]="1">{{
+            'CLIENTS.TUTOR' | translate
+          }}</mat-radio-button>
+        </mat-radio-group>
+      </div>
+      <div fxLayout="column">
+        <mat-label>{{ 'CLIENTS.HASMEDICARE' | translate }}</mat-label>
+        <section class="example-section">
+          <mat-checkbox class="example-margin" formControlName="MedicareA">{{
+            'CLIENTS.MEDICAREA' | translate
+          }}</mat-checkbox>
+          <mat-checkbox class="example-margin" formControlName="MedicareB">{{
+            'CLIENTS.MEDICAREB' | translate
+          }}</mat-checkbox>
+        </section>
+      </div>
+    </div>
+  </form>
+  <form
+    *ngIf="hasTutor.value == 1"
+    fxLayout="column"
+    fxLayoutAlign="center"
+    class="full-width"
+    [formGroup]="tutorInformation"
+  >
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33.33%">
+        <mat-label>{{ 'TUTOR.NAME' | translate }}</mat-label>
+        <input matInput formControlName="Name" />
+      </mat-form-field>
+      <mat-form-field fxFlex="33.33%">
+        <mat-label>{{ 'TUTOR.LASTNAME' | translate }}</mat-label>
+        <input matInput formControlName="LastName" />
+      </mat-form-field>
+      <mat-form-field fxFlex="33.33%">
+        <mat-label>{{ 'TUTOR.PRIMARYPHONE' | translate }}</mat-label>
+        <input matInput mask="(000)-000-0000" formControlName="Phone" />
+      </mat-form-field>
+    </div>
+  </form>
+</mat-card>

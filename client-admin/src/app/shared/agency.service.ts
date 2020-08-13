@@ -15,7 +15,7 @@ export class AgencyService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    return this.http.get(`${environment.baseURL}/agencies`);
+    return this.http.get<[]>(`${environment.baseURL}/agencies`);
   }
 
   create(agency) {
@@ -30,7 +30,7 @@ export class AgencyService {
 
   update(agency: any) {
     return this.http
-      .put(`${environment.baseURL}/agencies/${agency.id}`, agency)
+      .put(`${environment.baseURL}/agencies/${agency.Id}`, agency)
       .toPromise();
   }
 

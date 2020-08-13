@@ -47,9 +47,11 @@ export class CommunicationMethodsAPIService {
       .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
       .toPromise();
   }
-  checkCampaignNameExist(name) {
+  checkNameExist(name) {
     return this.http
-      .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/${name}`)
+      .get(`${environment.baseURL}/${this._apiName}/CheckNameExist/`, {
+        params: new HttpParams().set('name', name),
+      })
       .toPromise();
   }
 }

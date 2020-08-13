@@ -1,15 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-} from '@angular/forms';
+import { Component, OnInit, Input, Inject } from '@angular/core';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { bonaFideservice } from '@app/shared/bonafide.service';
-import { merge, fromEvent } from 'rxjs';
-import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
+import { LanguageService } from '@app/shared/Language.service';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-bona-fide',
   templateUrl: './bona-fide.component.html',
@@ -17,81 +13,49 @@ import { debounceTime, distinctUntilChanged, tap } from 'rxjs/operators';
 })
 export class BonaFideComponent implements OnInit {
   reactiveForm: FormGroup;
-  id: string;
+  @Input() bonafideId: string;
   loading = false;
-
-  bonafide: string;
-  NameExists: boolean = false;
-  EmailExists: boolean = false;
-  @ViewChild('inputEmail', { static: true }) inputEmail: ElementRef;
-  @ViewChild('inputName', { static: true }) inputName: ElementRef;
-
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private bonafideService: bonaFideservice,
-    private app: AppService
+    private app: AppService,
+    private languageService: LanguageService,
+    private clientWizard: ClientWizardService
   ) {}
 
   async ngOnInit() {
-    this.loading = true;
-    this.id = this.route.snapshot.paramMap.get('id');
-    if (this.id) {
-      this.reactiveForm = this.fb.group({
-        Id: [this.id],
-        Name: ['', [Validators.required]],
-        Code: [''],
-        Siglas: [''],
-        Phone: [''],
-        Email: ['', [Validators.email]],
-        Benefits: [''],
-        Disclaimer: [''],
-      });
-      var editBonafide: any = await this.bonafideService.bonafide(this.id);
-      this.bonafide = editBonafide.name;
-      this.reactiveForm.get('Id').setValue(editBonafide.id);
-      this.reactiveForm.get('Name').setValue(editBonafide.name);
-      this.reactiveForm.get('Code').setValue(editBonafide.code);
-      this.reactiveForm.get('Siglas').setValue(editBonafide.siglas);
-      this.reactiveForm.get('Phone').setValue(editBonafide.phone);
-      this.reactiveForm.get('Email').setValue(editBonafide.email);
-      this.reactiveForm.get('Benefits').setValue(editBonafide.benefits);
-      this.reactiveForm.get('Disclaimer').setValue(editBonafide.disclaimer);
-    } else {
-      this.reactiveForm = this.fb.group({
-        Name: ['', [Validators.required]],
-        Code: [''],
-        Siglas: [''],
-        Phone: [''],
-        Email: ['', [Validators.email]],
-        Benefits: [''],
-        Disclaimer: [''],
-      });
+    try {
+      this.loading = true;
+      this.bonafideId = this.route.snapshot.paramMap.get('id');
+      this.reactiveForm = this.clientWizard.bonafidesFormGroup;
+      if (this.bonafideId) {
+        var bonafide: any = await this.bonafideService.bonafide(
+          this.bonafideId
+        );
+        this.reactiveForm.get('Id').setValue(bonafide.id);
+        this.reactiveForm.get('Name').setValue(bonafide.name);
+        this.reactiveForm.get('Code').setValue(bonafide.code);
+        this.reactiveForm.get('Siglas').setValue(bonafide.siglas);
+        this.reactiveForm.get('Phone').setValue(bonafide.phone);
+        this.reactiveForm.get('Email').setValue(bonafide.email);
+        this.reactiveForm.get('Benefits').setValue(bonafide.benefits);
+        this.reactiveForm.get('Disclaimer').setValue(bonafide.disclaimer);
+        this.reactiveForm.get('Email').setAsyncValidators(null);
+        this.reactiveForm.get('Name').setAsyncValidators(null);
+      } else this.loading = false;
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    } finally {
+      this.loading = false;
     }
-    this.setUpSubscriptions();
-    this.loading = false;
-  }
-  setUpSubscriptions() {
-    merge(fromEvent(this.inputName.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(async () => {
-          await !this.checkName(this.inputName.nativeElement.value);
-        })
-      )
-      .subscribe();
-
-    merge(fromEvent(this.inputEmail.nativeElement, 'keydown'))
-      .pipe(
-        debounceTime(150),
-        distinctUntilChanged(),
-        tap(async () => {
-          await !this.checkEmail(this.inputEmail.nativeElement.value);
-        })
-      )
-      .subscribe();
   }
 
   onBack() {
@@ -101,7 +65,7 @@ export class BonaFideComponent implements OnInit {
   async onSubmit() {
     try {
       this.loading = true;
-      if (this.id) {
+      if (this.bonafideId) {
         await this.bonafideService.update(this.reactiveForm.value);
         this.onBack();
       } else {
@@ -112,40 +76,12 @@ export class BonaFideComponent implements OnInit {
       this.loading = false;
       if (error.status != 401) {
         console.error('error', error);
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
       }
     } finally {
       this.loading = false;
-    }
-  }
-
-  async checkName(name: string) {
-    try {
-      if (name) {
-        const res: any = await this.bonafideService.checkName({
-          name: name,
-        });
-        this.NameExists = res;
-      }
-    } catch (error) {
-      this.NameExists = false;
-    }
-  }
-
-  async checkEmail(email: string) {
-    try {
-      if (email) {
-        const res: any = await this.bonafideService.checkEmail({
-          name: email,
-        });
-        this.EmailExists = res;
-      }
-    } catch (error) {
-      this.EmailExists = false;
-    }
-  }
-  async validate(ctrl: FormControl) {
-    if (ctrl.value) {
     }
   }
 }

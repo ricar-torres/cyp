@@ -6,11 +6,17 @@ import {
   MatTableDataSource,
   MatSort,
   MatPaginator,
+  MatDialog,
 } from '@angular/material';
 import { AgencyService } from '@app/shared/agency.service';
 import { MenuRoles } from '@app/models/enums';
 import { Route } from '@angular/compiler/src/core';
 import { Router } from '@angular/router';
+import { LanguageService } from '@app/shared/Language.service';
+import {
+  ConfirmDialogModel,
+  ConfirmDialogComponent,
+} from '@app/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-agency-list',
@@ -22,7 +28,13 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['Name', 'Actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'createdAt',
+    'updatedAt',
+    'actions',
+  ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
@@ -34,7 +46,9 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
     private app: AppService,
     private fb: FormBuilder,
     private agencyApi: AgencyService,
-    private router: Router
+    private router: Router,
+    private languageService: LanguageService,
+    private dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -63,7 +77,12 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
       },
       (error) => {
         this.loading = false;
-        this.app.showErrorMessage('Error');
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      },
+      () => {
+        this.loading = false;
       }
     );
   }
@@ -78,11 +97,6 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
     }
   }
 
-  async deleteAgency(id: string) {
-    await this.agencyApi.delete(id);
-    this.LoadAgencies();
-  }
-
   editAgency(id: number) {
     this.router.navigate(['/home/agency', id]);
   }
@@ -93,5 +107,47 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
 
   doFilter(value: any) {
     this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
+  }
+
+  async deleteConfirm(id: string) {
+    const message = await this.languageService.translate
+      .get('AGENCY.ARE_YOU_SURE_DELETE')
+      .toPromise();
+
+    const title = await this.languageService.translate
+      .get('COMFIRMATION')
+      .toPromise();
+
+    const dialogData = new ConfirmDialogModel(
+      title,
+      message,
+      true,
+      true,
+      false
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+    try {
+      dialogRef.afterClosed().subscribe(async (dialogResult) => {
+        if (dialogResult) {
+          console.log(id);
+          await this.agencyApi.delete(id);
+          this.LoadAgencies();
+        }
+      });
+    } catch (error) {
+      this.loading = false;
+      if (error.status != 401) {
+        console.error('error', error);
+        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
+          this.app.showErrorMessage(res);
+        });
+      }
+    } finally {
+      this.loading = false;
+    }
   }
 }

@@ -23,7 +23,7 @@ import {
 })
 export class CommunicationMethodsListComponent
   implements OnInit, AfterViewInit {
-  loading = false;
+  loading = true;
 
   dataSource: any;
 
@@ -74,9 +74,9 @@ export class CommunicationMethodsListComponent
   async loadCommunicationMethods() {
     try {
       this.loading = true;
-      this.dataSource = new MatTableDataSource();
       await this.apiCommunicationMethod.getAll().subscribe(
         (data: any) => {
+          this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
