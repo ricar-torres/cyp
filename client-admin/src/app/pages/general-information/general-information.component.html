@@ -79,11 +79,11 @@
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="flex-start">
       <div fxLayout="column">
         <mat-label>{{ 'CLIENTS.AUTORIZEDPERSON' | translate }}</mat-label>
-        <mat-radio-group>
-          <mat-radio-button value="1">{{
+        <mat-radio-group [formControl]="hasTutor">
+          <mat-radio-button [value]="0">{{
             'CLIENTS.PARTICIPANT' | translate
           }}</mat-radio-button>
-          <mat-radio-button value="2">{{
+          <mat-radio-button [value]="1">{{
             'CLIENTS.TUTOR' | translate
           }}</mat-radio-button>
         </mat-radio-group>
@@ -99,6 +99,28 @@
           }}</mat-checkbox>
         </section>
       </div>
+    </div>
+  </form>
+  <form
+    *ngIf="hasTutor.value == 1"
+    fxLayout="column"
+    fxLayoutAlign="center"
+    class="full-width"
+    [formGroup]="tutorInformation"
+  >
+    <div fxLayout="row" fxLayoutGap="20px">
+      <mat-form-field fxFlex="33.33%">
+        <mat-label>{{ 'TUTOR.NAME' | translate }}</mat-label>
+        <input matInput formControlName="Name" />
+      </mat-form-field>
+      <mat-form-field fxFlex="33.33%">
+        <mat-label>{{ 'TUTOR.LASTNAME' | translate }}</mat-label>
+        <input matInput formControlName="LastName" />
+      </mat-form-field>
+      <mat-form-field fxFlex="33.33%">
+        <mat-label>{{ 'TUTOR.PRIMARYPHONE' | translate }}</mat-label>
+        <input matInput mask="(000)-000-0000" formControlName="Phone" />
+      </mat-form-field>
     </div>
   </form>
 </mat-card>

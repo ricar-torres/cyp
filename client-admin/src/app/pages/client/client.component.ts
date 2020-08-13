@@ -22,7 +22,7 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css'],
 })
-export class ClientComponent implements OnInit {
+export class ClientComponent implements OnInit, OnDestroy {
   clientid: string;
   client;
   @Input() fromWizard: boolean = false;
@@ -51,6 +51,9 @@ export class ClientComponent implements OnInit {
     private languageService: LanguageService,
     private clientWizard: ClientWizardService
   ) {}
+  ngOnDestroy(): void {
+    this.clientWizard.resetFormGroups();
+  }
 
   async ngOnInit() {
     this.reactiveForm = this.clientWizard.clientDemographic;

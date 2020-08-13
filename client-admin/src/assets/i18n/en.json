@@ -195,6 +195,11 @@
     "SAVE": "Save",
     "GOBACK": "Return"
   },
+  "TUTOR": {
+    "NAME": "Name",
+    "LASTNAME": "Last Name",
+    "PRIMARYPHONE": "Primary Phone"
+  },
   "USER_LIST": {
     "BTN_ADD": "New user",
     "USER": "User",

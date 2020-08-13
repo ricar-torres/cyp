@@ -196,6 +196,11 @@
     "SAVE": "Guardar",
     "GOBACK": "Regresar"
   },
+  "TUTOR": {
+    "NAME": "Nombre",
+    "LASTNAME": "Apellido",
+    "PRIMARYPHONE": "Teléfono Primario"
+  },
   "USER_LIST": {
     "BTN_ADD": "Nuevo usuario",
     "USER": "Usuario",

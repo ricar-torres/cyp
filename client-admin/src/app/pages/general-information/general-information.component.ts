@@ -17,8 +17,10 @@ export class GeneralInformationComponent implements OnInit {
   covers = [];
 
   healthPlan: FormControl = new FormControl();
+  hasTutor: FormControl = new FormControl();
 
   reactiveForm: FormGroup;
+  tutorInformation: FormGroup;
   constructor(
     public wizadFormGroups: ClientWizardService,
     private hps: HealthPlanService,
@@ -28,6 +30,7 @@ export class GeneralInformationComponent implements OnInit {
 
   async ngOnInit() {
     this.reactiveForm = this.wizadFormGroups.generalInformationForm;
+    this.tutorInformation = this.wizadFormGroups.tutorInformation;
     this.heathPlans = await this.hps.GetAll();
     this.agencies = await this.ag.getAll().toPromise();
     if (this.client) {
@@ -45,6 +48,26 @@ export class GeneralInformationComponent implements OnInit {
     this.reactiveForm.get('EffectiveDate').setValue(this.client.effectiveDate);
     this.reactiveForm.get('MedicareA').setValue(this.client.medicareA);
     this.reactiveForm.get('MedicareB').setValue(this.client.medicareB);
+    if (this.client.tutors.length < 1) this.hasTutor.setValue(0);
+    else {
+      this.hasTutor.setValue(1);
+      this.tutorInformation.get('Name').setValue(this.client.tutors[0].name);
+      this.tutorInformation
+        .get('LastName')
+        .setValue(this.client.tutors[0].lastName);
+      this.tutorInformation.get('Phone').setValue(this.client.tutors[0].phone);
+      this.tutorInformation
+        .get('ClientId')
+        .setValue(this.client.tutors[0].clientId);
+      this.tutorInformation.get('Id').setValue(this.client.tutors[0].id);
+    }
+    this.hasTutor.valueChanges.subscribe((val) => {
+      if (!val) {
+        this.tutorInformation.get('Name').reset();
+        this.tutorInformation.get('LastName').reset();
+        this.tutorInformation.get('Phone').reset();
+      }
+    });
   }
 
   async loadCovers(selection) {

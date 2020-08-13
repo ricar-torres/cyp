@@ -61,7 +61,7 @@ namespace WebApi.Services
 
     public Clients GetById(int id)
     {
-      var res = _context.Clients.FirstOrDefault(c => c.Id == id);
+      var res = _context.Clients.Include(cl => cl.Tutors).FirstOrDefault(c => c.Id == id);
       return res;
     }
 
@@ -77,6 +77,9 @@ namespace WebApi.Services
           newClient.UpdatedAt = DateTime.Now;
           newClient.CreatedAt = DateTime.Now;
           _context.Clients.Add(newClient);
+          _context.SaveChanges();
+          payload.Demographic.Id = newClient.Id;
+          TutorBuilder(payload);
           _context.SaveChanges();
         }
         else
@@ -144,12 +147,50 @@ namespace WebApi.Services
 
           postalAddress.UpdatedAt = DateTime.Now;
         }
+
+        TutorBuilder(payload);
+
         await _context.SaveChangesAsync();
         return payload;
       }
       catch (Exception ex)
       {
         throw ex;
+      }
+    }
+
+    private void TutorBuilder(ClientInformationDto payload)
+    {
+      var tutors = payload.Demographic.Tutors.ToArray();
+      if (tutors.Length > 0)
+      {
+        if (tutors[0].Id != null)
+        {
+          var tutor = _context.Tutors.FirstOrDefault(t => t.Id == tutors[0].Id);
+          if (!String.IsNullOrEmpty(tutors[0].Phone))
+          {
+            tutor.Name = tutors[0].Name;
+            tutor.LastName = tutors[0].LastName;
+            tutor.Phone = tutors[0].Phone;
+            _context.Tutors.Update(tutor);
+          }
+          else
+          {
+            _context.Tutors.Remove(tutor);
+          }
+        }
+        else
+        {
+          if (!String.IsNullOrEmpty(tutors[0].Phone))
+          {
+            var newTutor = new Tutors();
+            newTutor.ClientId = payload.Demographic.Id;
+            newTutor.Name = tutors[0].Name;
+            newTutor.LastName = tutors[0].LastName;
+            newTutor.Phone = tutors[0].Phone;
+            _context.Tutors.Add(newTutor);
+          }
+        }
       }
     }
 

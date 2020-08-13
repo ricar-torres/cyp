@@ -38,6 +38,14 @@ export class ClientWizardService {
     Phone2: [null],
   });
 
+  tutorInformation = this.formBuilder.group({
+    Id: [''],
+    ClientId: [''],
+    Name: [''],
+    LastName: [''],
+    Phone: [''],
+  });
+
   clientAddressFormGroup = this.formBuilder.group({
     PhysicalAddress: this.formBuilder.group({
       Id: [null],
@@ -96,6 +104,7 @@ export class ClientWizardService {
     this.clientAddressFormGroup.reset();
     this.secondFormGroup.reset();
     this.generalInformationForm.reset();
+    this.tutorInformation.reset();
   }
 
   //#region bonafide Checks
@@ -139,10 +148,7 @@ export class ClientWizardService {
   async preRegister() {
     try {
       var agency = this.adaptInfoForAPI();
-      var clientDemographic = Object.assign(
-        this.clientDemographic.value,
-        this.generalInformationForm.value
-      );
+      var clientDemographic = this.addValues();
       var ClientInforation = {
         PreRegister: true,
         Demographic: clientDemographic,
@@ -163,10 +169,7 @@ export class ClientWizardService {
   async register() {
     try {
       var agency = this.adaptInfoForAPI();
-      var clientDemographic = Object.assign(
-        this.clientDemographic.value,
-        this.generalInformationForm.value
-      );
+      var clientDemographic = this.addValues();
       var ClientInforation = {
         PreRegister: false,
         Demographic: clientDemographic,
@@ -187,10 +190,7 @@ export class ClientWizardService {
   async UpdateClientInformation() {
     try {
       var agency = this.adaptInfoForAPI();
-      var clientDemographic = Object.assign(
-        this.clientDemographic.value,
-        this.generalInformationForm.value
-      );
+      var clientDemographic = this.addValues();
       var ClientInforation = {
         Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
@@ -205,6 +205,16 @@ export class ClientWizardService {
         });
       }
     }
+  }
+
+  private addValues() {
+    var buff = Object.assign(
+      this.clientDemographic.value,
+      this.generalInformationForm.value
+    );
+    buff['Tutors'] = [this.tutorInformation.value];
+    console.log(buff);
+    return buff;
   }
 
   private adaptInfoForGUI(agency: any) {

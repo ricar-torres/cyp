@@ -43,7 +43,11 @@
           </th>
           <td mat-cell *matCellDef="let element">
             {{
-              element.name + ' ' + element?.lastName1 + ' ' + element?.lastName2
+              (element?.name ? element?.name : '') +
+                ' ' +
+                (element?.lastName1 ? element?.lastName1 : '') +
+                ' ' +
+                (element?.lastName2 ? element?.lastName2 : '')
             }}
           </td>
         </ng-container>
