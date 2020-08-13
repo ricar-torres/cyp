@@ -1,0 +1,24 @@
+.full-width {
+  margin-top: 20px;
+  width: 100%;
+}
+
+mat-radio-group {
+  margin-top: 10px;
+}
+
+mat-label {
+  margin-right: 10px;
+}
+
+mat-radio-button {
+  margin-right: 5px;
+}
+
+mat-checkbox {
+  margin-right: 10px;
+}
+
+mat-card {
+  margin-top: 20px;
+}

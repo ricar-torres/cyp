@@ -6,55 +6,106 @@
     </mat-card-header>
     <mat-card-content>
       <div fxLayout fxLayoutAlign="end start">
-        <button type="button" mat-raised-button color="primary" (click)="goToNew()" *ngIf="createAccess">
+        <button
+          type="button"
+          mat-raised-button
+          color="primary"
+          (click)="goToNew()"
+          *ngIf="createAccess"
+        >
           <mat-icon>add</mat-icon> {{ 'BONAFIDE.BTN_ADD' | translate }}
         </button>
       </div>
       <div fxLayout>
         <mat-form-field class="search-form">
-          <input matInput placeholder="{{ 'BONAFIDE.SEARCH' | translate }}" type="text"
-            (keyup)="doFilter($event.target.value)" />
+          <input
+            matInput
+            placeholder="{{ 'SEARCH' | translate }}"
+            type="text"
+            (keyup)="doFilter($event.target.value)"
+          />
         </mat-form-field>
       </div>
-      <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        class="mat-elevation-z8"
+      >
+        <ng-container matColumnDef="id">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+          <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+        </ng-container>
 
-        <ng-container matColumnDef="Name">
+        <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ 'BONAFIDE.NAME' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">{{ element.name }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="Phone">
+        <ng-container matColumnDef="phone">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ 'BONAFIDE.PHONE' | translate }}
           </th>
-          <td mat-cell *matCellDef="let element">{{ element.phone }}</td>
+          <td mat-cell *matCellDef="let element">
+            {{ element.phone | mask: '(000)-000-0000' }}
+          </td>
         </ng-container>
 
-        <ng-container matColumnDef="Code">
+        <ng-container matColumnDef="code">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ 'BONAFIDE.CODE' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">{{ element.code }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="Siglas">
+        <ng-container matColumnDef="siglas">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
             {{ 'BONAFIDE.SIGLAS' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">{{ element.siglas }}</td>
         </ng-container>
 
-        <ng-container matColumnDef="Actions">
+        <ng-container matColumnDef="updatedAt">
           <th mat-header-cell *matHeaderCellDef mat-sort-header>
-            {{ 'BONAFIDE.ACTIONS' | translate }}
+            {{ 'UPDATEDAT' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
-            <button mat-button (click)="editBonafide(element.id)" *ngIf="editAccess">
+            {{ element.updatedAt | date: 'dd/MM/yyyy hh:mm a' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="createdAt">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header>
+            {{ 'CREATEDAT' | translate }}
+          </th>
+          <td mat-cell *matCellDef="let element">
+            {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+          </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+          <th mat-header-cell *matHeaderCellDef>
+            <!-- {{ 'BONAFIDE.ACTIONS' | translate }} -->
+          </th>
+          <td mat-cell *matCellDef="let element" align="right">
+            <button
+              type="button"
+              color="accent"
+              mat-button
+              (click)="editBonafide(element.id)"
+              *ngIf="editAccess"
+            >
               <mat-icon>edit</mat-icon> {{ 'BONAFIDE.EDIT' | translate }}
             </button>
-            <button mat-button (click)="deleteBonafide(element.id)" *ngIf="deleteAccess">
+            <button
+              type="button"
+              color="warn"
+              mat-button
+              (click)="deleteConfirm(element.id)"
+              *ngIf="deleteAccess"
+            >
               <mat-icon>delete</mat-icon> {{ 'BONAFIDE.DELETE' | translate }}
             </button>
           </td>
@@ -65,7 +116,11 @@
       </table>
     </mat-card-content>
     <mat-card-actions>
-      <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+      <mat-paginator
+        [pageSize]="pageSize"
+        [pageSizeOptions]="pageSizeOptions"
+        (page)="pageEvent = $event"
+      >
       </mat-paginator>
     </mat-card-actions>
   </mat-card>

@@ -1,0 +1,10 @@
+.mat-icon {
+  transform: scale(1.5);
+}
+:host ::ng-deep mat-card-header .mat-card-header-text {
+  margin: 0px !important;
+}
+
+.mat-card {
+  padding: 0px !important;
+}

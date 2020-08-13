@@ -1,3 +1,11 @@
 .full-width {
   width: 100%;
 }
+
+.error {
+  color: red;
+}
+
+.area-height {
+  height: 10vh;
+}

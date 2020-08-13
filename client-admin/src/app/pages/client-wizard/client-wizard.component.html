@@ -1,0 +1,47 @@
+<mat-horizontal-stepper [linear]="isLinear" #stepper>
+  <mat-step [stepControl]="this.wizardForms.clientDemographic">
+    <app-client [fromWizard]="true"></app-client>
+    <app-general-information></app-general-information>
+    <app-client-address [fromWizard]="true"></app-client-address>
+    <button
+      [disabled]="wizardForms.clientDemographic.invalid"
+      mat-raised-button
+      (click)="preRegister()"
+    >
+      {{ 'CLIENTWIZARD.PREREGISTER' | translate }}
+    </button>
+    <button mat-button matStepperNext>
+      {{ 'NEXT' | translate }}
+    </button>
+  </mat-step>
+  <mat-step [stepControl]="this.wizardForms.secondFormGroup">
+    <form [formGroup]="this.wizardForms.secondFormGroup">
+      <ng-template matStepLabel>Fill out your address</ng-template>
+      <mat-form-field>
+        <mat-label>Address</mat-label>
+        <input
+          matInput
+          formControlName="secondCtrl"
+          placeholder="Ex. 1 Main St, New York, NY"
+          required
+        />
+      </mat-form-field>
+      <div>
+        <button mat-flat-button matStepperPrevious>
+          {{ 'BACK' | translate }}
+        </button>
+        <button mat-flat-button matStepperNext>
+          {{ 'NEXT' | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>Done</ng-template>
+    <p>You are now done.</p>
+    <div>
+      <button mat-button matStepperPrevious>Back</button>
+      <button mat-button (click)="stepper.reset()">Reset</button>
+    </div>
+  </mat-step>
+</mat-horizontal-stepper>

@@ -102,6 +102,21 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
+import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
+import { ChapterComponent } from './pages/chapter/chapter.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
+import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
+import { ClientListComponent } from './pages/client-list/client-list.component';
+import { ClientComponent } from './pages/client/client.component';
+import { ClientWizardComponent } from './pages/client-wizard/client-wizard.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { AddressComponent } from './pages/address/address.component';
+import { GeneralInformationComponent } from './pages/general-information/general-information.component';
+import { RetirementComponent } from './pages/retirement/retirement.component';
+import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
+import { TestPageComponent } from './pages/test-page/test-page.component';
+import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -139,6 +154,20 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RetirementListComponent,
     BonaFideListComponent,
     BonaFideComponent,
+    ChapterListComponent,
+    ChapterComponent,
+    ConfirmDialogComponent,
+    QualifyingEventComponent,
+    QualifyingEventListComponent,
+    ClientListComponent,
+    ClientComponent,
+    ClientWizardComponent,
+    AddressComponent,
+    GeneralInformationComponent,
+    RetirementComponent,
+    DocumentationCallComponent,
+    TestPageComponent,
+    DialogSuccessComponent,
   ],
   imports: [
     BrowserModule,
@@ -192,6 +221,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     FlexLayoutModule,
     BrowserModule,
     HttpClientModule,
+    MatStepperModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     {
@@ -212,6 +243,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DialogGenericErrorComponent,
     SnackBarConfirmationComponent,
     DialogGenericSuccessComponent,
+    ConfirmDialogComponent,
+    ClientWizardComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

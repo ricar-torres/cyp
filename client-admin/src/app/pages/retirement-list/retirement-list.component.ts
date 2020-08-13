@@ -1,3 +1,4 @@
+import { RetirementAPIService } from './../../shared/retirement.api.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import {
   PageEvent,
@@ -21,7 +22,7 @@ import {
   styleUrls: ['./retirement-list.component.css'],
 })
 export class RetirementListComponent implements OnInit {
-  loading = false;
+  loading = true;
 
   dataSource: any;
 
@@ -29,12 +30,7 @@ export class RetirementListComponent implements OnInit {
   createAccess: boolean;
   deteleAccess: boolean;
 
-  displayedColumns: string[] = [
-    'id',
-    'name',
-    // 'updDt',
-    'action',
-  ];
+  displayedColumns: string[] = ['id', 'name', 'code', 'action'];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
@@ -44,7 +40,7 @@ export class RetirementListComponent implements OnInit {
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private apiCommunicationMethod: CommunicationMethodsAPIService,
+    private apiRetirement: RetirementAPIService,
     private app: AppService,
     private dialog: MatDialog
   ) {}
@@ -62,19 +58,19 @@ export class RetirementListComponent implements OnInit {
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCommunicationMethods();
+      await this.loadData();
     } catch (error) {
       this.loading = false;
     } finally {
     }
   }
 
-  async loadCommunicationMethods() {
+  async loadData() {
     try {
       this.loading = true;
-      this.dataSource = new MatTableDataSource();
-      await this.apiCommunicationMethod.getAll().subscribe(
+      await this.apiRetirement.getAll().subscribe(
         (data: any) => {
+          this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
@@ -95,11 +91,11 @@ export class RetirementListComponent implements OnInit {
     }
   }
   goToNew() {
-    this.router.navigate(['/home/communication-method', 0]);
+    this.router.navigate(['/home/retirement', 0]);
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/communication-method', id]);
+    this.router.navigate(['/home/retirement', id]);
   }
 
   doFilter(value: any) {
@@ -107,7 +103,7 @@ export class RetirementListComponent implements OnInit {
   }
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
+      .get('RETIREMENT_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -131,14 +127,14 @@ export class RetirementListComponent implements OnInit {
       if (dialogResult) {
         console.log(id);
         await this.delete(id);
-        await this.loadCommunicationMethods();
+        await this.loadData();
       }
     });
   }
 
   async delete(id: string) {
     try {
-      await this.apiCommunicationMethod.delete(id);
+      await this.apiRetirement.delete(id);
     } catch (error) {}
   }
 

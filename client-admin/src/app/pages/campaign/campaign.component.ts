@@ -74,8 +74,13 @@ export class CampaignComponent implements OnInit {
     this.reactiveForm = new FormGroup({
       name: new FormControl('', [
         Validators.required,
-        Validators.minLength(5),
+        Validators.minLength(2),
         Validators.maxLength(250),
+        Validators.pattern(
+          new RegExp(
+            `^[A-Za-z0-9\u00C0-\u00FF]{1}[A-Za-z0-9\u00C0-\u00FF/_.\-\\s\]*$`
+          )
+        ),
       ]),
       origin: new FormControl('', [Validators.required]),
     });

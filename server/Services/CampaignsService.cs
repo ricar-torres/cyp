@@ -45,7 +45,7 @@ namespace WebApi.Services {
 			return res;
 		}
 		public bool NameExists(string name) {
-			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower() && c.DeletedAt == null).FirstOrDefault();
+			var res = _context.Campaigns.Where(c => c.Name.ToLower() == name.ToLower()).FirstOrDefault();
 			return res is object;
 		}
 
@@ -78,7 +78,6 @@ namespace WebApi.Services {
 
 				_context.Campaigns.Update(item);
 				_context.SaveChanges();
-
 				return item;
 
 			} catch (Exception ex) {
@@ -100,6 +99,5 @@ namespace WebApi.Services {
 				throw new AppException("Campaign not found");
 
 		}
-
 	}
 }
