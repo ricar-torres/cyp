@@ -1,10 +1,10 @@
-import { LanguageService } from './../../shared/Language.service';
-import { DocCall } from './../../models/DocCall';
+import { LanguageService } from '../../shared/Language.service';
+import { DocCall } from '../../models/DocCall';
 import { Observable } from 'rxjs';
 import { AppService } from '@app/shared/app.service';
-import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
-import { GenericSucessModel } from './../../models/GenericSuccessModel';
-import { DocumentationCallComponent } from './../../components/documentation-call/documentation-call.component';
+import { DocumentationCallAPIService } from '../../shared/documentation-call.api.service';
+import { GenericSucessModel } from '../../models/GenericSuccessModel';
+import { DocumentationCallComponent } from '../../components/documentation-call/documentation-call.component';
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
@@ -19,11 +19,11 @@ import { map } from 'rxjs/operators';
 import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-success.component';
 
 @Component({
-  selector: 'app-test-page',
-  templateUrl: './test-page.component.html',
-  styleUrls: ['./test-page.component.css'],
+  selector: 'app-docs-calls-list',
+  templateUrl: './docs-calls-list.component.html',
+  styleUrls: ['./docs-calls-list.component.css'],
 })
-export class TestPageComponent implements OnInit, AfterViewInit {
+export class DocsCallsList implements OnInit, AfterViewInit {
   threads: any[] = [];
   loading: boolean;
 

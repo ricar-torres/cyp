@@ -27,11 +27,10 @@
         (closed)="panelOpenState = false"
       >
         <mat-card class="mat-elevation-z0">
-          <mat-card-header>
+          <mat-card-header class="mt-2">
             <div fxLayout="row" fxFlex="50">
               <div mat-card-avatar class="avatarImage"></div>
               <mat-card-title
-                class="mt-1"
                 matBadge="{{ masterThread.threads.length }}"
                 [matBadgeHidden]="masterThread.threads.length < 1"
                 matBadgeOverlap="false"
@@ -68,7 +67,7 @@
         class="mat-elevation-z0"
         *ngFor="let thread of masterThread.threads; last as isLast"
       >
-        <mat-card-header>
+        <mat-card-header class="mt-2">
           <div fxLayout="row" fxFlex="50">
             <div mat-card-avatar class="avatarImage"></div>
             <mat-card-title

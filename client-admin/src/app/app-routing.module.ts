@@ -1,4 +1,4 @@
-import { TestPageComponent } from './pages/test-page/test-page.component';
+import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
@@ -266,7 +266,7 @@ const routes: Routes = [
       },
       {
         path: 'test-page',
-        component: TestPageComponent,
+        component: DocsCallsList,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
