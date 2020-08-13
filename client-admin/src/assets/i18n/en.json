@@ -162,6 +162,14 @@
     "TAKENNAME": "this Name is already taken",
     "TAKENEMAIL": "This Email is Already taken"
   },
+  "BONAFIDESASSOCIATOR": {
+    "BONAFIDES": "Select the desired Bonafides",
+    "CHAPTERS": "select The desired Chapters",
+    "REGISTERDATE": "Registration Date",
+    "PRIMARYASSOCIATION": "Primary",
+    "NEWREGISTRATION": "New Reistration",
+    "ADD": "Add selection"
+  },
   "CHAPTER": {
     "TITLE": "Chapers",
     "BTN_ADD": "New Chaper",

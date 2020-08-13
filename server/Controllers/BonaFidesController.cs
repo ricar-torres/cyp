@@ -71,6 +71,25 @@ namespace WebApi.Controllers
     }
 
     [AllowAnonymous]
+    [HttpGet("notinclient/{clientId}")]
+    public IActionResult GetBonafidesNotInClient(int clientId)
+    {
+      try
+      {
+        var res = _BonaFidesServices.GetBonafidesNotInClient(clientId);
+        if (res == null)
+        {
+          return NotFound();
+        }
+        return Ok(res);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
