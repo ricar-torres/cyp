@@ -115,7 +115,7 @@ import { AddressComponent } from './pages/address/address.component';
 import { GeneralInformationComponent } from './pages/general-information/general-information.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
-import { TestPageComponent } from './pages/test-page/test-page.component';
+import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
 
@@ -167,7 +167,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     GeneralInformationComponent,
     RetirementComponent,
     DocumentationCallComponent,
-    TestPageComponent,
+    DocsCallsList,
     DialogSuccessComponent,
     BonafidesAssociatorComponent,
   ],
