@@ -323,6 +323,7 @@
     "SUCCESS": "Exitoso"
   },
   "DOCUMENTATION_CALL_LIST": {
+    "TITLE": "Llamadas Documentadas",
     "ADD_BTN": "Agregar",
     "TYPE_CALL": "Tipo de llamada",
     "THREAD": "Añadir al Hilo"

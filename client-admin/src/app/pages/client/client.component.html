@@ -158,7 +158,7 @@
             fxLayoutAlign="end"
             *ngIf="!fromWizard"
           >
-            
+
           </mat-card-actions> -->
           <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
             <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
@@ -179,7 +179,10 @@
               Content 5
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
-              Content 6
+              <app-docs-calls-list
+                [clientId]="clientid"
+                (isLoadingEvent)="onIsCallsLoading($event)"
+              ></app-docs-calls-list>
             </mat-tab>
           </mat-tab-group>
         </mat-card-content>

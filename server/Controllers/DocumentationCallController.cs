@@ -154,7 +154,7 @@ namespace server.Controllers {
 				if (res == null) {
 					return NotFound();
 				} else {
-					return Ok(masterThreads);
+					return Ok(masterThreads.OrderByDescending(x => x.CreatedAt));
 				}
 
 			} catch (Exception ex) {

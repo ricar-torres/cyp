@@ -321,6 +321,7 @@
     "SUCCESS": "Success"
   },
   "DOCUMENTATION_CALL_LIST": {
+    "TITLE": "Documented Calls",
     "ADD_BTN": "Add",
     "TYPE_CALL": "Type of Call",
     "THREAD": "Add to Thread"
