@@ -180,7 +180,6 @@
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
               <app-docs-calls-list
-                style="height: 300px;"
                 [clientId]="clientid"
                 (isLoadingEvent)="onIsCallsLoading($event)"
               ></app-docs-calls-list>
