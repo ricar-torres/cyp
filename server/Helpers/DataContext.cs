@@ -70,6 +70,7 @@ namespace WebApi.Helpers {
 		public virtual DbSet<Users> Users { get; set; }
 		public virtual DbSet<Zipcodes> Zipcodes { get; set; }
 
+		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		#endregion
 
 		#region FUNCTIONS
