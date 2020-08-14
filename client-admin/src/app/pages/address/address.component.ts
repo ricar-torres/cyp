@@ -56,7 +56,6 @@ export class AddressComponent implements OnInit {
             .get('PhysicalAddress')
             .get('Line2')
             .setValue(physicalAddress.line2);
-          this.reactiveForm.get('PhysicalAddress').get('State').setValue('PR');
           this.reactiveForm
             .get('PhysicalAddress')
             .get('City')
@@ -92,7 +91,6 @@ export class AddressComponent implements OnInit {
             .get('PostalAddress')
             .get('Line2')
             .setValue(postalAddress.line2);
-          this.reactiveForm.get('PostalAddress').get('State').setValue('PR');
           this.reactiveForm
             .get('PostalAddress')
             .get('City')
@@ -114,13 +112,14 @@ export class AddressComponent implements OnInit {
             .get('Id')
             .setValue(postalAddress.id);
         }
-        this.reactiveForm.get('PhysicalAddress').get('State').disable();
-        this.reactiveForm.get('PostalAddress').get('State').disable();
       }
-
       this.clientsService.toggleEditControl.subscribe((val) => {
         this.toggleControls(val);
       });
+      this.reactiveForm.get('PhysicalAddress').get('State').setValue('PR');
+      this.reactiveForm.get('PostalAddress').get('State').setValue('PR');
+      this.reactiveForm.get('PhysicalAddress').get('State').disable();
+      this.reactiveForm.get('PostalAddress').get('State').disable();
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
