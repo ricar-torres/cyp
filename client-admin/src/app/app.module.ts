@@ -118,6 +118,7 @@ import { DocumentationCallComponent } from './components/documentation-call/docu
 import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
+import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -170,6 +171,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DocsCallsList,
     DialogSuccessComponent,
     DependantsListComponent,
+    BonafidesAssociatorComponent,
   ],
   imports: [
     BrowserModule,
@@ -247,6 +249,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DialogGenericSuccessComponent,
     ConfirmDialogComponent,
     ClientWizardComponent,
+    BonafidesAssociatorComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

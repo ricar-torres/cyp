@@ -74,10 +74,10 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    this.LoadAgencies();
+    this.LoadClients();
   }
 
-  private LoadAgencies() {
+  private LoadClients() {
     this.clientService.getAll().subscribe(
       (res) => {
         this.loading = true;
@@ -120,7 +120,9 @@ export class ClientListComponent implements OnInit, OnDestroy {
       height: '95%',
       data: {},
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.LoadClients();
+    });
   }
 
   doFilter(value: any) {
@@ -153,7 +155,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
         if (dialogResult) {
           console.log(id);
           await this.clientService.delete(id);
-          this.LoadAgencies();
+          this.LoadClients();
         }
       });
     } catch (error) {

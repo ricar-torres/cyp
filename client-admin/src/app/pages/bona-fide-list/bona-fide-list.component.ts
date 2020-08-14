@@ -22,6 +22,8 @@ import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
+import { BonafidesAssociatorComponent } from '../bonafides-associator/bonafides-associator.component';
+import { ChapterServiceService } from '@app/shared/chapter-service.service';
 
 @Component({
   selector: 'app-bona-fide-list',
@@ -48,13 +50,14 @@ export class BonaFideListComponent implements OnInit {
   pageEvent: PageEvent;
   loading = true;
 
-  @Input() cientId: string;
+  @Input() clientId: string;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
     private app: AppService,
     private fb: FormBuilder,
     private bonafidesService: bonaFideservice,
+    private chapterService: ChapterServiceService,
     private router: Router,
     private languageService: LanguageService,
     private dialog: MatDialog
@@ -68,11 +71,11 @@ export class BonaFideListComponent implements OnInit {
     this.editAccess = true;
     this.createAccess = true;
     this.deleteAccess = true;
-    this.LoadAgencies();
+    this.loadBonafides();
   }
 
-  private LoadAgencies() {
-    this.bonafidesService.getAll(this.cientId).subscribe(
+  private loadBonafides() {
+    this.bonafidesService.getAll(this.clientId).subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();
@@ -128,9 +131,13 @@ export class BonaFideListComponent implements OnInit {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          console.log(id);
-          await this.bonafidesService.delete(id);
-          this.LoadAgencies();
+          if (!this.clientId) {
+            await this.bonafidesService.delete(id);
+            this.loadBonafides();
+          } else {
+            await this.chapterService.deleteChapterClient(id, this.clientId);
+            this.loadBonafides();
+          }
         }
       });
     } catch (error) {
@@ -147,14 +154,30 @@ export class BonaFideListComponent implements OnInit {
   }
 
   editBonafide(id: number) {
-    if (this.cientId) {
+    if (this.clientId) {
+      const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
+        width: '70%',
+        height: '50%',
+        data: { clientId: this.clientId, bonafideId: id },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {});
     } else {
       this.router.navigate(['/home/bonafide', id]);
     }
   }
 
   goToNew() {
-    if (this.cientId) {
+    if (this.clientId) {
+      const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
+        width: '70%',
+        height: '50%',
+        data: { clientId: this.clientId, bonafideId: null },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        this.loadBonafides();
+      });
     } else {
       this.router.navigate(['/home/bonafide']);
     }

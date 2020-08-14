@@ -8,6 +8,34 @@ import { HttpClient } from '@angular/common/http';
 export class ChapterServiceService {
   constructor(private http: HttpClient) {}
 
+  deleteChapterClient(bonafideId: string, clientId: string) {
+    return this.http
+      .delete<any>(`${environment.baseURL}/chapter/${clientId}/${bonafideId}`)
+      .toPromise();
+  }
+
+  getChapterOfClientByBonafideId(data: any) {
+    return this.http
+      .get<any>(
+        `${environment.baseURL}/chapter/${data.clientId}/${data.bonafideId}`
+      )
+      .toPromise();
+  }
+
+  saveChapterClient(payload) {
+    return this.http
+      .post(`${environment.baseURL}/chapter/client`, payload)
+      .toPromise();
+  }
+
+  getChaptersByBonafidesIds(bonafideIds: string) {
+    return this.http
+      .get<[]>(`${environment.baseURL}/chapter/bonafides`, {
+        params: { bonafideIds: bonafideIds },
+      })
+      .toPromise();
+  }
+
   getByBonafideById(id: string) {
     return this.http.get(`${environment.baseURL}/chapter/bonafide/${id}`);
   }

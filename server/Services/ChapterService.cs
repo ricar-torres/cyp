@@ -18,6 +18,10 @@ namespace WebApi.Services
     void Delete(int id);
     Task<Boolean> ChekcName(string name, int? bonafideid);
     Task<List<Chapters>> GetByBonafineId(int id);
+    Task<List<Chapters>> getChaptersInBonafideIds(String bonafideIds);
+    Task saveClientChapter(ChapterClient payload);
+    Task<ChapterClient> GetChapterOfClientByBonafideId(int clientId, int bonafideId);
+    Task DeleteClientChapter(int clientId, int bonafideId);
   }
 
   public class ChapterServices : IChapterServices
@@ -143,6 +147,77 @@ namespace WebApi.Services
     {
       var res = await _context.Chapters.Where(ch => ch.BonaFideId == id && ch.DeletedAt == null).ToListAsync();
       return res;
+    }
+
+    public async Task<List<Chapters>> getChaptersInBonafideIds(String bonafideIds)
+    {
+      var chapters = await (from ch in _context.Chapters
+                            join bn in _context.BonaFides
+                            on ch.BonaFideId equals bn.Id
+                            where bonafideIds == bn.Id.ToString()
+                            orderby bn.Name ascending
+                            select ch).Distinct().ToListAsync();
+      return chapters;
+    }
+
+    public async Task<ChapterClient> GetChapterOfClientByBonafideId(int clientId, int bonafideId)
+    {
+      var chapterClient = await (from cu in _context.ChapterClient
+                                 join ch in _context.Chapters on cu.ChapterId equals ch.Id
+                                 join bn in _context.BonaFides on ch.BonaFideId equals bn.Id
+                                 where clientId == cu.ClientId && bn.Id == bonafideId
+                                 select cu
+                    ).FirstOrDefaultAsync();
+      return chapterClient;
+    }
+
+    public async Task saveClientChapter(ChapterClient payload)
+    {
+      ChapterClient cc = null;
+      if (payload.Id != null)
+      {
+        cc = await _context.ChapterClient.FirstOrDefaultAsync(cc => cc.Id == payload.Id);
+        clientChapterBuilder(ref payload, ref cc);
+        _context.ChapterClient.Update(cc);
+      }
+      else
+      {
+        cc = new ChapterClient();
+        clientChapterBuilder(ref payload, ref cc);
+        await _context.ChapterClient.AddAsync(cc);
+      }
+      if (payload.Primary == true)
+      {
+        var removeFromPrimary = await _context.ChapterClient.Where(ch => ch.ClientId == cc.ClientId && cc.Id != ch.Id).ToListAsync();
+        removeFromPrimary.ForEach(el =>
+        {
+          el.Primary = false;
+        });
+        _context.ChapterClient.UpdateRange(removeFromPrimary);
+      }
+      await _context.SaveChangesAsync();
+    }
+
+    private static void clientChapterBuilder(ref ChapterClient payload, ref ChapterClient cc)
+    {
+      cc.RegistrationDate = payload.RegistrationDate;
+      cc.ChapterId = payload.ChapterId;
+      cc.ClientId = payload.ClientId;
+      cc.Primary = payload.Primary;
+      cc.NewRegistration = payload.NewRegistration;
+      cc.UpdatedAt = DateTime.Now;
+    }
+
+    public async Task DeleteClientChapter(int clientId, int bonafideId)
+    {
+      var chapterClient = await (from cu in _context.ChapterClient
+                                 join ch in _context.Chapters on cu.ChapterId equals ch.Id
+                                 join bn in _context.BonaFides on ch.BonaFideId equals bn.Id
+                                 where clientId == cu.ClientId && bn.Id == bonafideId
+                                 select cu
+                    ).FirstOrDefaultAsync();
+      _context.ChapterClient.Remove(chapterClient);
+      await _context.SaveChangesAsync();
     }
   }
 

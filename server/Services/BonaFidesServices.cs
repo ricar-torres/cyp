@@ -32,6 +32,7 @@ namespace WebApi.Services
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
     Task<Boolean> ChekcEmail(string email);
+    List<BonaFides> GetBonafidesNotInClient(int clientId);
   }
 
   public class BonaFidesServices : Controller, IBonaFidesServices
@@ -173,6 +174,35 @@ namespace WebApi.Services
         }
       }
       return false;
+    }
+
+    public List<BonaFides> GetBonafidesNotInClient(int clientId)
+    {
+      try
+      {
+        if (clientId != 0)
+        {
+          var chaptersClients = _context.ChapterClient.Where(cc => cc.ClientId == clientId).ToList();
+          var idList = new List<int>();
+          chaptersClients.ForEach(el =>
+          {
+            idList.Add(el.ChapterId);
+          });
+          var bonafidesNotInClient = (from ch in _context.Chapters
+                                      join bn in _context.BonaFides
+                                      on ch.BonaFideId equals bn.Id
+                                      where !idList.Contains(ch.Id)
+                                      orderby bn.Name ascending
+                                      select bn).Distinct().ToList();
+          return bonafidesNotInClient;
+        }
+        throw new Exception("no clientId provided");
+
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
   }
 }

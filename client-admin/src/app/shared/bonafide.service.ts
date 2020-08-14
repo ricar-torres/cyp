@@ -8,6 +8,12 @@ import { environment } from '@environments/environment';
 export class bonaFideservice {
   constructor(private http: HttpClient) {}
 
+  async getAvailableBonafides(clientId: number) {
+    return this.http
+      .get<[]>(`${environment.baseURL}/bonaFides/notinclient/${clientId}`)
+      .toPromise();
+  }
+
   getAll(clientId: string) {
     if (!clientId) {
       return this.http.get(`${environment.baseURL}/bonaFides`);

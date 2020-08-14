@@ -1,16 +1,35 @@
 <md-content layout-margin layout-padding flex="50">
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>
-        {{ 'CLIENTS.TITLE' | translate }}
-      </mat-card-title>
-      <mat-card-subtitle>
-        {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
-      >
-    </mat-card-header>
-    <mat-card-content>
-      <div *ngIf="reactiveForm">
-        <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+  <div *ngIf="reactiveForm">
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            {{ 'CLIENTS.TITLE' | translate }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
+          >
+          <div style="margin-left: auto;">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!reactiveForm.valid"
+            >
+              <mat-icon>save</mat-icon>
+              {{ 'CLIENTS.SAVE' | translate }}
+            </button>
+            <button
+              type="button"
+              mat-stroked-button
+              type="button"
+              (click)="onBack()"
+            >
+              <mat-icon>list</mat-icon>{{ 'CLIENTS.GOBACK' | translate }}
+            </button>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
           <!-- main flexbox content -->
           <div fxLayout="column" fxLayoutAlign="center">
             <!-- name row -->
@@ -123,53 +142,39 @@
               <input matInput formControlName="Commnets" />
             </mat-form-field> -->
           </div>
-          <mat-card-actions
+          <!-- <mat-card-actions
             fxLayout="row"
             fxLayoutAlign="end"
             *ngIf="!fromWizard"
           >
-            <button
-              mat-raised-button
-              color="primary"
-              type="submit"
-              [disabled]="!reactiveForm.valid"
-            >
-              <mat-icon>save</mat-icon>
-              {{ 'CLIENTS.SAVE' | translate }}
-            </button>
-            <button
-              type="button"
-              mat-stroked-button
-              type="button"
-              (click)="onBack()"
-            >
-              <mat-icon>list</mat-icon>{{ 'CLIENTS.GOBACK' | translate }}
-            </button>
-          </mat-card-actions>
-        </form>
-      </div>
-      <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
-        <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
-          <app-general-information [client]="client"></app-general-information>
-        </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
-          <app-client-address [clientid]="clientid"></app-client-address>
-        </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.BONAFIDES' | translate }}">
-          <app-bona-fide-list [cientId]="clientid"></app-bona-fide-list>
-        </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
-          Content 4
-        </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
-          Content 5
-        </mat-tab>
-        <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
-          Content 6
-        </mat-tab>
-      </mat-tab-group>
-    </mat-card-content>
-  </mat-card>
+            
+          </mat-card-actions> -->
+          <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
+            <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
+              <app-general-information
+                [client]="client"
+              ></app-general-information>
+            </mat-tab>
+            <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
+              <app-client-address [clientid]="clientid"></app-client-address>
+            </mat-tab>
+            <mat-tab label="{{ 'CLIENTS.BONAFIDES' | translate }}">
+              <app-bona-fide-list [clientId]="clientid"></app-bona-fide-list>
+            </mat-tab>
+            <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
+              Content 4
+            </mat-tab>
+            <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
+              Content 5
+            </mat-tab>
+            <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
+              Content 6
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
 </md-content>
 <app-speed-dial-fab
   *ngIf="fabMenuButtons.visible"

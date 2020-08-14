@@ -163,6 +163,14 @@
     "TAKENNAME": "Este Nombre ya existe",
     "TAKENEMAIL": "Este correo electrónico ya existe"
   },
+  "BONAFIDESASSOCIATOR": {
+    "BONAFIDES": "Seleccione los Bona Fides deseados",
+    "CHAPTERS": "Seleccione los capitulos deseados",
+    "REGISTERDATE": "Fecha de registro",
+    "PRIMARYASSOCIATION": "Primario",
+    "NEWREGISTRATION": "Nuevo Registro",
+    "ADD": "Añadir Seleccion"
+  },
   "CHAPTER": {
     "TITLE": "Capítulos",
     "BTN_ADD": "Crear Capítulo",
