@@ -18,8 +18,7 @@
           <mat-form-field class="full-width">
             <mat-label>{{ 'CHAPTER.NAME' | translate }}</mat-label>
             <input matInput formControlName="Name" />
-            <mat-hint
-              class="error"
+            <mat-error
               *ngIf="
                 reactiveForm.get('Name').status != 'VALID' &&
                 reactiveForm.touched
@@ -31,7 +30,7 @@
                   ? ('CHAPTER.TAKENNAME' | translate)
                   : ('CHAPTER.REQUIRED' | translate)
               }}
-            </mat-hint>
+            </mat-error>
           </mat-form-field>
           <mat-form-field class="full-width">
             <mat-label>{{ 'CHAPTER.QUOTA' | translate }}</mat-label>

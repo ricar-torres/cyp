@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  AbstractControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
@@ -38,15 +39,11 @@ export class BonaFideComponent implements OnInit {
       this.bonafideId = this.route.snapshot.paramMap.get('id');
       this.reactiveForm = this.formBuilder.group({
         Id: [null],
-        Name: [null, [Validators.required], this.bonafideCheckName.bind(this)],
+        Name: [null, [Validators.required]],
         Code: [null, [Validators.maxLength(255)]],
         Siglas: [null, [Validators.maxLength(255)]],
         Phone: [null, [Validators.maxLength(255)]],
-        Email: [
-          null,
-          [Validators.email, Validators.maxLength(255)],
-          this.bonafideCheckEmail.bind(this),
-        ],
+        Email: [null, [Validators.email, Validators.maxLength(255)]],
         Benefits: [null, [Validators.maxLength(255)]],
         Disclaimer: [null, [Validators.maxLength(255)]],
       });
@@ -56,12 +53,27 @@ export class BonaFideComponent implements OnInit {
         );
         this.reactiveForm.get('Id').setValue(bonafide.id);
         this.reactiveForm.get('Name').setValue(bonafide.name);
+        this.reactiveForm
+          .get('Name')
+          .setAsyncValidators(this.bonafideCheckName(bonafide.name).bind(this));
         this.reactiveForm.get('Code').setValue(bonafide.code);
         this.reactiveForm.get('Siglas').setValue(bonafide.siglas);
         this.reactiveForm.get('Phone').setValue(bonafide.phone);
         this.reactiveForm.get('Email').setValue(bonafide.email);
+        this.reactiveForm
+          .get('Email')
+          .setAsyncValidators(
+            this.bonafideCheckEmail(bonafide.email).bind(this)
+          );
         this.reactiveForm.get('Benefits').setValue(bonafide.benefits);
         this.reactiveForm.get('Disclaimer').setValue(bonafide.disclaimer);
+      } else {
+        this.reactiveForm
+          .get('Email')
+          .setAsyncValidators(this.bonafideCheckEmail('').bind(this));
+        this.reactiveForm
+          .get('Name')
+          .setAsyncValidators(this.bonafideCheckName('').bind(this));
       }
       this.loading = false;
     } catch (error) {
@@ -107,44 +119,28 @@ export class BonaFideComponent implements OnInit {
   }
 
   bonafidesCheckName: boolean = false;
-  async bonafideCheckName(name: FormControl) {
-    try {
-      console.log(this.bonafidesCheckName);
-      if (name.value && this.bonafidesCheckName) {
+
+  bonafideCheckName(name: string) {
+    return async (control: AbstractControl) => {
+      if (control.value && name != control.value) {
         const res: any = await this.bonafideService.checkName({
-          name: name.value,
+          name: control.value,
         });
         if (res) return { nameTaken: true };
       }
-      this.bonafidesCheckName = true;
-    } catch (error) {
-      if (error.status != 401) {
-        console.error('error', error);
-        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
-          this.app.showErrorMessage(res);
-        });
-      }
-    }
+      return null;
+    };
   }
 
-  bonafidesCheckEmail: boolean = false;
-  async bonafideCheckEmail(email: FormControl) {
-    try {
-      console.log;
-      if (email.value && this.bonafidesCheckEmail) {
+  bonafideCheckEmail(email: string) {
+    return async (control: AbstractControl) => {
+      if (control.value && email != control.value) {
         const res: any = await this.bonafideService.checkEmail({
-          name: email.value,
+          name: control.value,
         });
         if (res) return { emailTaken: true };
       }
-      this.bonafidesCheckEmail = true;
-    } catch (error) {
-      if (error.status != 401) {
-        console.error('error', error);
-        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
-          this.app.showErrorMessage(res);
-        });
-      }
-    }
+      return null;
+    };
   }
 }

@@ -25,6 +25,7 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
 export class ClientComponent implements OnInit, OnDestroy {
   clientid: string;
   client;
+  loading = true;
   @Input() fromWizard: boolean = false;
 
   taskPermissions: PERMISSION = {
@@ -41,7 +42,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     visible: false,
     buttons: [],
   };
-  loading: boolean;
   constructor(
     private fb: FormBuilder,
     private clientsService: ClientService,
@@ -75,10 +75,20 @@ export class ClientComponent implements OnInit, OnDestroy {
         .setValue(this.client.maritalStatus);
       this.reactiveForm.get('Phone1').setValue(this.client.phone1);
       this.reactiveForm.get('Phone2').setValue(this.client.phone2);
+      this.reactiveForm
+        .get('Ssn')
+        .setAsyncValidators(
+          this.clientWizard.checkSsn(this.client.ssn).bind(this)
+        );
+    } else {
+      this.reactiveForm
+        .get('Ssn')
+        .setAsyncValidators(this.clientWizard.checkSsn('').bind(this));
     }
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
     });
+    this.loading = false;
   }
 
   async onSubmit() {

@@ -108,7 +108,7 @@
     "PHOSTALADDRESS": "Dirección Postal",
     "ADDRESSLINE1": "Dirección 1",
     "ADDRESSLINE2": "Dirección 2",
-    "STATE": "Estado",
+    "STATE": "País",
     "CITY": "Ciudad",
     "POSTALCODE": "Código Postal",
     "POSTALCODE4": "Código Postal +4",
@@ -122,7 +122,9 @@
     "ACOVER": "Cubierta Actual",
     "EFFECTIVEDATE": "Fecha de Efectividad",
     "MEDICAREA": "Medicare A",
-    "MEDICAREB": "Medicare B"
+    "MEDICAREB": "Medicare B",
+    "SSNTAKEN": "El 'SSN' provisto no esta disponible",
+    "SSNREQUIRED": "SSN es requerido"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

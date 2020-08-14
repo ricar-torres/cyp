@@ -140,6 +140,21 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
+
+    [Authorize]
+    [HttpPost("checkSsn")]
+    public async Task<IActionResult> checkSsn([FromBody] SsnDto ssn)
+    {
+      try
+      {
+        var check = await _service.ChekcSsn(ssn.SSN);
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
   }
 
 }

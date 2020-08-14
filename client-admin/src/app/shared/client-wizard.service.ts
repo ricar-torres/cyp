@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
   FormControl,
+  AbstractControl,
+  ValidationErrors,
 } from '@angular/forms';
 import { LanguageService } from './Language.service';
 import { AppService } from './app.service';
@@ -30,7 +32,7 @@ export class ClientWizardService {
     LastName2: [null],
     Email: [null, [Validators.email]],
     Initial: [null],
-    Ssn: [null, Validators.required],
+    Ssn: [null, [Validators.required]],
     Gender: [null],
     BirthDate: [null],
     MaritalStatus: [null],
@@ -173,5 +175,26 @@ export class ClientWizardService {
     var Agency = this.generalInformationForm.get('AgencyId').value;
     this.generalInformationForm.get('AgencyId').setValue(Agency.id);
     return Agency;
+  }
+
+  async checkClientSsn(control: FormControl) {
+    if (control.value) {
+      const res: any = await this.clientService.checkSsn({
+        ssn: control.value,
+      });
+      if (res) return { ssnTaken: true };
+    }
+  }
+
+  checkSsn(ssn: string) {
+    return async (control: AbstractControl) => {
+      if (control.value && ssn != control.value) {
+        const res: any = await this.clientService.checkSsn({
+          ssn: control.value,
+        });
+        if (res) return { ssnTaken: true };
+      }
+      return null;
+    };
   }
 }

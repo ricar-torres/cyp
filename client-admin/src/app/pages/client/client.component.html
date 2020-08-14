@@ -9,7 +9,7 @@
           <mat-card-subtitle>
             {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
           >
-          <div class="buttons-right">
+          <div class="buttons-right" *ngIf="!fromWizard">
             <button
               mat-raised-button
               color="primary"
@@ -110,7 +110,18 @@
 
               <mat-form-field fxFlex>
                 <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
-                <input matInput formControlName="Ssn" mask="000-00-0000" />
+                <input
+                  #ssnFormControl
+                  matInput
+                  formControlName="Ssn"
+                  mask="000-00-0000"
+                />
+                <mat-error *ngIf="reactiveForm.get('Ssn').hasError('ssnTaken')">
+                  {{ 'CLIENTS.SSNTAKEN' | translate }}
+                </mat-error>
+                <mat-error *ngIf="reactiveForm.get('Ssn').hasError('required')">
+                  {{ 'CLIENTS.SSNREQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex>

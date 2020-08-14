@@ -6,8 +6,8 @@ namespace server.Dtos
 
   public class PhysicalPostalAddresses
   {
-    public Addresses PhysicalAddress { get; set; }
-    public Addresses PostalAddress { get; set; }
+    public AddressesDto PhysicalAddress { get; set; }
+    public AddressesDto PostalAddress { get; set; }
   }
 
 

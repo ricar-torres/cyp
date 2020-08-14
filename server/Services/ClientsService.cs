@@ -17,6 +17,7 @@ namespace WebApi.Services {
 		void Delete(int id);
 		Task<Boolean> ChekcName(string criteria);
 		Task<List<Addresses>> GetClientAddress(int clientId);
+		Task<Boolean> ChekcSsn(string criteria);
 	}
 
 	public class ClientService : IClientService {
@@ -257,5 +258,17 @@ namespace WebApi.Services {
 				throw ex;
 			}
 		}
+
+		public async Task<Boolean> ChekcSsn(string criteria) {
+			if (!String.IsNullOrEmpty(criteria)) {
+				criteria = criteria.ToLower().Trim();
+				var payload = await _context.Clients.FirstOrDefaultAsync(ag => ag.Ssn.Replace("-", "") == criteria);
+				if (payload != null) {
+					return true;
+				}
+			}
+			return false;
+		}
 	}
+
 }
