@@ -1,12 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 
-namespace WebApi.Entities
+namespace server.Dtos
 {
-  public partial class Addresses
+  public partial class AddressesDto
   {
-    public int Id { get; set; }
-    public int ClientId { get; set; }
+    public int? Id { get; set; }
+    public int? ClientId { get; set; }
     public byte? Type { get; set; }
     public string Line1 { get; set; }
     public string Line2 { get; set; }

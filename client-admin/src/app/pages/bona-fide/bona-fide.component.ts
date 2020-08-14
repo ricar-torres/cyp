@@ -11,6 +11,7 @@ import { bonaFideservice } from '@app/shared/bonafide.service';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
 @Component({
   selector: 'app-bona-fide',
   templateUrl: './bona-fide.component.html',
@@ -61,9 +62,8 @@ export class BonaFideComponent implements OnInit {
         this.reactiveForm.get('Email').setValue(bonafide.email);
         this.reactiveForm.get('Benefits').setValue(bonafide.benefits);
         this.reactiveForm.get('Disclaimer').setValue(bonafide.disclaimer);
-        this.reactiveForm.get('Email').setAsyncValidators(null);
-        this.reactiveForm.get('Name').setAsyncValidators(null);
-      } else this.loading = false;
+      }
+      this.loading = false;
     } catch (error) {
       this.loading = false;
       if (error.status != 401) {
@@ -106,14 +106,17 @@ export class BonaFideComponent implements OnInit {
     }
   }
 
+  bonafidesCheckName: boolean = false;
   async bonafideCheckName(name: FormControl) {
     try {
-      if (name.value) {
+      console.log(this.bonafidesCheckName);
+      if (name.value && this.bonafidesCheckName) {
         const res: any = await this.bonafideService.checkName({
           name: name.value,
         });
         if (res) return { nameTaken: true };
       }
+      this.bonafidesCheckName = true;
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -124,14 +127,16 @@ export class BonaFideComponent implements OnInit {
     }
   }
 
+  bonafidesCheckEmail: boolean = false;
   async bonafideCheckEmail(email: FormControl) {
     try {
-      if (email.value) {
+      if (email.value && this.bonafidesCheckEmail) {
         const res: any = await this.bonafideService.checkEmail({
           name: email.value,
         });
         if (res) return { emailTaken: true };
       }
+      this.bonafidesCheckEmail = true;
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);

@@ -1,14 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 
-namespace WebApi.Entities
+
+using System;
+
+namespace server.Dtos
 {
-  public partial class Tutors
+  public partial class TutorsDto
   {
-    public int Id { get; set; }
-    public int ClientId { get; set; }
+    public int? Id { get; set; }
+    public int? ClientId { get; set; }
     public string Name { get; set; }
     public string LastName { get; set; }
     public string Phone { get; set; }
@@ -16,6 +15,5 @@ namespace WebApi.Entities
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
-    public virtual Clients Client { get; set; }
   }
 }

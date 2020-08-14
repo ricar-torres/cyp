@@ -1,9 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
 
-namespace WebApi.Entities
+using System;
+
+namespace server.Dtos
 {
-  public partial class ChapterClient
+  public partial class ChapterClientDto
   {
     public int Id { get; set; }
     public int ChapterId { get; set; }
@@ -13,7 +13,5 @@ namespace WebApi.Entities
     public bool? Primary { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
-    public virtual Chapters Chapter { get; set; }
-    public virtual Clients Client { get; set; }
   }
 }
