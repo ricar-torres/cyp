@@ -122,7 +122,9 @@
     "ACOVER": "Cubierta Actual",
     "EFFECTIVEDATE": "Fecha de Efectividad",
     "MEDICAREA": "Medicare A",
-    "MEDICAREB": "Medicare B"
+    "MEDICAREB": "Medicare B",
+    "SSNTAKEN": "El 'SSN' provisto no esta disponible",
+    "SSNREQUIRED": "SSN es requerido"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

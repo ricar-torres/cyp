@@ -121,7 +121,9 @@
     "ACOVER": "Actual Cover",
     "EFFECTIVEDATE": "Effective Date",
     "MEDICAREA": "Medicare A",
-    "MEDICAREB": "Medicare B"
+    "MEDICAREB": "Medicare B",
+    "SSNTAKEN": "Provided SSN is already in record",
+    "SSNREQUIRED": "SSN must be provided"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",

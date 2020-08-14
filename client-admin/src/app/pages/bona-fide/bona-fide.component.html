@@ -19,8 +19,7 @@
               <mat-form-field class="full-width">
                 <mat-label>{{ 'BONAFIDE.NAME' | translate }}</mat-label>
                 <input matInput formControlName="Name" />
-                <mat-hint
-                  class="error"
+                <mat-error
                   *ngIf="
                     reactiveForm.get('Name').status != 'VALID' &&
                     reactiveForm.get('Name').touched
@@ -32,7 +31,7 @@
                       ? ('BONAFIDE.TAKENNAME' | translate)
                       : ('REQUIRED' | translate)
                   }}
-                </mat-hint>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="full-width">
                 <mat-label>{{ 'BONAFIDE.CODE' | translate }}</mat-label>
@@ -49,8 +48,7 @@
               <mat-form-field class="full-width">
                 <mat-label>{{ 'BONAFIDE.EMAIL' | translate }}</mat-label>
                 <input matInput formControlName="Email" />
-                <mat-hint
-                  class="error"
+                <mat-error
                   *ngIf="
                     reactiveForm.get('Email')?.errors?.emailTaken &&
                     reactiveForm.get('Email').touched
@@ -58,9 +56,8 @@
                   align="start"
                 >
                   {{ 'BONAFIDE.TAKENEMAIL' | translate }}
-                </mat-hint>
-                <mat-hint
-                  class="error"
+                </mat-error>
+                <mat-error
                   *ngIf="
                     reactiveForm.get('Email')?.errors?.email &&
                     reactiveForm.get('Email').touched
@@ -68,7 +65,7 @@
                   align="start"
                 >
                   {{ 'VALIDEMAIL' | translate }}
-                </mat-hint>
+                </mat-error>
               </mat-form-field>
               <mat-form-field class="full-width">
                 <mat-label>{{ 'BONAFIDE.BENEFITS' | translate }}</mat-label>

@@ -36,4 +36,10 @@ export class ClientService {
   delete(id: string) {
     return this.http.delete(`${environment.baseURL}/clients/${id}`).toPromise();
   }
+
+  checkSsn(payload: { ssn: any }) {
+    return this.http
+      .post(`${environment.baseURL}/clients/checkSsn`, payload)
+      .toPromise();
+  }
 }

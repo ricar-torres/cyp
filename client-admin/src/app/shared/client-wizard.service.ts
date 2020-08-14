@@ -30,7 +30,7 @@ export class ClientWizardService {
     LastName2: [null],
     Email: [null, [Validators.email]],
     Initial: [null],
-    Ssn: [null, Validators.required],
+    Ssn: [null, [Validators.required], this.checkClientSsn.bind(this)],
     Gender: [null],
     BirthDate: [null],
     MaritalStatus: [null],
@@ -173,5 +173,14 @@ export class ClientWizardService {
     var Agency = this.generalInformationForm.get('AgencyId').value;
     this.generalInformationForm.get('AgencyId').setValue(Agency.id);
     return Agency;
+  }
+
+  async checkClientSsn(control: FormControl) {
+    if (control.value) {
+      const res: any = await this.clientService.checkSsn({
+        ssn: control.value,
+      });
+      if (res) return { ssnTaken: true };
+    }
   }
 }

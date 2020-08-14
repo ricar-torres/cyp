@@ -25,6 +25,7 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
 export class ClientComponent implements OnInit, OnDestroy {
   clientid: string;
   client;
+  loading = true;
   @Input() fromWizard: boolean = false;
 
   taskPermissions: PERMISSION = {
@@ -41,7 +42,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     visible: false,
     buttons: [],
   };
-  loading: boolean;
   constructor(
     private fb: FormBuilder,
     private clientsService: ClientService,
@@ -79,6 +79,7 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
     });
+    this.loading = false;
   }
 
   async onSubmit() {

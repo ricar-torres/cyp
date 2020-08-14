@@ -21,6 +21,7 @@ export class GeneralInformationComponent implements OnInit {
 
   reactiveForm: FormGroup;
   tutorInformation: FormGroup;
+  loading = true;
   constructor(
     public wizadFormGroups: ClientWizardService,
     private hps: HealthPlanService,
@@ -36,6 +37,7 @@ export class GeneralInformationComponent implements OnInit {
     if (this.client) {
       await this.fillForm();
     }
+    this.loading = false;
   }
 
   private async fillForm() {
