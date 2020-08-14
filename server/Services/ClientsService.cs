@@ -62,6 +62,10 @@ namespace WebApi.Services
     public Clients GetById(int id)
     {
       var res = _context.Clients.Include(cl => cl.Tutors).FirstOrDefault(c => c.Id == id);
+      res.Tutors.ToList().ForEach(tut =>
+      {
+        tut.Client = null;
+      });
       return res;
     }
 
@@ -113,14 +117,14 @@ namespace WebApi.Services
           if (physicalAddress != null)
           {
             PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
-            physicalAddress.ClientId = payload.Demographic.Id;
+            physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
             _context.Addresses.Update(physicalAddress);
           }
           else
           {
             physicalAddress = new Addresses();
             PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
-            physicalAddress.ClientId = payload.Demographic.Id;
+            physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
             physicalAddress.CreatedAt = DateTime.Now;
             await _context.Addresses.AddAsync(physicalAddress);
           }
@@ -141,7 +145,7 @@ namespace WebApi.Services
           {
             postalAddress = new Addresses();
             PostalAddressInformationBuilder(ref payload, ref postalAddress);
-            postalAddress.ClientId = payload.Demographic.Id;
+            postalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
             await _context.Addresses.AddAsync(postalAddress);
           }
 
@@ -184,7 +188,7 @@ namespace WebApi.Services
           if (!String.IsNullOrEmpty(tutors[0].Phone))
           {
             var newTutor = new Tutors();
-            newTutor.ClientId = payload.Demographic.Id;
+            newTutor.ClientId = payload.Demographic.Id.GetValueOrDefault();
             newTutor.Name = tutors[0].Name;
             newTutor.LastName = tutors[0].LastName;
             newTutor.Phone = tutors[0].Phone;

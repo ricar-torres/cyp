@@ -130,6 +130,7 @@ export class BonaFideComponent implements OnInit {
   bonafidesCheckEmail: boolean = false;
   async bonafideCheckEmail(email: FormControl) {
     try {
+      console.log;
       if (email.value && this.bonafidesCheckEmail) {
         const res: any = await this.bonafideService.checkEmail({
           name: email.value,

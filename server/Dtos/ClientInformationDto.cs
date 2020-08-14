@@ -14,7 +14,7 @@ namespace server.Dtos
   public class ClientInformationDto
   {
     public bool PreRegister { get; set; }
-    public Clients Demographic { get; set; }
+    public ClientsDto Demographic { get; set; }
     public PhysicalPostalAddresses Address { get; set; }
   }
 }

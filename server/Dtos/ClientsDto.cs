@@ -1,23 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
+using WebApi.Entities;
 
-namespace WebApi.Entities
+namespace server.Dtos
 {
-  public partial class Clients
+  public partial class ClientsDto
   {
-    public Clients()
-    {
-      ChapterClient = new HashSet<ChapterClient>();
-      ClientCommunicationMethod = new HashSet<ClientCommunicationMethod>();
-      ClientDocumentType = new HashSet<ClientDocumentType>();
-      ClientProduct = new HashSet<ClientProduct>();
-      ClientUser = new HashSet<ClientUser>();
-      Dependents = new HashSet<Dependents>();
-      Tutors = new HashSet<Tutors>();
-    }
 
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string Name { get; set; }
     public string Initial { get; set; }
     public string LastName1 { get; set; }
@@ -54,6 +44,6 @@ namespace WebApi.Entities
     public virtual ICollection<ClientProduct> ClientProduct { get; set; }
     public virtual ICollection<ClientUser> ClientUser { get; set; }
     public virtual ICollection<Dependents> Dependents { get; set; }
-    public virtual ICollection<Tutors> Tutors { get; set; }
+    public virtual ICollection<TutorsDto> Tutors { get; set; }
   }
 }

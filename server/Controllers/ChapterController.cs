@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace WebApi.Controllers
 
     [Authorize]
     [HttpPost("client")]
-    public async Task<IActionResult> SaveChaoterClient(ChapterClient payload)
+    public async Task<IActionResult> SaveChaoterClient(ChapterClientDto payload)
     {
       try
       {

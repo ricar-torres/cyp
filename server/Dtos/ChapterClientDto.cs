@@ -5,7 +5,7 @@ namespace server.Dtos
 {
   public partial class ChapterClientDto
   {
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public int ChapterId { get; set; }
     public int ClientId { get; set; }
     public DateTime? RegistrationDate { get; set; }
