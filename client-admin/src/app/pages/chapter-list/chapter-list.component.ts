@@ -62,7 +62,6 @@ export class ChapterListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.id);
     //TODO: Acces
     //this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_UPDATE);
     //this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_CREATE);

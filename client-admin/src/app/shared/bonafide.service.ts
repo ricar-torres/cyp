@@ -52,7 +52,6 @@ export class bonaFideservice {
       .toPromise();
   }
   checkEmail(obj: { name: string }): any {
-    console.log(obj.name);
     return this.http
       .get(`${environment.baseURL}/bonaFides/CheckEmail/${obj.name}`)
       .toPromise();

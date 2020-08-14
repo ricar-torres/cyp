@@ -50,7 +50,7 @@ namespace WebApi.Controllers
       }
     }
 
-    [Authorize]
+    [AllowAnonymous]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {

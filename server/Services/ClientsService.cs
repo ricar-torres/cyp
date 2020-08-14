@@ -51,6 +51,9 @@ namespace WebApi.Services {
 
 		public Clients GetById(int id) {
 			var res = _context.Clients.Include(cl => cl.Tutors).FirstOrDefault(c => c.Id == id);
+			res.Tutors.ToList().ForEach(tut => {
+				tut.Client = null;
+			});
 			return res;
 		}
 
@@ -90,7 +93,7 @@ namespace WebApi.Services {
 
 					if (physicalAddress != null) {
 						PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
-						physicalAddress.ClientId = payload.Demographic.Id.Value;
+						physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
 						_context.Addresses.Update(physicalAddress);
 					} else {
 						physicalAddress = new Addresses();

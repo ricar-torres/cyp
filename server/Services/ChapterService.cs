@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -19,7 +20,7 @@ namespace WebApi.Services
     Task<Boolean> ChekcName(string name, int? bonafideid);
     Task<List<Chapters>> GetByBonafineId(int id);
     Task<List<Chapters>> getChaptersInBonafideIds(String bonafideIds);
-    Task saveClientChapter(ChapterClient payload);
+    Task saveClientChapter(ChapterClientDto payload);
     Task<ChapterClient> GetChapterOfClientByBonafideId(int clientId, int bonafideId);
     Task DeleteClientChapter(int clientId, int bonafideId);
   }
@@ -171,7 +172,7 @@ namespace WebApi.Services
       return chapterClient;
     }
 
-    public async Task saveClientChapter(ChapterClient payload)
+    public async Task saveClientChapter(ChapterClientDto payload)
     {
       ChapterClient cc = null;
       if (payload.Id != null)
@@ -198,7 +199,7 @@ namespace WebApi.Services
       await _context.SaveChangesAsync();
     }
 
-    private static void clientChapterBuilder(ref ChapterClient payload, ref ChapterClient cc)
+    private static void clientChapterBuilder(ref ChapterClientDto payload, ref ChapterClient cc)
     {
       cc.RegistrationDate = payload.RegistrationDate;
       cc.ChapterId = payload.ChapterId;

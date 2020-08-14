@@ -84,65 +84,12 @@ export class ClientWizardService {
     secondCtrl: [null, Validators.required],
   });
 
-  bonafidesFormGroup = this.formBuilder.group({
-    Id: [null],
-    Name: [null, [Validators.required], this.bonafideCheckName.bind(this)],
-    Code: [null, [Validators.maxLength(255)]],
-    Siglas: [null, [Validators.maxLength(255)]],
-    Phone: [null, [Validators.maxLength(255)]],
-    Email: [
-      null,
-      [Validators.email, Validators.maxLength(255)],
-      this.bonafideCheckEmail.bind(this),
-    ],
-    Benefits: [null, [Validators.maxLength(255)]],
-    Disclaimer: [null, [Validators.maxLength(255)]],
-  });
-
   resetFormGroups() {
     this.clientDemographic.reset();
     this.clientAddressFormGroup.reset();
     this.secondFormGroup.reset();
     this.generalInformationForm.reset();
     this.tutorInformation.reset();
-  }
-
-  //#region bonafide Checks
-
-  async bonafideCheckName(name: FormControl) {
-    try {
-      if (name.value) {
-        const res: any = await this.bonafideService.checkName({
-          name: name.value,
-        });
-        if (res) return { nameTaken: true };
-      }
-    } catch (error) {
-      if (error.status != 401) {
-        console.error('error', error);
-        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
-          this.app.showErrorMessage(res);
-        });
-      }
-    }
-  }
-
-  async bonafideCheckEmail(email: FormControl) {
-    try {
-      if (email.value) {
-        const res: any = await this.bonafideService.checkEmail({
-          name: email.value,
-        });
-        if (res) return { emailTaken: true };
-      }
-    } catch (error) {
-      if (error.status != 401) {
-        console.error('error', error);
-        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
-          this.app.showErrorMessage(res);
-        });
-      }
-    }
   }
 
   async preRegister() {
@@ -227,6 +174,4 @@ export class ClientWizardService {
     this.generalInformationForm.get('AgencyId').setValue(Agency.id);
     return Agency;
   }
-
-  //#endregion
 }

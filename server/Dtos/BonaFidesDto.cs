@@ -1,18 +1,12 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using System.Text.Json.Serialization;
 
-namespace WebApi.Entities
+namespace server.Dtos
 {
-  public partial class BonaFides
+  public partial class BonaFidesDto
   {
-    public BonaFides()
-    {
-      Chapters = new HashSet<Chapters>();
-    }
-
-    public int Id { get; set; }
+    public int? Id { get; set; }
     public string Code { get; set; }
     public string Name { get; set; }
     public string Siglas { get; set; }
@@ -23,6 +17,5 @@ namespace WebApi.Entities
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
-    public virtual ICollection<Chapters> Chapters { get; set; }
   }
 }
