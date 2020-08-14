@@ -32,7 +32,7 @@ export class ClientWizardService {
     LastName2: [null],
     Email: [null, [Validators.email]],
     Initial: [null],
-    Ssn: [null, [Validators.required], this.checkSsn('').bind(this)],
+    Ssn: [null, [Validators.required]],
     Gender: [null],
     BirthDate: [null],
     MaritalStatus: [null],

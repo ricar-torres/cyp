@@ -77,11 +77,13 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.reactiveForm.get('Phone2').setValue(this.client.phone2);
       this.reactiveForm
         .get('Ssn')
-        .setAsyncValidators(this.clientWizard.checkSsn(this.client.ssn));
+        .setAsyncValidators(
+          this.clientWizard.checkSsn(this.client.ssn).bind(this)
+        );
     } else {
       this.reactiveForm
         .get('Ssn')
-        .setAsyncValidators(this.clientWizard.checkSsn(''));
+        .setAsyncValidators(this.clientWizard.checkSsn('').bind(this));
     }
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
