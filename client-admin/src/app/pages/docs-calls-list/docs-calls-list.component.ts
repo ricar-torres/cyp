@@ -5,7 +5,14 @@ import { AppService } from '@app/shared/app.service';
 import { DocumentationCallAPIService } from '../../shared/documentation-call.api.service';
 import { GenericSucessModel } from '../../models/GenericSuccessModel';
 import { DocumentationCallComponent } from '../../components/documentation-call/documentation-call.component';
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  AfterViewInit,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import {
   ConfirmDialogModel,
@@ -25,7 +32,10 @@ import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-su
 })
 export class DocsCallsList implements OnInit, AfterViewInit {
   threads: any[] = [];
+
   loading: boolean;
+  @Output()
+  isLoadingEvent = new EventEmitter<boolean>();
 
   @Input()
   clientId: string;
@@ -39,7 +49,7 @@ export class DocsCallsList implements OnInit, AfterViewInit {
     await this.loadData();
   }
 
-  ngOnInit() {}
+  async ngOnInit() {}
 
   async createThread(masterThreadId) {
     if (masterThreadId == null) {
@@ -68,14 +78,14 @@ export class DocsCallsList implements OnInit, AfterViewInit {
 
   async loadData() {
     try {
-      this.loading = true;
-      this.apiDocCall.getClientDocCalls('1').subscribe(
+      this.isLoadingEvent.emit(true);
+      await this.apiDocCall.getClientDocCalls(this.clientId).subscribe(
         (data: any) => {
           this.threads = data;
-          this.loading = false;
+          this.isLoadingEvent.emit(false);
         },
         (error: any) => {
-          this.loading = false;
+          this.isLoadingEvent.emit(false);
           if (error.status != 401) {
             console.error('error', error);
             this.app.showErrorMessage('Error interno');
@@ -83,7 +93,7 @@ export class DocsCallsList implements OnInit, AfterViewInit {
         }
       );
     } catch (error) {
-      this.loading = false;
+      this.isLoadingEvent.emit(false);
     }
   }
 
@@ -93,5 +103,10 @@ export class DocsCallsList implements OnInit, AfterViewInit {
       height: '200px',
       data: new GenericSucessModel('SUCCESS', '0000000000'),
     });
+  }
+  doFilter(filter) {
+    this.threads = this.threads.filter(
+      filter.toString().trim().toLocaleLowerCase()
+    );
   }
 }

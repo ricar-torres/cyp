@@ -1,20 +1,36 @@
-<md-content layout-margin layout-padding>
-  <button
-    mat-raised-button
-    class="mat-raised-button mb-1"
-    color="primary"
-    (click)="createThread(null)"
-  >
-    {{ 'DOCUMENTATION_CALL_LIST.ADD_BTN' | translate }}
-  </button>
-  <!-- <button
-    mat-raised-button
-    class="mat-raised-button mb-1"
-    color="primary"
-    (click)="callSuccessDialog()"
-  >
-    {{ 'DOCUMENTATION_CALL_LIST.ADD_BTN' | translate }}
-  </button> -->
+<md-content layout-margin layout-padding flex="50" style="height: 300px;">
+  <mat-card class="mat-elevation-z0">
+    <mat-card-header>
+      <mat-card-title>{{
+        'DOCUMENTATION_CALL_LIST.TITLE' | translate
+      }}</mat-card-title>
+      <!-- <mat-card-subtitle># {{ id }}</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayout fxLayoutAlign="end start">
+        <button
+          mat-raised-button
+          class="mat-raised-button mb-1"
+          color="primary"
+          (click)="createThread(null)"
+        >
+          <mat-icon>add</mat-icon>
+          {{ 'DOCUMENTATION_CALL_LIST.ADD_BTN' | translate }}
+        </button>
+      </div>
+      <!-- <div fxLayout>
+        <mat-form-field class="search-form">
+          <input
+            matInput
+            placeholder="{{ 'SEARCH' | translate }}"
+            type="text"
+            (keyup)="doFilter($event.target.value)"
+          />
+        </mat-form-field>
+      </div> -->
+    </mat-card-content>
+  </mat-card>
+
   <mat-accordion>
     <mat-expansion-panel
       [togglePosition]="'after'"
@@ -91,8 +107,8 @@
       </mat-card>
     </mat-expansion-panel>
   </mat-accordion>
-  <div class="loading-indicator" [hidden]="!loading">
-    <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
-  </div>
 </md-content>
+<!-- <div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div> -->
 <router-outlet></router-outlet>

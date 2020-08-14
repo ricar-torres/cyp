@@ -140,4 +140,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       }
     }
   }
+  onIsCallsLoading(bool: boolean) {
+    this.loading = bool;
+  }
 }
