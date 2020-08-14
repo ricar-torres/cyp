@@ -117,6 +117,7 @@ import { RetirementComponent } from './pages/retirement/retirement.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
+import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
@@ -168,6 +169,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DocumentationCallComponent,
     DocsCallsList,
     DialogSuccessComponent,
+    DependantsListComponent,
   ],
   imports: [
     BrowserModule,

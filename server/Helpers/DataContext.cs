@@ -2,6 +2,7 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
+using server.Entities;
 using WebApi.Entities;
 using WebApi.Entities.Identity;
 
@@ -9,7 +10,7 @@ namespace WebApi.Helpers {
 	//public class DataContext : IdentityDbContext<User, Role, int>
 	public class DataContext : DbContext {
 		public DataContext(DbContextOptions<DataContext> options) : base(options) {
-			Database.SetCommandTimeout(500);
+			// Database.SetCommandTimeout(500);
 		}
 
 		#region TABLES
@@ -100,6 +101,7 @@ namespace WebApi.Helpers {
 			new PermissionMap(modelBuilder.Entity<Permission>());
 			new LoginProviderMap(modelBuilder.Entity<LoginProvider>());
 			new OneTimePasswordMap(modelBuilder.Entity<OneTimePassword>());
+			new TypeOfRelationshipMap(modelBuilder.Entity<TypeOfRelationship>());
 
 			#endregion
 
