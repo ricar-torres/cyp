@@ -18,3 +18,11 @@
   height: 100px;
   resize: none;
 }
+
+.buttons-right {
+  margin-left: auto;
+}
+
+.buttons-right button {
+  margin: 5px;
+}
