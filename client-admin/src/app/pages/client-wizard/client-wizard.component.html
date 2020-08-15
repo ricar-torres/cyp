@@ -14,8 +14,11 @@
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
-  <mat-step>
+  <mat-step [stepControl]="this.wizardForms.secondFormGroup">
     <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
+    <button mat-button matStepperNext>
+      {{ 'NEXT' | translate }}
+    </button>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>

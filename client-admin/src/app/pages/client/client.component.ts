@@ -88,15 +88,16 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
     });
-    //this.loading = false;
+    this.loading = false;
   }
 
   async onSubmit() {
     try {
       if (this.fromWizard) {
         //  await this.clientWizard.CreateClient();
+      } else {
+        await this.clientWizard.UpdateClientInformation();
       }
-      await this.clientWizard.UpdateClientInformation();
     } catch (error) {
       this.loading = false;
       if (error.status != 401) {
