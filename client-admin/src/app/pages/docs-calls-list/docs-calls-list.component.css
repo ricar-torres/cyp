@@ -19,6 +19,16 @@
 :host ::ng-deep mat-card-header .mat-card-header-text {
   margin: 0px !important;
 }
+
 .mat-card-content {
   word-break: break-all !important;
+}
+
+.mat-expansion-panel {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+.mat-divider {
+  margin-left: 5px;
+  margin-right: 5px;
 }

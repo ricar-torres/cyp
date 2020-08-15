@@ -45,11 +45,11 @@ export class DocsCallsList implements OnInit, AfterViewInit {
     private app: AppService,
     private lang: LanguageService
   ) {}
-  async ngAfterViewInit() {
+  async ngAfterViewInit() {}
+
+  async ngOnInit() {
     await this.loadData();
   }
-
-  async ngOnInit() {}
 
   async createThread(masterThreadId) {
     if (masterThreadId == null) {
