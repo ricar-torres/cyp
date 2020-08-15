@@ -26,3 +26,6 @@
 .buttons-right button {
   margin: 5px;
 }
+:host ::ng-deep .mat-tab-body.mat-tab-body-active {
+  overflow-y: hidden !important;
+}
