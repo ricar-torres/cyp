@@ -8,6 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ChapterServiceService } from '@app/shared/chapter-service.service';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
 
 @Component({
   selector: 'app-bonafides-associator',
@@ -15,8 +16,8 @@ import { ChapterServiceService } from '@app/shared/chapter-service.service';
   styleUrls: ['./bonafides-associator.component.css'],
 })
 export class BonafidesAssociatorComponent implements OnInit {
-  availableBonafides: [];
-  correspondingChapters: [];
+  availableBonafides: any[];
+  correspondingChapters: any[];
   bonafides: FormControl = new FormControl();
   reactiveForm: FormGroup;
   constructor(
@@ -24,6 +25,7 @@ export class BonafidesAssociatorComponent implements OnInit {
     private bonafideService: bonaFideservice,
     private chapterService: ChapterServiceService,
     public dialogRef: MatDialogRef<BonafidesAssociatorComponent>,
+    private clientWizard: ClientWizardService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
 
@@ -36,9 +38,16 @@ export class BonafidesAssociatorComponent implements OnInit {
       NewRegistration: [null],
       Primary: [null],
     });
-    this.availableBonafides = await this.bonafideService.getAvailableBonafides(
-      this.data.clientId
-    );
+    if (this.data.fromWizard) {
+      this.availableBonafides = await this.bonafideService
+        .getAll(undefined)
+        .toPromise();
+    } else {
+      this.availableBonafides = await this.bonafideService.getAvailableBonafides(
+        this.data.clientId
+      );
+    }
+
     this.bonafides.valueChanges.subscribe(async (val) => {
       this.correspondingChapters = await this.chapterService.getChaptersByBonafidesIds(
         val
@@ -70,10 +79,19 @@ export class BonafidesAssociatorComponent implements OnInit {
   }
 
   async saveChapterClient() {
-    await this.chapterService
-      .saveChapterClient(this.reactiveForm.value)
-      .then(() => {
-        this.dialogRef.close();
-      });
+    if (this.data.fromWizard) {
+      var bonafidesSelected = this.availableBonafides.find(
+        (x) => x.id == this.bonafides.value
+      );
+      bonafidesSelected['Chapter'] = this.reactiveForm.value;
+      this.clientWizard.BonafideList.push(bonafidesSelected);
+      this.dialogRef.close();
+    } else {
+      await this.chapterService
+        .saveChapterClient(this.reactiveForm.value)
+        .then((rs) => {
+          this.dialogRef.close();
+        });
+    }
   }
 }

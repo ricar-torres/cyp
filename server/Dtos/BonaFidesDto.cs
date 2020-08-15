@@ -14,6 +14,8 @@ namespace server.Dtos
     public string Email { get; set; }
     public string Benefits { get; set; }
     public string Disclaimer { get; set; }
+
+    public ChapterClientDto Chapter { get; set; }
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }

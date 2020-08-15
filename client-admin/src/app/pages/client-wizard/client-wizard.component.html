@@ -14,27 +14,8 @@
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
-  <mat-step [stepControl]="this.wizardForms.secondFormGroup">
-    <form [formGroup]="this.wizardForms.secondFormGroup">
-      <ng-template matStepLabel>Fill out your address</ng-template>
-      <mat-form-field>
-        <mat-label>Address</mat-label>
-        <input
-          matInput
-          formControlName="secondCtrl"
-          placeholder="Ex. 1 Main St, New York, NY"
-          required
-        />
-      </mat-form-field>
-      <div>
-        <button mat-flat-button matStepperPrevious>
-          {{ 'BACK' | translate }}
-        </button>
-        <button mat-flat-button matStepperNext>
-          {{ 'NEXT' | translate }}
-        </button>
-      </div>
-    </form>
+  <mat-step>
+    <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>Done</ng-template>
