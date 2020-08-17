@@ -341,6 +341,7 @@
   "DEPENDANT": {
     "NAME": "Nombre",
     "LASTNAME1": "Primer Apellido",
-    "LASTNAME2": "Segundo Apellido"
+    "LASTNAME2": "Segundo Apellido",
+    "INITIAL": "Inicial"
   }
 }

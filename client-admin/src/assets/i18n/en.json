@@ -339,6 +339,7 @@
   "DEPENDANT": {
     "NAME": "Name",
     "LASTNAME1": "Last Name",
-    "LASTNAME2": "Last Name"
+    "LASTNAME2": "Last Name",
+    "INITIAL": "Initial"
   }
 }

@@ -52,9 +52,7 @@ export class DependantComponent implements OnInit {
         Validators.minLength(2),
         Validators.maxLength(250),
         Validators.pattern(
-          new RegExp(
-            `^[A-Za-z0-9\u00C0-\u00FF]{1}[A-Za-z0-9\u00C0-\u00FF/_.\-\\s\]*$`
-          )
+          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
         ),
       ]),
     });
