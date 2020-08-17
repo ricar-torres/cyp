@@ -195,7 +195,9 @@
     "REQUIRED": "Field Name is required"
   },
   "CLIENTWIZARD": {
-    "PREREGISTER": "Pre Register"
+    "PREREGISTER": "Pre Register",
+    "BONAFIDES": "Bonafides Association",
+    "BASICINFORMATION": "Basic Information"
   },
   "USER": {
     "TITLE": "User",

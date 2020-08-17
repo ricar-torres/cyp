@@ -24,6 +24,7 @@ import {
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 import { BonafidesAssociatorComponent } from '../bonafides-associator/bonafides-associator.component';
 import { ChapterServiceService } from '@app/shared/chapter-service.service';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
 
 @Component({
   selector: 'app-bona-fide-list',
@@ -51,6 +52,7 @@ export class BonaFideListComponent implements OnInit {
   loading = true;
 
   @Input() clientId: string;
+  @Input() fromWizard: string;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(
@@ -60,7 +62,8 @@ export class BonaFideListComponent implements OnInit {
     private chapterService: ChapterServiceService,
     private router: Router,
     private languageService: LanguageService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private clietnWizard: ClientWizardService
   ) {}
 
   ngOnInit(): void {
@@ -75,26 +78,36 @@ export class BonaFideListComponent implements OnInit {
   }
 
   private loadBonafides() {
-    this.bonafidesService.getAll(this.clientId).subscribe(
-      (res) => {
-        this.loading = true;
-        this.dataSource = new MatTableDataSource();
-        this.dataSource.data = res;
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-        this.loading = false;
-      },
-      (error) => {
-        this.loading = false;
-        console.log('error', error);
-        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
-          this.app.showErrorMessage(res);
-        });
-      },
-      () => {
-        this.loading = false;
-      }
-    );
+    if (this.fromWizard) {
+      this.dataSource = new MatTableDataSource();
+      this.dataSource.data = this.clietnWizard.BonafideList;
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+      this.loading = false;
+    } else {
+      this.bonafidesService.getAll(this.clientId).subscribe(
+        (res) => {
+          this.loading = true;
+          this.dataSource = new MatTableDataSource();
+          this.dataSource.data = res;
+          this.dataSource.paginator = this.paginator;
+          this.dataSource.sort = this.sort;
+          this.loading = false;
+        },
+        (error) => {
+          this.loading = false;
+          console.log('error', error);
+          this.languageService.translate
+            .get('GENERIC_ERROR')
+            .subscribe((res) => {
+              this.app.showErrorMessage(res);
+            });
+        },
+        () => {
+          this.loading = false;
+        }
+      );
+    }
   }
 
   onBack() {}
@@ -161,7 +174,9 @@ export class BonaFideListComponent implements OnInit {
         data: { clientId: this.clientId, bonafideId: id },
       });
 
-      dialogRef.afterClosed().subscribe((result) => {});
+      dialogRef.afterClosed().subscribe((result) => {
+        this.loadBonafides();
+      });
     } else {
       this.router.navigate(['/home/bonafide', id]);
     }
@@ -174,8 +189,16 @@ export class BonaFideListComponent implements OnInit {
         height: '50%',
         data: { clientId: this.clientId, bonafideId: null },
       });
-
       dialogRef.afterClosed().subscribe((result) => {
+        this.loadBonafides();
+      });
+    } else if (this.fromWizard) {
+      const pepe = this.dialog.open(BonafidesAssociatorComponent, {
+        width: '70%',
+        height: '50%',
+        data: { clientId: null, bonafideId: null, fromWizard: true },
+      });
+      pepe.afterClosed().subscribe((result) => {
         this.loadBonafides();
       });
     } else {

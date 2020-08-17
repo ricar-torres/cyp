@@ -196,7 +196,9 @@
     "REQUIRED": "Campo Nombre es requerido"
   },
   "CLIENTWIZARD": {
-    "PREREGISTER": "Pre Registro"
+    "PREREGISTER": "Pre Registro",
+    "BONAFIDES": "Bona fides",
+    "BASICINFORMATION": "Información basica"
   },
   "USER": {
     "TITLE": "Usuario",

@@ -95,8 +95,9 @@ export class ClientComponent implements OnInit, OnDestroy {
     try {
       if (this.fromWizard) {
         //  await this.clientWizard.CreateClient();
+      } else {
+        await this.clientWizard.UpdateClientInformation();
       }
-      await this.clientWizard.UpdateClientInformation();
     } catch (error) {
       this.loading = false;
       if (error.status != 401) {
