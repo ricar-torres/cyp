@@ -145,16 +145,23 @@ export class BonaFideListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          if (!this.clientId) {
-            await this.bonafidesService.delete(id);
-            this.loadBonafides();
-          } else if (this.fromWizard) {
+          debugger;
+          //if from the wizard delete from the local list
+          if (this.fromWizard) {
             var index = this.clietnWizard.BonafideList.findIndex(
               (x) => x.id == id
             );
             this.clietnWizard.BonafideList.splice(index, 1);
-          } else {
+            this.dataSource.data = this.clietnWizard.BonafideList;
+          }
+          //if from the client, delete the client_chapter association
+          else if (this.clientId) {
             await this.chapterService.deleteChapterClient(id, this.clientId);
+            this.loadBonafides();
+          }
+          // if form bonafides list, delete the bonafides entirely
+          else {
+            await this.bonafidesService.delete(id);
             this.loadBonafides();
           }
         }

@@ -48,11 +48,23 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       );
     });
 
-    if (this.data.fromWizard || this.data.listItem) {
+    if (this.data.fromWizard) {
       this.availableBonafides = await this.bonafideService
         .getAll(undefined)
         .toPromise();
-    } else {
+    }
+
+    if (!this.data.listItem && this.data.fromWizard) {
+      this.clientWizard.BonafideList.forEach((x) => {
+        var itmIndex = this.availableBonafides.findIndex((b) => b.id == x.id);
+        if (itmIndex != -1) {
+          console.log('removed', itmIndex);
+          this.availableBonafides.splice(itmIndex, 1);
+        }
+      });
+    }
+
+    if (this.data.clientId) {
       this.availableBonafides = await this.bonafideService.getAvailableBonafides(
         this.data.clientId
       );
@@ -90,7 +102,9 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
         .setValue(chapter.newRegistration);
       this.reactiveForm.get('Primary').setValue(chapter.primary);
     } else {
-      this.reactiveForm.get('ClientId').setValue(this.data.clientId);
+      if (this.data.clientId) {
+        this.reactiveForm.get('ClientId').setValue(this.data.clientId);
+      }
     }
   }
 
