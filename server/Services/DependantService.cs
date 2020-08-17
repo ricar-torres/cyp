@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using server.Dtos;
 using server.Entities;
@@ -9,7 +10,7 @@ using WebApi.Helpers;
 namespace server.Services {
 	public interface IDependantService {
 		IQueryable<Dependents> GetAll();
-		IQueryable<DependentDto> GetAllByClient(int clientId);
+		IQueryable<Dependents> GetAllByClient(int clientId);
 		Dependents GetById(int id);
 		Dependents Create(Dependents payload);
 		IQueryable<TypeOfRelationship> GetRelationTypes();
@@ -39,26 +40,24 @@ namespace server.Services {
 			throw new System.NotImplementedException();
 		}
 
-		public IQueryable<DependentDto> GetAllByClient(int clientId) {
-			List<DependentDto> dependents = new List<DependentDto>();
+		public IQueryable<Dependents> GetAllByClient(int clientId) {
 			try {
-				dependents.AddRange(this._context.Dependents.Where(x => x.ClientId == clientId) as IEnumerable<DependentDto>);
-				dependents.ForEach((item) => {
-					item.Name = GetRelationTypes().Where(x => x.Id == item.Relationship)
-						.FirstOrDefault() is TypeOfRelationship x ? x.Name : string.Empty;
-				});
-				return dependents.AsQueryable();
+				return _context.Dependents.Include(x => x.Cover).AsQueryable().AsNoTracking();
 			} catch (System.Exception ex) {
 				throw ex;
 			}
 		}
 
 		public Dependents GetById(int id) {
-			throw new System.NotImplementedException();
+			try {
+				return this._context.Dependents.FirstOrDefault(x => x.Id == id);
+			} catch (System.Exception ex) {
+				throw ex;
+			}
 		}
 
 		public IQueryable<TypeOfRelationship> GetRelationTypes() {
-			return _context.TypeOfRelationship.AsQueryable();
+			return _context.TypeOfRelationship.AsNoTracking();
 		}
 	}
 }

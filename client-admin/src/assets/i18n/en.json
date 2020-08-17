@@ -19,6 +19,8 @@
   "RECOVER_BTN": "RETURN TO INBOX",
   "CANCEL_BTN": "CANCEL",
   "CLOSE_BTN": "CLOSE",
+  "DEL_BTN": "Delete",
+  "EDIT_BTN": "Edit",
   "GENERIC_ERROR": "An error has occurred please try again later.",
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
   "REQUIRED": "This Field is required",
@@ -34,6 +36,9 @@
   "BACK": "Back",
   "YES": "Yes",
   "NO": "No",
+  "GENERAL_FILTER": "Filter",
+  "NAME": "Name",
+  "PHONE": "Phone",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -325,5 +330,15 @@
     "ADD_BTN": "Add",
     "TYPE_CALL": "Type of Call",
     "THREAD": "Add to Thread"
+  },
+  "DEPENDANTS_LIST": {
+    "PAGE_TITLE": "Dependants",
+    "RELATION_NAME": "Relation",
+    "COVER": "Cover"
+  },
+  "DEPENDANT": {
+    "NAME": "Name",
+    "LASTNAME1": "Last Name",
+    "LASTNAME2": "Last Name"
   }
 }

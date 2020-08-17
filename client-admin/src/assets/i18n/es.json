@@ -10,6 +10,8 @@
   "SEND_BTN": "Enviar",
   "OK_BTN": "Ok",
   "YES_BTN": "Si",
+  "DEL_BTN": "Borrar",
+  "EDIT_BTN": "Editar",
   "COMFIRMATION": "Confirmar",
   "NO_BTN": "No",
   "ADD_BTN": "Agregar",
@@ -35,6 +37,9 @@
   "BACK": "Regresar",
   "YES": "Si",
   "NO": "No",
+  "GENERAL_FILTER": "Filtro",
+  "NAME": "Nombre",
+  "PHONE": "Teléfono",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -327,5 +332,15 @@
     "ADD_BTN": "Agregar",
     "TYPE_CALL": "Tipo de llamada",
     "THREAD": "Añadir al Hilo"
+  },
+  "DEPENDANTS_LIST": {
+    "PAGE_TITLE": "Dependientes",
+    "RELATION_NAME": "Relación",
+    "COVER": "Cubierta"
+  },
+  "DEPENDANT": {
+    "NAME": "Nombre",
+    "LASTNAME1": "Primer Apellido",
+    "LASTNAME2": "Segundo Apellido"
   }
 }

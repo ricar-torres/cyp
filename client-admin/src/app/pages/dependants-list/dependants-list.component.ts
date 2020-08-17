@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { DependantComponent } from './../dependant/dependant.component';
+import { DependantsAPIService } from './../../shared/dependants.api.service';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  Input,
+} from '@angular/core';
 import {
   PageEvent,
   MatSort,
@@ -28,8 +36,16 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   editAccess: boolean;
   createAccess: boolean;
   deteleAccess: boolean;
+  @Input() clientId: string | number;
 
-  displayedColumns: string[] = ['id', 'name', 'phone', 'action'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'phone1',
+    'relationName',
+    'coverName',
+    'action',
+  ];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
@@ -39,7 +55,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private apiCommunicationMethod: CommunicationMethodsAPIService,
+    private apiDependant: DependantsAPIService,
     private app: AppService,
     private dialog: MatDialog
   ) {}
@@ -57,17 +73,17 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCommunicationMethods();
+      await this.loadData();
     } catch (error) {
       this.loading = false;
     } finally {
     }
   }
 
-  async loadCommunicationMethods() {
+  async loadData() {
     try {
       this.loading = true;
-      await this.apiCommunicationMethod.getAll().subscribe(
+      await this.apiDependant.getAllByClient('1').subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -126,14 +142,14 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       if (dialogResult) {
         console.log(id);
         await this.delete(id);
-        await this.loadCommunicationMethods();
+        await this.loadData();
       }
     });
   }
 
   async delete(id: string) {
     try {
-      await this.apiCommunicationMethod.delete(id);
+      //await this.apiDependant.delete(id);
     } catch (error) {}
   }
 
@@ -143,5 +159,13 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
         .split(',')
         .map((str) => +str);
     }
+  }
+
+  async createDependant() {
+    const dialogRef = this.dialog.open(DependantComponent, {
+      width: '800px',
+      height: '600px',
+      data: 1,
+    });
   }
 }

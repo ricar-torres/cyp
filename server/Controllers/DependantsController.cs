@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Dtos;
+using server.Entities;
 using server.Services;
 using WebApi.Controllers;
 using WebApi.Entities;
@@ -78,13 +79,23 @@ namespace server.Controllers {
 		[AllowAnonymous]
 		[HttpGet("[action]/{clientId:int}")]
 		public IActionResult GetAllByClient(int clientId) {
+			List<DependentDto> dependentsDtoList = new List<DependentDto>();
+			List<Dependents> dependents;
+			IEnumerable<TypeOfRelationship> relationships;
 			try {
-				var res = _service.GetAllByClient(clientId);
-				if (res == null) {
+				dependents = new List<Dependents>(_service.GetAllByClient(clientId).Where(x => x.Relationship.HasValue).Take(1));
+				if (dependents is object) {
+					relationships = _service.GetRelationTypes();
+					dependents.ForEach((item) => {
+						dependentsDtoList.Add(_mapper.Map<DependentDto>(item));
+						var itemDto = dependentsDtoList.Last();
+						itemDto.RelationName = relationships.Where(_ => _.Id == item.Relationship).FirstOrDefault() is TypeOfRelationship x ? x.Name : string.Empty;
+						itemDto.CoverName = item.Cover is Covers c ? c.Name : string.Empty;
+					});
+					return Ok(dependentsDtoList);
+				} else {
 					return NotFound();
 				}
-				return Ok(res);
-
 			} catch (Exception ex) {
 				return DefaultError(ex);
 			}
