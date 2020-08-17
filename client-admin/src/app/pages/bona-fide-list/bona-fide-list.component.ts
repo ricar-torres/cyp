@@ -121,32 +121,38 @@ export class BonaFideListComponent implements OnInit {
   }
 
   async deleteConfirm(id: string) {
-    const message = await this.languageService.translate
-      .get('BONAFIDE.ARE_YOU_SURE_DELETE')
-      .toPromise();
-
-    const title = await this.languageService.translate
-      .get('COMFIRMATION')
-      .toPromise();
-
-    const dialogData = new ConfirmDialogModel(
-      title,
-      message,
-      true,
-      true,
-      false
-    );
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: dialogData,
-    });
     try {
+      const message = await this.languageService.translate
+        .get('BONAFIDE.ARE_YOU_SURE_DELETE')
+        .toPromise();
+
+      const title = await this.languageService.translate
+        .get('COMFIRMATION')
+        .toPromise();
+
+      const dialogData = new ConfirmDialogModel(
+        title,
+        message,
+        true,
+        true,
+        false
+      );
+
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        maxWidth: '400px',
+        data: dialogData,
+      });
+
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
           if (!this.clientId) {
             await this.bonafidesService.delete(id);
             this.loadBonafides();
+          } else if (this.fromWizard) {
+            var index = this.clietnWizard.BonafideList.findIndex(
+              (x) => x.id == id
+            );
+            this.clietnWizard.BonafideList.splice(index, 1);
           } else {
             await this.chapterService.deleteChapterClient(id, this.clientId);
             this.loadBonafides();
@@ -172,6 +178,16 @@ export class BonaFideListComponent implements OnInit {
         width: '70%',
         height: '50%',
         data: { clientId: this.clientId, bonafideId: id },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        this.loadBonafides();
+      });
+    } else if (this.fromWizard) {
+      const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
+        width: '70%',
+        height: '50%',
+        data: { clientId: this.clientId, listItem: id },
       });
 
       dialogRef.afterClosed().subscribe((result) => {
