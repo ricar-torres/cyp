@@ -26,6 +26,12 @@ export class ClientWizardComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
+  async register() {
+    await this.wizardForms.register().then((res) => {
+      this.dialogRef.close();
+    });
+  }
+
   async preRegister() {
     await this.wizardForms.preRegister().then((res) => {
       this.dialogRef.close();

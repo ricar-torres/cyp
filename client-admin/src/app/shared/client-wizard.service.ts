@@ -17,7 +17,6 @@ import { debug } from 'console';
   providedIn: 'root',
 })
 export class ClientWizardService {
-  BonafideList = new Array();
   constructor(
     private formBuilder: FormBuilder,
     private languageService: LanguageService,
@@ -25,6 +24,8 @@ export class ClientWizardService {
     private bonafideService: bonaFideservice,
     private clientService: ClientService
   ) {}
+
+  BonafideList = new Array();
 
   clientDemographic = this.formBuilder.group({
     Id: [null],
@@ -124,6 +125,7 @@ export class ClientWizardService {
         PreRegister: false,
         Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
+        Bonafides: this.BonafideList,
       };
       await this.clientService.create(ClientInforation);
       this.adaptInfoForGUI(agency);
