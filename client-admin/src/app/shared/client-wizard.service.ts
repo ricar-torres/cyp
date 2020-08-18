@@ -128,7 +128,7 @@ export class ClientWizardService {
         Bonafides: this.BonafideList,
       };
       await this.clientService.create(ClientInforation);
-      this.adaptInfoForGUI(agency);
+      if (agency) this.adaptInfoForGUI(agency);
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -176,7 +176,7 @@ export class ClientWizardService {
 
   private adaptInfoForAPI() {
     var Agency = this.generalInformationForm.get('AgencyId').value;
-    this.generalInformationForm.get('AgencyId').setValue(Agency.id);
+    if (Agency) this.generalInformationForm.get('AgencyId').setValue(Agency.id);
     return Agency;
   }
 
