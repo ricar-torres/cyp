@@ -1,5 +1,8 @@
 <mat-horizontal-stepper [linear]="isLinear" #stepper>
   <mat-step [stepControl]="this.wizardForms.clientDemographic">
+    <ng-template matStepLabel>{{
+      'CLIENTWIZARD.GENERAL_INFORMATION' | translate
+    }}</ng-template>
     <app-client [fromWizard]="true"></app-client>
     <app-general-information></app-general-information>
     <app-client-address [fromWizard]="true"></app-client-address>
@@ -14,7 +17,10 @@
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
-  <mat-step [stepControl]="this.wizardForms.secondFormGroup">
+  <mat-step>
+    <ng-template matStepLabel>{{
+      'CLIENTWIZARD.BONAFIDES_ASSOCIATION' | translate
+    }}</ng-template>
     <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
     <button mat-button matStepperNext>
       {{ 'NEXT' | translate }}

@@ -191,8 +191,8 @@
   },
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Register",
-    "BONAFIDES": "Bonafides Association",
-    "BASICINFORMATION": "Basic Information"
+    "BONAFIDES_ASSOCIATION": "Bonafides Association",
+    "GENERAL_INFORMATION": "General Information"
   },
   "USER": {
     "TITLE": "User",
