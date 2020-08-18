@@ -258,6 +258,7 @@ namespace WebApi.Services
       client.Phone2 = payload.Demographic?.Phone2;
       client.Ssn = payload.Demographic?.Ssn;
       client.EffectiveDate = payload.Demographic.EffectiveDate;
+      client.BirthDate = payload.Demographic.BirthDate;
       client.MedicareA = payload.Demographic.MedicareA;
       client.MedicareB = payload.Demographic.MedicareB;
 

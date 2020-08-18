@@ -145,7 +145,6 @@ export class BonaFideListComponent implements OnInit {
 
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          debugger;
           //if from the wizard delete from the local list
           if (this.fromWizard) {
             var index = this.clietnWizard.BonafideList.findIndex(
