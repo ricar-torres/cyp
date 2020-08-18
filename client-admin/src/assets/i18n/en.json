@@ -101,7 +101,7 @@
     "DEPENDANTS": "Dependants",
     "GENERALINFORMATION": "General Information",
     "ALLIANCE": "Alliance",
-    "CALLHISTORY": "Call History",
+    "CALLHISTORY": "Calls",
     "DIRECTIONS": "Directions",
     "PHYSICALADDRESS": "Physical Address",
     "PHOSTALADDRESS": "Postal Address",
@@ -315,7 +315,7 @@
     "EXISTS_CODE": "Exists a retirement with this code"
   },
   "DOCUMENTATION_CALL": {
-    "PAGE_TITLE": "Document Call",
+    "PAGE_TITLE": "New Call",
     "CONFIRM_NUM": "Confirmation Number",
     "CALL_TYPE": "Call Type",
     "COMMENT": "Comment",
@@ -323,9 +323,9 @@
     "SUCCESS": "Success"
   },
   "DOCUMENTATION_CALL_LIST": {
-    "TITLE": "Documented Calls",
+    "TITLE": "Calls History",
     "ADD_BTN": "Add",
     "TYPE_CALL": "Type of Call",
-    "THREAD": "Add to Thread"
+    "THREAD": "Thread"
   }
 }

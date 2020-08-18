@@ -51,7 +51,7 @@
                     matBadgeOverlap="false"
                     >#{{ masterThread.confirmationNumber }}
                     <mat-card-subtitle>{{
-                      masterThread.createdAt | date: 'yyyy-MM-dd HH:ss'
+                      masterThread.createdAt | date: 'MM/dd/yyyy HH:mm'
                     }}</mat-card-subtitle>
                   </mat-card-title>
                 </div>
@@ -67,10 +67,10 @@
               </mat-card-content>
               <mat-card-actions>
                 <button
-                  mat-raised-button
-                  color="accent"
+                  mat-button
                   (click)="createThread(masterThread.confirmationNumber)"
                 >
+                  <mat-icon> chat</mat-icon>
                   {{ 'DOCUMENTATION_CALL_LIST.THREAD' | translate }}
                 </button>
               </mat-card-actions>

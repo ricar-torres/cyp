@@ -112,7 +112,7 @@ export class SideNavComponent implements OnInit {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.RETIREMENTS')
                 .toPromise(),
-              iconName: 'group_work',
+              iconName: 'rowing',
               route: '/home/retirement-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },

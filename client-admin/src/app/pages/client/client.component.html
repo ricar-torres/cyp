@@ -166,23 +166,45 @@
             mat-stretch-tabs
           >
             <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
+              <ng-template mat-tab-label>
+                <mat-icon>info</mat-icon>
+                {{ 'CLIENTS.GENERALINFORMATION' | translate }}
+              </ng-template>
               <app-general-information
                 [client]="client"
               ></app-general-information>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>home</mat-icon>
+                {{ 'CLIENTS.DIRECTIONS' | translate }}
+              </ng-template>
               <app-client-address [clientid]="clientid"></app-client-address>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.BONAFIDES' | translate }}">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>group_work</mat-icon>
+                {{ 'CLIENTS.BONAFIDES' | translate }}
+              </ng-template>
               <app-bona-fide-list [clientId]="clientid"></app-bona-fide-list>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
-              Content 4
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>insert_emoticon</mat-icon>
+                {{ 'CLIENTS.DEPENDANTS' | translate }}
+              </ng-template>
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
-              Content 5
+              <ng-template mat-tab-label>
+                <mat-icon>link</mat-icon>
+                {{ 'CLIENTS.ALLIANCE' | translate }}
+              </ng-template>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>perm_phone_msg</mat-icon>
+                {{ 'CLIENTS.CALLHISTORY' | translate }}
+              </ng-template>
               <app-docs-calls-list
                 [clientId]="clientid"
                 (isLoadingEvent)="onIsCallsLoading($event)"

@@ -6,7 +6,7 @@
   "TASK": "Tarea",
   "TAG": "Tags",
   "COMMENT": "Deja un comentario",
-  "SAVE_BTN": "Grabar",
+  "SAVE_BTN": "Guardar",
   "SEND_BTN": "Enviar",
   "OK_BTN": "Ok",
   "YES_BTN": "Si",
@@ -102,7 +102,7 @@
     "DEPENDANTS": "Dependientes",
     "GENERALINFORMATION": "Información General",
     "ALLIANCE": "Alianzas",
-    "CALLHISTORY": "Historial de llamadas",
+    "CALLHISTORY": "Llamadas",
     "DIRECTIONS": "Direcciones",
     "PHYSICALADDRESS": "Dirección Física",
     "PHOSTALADDRESS": "Dirección Postal",
@@ -278,7 +278,7 @@
     "ORIGIN": "Origen",
     "UPDATE": "Actualizar",
     "SAVE": "Guardar",
-    "BACK": "Atras",
+    "BACK": "Regresar",
     "EXISTS": "Existe una campaña con este nombre"
   },
   "COMMUNICATION_METHOD_LIST": {
@@ -294,7 +294,7 @@
     "PAGE_TITLE": "Método de Comunicación",
     "NAME": "Nombre",
     "SAVE": "Guardar",
-    "BACK": "Atras",
+    "BACK": "Regresar",
     "EXISTS": "Existe un método de comunicación con este nombre"
   },
   "RETIREMENT_LIST": {
@@ -311,23 +311,25 @@
     "PAGE_TITLE": "Retiro",
     "NAME": "Nombre",
     "CODE": "Código",
-    "BACK": "Atras",
+    "BACK": "Regresar",
     "SAVE": "Guardar",
     "EXISTS_NAME": "Existe un retiro con este nombre",
     "EXISTS_CODE": "Existe un retiro con este código"
   },
   "DOCUMENTATION_CALL": {
-    "PAGE_TITLE": "Documentar Llamada",
+    "PAGE_TITLE": "Nueva Llamada",
     "CONFIRM_NUM": "Número de Confiramción",
     "CALL_TYPE": "Típo de Llamada",
     "COMMENT": "Commentario",
     "CONFIRMATION_NAME": "Número de Confirmación",
-    "SUCCESS": "Exitoso"
+    "SUCCESS": "Exitoso",
+    "BACK": "Regresar",
+    "SAVE": "Guardar"
   },
   "DOCUMENTATION_CALL_LIST": {
-    "TITLE": "Llamadas Documentadas",
+    "TITLE": "Historial de llamadas",
     "ADD_BTN": "Agregar",
     "TYPE_CALL": "Tipo de llamada",
-    "THREAD": "Añadir al Hilo"
+    "THREAD": "Hilo"
   }
 }
