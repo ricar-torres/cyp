@@ -128,11 +128,23 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   setupFabButton() {
-    this.fabMenuButtons.buttons.push({
-      icon: 'list',
-      tooltip: 'Bonafide',
-      desc: '',
-    });
+    this.fabMenuButtons.buttons.push(
+      {
+        icon: 'group_work',
+        tooltip: 'Bonafide',
+        desc: '',
+      },
+      {
+        icon: 'insert_emoticon',
+        tooltip: 'Dependents',
+        desc: '',
+      },
+      {
+        icon: 'perm_phone_msg',
+        tooltip: 'Calls',
+        desc: '',
+      }
+    );
 
     this.fabMenuButtons.visible =
       this.fabMenuButtons.buttons.length > 0 ? true : false;
