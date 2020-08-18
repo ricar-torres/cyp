@@ -160,7 +160,11 @@
           >
 
           </mat-card-actions> -->
-          <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
+          <mat-tab-group
+            dynamicHeight="true"
+            *ngIf="!fromWizard"
+            mat-stretch-tabs
+          >
             <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
               <app-general-information
                 [client]="client"

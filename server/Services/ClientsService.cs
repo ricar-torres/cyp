@@ -89,7 +89,15 @@ namespace WebApi.Services
         }
         else
         {
-
+          GeneralInformationBuilder(ref payload, ref newClient);
+          newClient.UpdatedAt = DateTime.Now;
+          newClient.CreatedAt = DateTime.Now;
+          _context.Clients.Add(newClient);
+          _context.SaveChanges();
+          payload.Demographic.Id = newClient.Id;
+          TutorBuilder(payload);
+          ClientChapterAssociationBuilder(payload.Bonafides, newClient.Id);
+          _context.SaveChanges();
         }
         return payload;
       }
@@ -97,6 +105,21 @@ namespace WebApi.Services
       {
         throw ex;
       }
+    }
+
+    private void ClientChapterAssociationBuilder(List<BonaFidesDto> payload, int clientId)
+    {
+      payload.ForEach(bn =>
+      {
+        var ch = new ChapterClient();
+        ch.ChapterId = bn.Chapter.ChapterId.GetValueOrDefault();
+        ch.ClientId = clientId;
+        ch.Primary = bn.Chapter.Primary;
+        ch.NewRegistration = bn.Chapter.NewRegistration;
+        ch.RegistrationDate = bn.Chapter.RegistrationDate;
+        ch.UpdatedAt = DateTime.Now;
+        _context.ChapterClient.Add(ch);
+      });
     }
 
     public async Task<ClientInformationDto> Update(ClientInformationDto payload)
@@ -234,14 +257,12 @@ namespace WebApi.Services
       client.Phone2 = payload.Demographic?.Phone2;
       client.Phone2 = payload.Demographic?.Phone2;
       client.Ssn = payload.Demographic?.Ssn;
-      client.CoverId = payload.Demographic.CoverId.GetValueOrDefault();
-      client.AgencyId = payload.Demographic.AgencyId.GetValueOrDefault();
       client.EffectiveDate = payload.Demographic.EffectiveDate;
       client.MedicareA = payload.Demographic.MedicareA;
       client.MedicareB = payload.Demographic.MedicareB;
 
       var AgencyId = payload.Demographic.AgencyId;
-      if (AgencyId != 0)
+      if (AgencyId != null)
       {
         client.AgencyId = AgencyId.GetValueOrDefault();
       }
@@ -251,7 +272,7 @@ namespace WebApi.Services
       }
 
       var RetirementId = payload.Demographic.RetirementId;
-      if (RetirementId != 0)
+      if (RetirementId != null)
       {
         client.RetirementId = RetirementId.GetValueOrDefault();
       }
@@ -261,7 +282,7 @@ namespace WebApi.Services
       }
 
       var CoverId = payload.Demographic.CoverId;
-      if (CoverId != 0)
+      if (CoverId != null)
       {
         client.CoverId = CoverId.GetValueOrDefault();
       }
@@ -271,7 +292,7 @@ namespace WebApi.Services
       }
 
       var CampaignId = payload.Demographic.CampaignId;
-      if (CampaignId != 0)
+      if (CampaignId != null)
       {
         client.CampaignId = CampaignId.GetValueOrDefault();
       }
