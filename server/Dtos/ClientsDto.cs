@@ -19,15 +19,15 @@ namespace server.Dtos
     public string Phone1 { get; set; }
     public string Phone2 { get; set; }
     public byte? MaritalStatus { get; set; }
-    public int AgencyId { get; set; }
+    public int? AgencyId { get; set; }
     public double? Contribution { get; set; }
-    public int RetirementId { get; set; }
-    public int CoverId { get; set; }
+    public int? RetirementId { get; set; }
+    public int? CoverId { get; set; }
     public string ContractNumber { get; set; }
     public DateTime? EffectiveDate { get; set; }
     public bool? MedicareA { get; set; }
     public bool? MedicareB { get; set; }
-    public int CampaignId { get; set; }
+    public int? CampaignId { get; set; }
     public bool? Principal { get; set; }
     public byte Status { get; set; }
     public DateTime? CreatedAt { get; set; }

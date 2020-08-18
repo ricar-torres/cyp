@@ -202,8 +202,8 @@ namespace WebApi.Services
     private static void clientChapterBuilder(ref ChapterClientDto payload, ref ChapterClient cc)
     {
       cc.RegistrationDate = payload.RegistrationDate;
-      cc.ChapterId = payload.ChapterId;
-      cc.ClientId = payload.ClientId;
+      cc.ChapterId = payload.ChapterId.GetValueOrDefault();
+      cc.ClientId = payload.ClientId.GetValueOrDefault();
       cc.Primary = payload.Primary;
       cc.NewRegistration = payload.NewRegistration;
       cc.UpdatedAt = DateTime.Now;
