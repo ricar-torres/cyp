@@ -113,6 +113,7 @@ export class DependantComponent implements OnInit {
       this.loading = true;
       console.log(this.reactiveForm.controls['gender'].value.index);
       this.reactiveForm.removeControl('gender');
+
       var payload = this.reactiveForm.value;
       console.log(payload);
       const res: any = await this.apiDependant.create(payload);
