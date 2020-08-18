@@ -30,9 +30,9 @@ export class DependantsAPIService {
         .toPromise();
     } catch (error) {}
   }
-  create(campaign) {
+  create(payload) {
     return this.http
-      .post(`${environment.baseURL}/${this._apiName}`, campaign)
+      .post(`${environment.baseURL}/${this._apiName}`, payload)
       .toPromise();
   }
   update(id, campaign) {
@@ -45,5 +45,10 @@ export class DependantsAPIService {
     return this.http.get(
       `${environment.baseURL}/${this._apiName}/GetAllByClient/${id}`
     );
+  }
+  getRelationTypes() {
+    return this.http
+      .get(`${environment.baseURL}/${this._apiName}/GetRelationTypes`)
+      .toPromise();
   }
 }

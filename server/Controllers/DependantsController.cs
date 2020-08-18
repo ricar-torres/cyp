@@ -61,11 +61,10 @@ namespace server.Controllers {
 		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Create([FromBody] ClientUser payload) {
-
+		public IActionResult Create([FromBody] DependentDto payload) {
+			var x = payload;
+			return Ok(payload);
 			// try {
-			// 	payload.ConfirmationNumber = payload.ConfirmationNumber.Contains("000000000000") ?
-			// 		CreateConfirmationCode() : payload.ConfirmationNumber;
 			// 	_service.Create(payload);
 			// 	return Ok(payload);
 
@@ -73,7 +72,6 @@ namespace server.Controllers {
 			// 	// return error message if there was an exception
 			// 	return DefaultError(ex);
 			// }
-			return Ok();
 		}
 
 		[AllowAnonymous]
@@ -89,8 +87,9 @@ namespace server.Controllers {
 					dependents.ForEach((item) => {
 						dependentsDtoList.Add(_mapper.Map<DependentDto>(item));
 						var itemDto = dependentsDtoList.Last();
-						itemDto.RelationName = relationships.Where(_ => _.Id == item.Relationship).FirstOrDefault() is TypeOfRelationship x ? x.Name : string.Empty;
+						itemDto.RelationshipType = relationships.Where(_ => _.Id == item.Relationship).FirstOrDefault();
 						itemDto.CoverName = item.Cover is Covers c ? c.Name : string.Empty;
+						itemDto.Cover = null;
 					});
 					return Ok(dependentsDtoList);
 				} else {
@@ -103,7 +102,7 @@ namespace server.Controllers {
 
 		[AllowAnonymous]
 		[HttpGet("[action]")]
-		public IActionResult GetCallTypes() {
+		public IActionResult GetRelationTypes() {
 			try {
 				var res = _service.GetRelationTypes();
 				if (res == null) {
@@ -116,5 +115,23 @@ namespace server.Controllers {
 			}
 		}
 
+		public IActionResult GetCovers() {
+			try {
+				var res = this._service.GetCovers();
+				return Ok(res);
+			} catch (System.Exception) {
+
+				throw;
+			}
+		}
+		public IActionResult GetHealthPlans() {
+			try {
+				var res = this._service.GetHealthPlans();
+				return Ok(res);
+			} catch (System.Exception) {
+
+				throw;
+			}
+		}
 	}
 }

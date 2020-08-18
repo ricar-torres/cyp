@@ -346,6 +346,17 @@
     "LASTNAME2": "Segundo Apellido",
     "INITIAL": "Inicial",
     "MALE": "Masculino",
-    "FEMINE": "Femenino"
+    "FEMALE": "Femenino",
+    "SSN": "Seguro Social",
+    "BIRTHDAY": "Cumpleaños",
+    "EMAIL": "Email",
+    "GENDER": "Genero",
+    "PHONE_PRIMARY": "Teléfono Principal",
+    "PHONE_SECONDARY": "Teléfono Secundario",
+    "RELATION": "Relación",
+    "ACTUALPLAN": "Plan médico actual",
+    "ACTUALCOVER": "Cubierta Actual",
+    "CONTRACT_NUM": "Número de Contrato",
+    "EFFECTDATE": "Fecha de efectividad"
   }
 }

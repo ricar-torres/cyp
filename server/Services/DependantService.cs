@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,8 @@ namespace server.Services {
 		Dependents GetById(int id);
 		Dependents Create(Dependents payload);
 		IQueryable<TypeOfRelationship> GetRelationTypes();
+		IQueryable<Covers> GetCovers();
+		IQueryable<HealthPlans> GetHealthPlans();
 
 	}
 	public class DependantService : IDependantService {
@@ -28,7 +31,10 @@ namespace server.Services {
 		}
 
 		public Dependents Create(Dependents payload) {
-			throw new System.NotImplementedException();
+			payload.CreatedAt = DateTime.Now;
+			this._context.Dependents.Add(payload);
+			this._context.SaveChanges();
+			return payload;
 		}
 
 		public IQueryable<Dependents> GetAll(int cliendId) {
@@ -54,6 +60,14 @@ namespace server.Services {
 			} catch (System.Exception ex) {
 				throw ex;
 			}
+		}
+
+		public IQueryable<Covers> GetCovers() {
+			return _context.Covers.AsNoTracking();
+		}
+
+		public IQueryable<HealthPlans> GetHealthPlans() {
+			return _context.HealthPlans.AsNoTracking();
 		}
 
 		public IQueryable<TypeOfRelationship> GetRelationTypes() {

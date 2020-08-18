@@ -65,7 +65,9 @@
           <th mat-header-cell *matHeaderCellDef mat-sort-header="relationName">
             {{ 'DEPENDANTS_LIST.RELATION_NAME' | translate }}
           </th>
-          <td mat-cell *matCellDef="let element">{{ element.relationName }}</td>
+          <td mat-cell *matCellDef="let element">
+            {{ element.relationshipType.name }}
+          </td>
         </ng-container>
 
         <!-- cover Column -->
