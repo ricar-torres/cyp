@@ -7,6 +7,8 @@ namespace server.Dtos {
 		public DependentDto() {
 
 		}
+		// public new DateTime EffectiveDate { get; set; }
+		// public new DateTime BirthDate { get; set; }
 		public string CoverName { get; set; }
 		public TypeOfRelationship RelationshipType { get; set; }
 		public HealthPlans Plan { get; set; }

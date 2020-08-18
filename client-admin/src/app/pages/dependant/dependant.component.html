@@ -60,14 +60,10 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.GENDER' | translate }}</mat-label>
-            <mat-select #options formControlName="gender">
-              <mat-option
-                *ngFor="let o of genreOptions; let i = index"
-                [value]="o | translate"
-                [selectedIndex]="i"
-              >
-                {{ o | translate }}</mat-option
-              >
+
+            <mat-select formControlName="gender">
+              <mat-option [value]="1">{{ 'MALE' | translate }}</mat-option>
+              <mat-option [value]="2">{{ 'FEMALE' | translate }}</mat-option>
             </mat-select>
           </mat-form-field>
         </div>
