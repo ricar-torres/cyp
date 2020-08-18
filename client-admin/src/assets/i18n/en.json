@@ -342,6 +342,8 @@
     "NAME": "Name",
     "LASTNAME1": "Last Name",
     "LASTNAME2": "Last Name",
-    "INITIAL": "Initial"
+    "INITIAL": "Initial",
+    "MALE": "Male",
+    "FEMINE": "Female"
   }
 }

@@ -119,7 +119,7 @@ import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
-import { DependantComponent } from './Pages/dependant/dependant.component';
+import { DependantComponent } from './pages/dependant/dependant.component';
 
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {

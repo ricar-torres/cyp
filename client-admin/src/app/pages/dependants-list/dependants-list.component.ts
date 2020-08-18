@@ -105,8 +105,17 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       this.loading = false;
     }
   }
-  goToNew() {
-    this.router.navigate(['/home/communication-method', 0]);
+  goToNew(dependantId?: string | number) {
+    const dialogRef = this.dialog.open(DependantComponent, {
+      width: '95%',
+      height: '95%',
+      maxWidth: '95%',
+      maxHeight: '95%',
+      minHeight: '95%',
+      minWidth: '95%',
+      data: dependantId,
+    });
+    // this.router.navigate(['/home/communication-method', 0]);
   }
 
   goToDetail(id) {
@@ -133,18 +142,13 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       false
     );
 
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: dialogData,
-    });
-
-    dialogRef.afterClosed().subscribe(async (dialogResult) => {
-      if (dialogResult) {
-        console.log(id);
-        await this.delete(id);
-        await this.loadData();
-      }
-    });
+    // dialogRef.afterClosed().subscribe(async (dialogResult) => {
+    //   if (dialogResult) {
+    //     console.log(id);
+    //     await this.delete(id);
+    //     await this.loadData();
+    //   }
+    // });
   }
 
   async delete(id: string) {
@@ -163,8 +167,9 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
 
   async createDependant() {
     const dialogRef = this.dialog.open(DependantComponent, {
-      width: '800px',
-      height: '600px',
+      width: '95%',
+      height: '95%',
+      minWidth: '95%',
       data: 1,
     });
   }

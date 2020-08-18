@@ -117,9 +117,9 @@ export class SideNavComponent implements OnInit {
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {
-              displayName: 'Documentation Call',
+              displayName: 'Dependants',
               iconName: 'group_work',
-              route: '/home/test-page',
+              route: '/home/dependants-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],

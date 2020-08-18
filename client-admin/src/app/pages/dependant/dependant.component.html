@@ -1,4 +1,9 @@
-<md-content layout-margin layout-padding flex="50">
+<md-content layout-margin layout-padding>
+  <!-- <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" *ngIf="editAccess">
+      {{ actionName | translate }}
+    </button>
+  </div> -->
   <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
     <mat-card>
       <mat-card-header>
@@ -10,29 +15,86 @@
         </mat-card-title>
       </mat-card-header>
 
-      <mat-card-content fxLayout="row" fxLayoutGap="5px">
-        <mat-form-field class="full-width">
-          <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
-          <input formControlName="name" matInput #inputName />
-          <!-- <mat-icon *ngIf="reactiveForm.controls.name.valid && !exist" matSuffix
-            >done</mat-icon
-          > -->
-          <!-- <mat-hint #existenceHint class="error" *ngIf="exist">
-            {{ 'COMMUNICATION_METHOD.EXISTS' | translate }}</mat-hint
-          > -->
-        </mat-form-field>
-        <mat-form-field class="half-width">
-          <mat-label>{{ 'DEPENDANT.INITIAL' | translate }}</mat-label>
-          <input formControlName="initial" matInput />
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <mat-label>{{ 'DEPENDANT.LASTNAME1' | translate }}</mat-label>
-          <input formControlName="lastname1" matInput />
-        </mat-form-field>
-        <mat-form-field class="full-width">
-          <mat-label>{{ 'DEPENDANT.LASTNAME2' | translate }}</mat-label>
-          <input formControlName="lastname2" matInput />
-        </mat-form-field>
+      <mat-card-content fxLayout="column" fxLayoutGap="5" class="full-width">
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
+            <input formControlName="name" matInput #inputName />
+          </mat-form-field>
+          <mat-form-field style="width: 50px;">
+            <mat-label>{{ 'DEPENDANT.INITIAL' | translate }}</mat-label>
+            <input formControlName="initial" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.LASTNAME1' | translate }}</mat-label>
+            <input formControlName="lastname1" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.LASTNAME2' | translate }}</mat-label>
+            <input formControlName="lastname2" matInput />
+          </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="birthDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.SSN' | translate }}</mat-label>
+            <input formControlName="ssn" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.EMAIL' | translate }}</mat-label>
+            <input formControlName="email" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.GENRE' | translate }}</mat-label>
+            <mat-select formControlName="genre">
+              <mat-option>{{ 'DEPENDANT.MALE' }}</mat-option>
+              <mat-option>{{ 'DEPENDANT.FEMINE' }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="picker"
+              formControlName="birthDate"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="picker"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.SSN' | translate }}</mat-label>
+            <input formControlName="ssn" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.EMAIL' | translate }}</mat-label>
+            <input formControlName="email" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.GENRE' | translate }}</mat-label>
+            <mat-select formControlName="genre">
+              <mat-option>{{ 'DEPENDANT.MALE' }}</mat-option>
+              <mat-option>{{ 'DEPENDANT.FEMINE' }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
       </mat-card-content>
 
       <mat-card-actions>
@@ -52,11 +114,6 @@
       </mat-card-actions>
     </mat-card>
   </form>
-  <!-- <div fxLayout="row" fxLayoutAlign="end center">
-    <button mat-raised-button color="primary" *ngIf="editAccess">
-      {{ actionName | translate }}
-    </button>
-  </div> -->
 </md-content>
 <div class="loading-indicator" [hidden]="!loading">
   <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>

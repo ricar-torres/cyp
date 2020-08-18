@@ -1,6 +1,7 @@
 .full-width {
   width: 100%;
 }
-.half-width {
-  width: 50%;
+
+.mat-form-field {
+  width: 100vw;
 }

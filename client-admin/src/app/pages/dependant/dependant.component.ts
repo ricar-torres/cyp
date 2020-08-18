@@ -33,13 +33,14 @@ export class DependantComponent implements OnInit {
 
   ngOnInit(): void {
     this.loading = true;
+    this.initForm();
+
     try {
-      this.initForm();
-      this.dependantId = this.route.snapshot.paramMap.get('id');
-      if (this.dependantId) {
-        //LOAD DEPENDANT TO FORM FOR EDIT
-        this.dependant = this.apiDependant.getById(this.dependantId);
-      }
+      // this.dependantId = this.route.snapshot.paramMap.get('id');
+      // if (this.dependantId) {
+      //   //LOAD DEPENDANT TO FORM FOR EDIT
+      //   this.dependant = this.apiDependant.getById(this.dependantId);
+      // }
     } catch (error) {
     } finally {
       this.loading = false;
@@ -55,6 +56,41 @@ export class DependantComponent implements OnInit {
           new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
         ),
       ]),
+      initial: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(250),
+        Validators.pattern(
+          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
+        ),
+      ]),
+      lastname1: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(250),
+        Validators.pattern(
+          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
+        ),
+      ]),
+      lastname2: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(250),
+        Validators.pattern(
+          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
+        ),
+      ]),
+      birthDate: this.formBuilder.control('', [Validators.required]),
+      ssn: this.formBuilder.control('', [
+        Validators.required,
+        Validators.minLength(11),
+        // Validators.pattern(new RegExp(`^[0-9]{3} [0-9]{2} [0-9]{4}*$`)),
+      ]),
+      email: this.formBuilder.control('', [
+        Validators.required,
+        Validators.maxLength(250),
+      ]),
+      genre: this.formBuilder.control('', [Validators.required]),
     });
   }
   async onSubmit() {
