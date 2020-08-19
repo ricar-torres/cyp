@@ -1,3 +1,7 @@
+import { DependantsListComponent } from './../dependants-list/dependants-list.component';
+import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
+import { DocumentationCallComponent } from './../../components/documentation-call/documentation-call.component';
+import { DocsCallsListComponent } from './../docs-calls-list/docs-calls-list.component';
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
 import {
   FormGroup,
@@ -27,8 +31,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   client;
   loading = true;
   @Input() fromWizard: boolean = false;
-  @Input() dependants;
-  @Input() docsCalls;
+  @Input() dependants: DependantsListComponent;
+  @Input() docsCalls: DocsCallsListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -119,8 +123,10 @@ export class ClientComponent implements OnInit, OnDestroy {
       case 'bonafide':
         break;
       case 'Call':
+        this.docsCalls.createThread(null);
         break;
       case 'Dependant':
+        this.dependants.goToNew(null);
         break;
 
       default:

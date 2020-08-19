@@ -30,7 +30,7 @@ import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-su
   templateUrl: './docs-calls-list.component.html',
   styleUrls: ['./docs-calls-list.component.css'],
 })
-export class DocsCallsList implements OnInit, AfterViewInit {
+export class DocsCallsListComponent implements OnInit, AfterViewInit {
   threads: any[] = [];
 
   loading: boolean;

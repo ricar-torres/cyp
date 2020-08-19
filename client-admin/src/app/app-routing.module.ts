@@ -1,5 +1,5 @@
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
-import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
+import { DocsCallsListComponent } from './pages/docs-calls-list/docs-calls-list.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';

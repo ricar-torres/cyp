@@ -102,7 +102,6 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
-import { RetirementComponent } from './pages/retirement/retirement.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -116,7 +115,7 @@ import { AddressComponent } from './pages/address/address.component';
 import { GeneralInformationComponent } from './pages/general-information/general-information.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
-import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
+import { DocsCallsListComponent } from './pages/docs-calls-list/docs-calls-list.component';
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
@@ -171,7 +170,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     GeneralInformationComponent,
     RetirementComponent,
     DocumentationCallComponent,
-    DocsCallsList,
+    DocsCallsListComponent,
     DialogSuccessComponent,
     DependantsListComponent,
     BonafidesAssociatorComponent,
