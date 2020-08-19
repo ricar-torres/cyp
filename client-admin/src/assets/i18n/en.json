@@ -336,9 +336,11 @@
   "DEPENDANTS_LIST": {
     "PAGE_TITLE": "Dependants",
     "RELATION_NAME": "Relation",
-    "COVER": "Cover"
+    "COVER": "Cover",
+    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Dependent?"
   },
   "DEPENDANT": {
+    "PAGE_TITLE": "Dependant",
     "NAME": "Name",
     "LASTNAME1": "Last Name",
     "LASTNAME2": "Last Name",

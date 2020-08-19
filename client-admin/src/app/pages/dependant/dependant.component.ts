@@ -42,10 +42,8 @@ export class DependantComponent implements OnInit, AfterViewInit {
   }
   async ngAfterViewInit() {
     if (this.dependantId) {
-      //LOAD DEPENDANT TO FORM FOR EDIT
       this.dependant = await this.apiDependant.getById(this.dependantId);
-      console.log(this.dependant);
-      //this.reactiveForm = this.dependant;
+      // console.log(JSON.stringify(this.dependant));
       this.reactiveForm.get('id').setValue(this.dependant.id);
       this.reactiveForm.get('name').setValue(this.dependant.name);
       this.reactiveForm.get('initial').setValue(this.dependant.initial);
@@ -137,12 +135,13 @@ export class DependantComponent implements OnInit, AfterViewInit {
     try {
       this.loading = true;
       var payload = this.reactiveForm.value;
-      console.log(this.reactiveForm.value);
+      // console.log(JSON.stringify(this.reactiveForm.value));
       if (this.dependantId > 0) {
         const res: any = await this.apiDependant.update(payload);
       } else {
         const res: any = await this.apiDependant.create(payload);
       }
+      this.onBack();
     } catch (error) {
       this.loading = false;
       if (error.status != 401) {
@@ -154,6 +153,6 @@ export class DependantComponent implements OnInit, AfterViewInit {
     }
   }
   onBack() {
-    // this.router.navigate(['home/communication-method-list']);
+    this.dialogRef.close();
   }
 }

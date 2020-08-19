@@ -18,6 +18,7 @@ namespace server.Services {
 		IQueryable<Covers> GetCovers();
 		IQueryable<HealthPlans> GetHealthPlans();
 		Dependents Update(Dependents dependent);
+		void Delete(int id);
 
 	}
 	public class DependantService : IDependantService {
@@ -34,14 +35,21 @@ namespace server.Services {
 		public Dependents Create(Dependents payload) {
 			try {
 				payload.CreatedAt = DateTime.Now;
-				this._context.Dependents.Add(payload as Dependents);
+				this._context.Dependents.Add(payload);
 				this._context.SaveChanges();
-			} catch (System.Exception ex) {
-
-				throw ex;
-			}
+			} catch (System.Exception ex) { }
 
 			return payload;
+		}
+
+		public void Delete(int id) {
+			try {
+				var item = this._context.Dependents.Find(id);
+				item.DeletedAt = DateTime.Now;
+				this.Update(item);
+			} catch (System.Exception) {
+				throw;
+			}
 		}
 
 		public IQueryable<Dependents> GetAll(int cliendId) {
@@ -55,7 +63,7 @@ namespace server.Services {
 
 		public IQueryable<Dependents> GetAllByClient(int clientId) {
 			try {
-				return _context.Dependents
+				return _context.Dependents.Where(x => !x.DeletedAt.HasValue)
 					.Include(x => x.Cover)
 					.ThenInclude(x => x.HealthPlan).AsQueryable().AsNoTracking();
 			} catch (System.Exception ex) {
@@ -83,22 +91,16 @@ namespace server.Services {
 			return _context.TypeOfRelationship.AsNoTracking();
 		}
 
-		public Dependents Update(Dependents dependent) {
+		public Dependents Update(Dependents dependents) {
 			try {
-
-				var item = _context.Dependents.Find(dependent.Id);
-
-				if (item == null)
-					throw new AppException("Dependent not found");
-
-				item = dependent;
-				item.UpdatedAt = DateTime.Now;
-
-				_context.Dependents.Update(item);
-				_context.SaveChanges();
-
-				return item;
-
+				dependents.UpdatedAt = DateTime.Now;
+				if (_context.Dependents.FirstOrDefault(x => x.Id == dependents.Id) is Dependents d) {
+					_context.Entry(d).CurrentValues.SetValues(dependents);
+					_context.SaveChanges();
+					return d;
+				} else {
+					throw new AppException("Communication Method not found");
+				}
 			} catch (Exception ex) {
 
 				throw ex;

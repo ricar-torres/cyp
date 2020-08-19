@@ -114,6 +114,9 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       minWidth: '95%',
       data: { id: 0, clientId: 1 },
     });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.loadData();
+    });
   }
 
   goToDetail(id) {
@@ -122,6 +125,9 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       height: '95%',
       minWidth: '95%',
       data: { id: id, clientId: 1 },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.loadData();
     });
   }
 
@@ -145,18 +151,22 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       false
     );
 
-    // dialogRef.afterClosed().subscribe(async (dialogResult) => {
-    //   if (dialogResult) {
-    //     console.log(id);
-    //     await this.delete(id);
-    //     await this.loadData();
-    //   }
-    // });
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe(async (dialogResult) => {
+      if (dialogResult) {
+        await this.delete(id);
+        await this.loadData();
+      }
+    });
   }
 
   async delete(id: string) {
     try {
-      //await this.apiDependant.delete(id);
+      await this.apiDependant.delete(id);
     } catch (error) {}
   }
 

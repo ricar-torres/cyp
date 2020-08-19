@@ -75,14 +75,13 @@ namespace server.Controllers {
 		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Create([FromBody] DependentDto payload) {
+		public IActionResult Create([FromBody] Dependents payload) {
 			try {
-				payload.CoverId = payload.Cover.Id;
-				payload.Cover = null;
-				payload.Relationship = payload.Relationship;
-				payload.Relationship = null;
-				_service.Create(payload);
-				return Ok(payload);
+				//payload.Cover = null;
+				// (payload as Dependents).Relationship = payload.Relationship.Id;
+				//payload.Relationship = null;
+				var res = _service.Create(payload);
+				return Ok(res);
 
 			} catch (AppException ex) {
 				// return error message if there was an exception
@@ -142,9 +141,26 @@ namespace server.Controllers {
 		public IActionResult Put(Dependents dependent) {
 			Dependents updatedDependent;
 			try {
+
 				updatedDependent = _service.Update(dependent);
 
 				return Ok(updatedDependent);
+
+			} catch (AppException ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
+
+		}
+
+		[AllowAnonymous]
+		[HttpDelete("{id}")]
+		public IActionResult Delete(int id) {
+			try {
+
+				_service.Delete(id);
+
+				return Ok();
 
 			} catch (AppException ex) {
 				// return error message if there was an exception
