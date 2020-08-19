@@ -173,16 +173,20 @@
               <app-bona-fide-list [clientId]="clientid"></app-bona-fide-list>
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
-              <app-dependants-list [clientId]="clientid"></app-dependants-list>
+              <app-dependants-list
+                #dependants
+                [clientId]="clientid"
+              ></app-dependants-list>
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
               Content 5
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
-              <!-- <app-docs-calls-list
+              <app-docs-calls-list
+                #docsCalls
                 [clientId]="clientid"
                 (isLoadingEvent)="onIsCallsLoading($event)"
-              ></app-docs-calls-list> -->
+              ></app-docs-calls-list>
             </mat-tab>
           </mat-tab-group>
         </mat-card-content>

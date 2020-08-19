@@ -27,7 +27,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   client;
   loading = true;
   @Input() fromWizard: boolean = false;
-
+  @Input() dependants;
+  @Input() docsCalls;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
