@@ -248,11 +248,12 @@
     "CAMPAIGNS": "Campañas",
     "HOME": "Inicio",
     "SETTINGS": "Configuraciones",
-    "BONAFIDES": "Asociaciones Bonafides",
-    "QUALIFYIN_EVENTS": "Eventos Calificativos",
-    "COMMUNICATION_METHODS": "Métodos de Comunicación",
+
     "CLIENTS": "Clientes",
-    "RETIREMENTS": "Retiros"
+    "RETIREMENTS": "Retiros",
+    "COMMUNICATION_METHODS": "Métodos de Comunicación",
+    "BONAFIDES": "Asociaciones Bonafides",
+    "QUALIFYIN_EVENTS": "Eventos Calificativos"
   },
 
   "PAGINATOR": {

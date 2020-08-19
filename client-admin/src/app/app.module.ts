@@ -102,6 +102,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
+import { RetirementComponent } from './pages/retirement/retirement.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -157,6 +158,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     RetirementListComponent,
     BonaFideListComponent,
     BonaFideComponent,
+    RetirementComponent,
     ChapterListComponent,
     ChapterComponent,
     ConfirmDialogComponent,
