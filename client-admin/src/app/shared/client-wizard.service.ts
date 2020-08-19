@@ -17,7 +17,6 @@ import { debug } from 'console';
   providedIn: 'root',
 })
 export class ClientWizardService {
-  BonafideList = new Array();
   constructor(
     private formBuilder: FormBuilder,
     private languageService: LanguageService,
@@ -25,6 +24,8 @@ export class ClientWizardService {
     private bonafideService: bonaFideservice,
     private clientService: ClientService
   ) {}
+
+  BonafideList = new Array();
 
   clientDemographic = this.formBuilder.group({
     Id: [null],
@@ -124,9 +125,10 @@ export class ClientWizardService {
         PreRegister: false,
         Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
+        Bonafides: this.BonafideList,
       };
       await this.clientService.create(ClientInforation);
-      this.adaptInfoForGUI(agency);
+      if (agency) this.adaptInfoForGUI(agency);
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -174,7 +176,7 @@ export class ClientWizardService {
 
   private adaptInfoForAPI() {
     var Agency = this.generalInformationForm.get('AgencyId').value;
-    this.generalInformationForm.get('AgencyId').setValue(Agency.id);
+    if (Agency) this.generalInformationForm.get('AgencyId').setValue(Agency.id);
     return Agency;
   }
 

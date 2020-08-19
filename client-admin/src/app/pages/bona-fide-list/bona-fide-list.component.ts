@@ -121,34 +121,46 @@ export class BonaFideListComponent implements OnInit {
   }
 
   async deleteConfirm(id: string) {
-    const message = await this.languageService.translate
-      .get('BONAFIDE.ARE_YOU_SURE_DELETE')
-      .toPromise();
-
-    const title = await this.languageService.translate
-      .get('COMFIRMATION')
-      .toPromise();
-
-    const dialogData = new ConfirmDialogModel(
-      title,
-      message,
-      true,
-      true,
-      false
-    );
-
-    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
-      maxWidth: '400px',
-      data: dialogData,
-    });
     try {
+      const message = await this.languageService.translate
+        .get('BONAFIDE.ARE_YOU_SURE_DELETE')
+        .toPromise();
+
+      const title = await this.languageService.translate
+        .get('COMFIRMATION')
+        .toPromise();
+
+      const dialogData = new ConfirmDialogModel(
+        title,
+        message,
+        true,
+        true,
+        false
+      );
+
+      const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+        maxWidth: '400px',
+        data: dialogData,
+      });
+
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          if (!this.clientId) {
-            await this.bonafidesService.delete(id);
-            this.loadBonafides();
-          } else {
+          //if from the wizard delete from the local list
+          if (this.fromWizard) {
+            var index = this.clietnWizard.BonafideList.findIndex(
+              (x) => x.id == id
+            );
+            this.clietnWizard.BonafideList.splice(index, 1);
+            this.dataSource.data = this.clietnWizard.BonafideList;
+          }
+          //if from the client, delete the client_chapter association
+          else if (this.clientId) {
             await this.chapterService.deleteChapterClient(id, this.clientId);
+            this.loadBonafides();
+          }
+          // if form bonafides list, delete the bonafides entirely
+          else {
+            await this.bonafidesService.delete(id);
             this.loadBonafides();
           }
         }
@@ -172,6 +184,16 @@ export class BonaFideListComponent implements OnInit {
         width: '70%',
         height: '50%',
         data: { clientId: this.clientId, bonafideId: id },
+      });
+
+      dialogRef.afterClosed().subscribe((result) => {
+        this.loadBonafides();
+      });
+    } else if (this.fromWizard) {
+      const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
+        width: '70%',
+        height: '50%',
+        data: { clientId: this.clientId, listItem: id },
       });
 
       dialogRef.afterClosed().subscribe((result) => {

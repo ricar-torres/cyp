@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace server.Dtos
@@ -16,5 +17,6 @@ namespace server.Dtos
     public bool PreRegister { get; set; }
     public ClientsDto Demographic { get; set; }
     public PhysicalPostalAddresses Address { get; set; }
+    public List<BonaFidesDto> Bonafides { get; set; }
   }
 }

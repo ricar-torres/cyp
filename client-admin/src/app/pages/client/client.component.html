@@ -42,11 +42,21 @@
               <mat-form-field fxFlex="30%">
                 <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
                 <input matInput formControlName="Name" />
+                <mat-error
+                  *ngIf="reactiveForm.get('Name').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="30%">
                 <mat-label>{{ 'CLIENTS.FAMILY_NAME_1' | translate }}</mat-label>
                 <input matInput formControlName="LastName1" />
+                <mat-error
+                  *ngIf="reactiveForm.get('LastName1').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="30%">
@@ -78,6 +88,11 @@
                   formControlName="Phone1"
                   mask="(000)-000-0000"
                 />
+                <mat-error
+                  *ngIf="reactiveForm.get('Phone1').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="25%">
@@ -160,33 +175,64 @@
           >
 
           </mat-card-actions> -->
-          <mat-tab-group *ngIf="!fromWizard" mat-stretch-tabs>
+          <mat-tab-group
+            dynamicHeight="true"
+            *ngIf="!fromWizard"
+            mat-stretch-tabs
+          >
             <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
+              <ng-template mat-tab-label>
+                <mat-icon>info</mat-icon>
+                {{ 'CLIENTS.GENERALINFORMATION' | translate }}
+              </ng-template>
               <app-general-information
                 [client]="client"
               ></app-general-information>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.DIRECTIONS' | translate }}">
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>home</mat-icon>
+                {{ 'CLIENTS.DIRECTIONS' | translate }}
+              </ng-template>
               <app-client-address [clientid]="clientid"></app-client-address>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.BONAFIDES' | translate }}">
-              <app-bona-fide-list [clientId]="clientid"></app-bona-fide-list>
-            </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
-              <app-dependants-list
-                #dependants
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>group_work</mat-icon>
+                {{ 'CLIENTS.BONAFIDES' | translate }}
+              </ng-template>
+              <app-bona-fide-list
+                #BonafideList
                 [clientId]="clientid"
-              ></app-dependants-list>
+              ></app-bona-fide-list>
             </mat-tab>
+
+            <ng-template mat-tab-label>
+              <mat-icon>insert_emoticon</mat-icon>
+              {{ 'CLIENTS.DEPENDANTS' | translate }}\
+              <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
+                <app-dependants-list
+                  #dependants
+                  [clientId]="clientid"
+                ></app-dependants-list>
+              </mat-tab>
+            </ng-template>
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
-              Content 5onSpeedDialFabClicked
+              <ng-template mat-tab-label>
+                <mat-icon>link</mat-icon>
+                {{ 'CLIENTS.ALLIANCE' | translate }}
+              </ng-template>
             </mat-tab>
-            <mat-tab label="{{ 'CLIENTS.CALLHISTORY' | translate }}">
-              <app-docs-calls-list
-                #docsCalls
-                [clientId]="clientid"
-                (isLoadingEvent)="onIsCallsLoading($event)"
-              ></app-docs-calls-list>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>perm_phone_msg</mat-icon>
+                {{ 'CLIENTS.CALLHISTORY' | translate }}
+                <app-docs-calls-list
+                  #docsCalls
+                  [clientId]="clientid"
+                  (isLoadingEvent)="onIsCallsLoading($event)"
+                ></app-docs-calls-list>
+              </ng-template>
             </mat-tab>
           </mat-tab-group>
         </mat-card-content>

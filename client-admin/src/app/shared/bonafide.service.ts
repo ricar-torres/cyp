@@ -15,12 +15,12 @@ export class bonaFideservice {
   }
 
   getAll(clientId: string) {
-    if (!clientId) {
-      return this.http.get<any>(`${environment.baseURL}/bonaFides`);
-    } else {
+    if (clientId) {
       return this.http.get<any>(
         `${environment.baseURL}/bonaFides/client/${clientId}`
       );
+    } else {
+      return this.http.get<any>(`${environment.baseURL}/bonaFides`);
     }
   }
 

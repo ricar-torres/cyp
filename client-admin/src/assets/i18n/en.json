@@ -39,6 +39,7 @@
   "GENERAL_FILTER": "Filter",
   "NAME": "Name",
   "PHONE": "Phone",
+  "SAVESUCCESS": "The information has been updated",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -106,7 +107,7 @@
     "DEPENDANTS": "Dependants",
     "GENERALINFORMATION": "General Information",
     "ALLIANCE": "Alliance",
-    "CALLHISTORY": "Call History",
+    "CALLHISTORY": "Calls",
     "DIRECTIONS": "Directions",
     "PHYSICALADDRESS": "Physical Address",
     "PHOSTALADDRESS": "Postal Address",
@@ -196,8 +197,8 @@
   },
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Register",
-    "BONAFIDES": "Bonafides Association",
-    "BASICINFORMATION": "Basic Information"
+    "BONAFIDES_ASSOCIATION": "Bonafides Association",
+    "GENERAL_INFORMATION": "General Information"
   },
   "USER": {
     "TITLE": "User",
@@ -321,7 +322,7 @@
     "EXISTS_CODE": "Exists a retirement with this code"
   },
   "DOCUMENTATION_CALL": {
-    "PAGE_TITLE": "Document Call",
+    "PAGE_TITLE": "New Call",
     "CONFIRM_NUM": "Confirmation Number",
     "CALL_TYPE": "Call Type",
     "COMMENT": "Comment",
@@ -329,7 +330,7 @@
     "SUCCESS": "Success"
   },
   "DOCUMENTATION_CALL_LIST": {
-    "TITLE": "Documented Calls",
+    "TITLE": "Calls History",
     "ADD_BTN": "Add",
     "TYPE_CALL": "Type of Call",
     "THREAD": "Add to Thread"
@@ -358,6 +359,7 @@
     "ACTUALPLAN": "Current medical plan",
     "ACTUALCOVER": "Actual Cover",
     "CONTRACT_NUM": "Contract Number",
-    "EFFECTDATE": "Effective date"
+    "EFFECTDATE": "Effective date",
+    "THREAD": "Thread"
   }
 }

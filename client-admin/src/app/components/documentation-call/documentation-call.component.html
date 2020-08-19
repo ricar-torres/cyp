@@ -48,7 +48,8 @@
             <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
 
             <button mat-stroked-button type="button" (click)="onBack()">
-              <mat-icon>list</mat-icon>{{ 'RETIREMENT.BACK' | translate }}
+              <mat-icon>list</mat-icon
+              >{{ 'DOCUMENTATION_CALL.BACK' | translate }}
             </button>
             <button
               type="submit"
@@ -57,7 +58,8 @@
               *ngIf="editAccess"
               [disabled]="!reactiveForm.valid"
             >
-              {{ 'RETIREMENT.SAVE' | translate }}
+              <mat-icon>save</mat-icon>
+              {{ 'DOCUMENTATION_CALL.SAVE' | translate }}
             </button>
           </mat-card-actions>
         </div>

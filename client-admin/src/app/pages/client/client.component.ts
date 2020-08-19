@@ -20,6 +20,8 @@ import { AppService } from '@app/shared/app.service';
 import { MenuRoles, PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
+import * as Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-client',
@@ -33,6 +35,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   @Input() fromWizard: boolean = false;
   @Input() dependants: DependantsListComponent;
   @Input() docsCalls: DocsCallsListComponent;
+  @ViewChild('BonafideList')
+  bonafideList: BonaFideListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -101,7 +105,20 @@ export class ClientComponent implements OnInit, OnDestroy {
       if (this.fromWizard) {
         //  await this.clientWizard.CreateClient();
       } else {
-        await this.clientWizard.UpdateClientInformation();
+        var successMessage = await this.languageService.translate
+          .get('SAVESUCCESS')
+          .toPromise();
+
+        await this.clientWizard.UpdateClientInformation().then(() => {
+          Swal.default.fire({
+            position: 'center',
+            icon: 'success',
+            title: successMessage,
+            showConfirmButton: false,
+            timer: 1300,
+            heightAuto: false,
+          });
+        });
       }
     } catch (error) {
       this.loading = false;
@@ -119,8 +136,9 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   onSpeedDialFabClicked(ev) {
-    switch (ev) {
-      case 'bonafide':
+    switch (ev.tooltip) {
+      case 'Bonafide':
+        this.bonafideList.goToNew();
         break;
       case 'Call':
         this.docsCalls.createThread(null);
@@ -128,18 +146,29 @@ export class ClientComponent implements OnInit, OnDestroy {
       case 'Dependant':
         this.dependants.goToNew(null);
         break;
-
       default:
         break;
     }
   }
 
   setupFabButton() {
-    this.fabMenuButtons.buttons.push({
-      icon: 'list',
-      tooltip: 'Bonafide',
-      desc: '',
-    });
+    this.fabMenuButtons.buttons.push(
+      {
+        icon: 'group_work',
+        tooltip: 'Bonafide',
+        desc: '',
+      },
+      {
+        icon: 'insert_emoticon',
+        tooltip: 'Dependents',
+        desc: '',
+      },
+      {
+        icon: 'perm_phone_msg',
+        tooltip: 'Calls',
+        desc: '',
+      }
+    );
 
     this.fabMenuButtons.visible =
       this.fabMenuButtons.buttons.length > 0 ? true : false;
