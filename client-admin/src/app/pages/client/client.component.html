@@ -42,11 +42,21 @@
               <mat-form-field fxFlex="30%">
                 <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
                 <input matInput formControlName="Name" />
+                <mat-error
+                  *ngIf="reactiveForm.get('Name').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="30%">
                 <mat-label>{{ 'CLIENTS.FAMILY_NAME_1' | translate }}</mat-label>
                 <input matInput formControlName="LastName1" />
+                <mat-error
+                  *ngIf="reactiveForm.get('LastName1').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="30%">
@@ -78,6 +88,11 @@
                   formControlName="Phone1"
                   mask="(000)-000-0000"
                 />
+                <mat-error
+                  *ngIf="reactiveForm.get('Phone1').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="25%">

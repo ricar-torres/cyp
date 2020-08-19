@@ -17,6 +17,7 @@ import { MenuRoles, PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
+import * as Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-client',
@@ -98,7 +99,16 @@ export class ClientComponent implements OnInit, OnDestroy {
       if (this.fromWizard) {
         //  await this.clientWizard.CreateClient();
       } else {
-        await this.clientWizard.UpdateClientInformation();
+        await this.clientWizard.UpdateClientInformation().then(() => {
+          Swal.default.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Your work has been saved',
+            showConfirmButton: false,
+            timer: 1000,
+            heightAuto: false,
+          });
+        });
       }
     } catch (error) {
       this.loading = false;
