@@ -16,6 +16,7 @@ import { AppService } from '@app/shared/app.service';
 import { MenuRoles, PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
 
 @Component({
   selector: 'app-client',
@@ -27,7 +28,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   client;
   loading = true;
   @Input() fromWizard: boolean = false;
-
+  @ViewChild('BonafideList')
+  bonafideList: BonaFideListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -114,14 +116,15 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   onSpeedDialFabClicked(ev) {
-    switch (ev) {
-      case 'bonafide':
+    console.log(ev);
+    switch (ev.tooltip) {
+      case 'Bonafide':
+        this.bonafideList.goToNew();
         break;
-      case 'Call':
+      case 'Dependents':
         break;
-      case 'Dependant':
+      case 'Calls':
         break;
-
       default:
         break;
     }

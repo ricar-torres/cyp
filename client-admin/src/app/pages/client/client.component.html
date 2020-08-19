@@ -186,7 +186,10 @@
                 <mat-icon>group_work</mat-icon>
                 {{ 'CLIENTS.BONAFIDES' | translate }}
               </ng-template>
-              <app-bona-fide-list [clientId]="clientid"></app-bona-fide-list>
+              <app-bona-fide-list
+                #BonafideList
+                [clientId]="clientid"
+              ></app-bona-fide-list>
             </mat-tab>
             <mat-tab>
               <ng-template mat-tab-label>
