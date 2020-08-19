@@ -116,7 +116,6 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   onSpeedDialFabClicked(ev) {
-    console.log(ev);
     switch (ev.tooltip) {
       case 'Bonafide':
         this.bonafideList.goToNew();
