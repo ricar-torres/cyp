@@ -32,6 +32,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   loading = true;
 
   dataSource: any;
+  relations: any[] = [];
 
   editAccess: boolean;
   createAccess: boolean;
@@ -74,6 +75,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
     try {
       await this.loadData();
+      await this.apiDependant.getRelationTypes();
     } catch (error) {
       this.loading = false;
     } finally {
@@ -109,17 +111,18 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(DependantComponent, {
       width: '95%',
       height: '95%',
-      maxWidth: '95%',
-      maxHeight: '95%',
-      minHeight: '95%',
       minWidth: '95%',
-      data: dependantId,
+      data: { id: 0, clientId: 1 },
     });
-    // this.router.navigate(['/home/communication-method', 0]);
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/communication-method', id]);
+    const dialogRef = this.dialog.open(DependantComponent, {
+      width: '95%',
+      height: '95%',
+      minWidth: '95%',
+      data: { id: id, clientId: 1 },
+    });
   }
 
   doFilter(value: any) {
@@ -163,14 +166,5 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
         .split(',')
         .map((str) => +str);
     }
-  }
-
-  async createDependant() {
-    const dialogRef = this.dialog.open(DependantComponent, {
-      width: '95%',
-      height: '95%',
-      minWidth: '95%',
-      data: 1,
-    });
   }
 }

@@ -1172,6 +1172,7 @@ namespace WebApi.Helpers {
 					.HasForeignKey(d => d.CoverId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("dependents_cover_id_foreign");
+
 			});
 
 			modelBuilder.Entity<DocumentCategories>(entity => {

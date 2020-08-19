@@ -17,6 +17,7 @@ namespace server.Services {
 		IQueryable<TypeOfRelationship> GetRelationTypes();
 		IQueryable<Covers> GetCovers();
 		IQueryable<HealthPlans> GetHealthPlans();
+		Dependents Update(Dependents dependent);
 
 	}
 	public class DependantService : IDependantService {
@@ -31,9 +32,15 @@ namespace server.Services {
 		}
 
 		public Dependents Create(Dependents payload) {
-			payload.CreatedAt = DateTime.Now;
-			this._context.Dependents.Add(payload);
-			this._context.SaveChanges();
+			try {
+				payload.CreatedAt = DateTime.Now;
+				this._context.Dependents.Add(payload as Dependents);
+				this._context.SaveChanges();
+			} catch (System.Exception ex) {
+
+				throw ex;
+			}
+
 			return payload;
 		}
 
@@ -48,7 +55,9 @@ namespace server.Services {
 
 		public IQueryable<Dependents> GetAllByClient(int clientId) {
 			try {
-				return _context.Dependents.Include(x => x.Cover).AsQueryable().AsNoTracking();
+				return _context.Dependents
+					.Include(x => x.Cover)
+					.ThenInclude(x => x.HealthPlan).AsQueryable().AsNoTracking();
 			} catch (System.Exception ex) {
 				throw ex;
 			}
@@ -56,7 +65,7 @@ namespace server.Services {
 
 		public Dependents GetById(int id) {
 			try {
-				return this._context.Dependents.FirstOrDefault(x => x.Id == id);
+				return this._context.Dependents.Include(x => x.Cover).ThenInclude(x => x.HealthPlan).FirstOrDefault(x => x.Id == id);
 			} catch (System.Exception ex) {
 				throw ex;
 			}
@@ -72,6 +81,28 @@ namespace server.Services {
 
 		public IQueryable<TypeOfRelationship> GetRelationTypes() {
 			return _context.TypeOfRelationship.AsNoTracking();
+		}
+
+		public Dependents Update(Dependents dependent) {
+			try {
+
+				var item = _context.Dependents.Find(dependent.Id);
+
+				if (item == null)
+					throw new AppException("Dependent not found");
+
+				item = dependent;
+				item.UpdatedAt = DateTime.Now;
+
+				_context.Dependents.Update(item);
+				_context.SaveChanges();
+
+				return item;
+
+			} catch (Exception ex) {
+
+				throw ex;
+			}
 		}
 	}
 }

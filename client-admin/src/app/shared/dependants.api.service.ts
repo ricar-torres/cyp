@@ -23,7 +23,7 @@ export class DependantsAPIService {
         .toPromise();
     } catch (error) {}
   }
-  getById(id: string): Promise<any> {
+  getById(id: string | number): Promise<any> {
     try {
       return this.http
         .get(`${environment.baseURL}/${this._apiName}/${id}`)
@@ -35,9 +35,9 @@ export class DependantsAPIService {
       .post(`${environment.baseURL}/${this._apiName}`, payload)
       .toPromise();
   }
-  update(id, campaign) {
+  update(payload) {
     return this.http
-      .put(`${environment.baseURL}/${this._apiName}/${id}`, campaign)
+      .put(`${environment.baseURL}/${this._apiName}/`, payload)
       .toPromise();
   }
 

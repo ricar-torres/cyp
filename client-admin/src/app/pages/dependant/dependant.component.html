@@ -8,7 +8,7 @@
     <mat-card>
       <mat-card-header>
         <mat-card-title
-          >{{ 'COMMUNICATION_METHOD.PAGE_TITLE' | translate }}
+          >{{ 'DEPENDANT.PAGE_TITLE' | translate }}
           <caption *ngIf="dependantId != '0'">
             <small> #{{ dependantId }} </small>
           </caption>
@@ -37,7 +37,7 @@
         <div fxLayout="row" fxLayoutGap="5px">
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.SSN' | translate }}</mat-label>
-            <input formControlName="ssn" matInput />
+            <input formControlName="ssn" matInput mask="000-00-0000" />
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.BIRTHDAY' | translate }}</mat-label>
@@ -70,16 +70,16 @@
         <div fxLayout="row" fxLayoutGap="5px">
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.PHONE_PRIMARY' | translate }}</mat-label>
-            <input formControlName="phone1" matInput />
+            <input formControlName="phone1" matInput mask="000-00-0000" />
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.PHONE_SECONDARY' | translate }}</mat-label>
-            <input formControlName="phone2" matInput />
+            <input formControlName="phone2" matInput mask="000-00-0000" />
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.RELATION' | translate }}</mat-label>
-            <mat-select formControlName="relationshipTypes">
-              <mat-option *ngFor="let rel of relations" [value]="rel">{{
+            <mat-select formControlName="relationship">
+              <mat-option *ngFor="let rel of relations" [value]="rel.id">{{
                 rel.name
               }}</mat-option>
             </mat-select>
@@ -88,16 +88,16 @@
         <div fxLayout="row" fxLayoutGap="5px">
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.ACTUALPLAN' | translate }}</mat-label>
-            <mat-select formControlName="plan" matInput>
-              <mat-option *ngFor="let hp of healthPlans" [value]="hp">{{
+            <mat-select formControlName="healthPlanId" matInput>
+              <mat-option *ngFor="let hp of healthPlans" [value]="hp.id">{{
                 hp.name
               }}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.ACTUALCOVER' | translate }}</mat-label>
-            <mat-select formControlName="cover" matInput>
-              <mat-option *ngFor="let c of covers" [value]="c">{{
+            <mat-select formControlName="coverId" matInput>
+              <mat-option *ngFor="let c of covers" [value]="c.id">{{
                 c.name
               }}</mat-option>
             </mat-select>
@@ -119,6 +119,10 @@
               [for]="pickerEff"
             ></mat-datepicker-toggle>
             <mat-datepicker #pickerEff></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field hidden>
+            <input matInput formControlName="id" />
+            <input matInput formControlName="clientId" />
           </mat-form-field>
         </div>
       </mat-card-content>
