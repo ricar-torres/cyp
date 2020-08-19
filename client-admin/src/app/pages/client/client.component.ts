@@ -99,13 +99,17 @@ export class ClientComponent implements OnInit, OnDestroy {
       if (this.fromWizard) {
         //  await this.clientWizard.CreateClient();
       } else {
+        var successMessage = await this.languageService.translate
+          .get('SAVESUCCESS')
+          .toPromise();
+
         await this.clientWizard.UpdateClientInformation().then(() => {
           Swal.default.fire({
             position: 'center',
             icon: 'success',
-            title: 'Your work has been saved',
+            title: successMessage,
             showConfirmButton: false,
-            timer: 1000,
+            timer: 1300,
             heightAuto: false,
           });
         });
