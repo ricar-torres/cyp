@@ -113,9 +113,7 @@ export class AddressComponent implements OnInit {
             .setValue(postalAddress.id);
         }
       }
-      this.clientsService.toggleEditControl.subscribe((val) => {
-        this.toggleControls(val);
-      });
+
       this.reactiveForm.get('PhysicalAddress').get('State').setValue('PR');
       this.reactiveForm.get('PostalAddress').get('State').setValue('PR');
       this.reactiveForm.get('PhysicalAddress').get('State').disable();
@@ -128,18 +126,18 @@ export class AddressComponent implements OnInit {
         });
       }
     }
+
+    this.clientsService.toggleEditControl.subscribe((val) => {
+      this.toggleControls(val);
+    });
   }
 
   toggleControls(disable: boolean) {
     if (this.reactiveForm) {
-      for (var property in this.reactiveForm.controls) {
-        if (this.reactiveForm.controls.hasOwnProperty(property)) {
-          if (disable) {
-            this.reactiveForm.get(property).disable();
-          } else {
-            this.reactiveForm.get(property).enable();
-          }
-        }
+      if (disable) {
+        this.reactiveForm.disable();
+      } else {
+        this.reactiveForm.enable();
       }
     }
   }
