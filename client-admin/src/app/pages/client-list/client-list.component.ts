@@ -33,7 +33,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'name',
-    //'ssn',
+    'ssn',
     //'gender',
     'phone1',
     //'phone2',
