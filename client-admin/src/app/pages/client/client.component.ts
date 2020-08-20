@@ -124,13 +124,13 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.router.navigate(['home/clients']);
   }
 
-  onSpeedDialFabClicked(ev) {
+  async onSpeedDialFabClicked(ev) {
     switch (ev.tooltip) {
       case 'Bonafide':
         this.bonafideList.goToNew();
         break;
       case 'Calls':
-        this.docsCalls.createThread(null);
+        await this.docsCalls.createThread(null);
         break;
       case 'Dependents':
         this.dependants.goToNew(null);

@@ -39,7 +39,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
     await this.loadData();
   }
 
-  async createThread(masterThreadId) {
+  async createThread(masterThreadId?: string | number) {
     if (masterThreadId == null) {
       masterThreadId = '000000000000';
     }
