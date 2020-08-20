@@ -136,7 +136,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
+      .get('DEPENDANTS_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
