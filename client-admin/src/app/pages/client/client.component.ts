@@ -1,23 +1,11 @@
-import { DependantsListComponent } from './../dependants-list/dependants-list.component';
-import { DocumentationCallAPIService } from './../../shared/documentation-call.api.service';
-import { DocumentationCallComponent } from './../../components/documentation-call/documentation-call.component';
 import { DocsCallsListComponent } from './../docs-calls-list/docs-calls-list.component';
+import { DependantsListComponent } from './../dependants-list/dependants-list.component';
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClientService } from '@app/shared/client.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debug } from 'console';
-import { Route } from '@angular/compiler/src/core';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
-import { MatDatepicker, MatDatepickerToggle } from '@angular/material';
 import { AppService } from '@app/shared/app.service';
-import { MenuRoles, PERMISSION } from '@app/models/enums';
+import { PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
@@ -33,8 +21,10 @@ export class ClientComponent implements OnInit, OnDestroy {
   client;
   loading = true;
   @Input() fromWizard: boolean = false;
-  @Input() dependants: DependantsListComponent;
-  @Input() docsCalls: DocsCallsListComponent;
+  @ViewChild('dependants')
+  dependants: DependantsListComponent;
+  @ViewChild('docsCalls')
+  docsCalls: DocsCallsListComponent;
   @ViewChild('BonafideList')
   bonafideList: BonaFideListComponent;
   taskPermissions: PERMISSION = {
@@ -52,7 +42,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     buttons: [],
   };
   constructor(
-    private fb: FormBuilder,
     private clientsService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
@@ -140,10 +129,10 @@ export class ClientComponent implements OnInit, OnDestroy {
       case 'Bonafide':
         this.bonafideList.goToNew();
         break;
-      case 'Call':
+      case 'Calls':
         this.docsCalls.createThread(null);
         break;
-      case 'Dependant':
+      case 'Dependents':
         this.dependants.goToNew(null);
         break;
       default:

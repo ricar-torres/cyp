@@ -207,16 +207,16 @@
               ></app-bona-fide-list>
             </mat-tab>
 
-            <ng-template mat-tab-label>
-              <mat-icon>insert_emoticon</mat-icon>
-              {{ 'CLIENTS.DEPENDANTS' | translate }}\
-              <mat-tab label="{{ 'CLIENTS.DEPENDANTS' | translate }}">
-                <app-dependants-list
-                  #dependants
-                  [clientId]="clientid"
-                ></app-dependants-list>
-              </mat-tab>
-            </ng-template>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>insert_emoticon</mat-icon>
+                {{ 'CLIENTS.DEPENDANTS' | translate }}
+              </ng-template>
+              <app-dependants-list
+                #dependants
+                [clientId]="clientid"
+              ></app-dependants-list>
+            </mat-tab>
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
               <ng-template mat-tab-label>
                 <mat-icon>link</mat-icon>
@@ -227,12 +227,12 @@
               <ng-template mat-tab-label>
                 <mat-icon>perm_phone_msg</mat-icon>
                 {{ 'CLIENTS.CALLHISTORY' | translate }}
-                <app-docs-calls-list
-                  #docsCalls
-                  [clientId]="clientid"
-                  (isLoadingEvent)="onIsCallsLoading($event)"
-                ></app-docs-calls-list>
               </ng-template>
+              <app-docs-calls-list
+                #docsCalls
+                [clientId]="clientid"
+                (isLoadingEvent)="onIsCallsLoading($event)"
+              ></app-docs-calls-list>
             </mat-tab>
           </mat-tab-group>
         </mat-card-content>
