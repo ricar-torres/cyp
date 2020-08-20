@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  AbstractControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AgencyService } from '@app/shared/agency.service';
@@ -45,6 +46,7 @@ export class AgencyComponent implements OnInit {
             Validators.required,
             Validators.maxLength(255),
           ],
+          this.checkName(editAgency.name).bind(this),
         ],
       });
     } else {
@@ -56,7 +58,7 @@ export class AgencyComponent implements OnInit {
             Validators.required,
             Validators.maxLength(255),
           ],
-          this.checkName.bind(this),
+          this.checkName('').bind(this),
         ],
       });
     }
@@ -90,12 +92,15 @@ export class AgencyComponent implements OnInit {
     }
   }
 
-  async checkName(name: FormControl) {
-    if (name.value) {
-      const res: any = await this.agencyService.checkName({
-        name: name.value,
-      });
-      if (res) return { nameTaken: true };
-    }
+  checkName(name: string) {
+    return async (control: AbstractControl) => {
+      if (control.value && name != control.value) {
+        const res: any = await this.agencyService.checkName({
+          name: control.value,
+        });
+        if (res) return { nameTaken: true };
+      }
+      return null;
+    };
   }
 }

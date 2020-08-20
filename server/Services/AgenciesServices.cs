@@ -59,6 +59,7 @@ namespace WebApi.Services
       {
 
         payload.CreatedAt = DateTime.Now;
+        payload.UpdatedAt = DateTime.Now;
         _context.Agencies.Add(payload);
         _context.SaveChanges();
 

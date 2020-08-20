@@ -1,0 +1,119 @@
+<md-content layout-margin layout-padding flex="50">
+  <mat-card class="mat-elevation-z0">
+    <mat-card-header>
+      <mat-card-title>{{
+        'DOCUMENTATION_CALL_LIST.TITLE' | translate
+      }}</mat-card-title>
+      <!-- <mat-card-subtitle># {{ id }}</mat-card-subtitle> -->
+    </mat-card-header>
+    <mat-card-content>
+      <div fxLayout fxLayoutAlign="end start">
+        <button
+          mat-raised-button
+          class="mat-raised-button mb-1"
+          color="primary"
+          (click)="createThread(null)"
+        >
+          <mat-icon>add</mat-icon>
+          {{ 'DOCUMENTATION_CALL_LIST.ADD_BTN' | translate }}
+        </button>
+      </div>
+      <!-- <div fxLayout>
+        <mat-form-field class="search-form">
+          <input
+            matInput
+            placeholder="{{ 'SEARCH' | translate }}"
+            type="text"
+            (keyup)="doFilter($event.target.value)"
+          />
+        </mat-form-field>
+      </div> -->
+
+      <mat-accordion>
+        <mat-expansion-panel
+          #panel
+          [togglePosition]="'after'"
+          *ngFor="let masterThread of threads"
+        >
+          <mat-expansion-panel-header
+            collapsedHeight="*"
+            expandedHeight="*"
+            (opened)="panelOpenState = true"
+            (closed)="panelOpenState = false"
+          >
+            <mat-card class="mat-elevation-z0">
+              <mat-card-header class="mt-2">
+                <div fxLayout="row" fxFlex="50">
+                  <div mat-card-avatar class="avatarImage"></div>
+                  <mat-card-title
+                    matBadge="{{ masterThread.threads.length }}"
+                    [matBadgeHidden]="masterThread.threads.length < 1"
+                    matBadgeOverlap="false"
+                    >#{{ masterThread.confirmationNumber }}
+                    <mat-card-subtitle>{{
+                      masterThread.createdAt | date: 'MM/dd/yyyy HH:mm'
+                    }}</mat-card-subtitle>
+                  </mat-card-title>
+                </div>
+                <div fxLayout="column" fxLayoutAlign="start end" fxFlex="50">
+                  <mat-card-subtitle>
+                    {{ 'DOCUMENTATION_CALL_LIST.TYPE_CALL' | translate }}:
+                    {{ masterThread.callType }}
+                  </mat-card-subtitle>
+                </div>
+              </mat-card-header>
+              <mat-card-content>
+                {{ masterThread.comment }}
+              </mat-card-content>
+              <mat-card-actions>
+                <button
+                  mat-button
+                  (click)="createThread(masterThread.confirmationNumber)"
+                >
+                  <mat-icon> chat</mat-icon>
+                  {{ 'DOCUMENTATION_CALL_LIST.THREAD' | translate }}
+                </button>
+              </mat-card-actions>
+
+              <mat-divider
+                *ngIf="masterThread.threads.length > 0"
+                [hidden]="!panel.expanded"
+              ></mat-divider>
+            </mat-card>
+          </mat-expansion-panel-header>
+          <!-- <mat-divider *ngIf="masterThread.threads.length > 0" ></mat-divider> -->
+          <mat-card
+            class="mat-elevation-z0"
+            *ngFor="let thread of masterThread.threads; last as isLast"
+          >
+            <mat-card-header class="mt-2">
+              <div fxLayout="row" fxFlex="50">
+                <div mat-card-avatar class="avatarImage"></div>
+                <mat-card-title
+                  >#{{ thread.confirmationNumber }}
+                  <mat-card-subtitle>{{
+                    thread.createdAt | date: 'yyyy-MM-dd HH:ss'
+                  }}</mat-card-subtitle></mat-card-title
+                >
+              </div>
+              <div fxLayout="column" fxLayoutAlign="start end" fxFlex="50">
+                <mat-card-subtitle>
+                  {{ 'DOCUMENTATION_CALL_LIST.TYPE_CALL' | translate }}:
+                  {{ thread.callType }}
+                </mat-card-subtitle>
+              </div>
+            </mat-card-header>
+            <mat-card-content>
+              {{ thread.comment }}
+            </mat-card-content>
+            <mat-divider *ngIf="!isLast"></mat-divider>
+          </mat-card>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </mat-card-content>
+  </mat-card>
+</md-content>
+<!-- <div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div> -->
+<router-outlet></router-outlet>

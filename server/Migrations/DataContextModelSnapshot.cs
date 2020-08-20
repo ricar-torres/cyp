@@ -77,7 +77,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Addresses", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -618,7 +618,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.ChapterClient", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -919,7 +919,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Clients", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -2211,7 +2211,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Tutors", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -2373,6 +2373,19 @@ namespace WebApi.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("zipcodes");
+                });
+
+            modelBuilder.Entity("server.Entities.TypeOfRelationship", b =>
+                {
+                    b.Property<byte?>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeOfRelationship");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Alianzas", b =>

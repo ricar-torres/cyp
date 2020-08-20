@@ -1,0 +1,31 @@
+.width-with-space {
+  width: 90%;
+}
+.full-width {
+  width: 100%;
+}
+
+.form-padding {
+  padding-left: 10px !important;
+  padding-right: 10px !important;
+}
+
+.margin-top-20 {
+  margin-top: 20px;
+}
+
+.text-area-height {
+  height: 100px;
+  resize: none;
+}
+
+.buttons-right {
+  margin-left: auto;
+}
+
+.buttons-right button {
+  margin: 5px;
+}
+:host ::ng-deep .mat-tab-body.mat-tab-body-active {
+  overflow-y: hidden !important;
+}

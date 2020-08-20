@@ -5,6 +5,7 @@ import { DialogGenericSuccessComponent } from '../components/dialog-generic-succ
 import { HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { User } from './../models/User';
+import * as Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root',
@@ -73,27 +74,46 @@ export class AppService {
   }
 
   showError(error: HttpErrorResponse) {
-    this.dialog.open(DialogGenericErrorComponent, {
-      data: {
-        header:
-          error.status >= 400 && error.status < 500 ? '' : 'Error interno',
-        detail:
-          error.status == 0
-            ? 'favor de contactar al administrador del sistema'
-            : error.error,
-        icon: '',
-      },
+    Swal.default.fire({
+      icon: 'error',
+      title: error.status >= 400 && error.status < 500 ? '' : 'Error interno',
+      text:
+        error.status == 0
+          ? 'favor de contactar al administrador del sistema'
+          : error.error,
+      heightAuto: false,
+      // footer: '<a href>Why do I have this issue?</a>'
     });
+
+    // this.dialog.open(DialogGenericErrorComponent, {
+    //   data: {
+    //     header:
+    //       error.status >= 400 && error.status < 500 ? '' : 'Error interno',
+    //     detail:
+    //       error.status == 0
+    //         ? 'favor de contactar al administrador del sistema'
+    //         : error.error,
+    //     icon: '',
+    //   },
+    // });
   }
 
   showErrorMessage(error: string) {
-    this.dialog.open(DialogGenericErrorComponent, {
-      data: {
-        header: 'Error',
-        detail: error,
-        icon: '',
-      },
+    Swal.default.fire({
+      icon: 'error',
+      title: 'Error',
+      text: error,
+      heightAuto: false,
+      // footer: '<a href>Why do I have this issue?</a>'
     });
+
+    // this.dialog.open(DialogGenericErrorComponent, {
+    //   data: {
+    //     header: 'Error',
+    //     detail: error,
+    //     icon: '',
+    //   },
+    // });
   }
 
   changeUserProperty(key: string, val) {

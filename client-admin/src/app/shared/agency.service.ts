@@ -15,7 +15,7 @@ export class AgencyService {
   constructor(private http: HttpClient) {}
 
   getAll() {
-    return this.http.get(`${environment.baseURL}/agencies`);
+    return this.http.get<[]>(`${environment.baseURL}/agencies`);
   }
 
   create(agency) {

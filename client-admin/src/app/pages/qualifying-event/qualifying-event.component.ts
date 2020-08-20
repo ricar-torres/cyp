@@ -9,6 +9,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
 import { LanguageService } from '@app/shared/Language.service';
 import { QualifyingEventService } from '@app/shared/qualifying-event.service';
+import { validateBasis } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-qualifying-event',
@@ -40,7 +41,11 @@ export class QualifyingEventComponent implements OnInit {
         Id: [editQualifyingEvent.id],
         Name: [
           editQualifyingEvent.name,
-          [Validators.required, Validators.maxLength(255)],
+          [
+            Validators.required,
+            Validators.maxLength(255),
+            Validators.minLength(2),
+          ],
         ],
         Requirements: [editQualifyingEvent.requirements, [Validators.required]],
       });
@@ -48,7 +53,11 @@ export class QualifyingEventComponent implements OnInit {
       this.reactiveForm = this.fb.group({
         Name: [
           '',
-          [Validators.required, Validators.maxLength(255)],
+          [
+            Validators.required,
+            Validators.maxLength(255),
+            Validators.minLength(2),
+          ],
           this.checkName.bind(this),
         ],
         Requirements: ['', [Validators.required]],

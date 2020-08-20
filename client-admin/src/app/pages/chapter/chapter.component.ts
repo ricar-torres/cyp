@@ -4,6 +4,7 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  AbstractControl,
 } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AppService } from '@app/shared/app.service';
@@ -64,6 +65,7 @@ export class ChapterComponent implements OnInit {
         Name: [
           editChapter.name,
           [Validators.required, Validators.maxLength(255)],
+          this.CheckName(editChapter.name).bind(this),
         ],
         Quota: [editChapter.quota],
         BonaFideId: [this.bonafideid],
@@ -73,7 +75,7 @@ export class ChapterComponent implements OnInit {
         Name: [
           '',
           [Validators.required, Validators.maxLength(255)],
-          this.uniqueName.bind(this),
+          this.CheckName('').bind(this),
         ],
         Quota: [''],
         BonaFideId: [this.bonafideid],
@@ -109,26 +111,16 @@ export class ChapterComponent implements OnInit {
     }
   }
 
-  async uniqueName(ctrl: FormControl) {
-    try {
-      if (ctrl.value) {
+  CheckName(name: string) {
+    return async (control: AbstractControl) => {
+      if (control.value && name != control.value) {
         const res: any = await this.chapterService.checkName({
-          name: ctrl.value,
+          name: control.value,
+          bonafideid: Number.parseInt(this.bonafideid),
         });
-        if (res) {
-          return { nameTaken: true };
-        }
+        if (res) return { nameTaken: true };
       }
-    } catch (error) {
-      this.loading = false;
-      if (error.status != 401) {
-        console.error('error', error);
-        this.languageService.translate.get('GENERIC_ERROR').subscribe((res) => {
-          this.app.showErrorMessage(res);
-        });
-      }
-    } finally {
-      this.loading = false;
-    }
+      return null;
+    };
   }
 }

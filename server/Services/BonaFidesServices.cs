@@ -25,13 +25,14 @@ namespace WebApi.Services
 
   public interface IBonaFidesServices
   {
-    IQueryable<BonaFides> GetAll();
+    IQueryable<BonaFides> GetAll(int? clientId);
     BonaFides GetById(int id);
     BonaFides Create(BonaFides payload);
     BonaFides Update(BonaFides payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
     Task<Boolean> ChekcEmail(string email);
+    List<BonaFides> GetBonafidesNotInClient(int clientId);
   }
 
   public class BonaFidesServices : Controller, IBonaFidesServices
@@ -51,6 +52,7 @@ namespace WebApi.Services
       {
 
         payload.CreatedAt = DateTime.Now;
+        payload.UpdatedAt = DateTime.Now;
         _context.BonaFides.Add(payload);
         _context.SaveChanges();
 
@@ -77,18 +79,28 @@ namespace WebApi.Services
         _context.SaveChanges();
       }
       else
-        throw new AppException("Agency not found");
+        throw new AppException("Bonafide not found");
     }
 
-    public IQueryable<BonaFides> GetAll()
+    public IQueryable<BonaFides> GetAll(int? clientId)
     {
       IQueryable<BonaFides> payload = null;
 
       try
       {
-
-        payload = _context.BonaFides.Where(ag => ag.DeletedAt == null).AsQueryable();
-
+        if (clientId != null)
+        {
+          payload = (from cu in _context.ChapterClient
+                     join ch in _context.Chapters on cu.ChapterId equals ch.Id
+                     join bn in _context.BonaFides on ch.BonaFideId equals bn.Id
+                     where clientId == cu.ClientId
+                     select bn
+                    );
+        }
+        else
+        {
+          payload = _context.BonaFides.Where(ag => ag.DeletedAt == null).AsQueryable();
+        }
       }
       catch (Exception ex)
       {
@@ -162,6 +174,35 @@ namespace WebApi.Services
         }
       }
       return false;
+    }
+
+    public List<BonaFides> GetBonafidesNotInClient(int clientId)
+    {
+      try
+      {
+        if (clientId != 0)
+        {
+          var chaptersClients = _context.ChapterClient.Where(cc => cc.ClientId == clientId).ToList();
+          var idList = new List<int>();
+          chaptersClients.ForEach(el =>
+          {
+            idList.Add(el.ChapterId);
+          });
+          var bonafidesNotInClient = (from ch in _context.Chapters
+                                      join bn in _context.BonaFides
+                                      on ch.BonaFideId equals bn.Id
+                                      where !idList.Contains(ch.Id)
+                                      orderby bn.Name ascending
+                                      select bn).Distinct().ToList();
+          return bonafidesNotInClient;
+        }
+        throw new Exception("no clientId provided");
+
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
     }
   }
 }

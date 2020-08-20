@@ -1,0 +1,72 @@
+<div mat-dialog-content>
+  <md-content layout-margin layout-padding flex="50">
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title
+            >{{ 'DOCUMENTATION_CALL.PAGE_TITLE' | translate }}
+          </mat-card-title>
+        </mat-card-header>
+
+        <mat-card-content>
+          <div fxLayout="row" fxLayoutGap="5px">
+            <mat-form-field class="full-width">
+              <mat-label>{{
+                'DOCUMENTATION_CALL.CONFIRM_NUM' | translate
+              }}</mat-label>
+              <input matInput [value]="confirmationNumber" readonly #num />
+            </mat-form-field>
+            <mat-form-field class="full-width">
+              <mat-label>{{
+                'DOCUMENTATION_CALL.CALL_TYPE' | translate
+              }}</mat-label>
+              <mat-select formControlName="type">
+                <mat-option *ngFor="let call of typesOfCall" [value]="call">{{
+                  call.name
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+
+          <div fxLayout="column">
+            <mat-form-field class="full-width">
+              <mat-label>{{
+                'DOCUMENTATION_CALL.COMMENT' | translate
+              }}</mat-label>
+              <textarea
+                formControlName="comment"
+                matInput
+                #inputCode
+                rows="8"
+              ></textarea>
+            </mat-form-field>
+          </div>
+        </mat-card-content>
+
+        <div mat-dialog-actions>
+          <mat-card-actions>
+            <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
+
+            <button mat-stroked-button type="button" (click)="onBack()">
+              <mat-icon>list</mat-icon
+              >{{ 'DOCUMENTATION_CALL.BACK' | translate }}
+            </button>
+            <button
+              type="submit"
+              mat-raised-button
+              color="primary"
+              *ngIf="editAccess"
+              [disabled]="!reactiveForm.valid"
+            >
+              <mat-icon>save</mat-icon>
+              {{ 'DOCUMENTATION_CALL.SAVE' | translate }}
+            </button>
+          </mat-card-actions>
+        </div>
+      </mat-card>
+    </form>
+  </md-content>
+  <div class="loading-indicator" [hidden]="!loading">
+    <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+  </div>
+</div>

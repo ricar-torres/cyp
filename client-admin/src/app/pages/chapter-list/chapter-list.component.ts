@@ -33,7 +33,14 @@ export class ChapterListComponent implements OnInit {
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['id', 'name', 'quota', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'quota',
+    'createdAt',
+    'updatedAt',
+    'actions',
+  ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
@@ -55,7 +62,6 @@ export class ChapterListComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log(this.id);
     //TODO: Acces
     //this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_UPDATE);
     //this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_CREATE);

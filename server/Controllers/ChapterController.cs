@@ -2,7 +2,9 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -26,6 +28,21 @@ namespace WebApi.Controllers
       _service = service;
       _mapper = mapper;
       _appSettings = appSettings.Value;
+    }
+
+    [Authorize]
+    [HttpPost("client")]
+    public async Task<IActionResult> SaveChaoterClient(ChapterClientDto payload)
+    {
+      try
+      {
+        await _service.saveClientChapter(payload);
+        return Ok();
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
     }
 
     [Authorize]
@@ -77,6 +94,59 @@ namespace WebApi.Controllers
       try
       {
         var res = await _service.GetByBonafineId(id);
+        if (res == null)
+        {
+          return NotFound();
+        }
+        return Ok(res);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [Authorize]
+    [HttpGet("{clientId}/{bonafideId}")]
+    public async Task<IActionResult> GetChapterOfClientByBonafideId(int clientId, int bonafideId)
+    {
+      try
+      {
+        var res = await _service.GetChapterOfClientByBonafideId(clientId, bonafideId);
+        if (res == null)
+        {
+          return NotFound();
+        }
+        return Ok(res);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [Authorize]
+    [HttpDelete("{clientId}/{bonafideId}")]
+    public async Task<IActionResult> DeleteClientChapter(int clientId, int bonafideId)
+    {
+      try
+      {
+        await _service.DeleteClientChapter(clientId, bonafideId);
+        return Ok();
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [Authorize]
+    [HttpGet("bonafides")]
+    public async Task<IActionResult> GetChaptersInBonafides([FromQuery] String bonafideIds)
+    {
+      try
+      {
+        var res = await _service.getChaptersInBonafideIds(bonafideIds);
         if (res == null)
         {
           return NotFound();
@@ -150,12 +220,12 @@ namespace WebApi.Controllers
     }
 
     [Authorize]
-    [HttpGet("CheckName/{name}")]
-    public async Task<IActionResult> checkName(string name)
+    [HttpGet("CheckName/{bonafideid}/{name}")]
+    public async Task<IActionResult> checkName(string name, int bonafideid)
     {
       try
       {
-        var check = await _service.ChekcName(name);
+        var check = await _service.ChekcName(name, bonafideid);
         return Ok(check);
       }
       catch (Exception ex)

@@ -8,8 +8,20 @@ import { environment } from '@environments/environment';
 export class bonaFideservice {
   constructor(private http: HttpClient) {}
 
-  getAll() {
-    return this.http.get(`${environment.baseURL}/bonaFides`);
+  async getAvailableBonafides(clientId: number) {
+    return this.http
+      .get<[]>(`${environment.baseURL}/bonaFides/notinclient/${clientId}`)
+      .toPromise();
+  }
+
+  getAll(clientId: string) {
+    if (clientId) {
+      return this.http.get<any>(
+        `${environment.baseURL}/bonaFides/client/${clientId}`
+      );
+    } else {
+      return this.http.get<any>(`${environment.baseURL}/bonaFides`);
+    }
   }
 
   create(banafide) {
@@ -40,7 +52,6 @@ export class bonaFideservice {
       .toPromise();
   }
   checkEmail(obj: { name: string }): any {
-    console.log(obj.name);
     return this.http
       .get(`${environment.baseURL}/bonaFides/CheckEmail/${obj.name}`)
       .toPromise();

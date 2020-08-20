@@ -1,0 +1,244 @@
+<md-content layout-margin layout-padding flex="50">
+  <div *ngIf="reactiveForm">
+    <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+      <mat-card>
+        <mat-card-header>
+          <mat-card-title>
+            {{ 'CLIENTS.TITLE' | translate }}
+          </mat-card-title>
+          <mat-card-subtitle>
+            {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
+          >
+          <div class="buttons-right" *ngIf="!fromWizard">
+            <button
+              mat-raised-button
+              color="primary"
+              type="submit"
+              [disabled]="!reactiveForm.valid"
+            >
+              <mat-icon>save</mat-icon>
+              {{ 'CLIENTS.SAVE' | translate }}
+            </button>
+            <button
+              type="button"
+              mat-stroked-button
+              type="button"
+              (click)="onBack()"
+            >
+              <mat-icon>list</mat-icon>{{ 'CLIENTS.GOBACK' | translate }}
+            </button>
+          </div>
+        </mat-card-header>
+        <mat-card-content>
+          <!-- main flexbox content -->
+          <div fxLayout="column" fxLayoutAlign="center">
+            <!-- name row -->
+            <div
+              fxLayout
+              fxLayout.lt-md="column"
+              fxLayoutAlign="center"
+              fxLayoutGap="10px"
+            >
+              <mat-form-field fxFlex="30%">
+                <mat-label>{{ 'USER.NAME' | translate }}</mat-label>
+                <input matInput formControlName="Name" />
+                <mat-error
+                  *ngIf="reactiveForm.get('Name').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="30%">
+                <mat-label>{{ 'CLIENTS.FAMILY_NAME_1' | translate }}</mat-label>
+                <input matInput formControlName="LastName1" />
+                <mat-error
+                  *ngIf="reactiveForm.get('LastName1').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="30%">
+                <mat-label>{{ 'CLIENTS.FAMILY_NAME_2' | translate }}</mat-label>
+                <input matInput formControlName="LastName2" />
+              </mat-form-field>
+
+              <mat-form-field fxFlex="10%">
+                <mat-label>{{ 'CLIENTS.INITIAL' | translate }}</mat-label>
+                <input matInput formControlName="Initial" />
+              </mat-form-field>
+            </div>
+            <!-- contact row -->
+            <div
+              fxLayout
+              fxLayout.lt-md="column"
+              fxLayoutAlign="center"
+              fxLayoutGap="10px"
+            >
+              <mat-form-field fxFlex>
+                <mat-label>{{ 'CLIENTS.EMAIL' | translate }}</mat-label>
+                <input matInput formControlName="Email" />
+              </mat-form-field>
+
+              <mat-form-field fxFlex="25%">
+                <mat-label>{{ 'CLIENTS.PHONE1' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="Phone1"
+                  mask="(000)-000-0000"
+                />
+                <mat-error
+                  *ngIf="reactiveForm.get('Phone1').hasError('required')"
+                >
+                  {{ 'REQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex="25%">
+                <mat-label>{{ 'CLIENTS.PHONE2' | translate }}</mat-label>
+                <input
+                  matInput
+                  formControlName="Phone2"
+                  mask="(000)-000-0000"
+                />
+              </mat-form-field>
+            </div>
+            <!-- aditional information row -->
+            <div
+              fxLayout
+              fxLayout.lt-md="column"
+              fxLayoutAlign="center"
+              fxLayoutGap="10px"
+            >
+              <mat-form-field fxFlex>
+                <mat-label>{{ 'CLIENTS.MARITALSTATUS' | translate }}</mat-label>
+                <mat-select formControlName="MaritalStatus">
+                  <mat-option [value]="1">{{
+                    'MARRIED' | translate
+                  }}</mat-option>
+                  <mat-option [value]="0">{{
+                    'SINGLE' | translate
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
+                <input
+                  #ssnFormControl
+                  matInput
+                  formControlName="Ssn"
+                  mask="000-00-0000"
+                />
+                <mat-error *ngIf="reactiveForm.get('Ssn').hasError('ssnTaken')">
+                  {{ 'CLIENTS.SSNTAKEN' | translate }}
+                </mat-error>
+                <mat-error *ngIf="reactiveForm.get('Ssn').hasError('required')">
+                  {{ 'CLIENTS.SSNREQUIRED' | translate }}
+                </mat-error>
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                <mat-label>{{ 'CLIENTS.GENDER' | translate }}</mat-label>
+                <mat-select formControlName="Gender">
+                  <mat-option [value]="1">{{ 'MALE' | translate }}</mat-option>
+                  <mat-option [value]="2">{{
+                    'FEMALE' | translate
+                  }}</mat-option>
+                </mat-select>
+              </mat-form-field>
+
+              <mat-form-field fxFlex>
+                <mat-label>{{ 'CLIENTS.BIRTHDATE' | translate }}</mat-label>
+                <input
+                  [matDatepicker]="birthDatePiker"
+                  matInput
+                  formControlName="BirthDate"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="birthDatePiker"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #birthDatePiker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <!-- <mat-form-field fxFlex>
+              <mat-label>{{ 'CLIENTS.COMMENTS' | translate }}</mat-label>
+              <input matInput formControlName="Commnets" />
+            </mat-form-field> -->
+          </div>
+          <!-- <mat-card-actions
+            fxLayout="row"
+            fxLayoutAlign="end"
+            *ngIf="!fromWizard"
+          >
+
+          </mat-card-actions> -->
+          <mat-tab-group
+            dynamicHeight="true"
+            *ngIf="!fromWizard"
+            mat-stretch-tabs
+          >
+            <mat-tab label="{{ 'CLIENTS.GENERALINFORMATION' | translate }}">
+              <ng-template mat-tab-label>
+                <mat-icon>info</mat-icon>
+                {{ 'CLIENTS.GENERALINFORMATION' | translate }}
+              </ng-template>
+              <app-general-information
+                [client]="client"
+              ></app-general-information>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>home</mat-icon>
+                {{ 'CLIENTS.DIRECTIONS' | translate }}
+              </ng-template>
+              <app-client-address [clientid]="clientid"></app-client-address>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>group_work</mat-icon>
+                {{ 'CLIENTS.BONAFIDES' | translate }}
+              </ng-template>
+              <app-bona-fide-list
+                #BonafideList
+                [clientId]="clientid"
+              ></app-bona-fide-list>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>insert_emoticon</mat-icon>
+                {{ 'CLIENTS.DEPENDANTS' | translate }}
+              </ng-template>
+            </mat-tab>
+            <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
+              <ng-template mat-tab-label>
+                <mat-icon>link</mat-icon>
+                {{ 'CLIENTS.ALLIANCE' | translate }}
+              </ng-template>
+            </mat-tab>
+            <mat-tab>
+              <ng-template mat-tab-label>
+                <mat-icon>perm_phone_msg</mat-icon>
+                {{ 'CLIENTS.CALLHISTORY' | translate }}
+              </ng-template>
+              <app-docs-calls-list
+                [clientId]="clientid"
+                (isLoadingEvent)="onIsCallsLoading($event)"
+              ></app-docs-calls-list>
+            </mat-tab>
+          </mat-tab-group>
+        </mat-card-content>
+      </mat-card>
+    </form>
+  </div>
+</md-content>
+<app-speed-dial-fab
+  *ngIf="fabMenuButtons.visible"
+  (fabClick)="onSpeedDialFabClicked($event)"
+  [buttons]="fabMenuButtons.buttons"
+></app-speed-dial-fab>
+<div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div>

@@ -28,7 +28,14 @@ export class QualifyingEventListComponent implements OnInit {
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['id', 'name', 'requirements', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'requirements',
+    'createdAt',
+    'updatedAt',
+    'actions',
+  ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;

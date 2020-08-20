@@ -34,7 +34,7 @@ namespace WebApi.Controllers
     {
       try
       {
-        var res = _BonaFidesServices.GetAll();
+        var res = _BonaFidesServices.GetAll(null);
         if (res == null)
         {
           return NotFound();
@@ -42,6 +42,46 @@ namespace WebApi.Controllers
 
         return Ok(res);
 
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [AllowAnonymous]
+    [HttpGet("client/{clientId}")]
+    public IActionResult GetAll(int clientId)
+    {
+      try
+      {
+        var res = _BonaFidesServices.GetAll(clientId);
+        if (res == null)
+        {
+          return NotFound();
+        }
+
+        return Ok(res);
+
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [AllowAnonymous]
+    [HttpGet("notinclient/{clientId}")]
+    public IActionResult GetBonafidesNotInClient(int clientId)
+    {
+      try
+      {
+        var res = _BonaFidesServices.GetBonafidesNotInClient(clientId);
+        if (res == null)
+        {
+          return NotFound();
+        }
+        return Ok(res);
       }
       catch (Exception ex)
       {

@@ -28,7 +28,13 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
-  displayedColumns: string[] = ['id', 'name', 'actions'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'createdAt',
+    'updatedAt',
+    'actions',
+  ];
   pageSize = 5;
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
@@ -105,7 +111,7 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
 
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('CHAPTER.ARE_YOU_SURE_DELETE')
+      .get('AGENCY.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate

@@ -1,3 +1,4 @@
+import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { CampaignComponent } from './pages/campaign/campaign.component';
@@ -26,6 +27,9 @@ import { ChapterListComponent } from './pages/chapter-list/chapter-list.componen
 import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
 import { QualifyingEventListComponent } from './pages/qualifying-event-list/qualifying-event-list.component';
 import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-event.component';
+import { ClientListComponent } from './pages/client-list/client-list.component';
+import { ClientComponent } from './pages/client/client.component';
+import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 
 const routes: Routes = [
   {
@@ -226,6 +230,46 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.QUALIFYING_EVENT_UPDATE,
+        },
+      },
+      {
+        path: 'clients',
+        component: ClientListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.CLIENT_CREATE,
+        },
+      },
+      {
+        path: 'client',
+        component: ClientComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.CLIENT_CREATE,
+        },
+      },
+      {
+        path: 'client/:id',
+        component: ClientComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.CLIENT_CREATE,
+          // {
+          //   path: 'documentation-call',
+          //   component: DocumentationCallComponent,
+          //   canActivate: [AuthGuardService],
+          //   data: {
+          //     //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+          //   },
+          // },
+        },
+      },
+      {
+        path: 'test-page',
+        component: DocsCallsList,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
     ],

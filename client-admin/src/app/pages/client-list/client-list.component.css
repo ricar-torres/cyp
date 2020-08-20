@@ -1,0 +1,18 @@
+table {
+  width: 100%;
+}
+
+.mat-column-Name {
+  flex: 0 0 200px !important;
+}
+.mat-column-Actions {
+  flex: 0 0 400px !important;
+}
+
+.search-form {
+  width: 30%;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(242, 242, 242);
+}

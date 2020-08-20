@@ -130,7 +130,6 @@ export class CampaignListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
       if (dialogResult) {
-        console.log(id);
         await this.delete(id);
         await this.loadCampaigns();
       }
