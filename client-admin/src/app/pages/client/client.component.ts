@@ -168,18 +168,18 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   toggleControls(disable: boolean) {
     if (this.reactiveForm) {
-      for (var property in this.reactiveForm.controls) {
-        if (this.reactiveForm.controls.hasOwnProperty(property)) {
-          if (disable) {
-            this.reactiveForm.get(property).disable();
-          } else {
-            this.reactiveForm.get(property).enable();
-          }
-        }
+      if (disable) {
+        this.reactiveForm.disable();
+      } else {
+        this.reactiveForm.enable();
       }
     }
   }
   onIsCallsLoading(bool: boolean) {
     this.loading = bool;
+  }
+
+  disableControls() {
+    this.clientsService.toggleEditControl.emit(true);
   }
 }

@@ -4,6 +4,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { HealthPlanService } from '@app/shared/health-plan.service';
 import { AgencyService } from '@app/shared/agency.service';
 import { CoverService } from '@app/shared/cover.service';
+import { ClientService } from '@app/shared/client.service';
 
 @Component({
   selector: 'app-general-information',
@@ -26,7 +27,8 @@ export class GeneralInformationComponent implements OnInit {
     public wizadFormGroups: ClientWizardService,
     private hps: HealthPlanService,
     private ag: AgencyService,
-    private cs: CoverService
+    private cs: CoverService,
+    private clientService: ClientService
   ) {}
 
   async ngOnInit() {
@@ -70,6 +72,10 @@ export class GeneralInformationComponent implements OnInit {
         this.tutorInformation.get('Phone').reset();
       }
     });
+
+    this.clientService.toggleEditControl.subscribe((val) => {
+      this.toggleControls(val);
+    });
   }
 
   async loadCovers(selection) {
@@ -82,5 +88,21 @@ export class GeneralInformationComponent implements OnInit {
 
   displayFnMedicalPlan(selected: any) {
     if (selected) return selected.name;
+  }
+
+  toggleControls(disable: boolean) {
+    if (this.reactiveForm) {
+      if (disable) {
+        this.reactiveForm.disable();
+        this.healthPlan.disable();
+        this.hasTutor.disable();
+        this.tutorInformation.disable();
+      } else {
+        this.reactiveForm.enable();
+        this.healthPlan.enable();
+        this.hasTutor.enable();
+        this.tutorInformation.enable();
+      }
+    }
   }
 }
