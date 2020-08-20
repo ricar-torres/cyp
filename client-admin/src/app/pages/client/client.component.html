@@ -206,11 +206,16 @@
                 [clientId]="clientid"
               ></app-bona-fide-list>
             </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>insert_emoticon</mat-icon>
                 {{ 'CLIENTS.DEPENDANTS' | translate }}
               </ng-template>
+              <app-dependants-list
+                #dependants
+                [clientId]="clientid"
+              ></app-dependants-list>
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
               <ng-template mat-tab-label>
@@ -224,6 +229,7 @@
                 {{ 'CLIENTS.CALLHISTORY' | translate }}
               </ng-template>
               <app-docs-calls-list
+                #docsCalls
                 [clientId]="clientid"
                 (isLoadingEvent)="onIsCallsLoading($event)"
               ></app-docs-calls-list>

@@ -62,18 +62,18 @@ export class SideNavComponent implements OnInit {
           children: [
             {
               displayName: await this.languageService.translate
-                .get('SIDE_NAV.USERS')
-                .toPromise(),
-              iconName: 'person',
-              route: '/home/user-list',
-              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
-            },
-            {
-              displayName: await this.languageService.translate
                 .get('SIDE_NAV.AGENCIES')
                 .toPromise(),
               iconName: 'account_balance',
               route: '/home/agencies',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.BONAFIDES')
+                .toPromise(),
+              iconName: 'group_work',
+              route: '/home/bonafides',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {
@@ -86,28 +86,21 @@ export class SideNavComponent implements OnInit {
             },
             {
               displayName: await this.languageService.translate
-                .get('SIDE_NAV.COMMUNICATION_METHODS')
-                .toPromise(),
-              iconName: 'settings_input_antenna',
-              route: '/home/communication-method-list',
-              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
-            },
-            {
-              displayName: await this.languageService.translate
-                .get('SIDE_NAV.BONAFIDES')
-                .toPromise(),
-              iconName: 'group_work',
-              route: '/home/bonafides',
-              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
-            },
-            {
-              displayName: await this.languageService.translate
                 .get('SIDE_NAV.QUALIFYIN_EVENTS')
                 .toPromise(),
               iconName: 'check_circle_outline',
               route: '/home/qualifyingevents',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.COMMUNICATION_METHODS')
+                .toPromise(),
+              iconName: 'settings_input_antenna',
+              route: '/home/communication-method-list',
+              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+
             {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.RETIREMENTS')
@@ -117,10 +110,12 @@ export class SideNavComponent implements OnInit {
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {
-              displayName: 'Documentation Call',
-              iconName: 'group_work',
-              route: '/home/test-page',
-              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.USERS')
+                .toPromise(),
+              iconName: 'person',
+              route: '/home/user-list',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],
         },
