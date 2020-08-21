@@ -71,8 +71,20 @@ export class ClientWizardService {
   tutorInformation = this.formBuilder.group({
     Id: [''],
     ClientId: [''],
-    Name: [''],
-    LastName: [''],
+    Name: [
+      '',
+      [
+        Validators.pattern('^[A-Za-z\u00C0-\u00FF]*$'),
+        Validators.maxLength(250),
+      ],
+    ],
+    LastName: [
+      '',
+      [
+        Validators.pattern('^[A-Za-z\u00C0-\u00FF]*$'),
+        Validators.maxLength(250),
+      ],
+    ],
     Phone: [''],
   });
 
@@ -188,7 +200,7 @@ export class ClientWizardService {
   private addValues() {
     var buff = Object.assign(
       this.clientDemographic.getRawValue(),
-      this.generalInformationForm.value
+      this.generalInformationForm.getRawValue()
     );
     buff['Tutors'] = [this.tutorInformation.value];
     // console.log(buff);
