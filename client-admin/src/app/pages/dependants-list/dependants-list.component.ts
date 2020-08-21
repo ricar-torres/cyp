@@ -125,7 +125,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       width: '90%',
       height: '60%',
       minWidth: '90%',
-      data: { id: 0, clientId: this.clientId },
+      data: { id: id, clientId: this.clientId },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       await this.loadData();

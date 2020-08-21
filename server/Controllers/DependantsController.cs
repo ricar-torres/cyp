@@ -50,18 +50,15 @@ namespace server.Controllers {
 			DependentDto dependent = null;
 			try {
 				relationships = _service.GetRelationTypes().ToList();
-				_service.GetAllByClient(id).ToList().ForEach((item) => {
-					if (item is Dependents d && d.Cover is Covers c && c.Dependents is object) {
-						d.Cover.Dependents = null;
-						if (c.HealthPlan is HealthPlans hp) {
-							hp.Covers = null;
-						}
-						item = d;
+				if (_service.GetById(id) is Dependents d && d.Cover is Covers c && c.Dependents is object) {
+					d.Cover.Dependents = null;
+					if (c.HealthPlan is HealthPlans hp) {
+						hp.Covers = null;
 					}
-					dependent = new DependentDto(item);
-					dependent.Relationship = relationships.Where(_ => _.Id == item.Relationship).FirstOrDefault() is TypeOfRelationship relationship ?
+					dependent = new DependentDto(d);
+					dependent.Relationship = relationships.Where(_ => _.Id == d.Relationship).FirstOrDefault() is TypeOfRelationship relationship ?
 						relationship : new TypeOfRelationship();
-				});
+				}
 				if (dependent is object) {
 					return Ok(dependent);
 				} else {
