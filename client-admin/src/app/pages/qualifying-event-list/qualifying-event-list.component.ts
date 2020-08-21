@@ -134,7 +134,7 @@ export class QualifyingEventListComponent implements OnInit {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          console.log(id);
+          // console.log(id);
           await this.qualifyingEventService.delete(id);
           this.LoadQualifyingEvents();
         }

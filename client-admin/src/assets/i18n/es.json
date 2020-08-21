@@ -10,6 +10,8 @@
   "SEND_BTN": "Enviar",
   "OK_BTN": "Ok",
   "YES_BTN": "Si",
+  "DEL_BTN": "Borrar",
+  "EDIT_BTN": "Editar",
   "COMFIRMATION": "Confirmar",
   "NO_BTN": "No",
   "ADD_BTN": "Agregar",
@@ -24,6 +26,7 @@
   "PASSWORD_POLICY": "La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
   "REQUIRED": "Este Campo es requerido",
   "VALIDEMAIL": "Porfavor provea una dirección de email valida",
+  "ONLY_LETTERS": "Entrar solo letras",
   "SEARCH": "Buscar",
   "MALE": "Hombre",
   "FEMALE": "Mujer",
@@ -35,6 +38,9 @@
   "BACK": "Regresar",
   "YES": "Si",
   "NO": "No",
+  "GENERAL_FILTER": "Filtro",
+  "NAME": "Nombre",
+  "PHONE": "Teléfono",
   "SAVESUCCESS": "La información ha sido actualizada",
 
   "LOGIN-FORM": {
@@ -331,6 +337,33 @@
     "TITLE": "Historial de llamadas",
     "ADD_BTN": "Agregar",
     "TYPE_CALL": "Tipo de llamada",
+    "THREAD": "Añadir al Hilo"
+  },
+  "DEPENDANTS_LIST": {
+    "PAGE_TITLE": "Dependientes",
+    "RELATION_NAME": "Relación",
+    "COVER": "Cubierta",
+    "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?"
+  },
+  "DEPENDANT": {
+    "PAGE_TITLE": "Dependiente",
+    "NAME": "Nombre",
+    "LASTNAME1": "Primer Apellido",
+    "LASTNAME2": "Segundo Apellido",
+    "INITIAL": "Inicial",
+    "MALE": "Masculino",
+    "FEMALE": "Femenino",
+    "SSN": "Seguro Social",
+    "BIRTHDAY": "Cumpleaños",
+    "EMAIL": "Email",
+    "GENDER": "Genero",
+    "PHONE_PRIMARY": "Teléfono Principal",
+    "PHONE_SECONDARY": "Teléfono Secundario",
+    "RELATION": "Relación",
+    "ACTUALPLAN": "Plan médico actual",
+    "ACTUALCOVER": "Cubierta Actual",
+    "CONTRACT_NUM": "Número de Contrato",
+    "EFFECTDATE": "Fecha de efectividad",
     "THREAD": "Hilo"
   }
 }

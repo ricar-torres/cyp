@@ -1,4 +1,12 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { DependantComponent } from './../dependant/dependant.component';
+import { DependantsAPIService } from './../../shared/dependants.api.service';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  Input,
+} from '@angular/core';
 import {
   PageEvent,
   MatSort,
@@ -24,12 +32,21 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   loading = true;
 
   dataSource: any;
+  relations: any[] = [];
 
   editAccess: boolean;
   createAccess: boolean;
   deteleAccess: boolean;
+  @Input() clientId: string | number;
 
-  displayedColumns: string[] = ['id', 'name', 'phone', 'action'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    'phone1',
+    'relationName',
+    'coverName',
+    'action',
+  ];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
@@ -39,7 +56,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private apiCommunicationMethod: CommunicationMethodsAPIService,
+    private apiDependant: DependantsAPIService,
     private app: AppService,
     private dialog: MatDialog
   ) {}
@@ -57,17 +74,18 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCommunicationMethods();
+      await this.loadData();
+      await this.apiDependant.getRelationTypes();
     } catch (error) {
       this.loading = false;
     } finally {
     }
   }
 
-  async loadCommunicationMethods() {
+  async loadData() {
     try {
       this.loading = true;
-      await this.apiCommunicationMethod.getAll().subscribe(
+      this.apiDependant.getAllByClient(this.clientId).subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -83,18 +101,35 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
             console.error('error', error);
             this.app.showErrorMessage('Error interno');
           }
+        },
+        () => {
+          this.loading = false;
         }
       );
-    } catch (error) {
-      this.loading = false;
-    }
+    } catch (error) {}
   }
-  goToNew() {
-    this.router.navigate(['/home/communication-method', 0]);
+  goToNew(dependantId?: string | number) {
+    const dialogRef = this.dialog.open(DependantComponent, {
+      width: '90%',
+      height: '60%',
+      minWidth: '90%',
+      data: { id: 0, clientId: this.clientId },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.loadData();
+    });
   }
 
   goToDetail(id) {
-    this.router.navigate(['/home/communication-method', id]);
+    const dialogRef = this.dialog.open(DependantComponent, {
+      width: '90%',
+      height: '60%',
+      minWidth: '90%',
+      data: { id: id, clientId: this.clientId },
+    });
+    dialogRef.afterClosed().subscribe(async (result) => {
+      await this.loadData();
+    });
   }
 
   doFilter(value: any) {
@@ -102,7 +137,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
+      .get('DEPENDANTS_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -124,16 +159,15 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
       if (dialogResult) {
-        console.log(id);
         await this.delete(id);
-        await this.loadCommunicationMethods();
+        await this.loadData();
       }
     });
   }
 
   async delete(id: string) {
     try {
-      await this.apiCommunicationMethod.delete(id);
+      await this.apiDependant.delete(id);
     } catch (error) {}
   }
 

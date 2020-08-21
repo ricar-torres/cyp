@@ -97,11 +97,9 @@ export class BonaFideComponent implements OnInit {
     try {
       this.loading = true;
       if (this.bonafideId) {
-        console.log(this.reactiveForm.value);
         await this.bonafideService.update(this.reactiveForm.value);
         this.onBack();
       } else {
-        console.log(this.reactiveForm.value);
         await this.bonafideService.create(this.reactiveForm.value);
         this.onBack();
       }

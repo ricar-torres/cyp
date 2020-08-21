@@ -1,3 +1,4 @@
+import { PreviewSsn } from './../../directives/ssnPipe';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import {
   PageEvent,
@@ -33,7 +34,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'name',
-    //'ssn',
+    'ssn',
     //'gender',
     'phone1',
     //'phone2',

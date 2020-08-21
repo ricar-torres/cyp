@@ -128,7 +128,7 @@ export class ChapterListComponent implements OnInit {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          console.log(id);
+          // console.log(id);
           await this.chapterService.delete(id);
           this.LoadChapters();
         }

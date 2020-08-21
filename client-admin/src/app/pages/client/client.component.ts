@@ -1,19 +1,11 @@
+import { DocsCallsListComponent } from './../docs-calls-list/docs-calls-list.component';
+import { DependantsListComponent } from './../dependants-list/dependants-list.component';
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClientService } from '@app/shared/client.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debug } from 'console';
-import { Route } from '@angular/compiler/src/core';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
-import { MatDatepicker, MatDatepickerToggle } from '@angular/material';
 import { AppService } from '@app/shared/app.service';
-import { MenuRoles, PERMISSION } from '@app/models/enums';
+import { PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
@@ -29,6 +21,10 @@ export class ClientComponent implements OnInit, OnDestroy {
   client;
   loading = true;
   @Input() fromWizard: boolean = false;
+  @ViewChild('dependants')
+  dependants: DependantsListComponent;
+  @ViewChild('docsCalls')
+  docsCalls: DocsCallsListComponent;
   @ViewChild('BonafideList')
   bonafideList: BonaFideListComponent;
   taskPermissions: PERMISSION = {
@@ -46,7 +42,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     buttons: [],
   };
   constructor(
-    private fb: FormBuilder,
     private clientsService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
@@ -129,14 +124,16 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.router.navigate(['home/clients']);
   }
 
-  onSpeedDialFabClicked(ev) {
+  async onSpeedDialFabClicked(ev) {
     switch (ev.tooltip) {
       case 'Bonafide':
         this.bonafideList.goToNew();
         break;
-      case 'Dependents':
-        break;
       case 'Calls':
+        await this.docsCalls.createThread();
+        break;
+      case 'Dependents':
+        this.dependants.goToNew();
         break;
       default:
         break;
@@ -168,18 +165,18 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   toggleControls(disable: boolean) {
     if (this.reactiveForm) {
-      for (var property in this.reactiveForm.controls) {
-        if (this.reactiveForm.controls.hasOwnProperty(property)) {
-          if (disable) {
-            this.reactiveForm.get(property).disable();
-          } else {
-            this.reactiveForm.get(property).enable();
-          }
-        }
+      if (disable) {
+        this.reactiveForm.disable();
+      } else {
+        this.reactiveForm.enable();
       }
     }
   }
   onIsCallsLoading(bool: boolean) {
     this.loading = bool;
+  }
+
+  disableControls() {
+    this.clientsService.toggleEditControl.emit(true);
   }
 }

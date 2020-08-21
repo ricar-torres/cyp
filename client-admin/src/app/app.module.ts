@@ -115,11 +115,12 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { AddressComponent } from './pages/address/address.component';
 import { GeneralInformationComponent } from './pages/general-information/general-information.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
-import { DocsCallsList } from './pages/docs-calls-list/docs-calls-list.component';
+import { DocsCallsListComponent } from './pages/docs-calls-list/docs-calls-list.component';
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
-
+import { DependantComponent } from './pages/dependant/dependant.component';
+import { PreviewSsn } from './directives/ssnPipe';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -169,10 +170,12 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     GeneralInformationComponent,
     RetirementComponent,
     DocumentationCallComponent,
-    DocsCallsList,
+    DocsCallsListComponent,
     DialogSuccessComponent,
     DependantsListComponent,
     BonafidesAssociatorComponent,
+    DependantComponent,
+    PreviewSsn,
   ],
   imports: [
     BrowserModule,
@@ -240,6 +243,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     //{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     DatePipe,
     CurrencyPipe,
+    PreviewSsn,
     httpInterceptorProviders,
   ],
 

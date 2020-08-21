@@ -1,10 +1,13 @@
 <div mat-dialog-content>
   <md-content layout-margin layout-padding flex="50">
     <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
-      <mat-card>
+      <mat-card class="mat-elevation-z0">
         <mat-card-header>
           <mat-card-title
             >{{ 'DOCUMENTATION_CALL.PAGE_TITLE' | translate }}
+            <!-- <mat-card-subtitle>
+              {{ confirmationNumber }}
+            </mat-card-subtitle> -->
           </mat-card-title>
         </mat-card-header>
 
@@ -14,7 +17,12 @@
               <mat-label>{{
                 'DOCUMENTATION_CALL.CONFIRM_NUM' | translate
               }}</mat-label>
-              <input matInput [value]="confirmationNumber" readonly #num />
+              <input
+                matInput
+                [value]="confirmationNumber"
+                #num
+                formControlName="num"
+              />
             </mat-form-field>
             <mat-form-field class="full-width">
               <mat-label>{{
@@ -25,6 +33,14 @@
                   call.name
                 }}</mat-option>
               </mat-select>
+              <mat-error
+                *ngIf="
+                  reactiveForm.get('comment').hasError('required') &&
+                  reactiveForm.touched
+                "
+              >
+                {{ 'REQUIRED' | translate }}</mat-error
+              >
             </mat-form-field>
           </div>
 
@@ -39,6 +55,14 @@
                 #inputCode
                 rows="8"
               ></textarea>
+              <mat-error
+                *ngIf="
+                  reactiveForm.get('comment').hasError('required') &&
+                  reactiveForm.touched
+                "
+              >
+                {{ 'REQUIRED' | translate }}</mat-error
+              >
             </mat-form-field>
           </div>
         </mat-card-content>

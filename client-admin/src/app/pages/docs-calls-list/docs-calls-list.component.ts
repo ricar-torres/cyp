@@ -1,6 +1,4 @@
 import { LanguageService } from '../../shared/Language.service';
-import { DocCall } from '../../models/DocCall';
-import { Observable } from 'rxjs';
 import { AppService } from '@app/shared/app.service';
 import { DocumentationCallAPIService } from '../../shared/documentation-call.api.service';
 import { GenericSucessModel } from '../../models/GenericSuccessModel';
@@ -14,15 +12,6 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import {
-  ConfirmDialogModel,
-  ConfirmDialogComponent,
-} from '@app/components/confirm-dialog/confirm-dialog.component';
-import { title } from 'process';
-import { Console } from 'console';
-import { DialogGenericSuccessComponent } from '@app/components/dialog-generic-success/dialog-generic-success.component';
-import { MatTableDataSource, PageEvent } from '@angular/material';
-import { map } from 'rxjs/operators';
 import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-success.component';
 
 @Component({
@@ -30,7 +19,7 @@ import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-su
   templateUrl: './docs-calls-list.component.html',
   styleUrls: ['./docs-calls-list.component.css'],
 })
-export class DocsCallsList implements OnInit, AfterViewInit {
+export class DocsCallsListComponent implements OnInit, AfterViewInit {
   threads: any[] = [];
 
   loading: boolean;
@@ -42,8 +31,7 @@ export class DocsCallsList implements OnInit, AfterViewInit {
   constructor(
     private dialog: MatDialog,
     private apiDocCall: DocumentationCallAPIService,
-    private app: AppService,
-    private lang: LanguageService
+    private app: AppService
   ) {}
   async ngAfterViewInit() {}
 
@@ -51,7 +39,7 @@ export class DocsCallsList implements OnInit, AfterViewInit {
     await this.loadData();
   }
 
-  async createThread(masterThreadId) {
+  async createThread(masterThreadId?: string | number) {
     if (masterThreadId == null) {
       masterThreadId = '000000000000';
     }
