@@ -110,15 +110,12 @@ namespace WebApi.Services
             dependat.Phone2 = D.Phone2;
             dependat.Ssn = D.Ssn;
             dependat.UpdatedAt = D.UpdatedAt;
-            dependat.Agency = D.Agency;
             dependat.AgencyId = D.AgencyId;
             dependat.BirthDate = D.BirthDate;
             dependat.City = D.City;
             dependat.CityId = D.CityId;
-            dependat.Client = D.Client;
             dependat.ClientId = newClient.Id;
             dependat.ContractNumber = D.ContractNumber;
-            dependat.Cover = D.Cover;
             dependat.CoverId = D.CoverId;
             dependat.CreatedAt = D.CreatedAt;
             dependat.DeletedAt = D.DeletedAt;
