@@ -65,7 +65,7 @@ namespace server.Services {
 
 		public IQueryable<Dependents> GetAllByClient(int clientId) {
 			try {
-				return _context.Dependents.Where(x => !x.DeletedAt.HasValue)
+				return _context.Dependents.Where(x => !x.DeletedAt.HasValue && x.ClientId == clientId)
 					.Include(x => x.Cover)
 					.ThenInclude(x => x.HealthPlan).AsQueryable().AsNoTracking();
 			} catch (System.Exception ex) {
