@@ -30,6 +30,15 @@
     </button>
   </mat-step>
   <mat-step>
+    <ng-template matStepLabel>{{
+      'CLIENTWIZARD.ASSOCIATE_DEPENDATS' | translate
+    }}</ng-template>
+    <app-dependants-list [fromWizard]="true"></app-dependants-list>
+    <button mat-button matStepperNext>
+      {{ 'NEXT' | translate }}
+    </button>
+  </mat-step>
+  <mat-step>
     <ng-template matStepLabel>Done</ng-template>
     <p>You are now done.</p>
     <div>

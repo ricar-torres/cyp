@@ -154,9 +154,9 @@ export class ClientListComponent implements OnInit, OnDestroy {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          console.log(id);
-          await this.clientService.delete(id);
-          this.LoadClients();
+          await this.clientService.delete(id).then(() => {
+            this.LoadClients();
+          });
         }
       });
     } catch (error) {
