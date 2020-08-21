@@ -106,7 +106,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
           this.loading = false;
         }
       );
-    }
+    } catch (error) {}
   }
   goToNew(dependantId?: string | number) {
     const dialogRef = this.dialog.open(DependantComponent, {
