@@ -240,7 +240,7 @@ namespace WebApi.Services
       Address.Line2 = payload.Address?.PostalAddress.Line2;
       Address.State = payload.Address?.PostalAddress.State;
       Address.City = payload.Address?.PostalAddress.City;
-      Address.Type = payload.Address?.PostalAddress.Type;
+      Address.Type = payload.Address?.PostalAddress.Type.GetValueOrDefault();
       Address.Zip4 = payload.Address?.PostalAddress.Zip4;
       Address.Zipcode = payload.Address?.PostalAddress.Zipcode;
     }
