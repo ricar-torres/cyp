@@ -17,7 +17,7 @@ import { debug } from 'console';
   providedIn: 'root',
 })
 export class ClientWizardService {
-  DependantsList: [];
+  DependantsList = [];
   constructor(
     private formBuilder: FormBuilder,
     private languageService: LanguageService,

@@ -92,6 +92,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       if (!this.fromWizard) {
         this.apiDependant.getAllByClient(this.clientId).subscribe(
           (data: any) => {
+            console.log(data[0]);
             this.dataSource = new MatTableDataSource();
             this.dataSource.data = data;
             this.dataSource.paginator = this.paginator;
@@ -123,33 +124,57 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
 
   goToNew(dependantId?: string | number) {
-    const dialogRef = this.dialog.open(DependantComponent, {
-      width: '90%',
-      height: '60%',
-      minWidth: '90%',
-      data: { id: 0, clientId: this.clientId },
-    });
-    dialogRef.afterClosed().subscribe(async (result) => {
-      await this.loadData();
-    });
+    if (!this.fromWizard) {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { id: 0, clientId: this.clientId },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    } else {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { fromWizard: true },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    }
   }
 
-  goToDetail(id) {
-    const dialogRef = this.dialog.open(DependantComponent, {
-      width: '90%',
-      height: '60%',
-      minWidth: '90%',
-      data: { id: id, clientId: this.clientId },
-    });
-    dialogRef.afterClosed().subscribe(async (result) => {
-      await this.loadData();
-    });
+  goToDetail(element) {
+    if (!this.fromWizard) {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { id: element.id, clientId: this.clientId },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    } else {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { dependantFromWizard: element, fromWizard: true },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    }
   }
 
   doFilter(value: any) {
     this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
   }
-  async deleteConfirm(id: string) {
+  async deleteConfirm(element) {
     const message = await this.languageService.translate
       .get('DEPENDANTS_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
@@ -173,8 +198,17 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
       if (dialogResult) {
-        await this.delete(id);
-        await this.loadData();
+        if (!this.fromWizard) {
+          await this.delete(element.id).then(async () => {
+            await this.loadData();
+          });
+        } else {
+          var i = this.clientWizard.DependantsList.findIndex(
+            (x) => x.id == element.id
+          );
+          this.clientWizard.DependantsList.splice(i, 1);
+          await this.loadData();
+        }
       }
     });
   }

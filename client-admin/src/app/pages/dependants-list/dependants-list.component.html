@@ -107,7 +107,7 @@
               type="button"
               mat-button
               color="accent"
-              (click)="goToDetail(element.id)"
+              (click)="goToDetail(element)"
               *ngIf="editAccess"
             >
               <mat-icon>edit</mat-icon>
@@ -118,7 +118,7 @@
               type="button"
               mat-button
               color="warn"
-              (click)="deleteConfirm(element.id)"
+              (click)="deleteConfirm(element)"
               *ngIf="editAccess"
             >
               <mat-icon>delete</mat-icon>
