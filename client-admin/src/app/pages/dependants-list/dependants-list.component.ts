@@ -22,6 +22,7 @@ import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
 
 @Component({
   selector: 'app-dependants-list',
@@ -50,6 +51,8 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
+
+  @Input() fromWizard: boolean;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
@@ -58,7 +61,8 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
     private router: Router,
     private apiDependant: DependantsAPIService,
     private app: AppService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private clientWizard: ClientWizardService
   ) {}
   ngOnInit(): void {
     //TODO: Get access priviliges
@@ -85,29 +89,39 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   async loadData() {
     try {
       this.loading = true;
-      this.apiDependant.getAllByClient(this.clientId).subscribe(
-        (data: any) => {
-          this.dataSource = new MatTableDataSource();
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
+      if (!this.fromWizard) {
+        this.apiDependant.getAllByClient(this.clientId).subscribe(
+          (data: any) => {
+            this.dataSource = new MatTableDataSource();
+            this.dataSource.data = data;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
 
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
+            this.loading = false;
+          },
+          (error: any) => {
+            this.loading = false;
 
-          if (error.status != 401) {
-            console.error('error', error);
-            this.app.showErrorMessage('Error interno');
+            if (error.status != 401) {
+              console.error('error', error);
+              this.app.showErrorMessage('Error interno');
+            }
+          },
+          () => {
+            this.loading = false;
           }
-        },
-        () => {
-          this.loading = false;
-        }
-      );
+        );
+      } else {
+        this.dataSource = new MatTableDataSource();
+        this.dataSource.data = this.clientWizard.DependantsList;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+
+        this.loading = false;
+      }
     } catch (error) {}
   }
+
   goToNew(dependantId?: string | number) {
     const dialogRef = this.dialog.open(DependantComponent, {
       width: '90%',
