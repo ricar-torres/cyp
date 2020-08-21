@@ -130,10 +130,10 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.bonafideList.goToNew();
         break;
       case 'Calls':
-        await this.docsCalls.createThread(null);
+        await this.docsCalls.createThread();
         break;
       case 'Dependents':
-        this.dependants.goToNew(null);
+        this.dependants.goToNew();
         break;
       default:
         break;

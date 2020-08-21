@@ -24,6 +24,8 @@
   "GENERIC_ERROR": "An error has occurred please try again later.",
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
   "REQUIRED": "This Field is required",
+  "ONLY_LETTERS": "Enter only letters",
+
   "VALIDEMAIL": "Please provide a valid eail address",
   "SEARCH": "Search",
   "MALE": "Male",
@@ -360,6 +362,7 @@
     "ACTUALCOVER": "Actual Cover",
     "CONTRACT_NUM": "Contract Number",
     "EFFECTDATE": "Effective date",
-    "THREAD": "Thread"
+    "THREAD": "Thread",
+    "ONLY_LETTERS": "Enter only letters"
   }
 }

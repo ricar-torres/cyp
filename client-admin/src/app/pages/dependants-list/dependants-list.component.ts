@@ -85,7 +85,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   async loadData() {
     try {
       this.loading = true;
-      await this.apiDependant.getAllByClient('1').subscribe(
+      this.apiDependant.getAllByClient(this.clientId).subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -109,10 +109,10 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   goToNew(dependantId?: string | number) {
     const dialogRef = this.dialog.open(DependantComponent, {
-      width: '95%',
-      height: '95%',
-      minWidth: '95%',
-      data: { id: 0, clientId: 1 },
+      width: '90%',
+      height: '60%',
+      minWidth: '90%',
+      data: { id: 0, clientId: this.clientId },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       await this.loadData();
@@ -121,10 +121,10 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
 
   goToDetail(id) {
     const dialogRef = this.dialog.open(DependantComponent, {
-      width: '95%',
-      height: '95%',
-      minWidth: '95%',
-      data: { id: id, clientId: 1 },
+      width: '90%',
+      height: '60%',
+      minWidth: '90%',
+      data: { id: 0, clientId: this.clientId },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       await this.loadData();

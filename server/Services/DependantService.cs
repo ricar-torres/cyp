@@ -37,7 +37,9 @@ namespace server.Services {
 				payload.CreatedAt = DateTime.Now;
 				this._context.Dependents.Add(payload);
 				this._context.SaveChanges();
-			} catch (System.Exception ex) { }
+			} catch (System.Exception ex) {
+				throw ex;
+			}
 
 			return payload;
 		}

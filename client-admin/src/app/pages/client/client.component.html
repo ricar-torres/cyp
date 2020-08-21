@@ -47,6 +47,9 @@
                 >
                   {{ 'REQUIRED' | translate }}
                 </mat-error>
+                <mat-error *ngIf="reactiveForm.get('Name').hasError('pattern')">
+                  {{ 'ONLY_LETTERS' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="30%">
@@ -66,7 +69,7 @@
 
               <mat-form-field fxFlex="10%">
                 <mat-label>{{ 'CLIENTS.INITIAL' | translate }}</mat-label>
-                <input matInput formControlName="Initial" />
+                <input matInput formControlName="Initial" mask="A" />
               </mat-form-field>
             </div>
             <!-- contact row -->
@@ -147,6 +150,13 @@
                     'FEMALE' | translate
                   }}</mat-option>
                 </mat-select>
+                <mat-error>
+                  <mat-error
+                    *ngIf="reactiveForm.get('Gender').hasError('required')"
+                  >
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex>
@@ -160,7 +170,10 @@
                   matSuffix
                   [for]="birthDatePiker"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #birthDatePiker></mat-datepicker>
+                <mat-datepicker
+                  #birthDatePiker
+                  disabled="false"
+                ></mat-datepicker>
               </mat-form-field>
             </div>
             <!-- <mat-form-field fxFlex>
@@ -235,14 +248,6 @@
               ></app-docs-calls-list>
             </mat-tab>
           </mat-tab-group>
-          <button
-            type="button"
-            mat-flat-button
-            color="primary"
-            (click)="disableControls()"
-          >
-            Disable Controls
-          </button>
         </mat-card-content>
       </mat-card>
     </form>

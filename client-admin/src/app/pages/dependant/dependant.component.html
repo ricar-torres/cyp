@@ -5,7 +5,7 @@
     </button>
   </div> -->
   <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
-    <mat-card>
+    <mat-card class="mat-elevation-z0">
       <mat-card-header>
         <mat-card-title
           >{{ 'DEPENDANT.PAGE_TITLE' | translate }}
@@ -20,24 +20,87 @@
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
             <input formControlName="name" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('name').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'DEPENDANT.ONLY_PATTERN' | translate }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                reactiveForm.get('name').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.INITIAL' | translate }}</mat-label>
-            <input formControlName="initial" matInput />
+            <input formControlName="initial" matInput mask="A" />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('initial').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'ONLY_LETTERS' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.LASTNAME1' | translate }}</mat-label>
             <input formControlName="lastname1" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('lastname1').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                reactiveForm.get('lastname1').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'ONLY_LETTERS' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.LASTNAME2' | translate }}</mat-label>
             <input formControlName="lastname2" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('lastname2').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            ><mat-error
+              *ngIf="
+                reactiveForm.get('lastname2').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'ONLY_LETTERS' | translate }}</mat-error
+            >
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutGap="5px">
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.SSN' | translate }}</mat-label>
             <input formControlName="ssn" matInput mask="000-00-0000" />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('ssn').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.BIRTHDAY' | translate }}</mat-label>
@@ -52,11 +115,19 @@
               matSuffix
               [for]="pickerBirth"
             ></mat-datepicker-toggle>
-            <mat-datepicker #pickerBirth></mat-datepicker>
+            <mat-datepicker #pickerBirth disabled="false"></mat-datepicker>
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.EMAIL' | translate }}</mat-label>
             <input formControlName="email" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('email').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.GENDER' | translate }}</mat-label>
@@ -65,12 +136,28 @@
               <mat-option [value]="1">{{ 'MALE' | translate }}</mat-option>
               <mat-option [value]="2">{{ 'FEMALE' | translate }}</mat-option>
             </mat-select>
+            <mat-error
+              *ngIf="
+                reactiveForm.get('gender').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutGap="5px">
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.PHONE_PRIMARY' | translate }}</mat-label>
             <input formControlName="phone1" matInput mask="000-00-0000" />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('phone1').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.PHONE_SECONDARY' | translate }}</mat-label>
@@ -83,6 +170,14 @@
                 rel.name
               }}</mat-option>
             </mat-select>
+            <mat-error
+              *ngIf="
+                reactiveForm.get('relationship').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
         </div>
         <div fxLayout="row" fxLayoutGap="5px">
@@ -101,6 +196,14 @@
                 c.name
               }}</mat-option>
             </mat-select>
+            <mat-error
+              *ngIf="
+                reactiveForm.get('coverId').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.CONTRACT_NUM' | translate }}</mat-label>
@@ -118,7 +221,7 @@
               matSuffix
               [for]="pickerEff"
             ></mat-datepicker-toggle>
-            <mat-datepicker #pickerEff></mat-datepicker>
+            <mat-datepicker #pickerEff disabled="false"></mat-datepicker>
           </mat-form-field>
           <mat-form-field hidden>
             <input matInput formControlName="id" />

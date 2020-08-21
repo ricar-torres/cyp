@@ -78,9 +78,12 @@ export class DocumentationCallComponent implements OnInit {
 
   initForm() {
     this.reactiveForm = this.formBuilder.group({
-      num: new FormControl(),
-      type: new FormControl('', [Validators.required]),
-      comment: new FormControl('', [Validators.required]),
+      num: this.formBuilder.control({
+        value: this.confirmationNumber,
+        disabled: true,
+      }),
+      type: this.formBuilder.control('', [Validators.required]),
+      comment: this.formBuilder.control('', [Validators.required]),
     });
   }
 
@@ -102,9 +105,9 @@ export class DocumentationCallComponent implements OnInit {
       },
     });
 
-    dialogRef.afterClosed().subscribe((result) => {
-      console.log('The dialog was closed');
-    });
+    // dialogRef.afterClosed().subscribe((result) => {
+    //   console.log('The dialog was closed');
+    // });
   }
 
   async onSubmit() {

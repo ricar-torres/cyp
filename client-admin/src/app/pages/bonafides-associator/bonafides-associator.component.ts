@@ -58,7 +58,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       this.clientWizard.BonafideList.forEach((x) => {
         var itmIndex = this.availableBonafides.findIndex((b) => b.id == x.id);
         if (itmIndex != -1) {
-          console.log('removed', itmIndex);
+          // console.log('removed', itmIndex);
           this.availableBonafides.splice(itmIndex, 1);
         }
       });
