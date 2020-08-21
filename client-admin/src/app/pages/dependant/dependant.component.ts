@@ -40,9 +40,10 @@ export class DependantComponent implements OnInit, AfterViewInit {
     this.clientId = data.clientId;
   }
   async ngAfterViewInit() {
+    console.log(JSON.stringify(this.dependantId));
     if (this.dependantId) {
       this.dependant = await this.apiDependant.getById(this.dependantId);
-      // console.log(JSON.stringify(this.dependant));
+      console.log(JSON.stringify(this.dependant));
       this.reactiveForm.get('id').setValue(this.dependant.id);
       this.reactiveForm.get('name').setValue(this.dependant.name);
       this.reactiveForm.get('initial').setValue(this.dependant.initial);
@@ -125,7 +126,7 @@ export class DependantComponent implements OnInit, AfterViewInit {
   async onSubmit() {
     try {
       this.loading = true;
-      var payload = this.reactiveForm.value;
+      var payload = this.reactiveForm.getRawValue();
       // console.log(JSON.stringify(this.reactiveForm.value));
       if (this.dependantId > 0) {
         const res: any = await this.apiDependant.update(payload);
