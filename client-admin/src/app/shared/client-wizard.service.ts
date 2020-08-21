@@ -187,7 +187,7 @@ export class ClientWizardService {
 
   private addValues() {
     var buff = Object.assign(
-      this.clientDemographic.value,
+      this.clientDemographic.getRawValue(),
       this.generalInformationForm.value
     );
     buff['Tutors'] = [this.tutorInformation.value];
