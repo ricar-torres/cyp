@@ -1,3 +1,4 @@
+import { PreviewSsn } from './../../directives/ssnPipe';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import {
   PageEvent,

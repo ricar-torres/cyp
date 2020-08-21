@@ -96,7 +96,7 @@ export class BonaFideListComponent implements OnInit {
         },
         (error) => {
           this.loading = false;
-          console.log('error', error);
+          // console.log('error', error);
           this.languageService.translate
             .get('GENERIC_ERROR')
             .subscribe((res) => {

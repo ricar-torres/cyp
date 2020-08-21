@@ -83,31 +83,9 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
 
   async loadData() {
-    this.loading = true;
-    if (this.clientId) {
-      await this.apiDependant.getAllByClient(this.clientId).subscribe(
-        (data: any) => {
-          this.dataSource = new MatTableDataSource();
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-
-          if (error.status != 401) {
-            console.error('error', error);
-            this.app.showErrorMessage('Error interno');
-          }
-        },
-        () => {
-          this.loading = false;
-        }
-      );
-    } else {
-      await this.apiDependant.getAllByClient('1').subscribe(
+    try {
+      this.loading = true;
+      this.apiDependant.getAllByClient(this.clientId).subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -132,10 +110,10 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   goToNew(dependantId?: string | number) {
     const dialogRef = this.dialog.open(DependantComponent, {
-      width: '95%',
-      height: '95%',
-      minWidth: '95%',
-      data: { id: 0, clientId: 1 },
+      width: '90%',
+      height: '60%',
+      minWidth: '90%',
+      data: { id: 0, clientId: this.clientId },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       await this.loadData();
@@ -144,10 +122,10 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
 
   goToDetail(id) {
     const dialogRef = this.dialog.open(DependantComponent, {
-      width: '95%',
-      height: '95%',
-      minWidth: '95%',
-      data: { id: id, clientId: 1 },
+      width: '90%',
+      height: '60%',
+      minWidth: '90%',
+      data: { id: 0, clientId: this.clientId },
     });
     dialogRef.afterClosed().subscribe(async (result) => {
       await this.loadData();

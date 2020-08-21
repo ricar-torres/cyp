@@ -20,7 +20,6 @@ export class DependantComponent implements OnInit, AfterViewInit {
   clientId: string | number;
   dependant: any;
   reactiveForm: FormGroup;
-  genreOptions = ['DEPENDANT.MALE', 'DEPENDANT.FEMALE'];
   covers: any = [];
   healthPlans: any = [];
   relations: any = [];
@@ -90,35 +89,27 @@ export class DependantComponent implements OnInit, AfterViewInit {
       clientId: this.clientId,
       name: this.formBuilder.control('', [
         Validators.required,
-        Validators.minLength(2),
         Validators.maxLength(250),
-        Validators.pattern(
-          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
-        ),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
       initial: this.formBuilder.control('', [
         Validators.maxLength(1),
-        Validators.pattern(
-          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
-        ),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
       lastname1: this.formBuilder.control('', [
         Validators.required,
-        Validators.minLength(2),
         Validators.maxLength(250),
-        Validators.pattern(
-          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
-        ),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
       lastname2: this.formBuilder.control('', [
         Validators.required,
-        Validators.minLength(2),
         Validators.maxLength(250),
-        Validators.pattern(
-          new RegExp(`^[A-Z\u00C0-\u00FF]{1}[A-Za-z\u00C0-\u00FF]*$`)
-        ),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
-      birthDate: this.formBuilder.control('', [Validators.required]),
+      birthDate: this.formBuilder.control({ value: '', disabled: true }, [
+        Validators.required,
+        // Validators.pattern(new RegExp(`^[0-9]{2}[0-9]{2}[0-9]{4}*$`)),
+      ]),
       ssn: this.formBuilder.control('', [Validators.required]),
       email: this.formBuilder.control('', [Validators.maxLength(250)]),
       gender: this.formBuilder.control('', [Validators.required]),
@@ -128,7 +119,7 @@ export class DependantComponent implements OnInit, AfterViewInit {
       healthPlanId: this.formBuilder.control(''),
       coverId: this.formBuilder.control('', [Validators.required]),
       contractNumber: this.formBuilder.control(''),
-      effectiveDate: this.formBuilder.control(''),
+      effectiveDate: this.formBuilder.control({ value: '', disabled: true }),
     });
   }
   async onSubmit() {

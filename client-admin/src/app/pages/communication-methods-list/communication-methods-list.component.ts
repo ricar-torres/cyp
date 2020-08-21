@@ -131,7 +131,7 @@ export class CommunicationMethodsListComponent
 
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
       if (dialogResult) {
-        console.log(id);
+        // console.log(id);
         await this.delete(id);
         await this.loadCommunicationMethods();
       }

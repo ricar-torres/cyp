@@ -120,7 +120,7 @@ import { DialogSuccessComponent } from './components/dialog-success/dialog-succe
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
 import { DependantComponent } from './pages/dependant/dependant.component';
-
+import { PreviewSsn } from './directives/ssnPipe';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -175,6 +175,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     DependantsListComponent,
     BonafidesAssociatorComponent,
     DependantComponent,
+    PreviewSsn,
   ],
   imports: [
     BrowserModule,
@@ -242,6 +243,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     //{ provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true },
     DatePipe,
     CurrencyPipe,
+    PreviewSsn,
     httpInterceptorProviders,
   ],
 

@@ -29,14 +29,40 @@ export class ClientWizardService {
 
   clientDemographic = this.formBuilder.group({
     Id: [null],
-    Name: [null, [Validators.required]],
-    LastName1: [null, [Validators.required]],
-    LastName2: [null],
+    Name: [
+      null,
+      [
+        Validators.required,
+        Validators.maxLength(250),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
+      ],
+    ],
+    LastName1: [
+      null,
+      [
+        Validators.required,
+        Validators.maxLength(250),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
+      ],
+    ],
+    LastName2: [
+      null,
+      [
+        Validators.maxLength(250),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
+      ],
+    ],
     Email: [null, [Validators.email]],
-    Initial: [null],
+    Initial: [
+      null,
+      [
+        Validators.maxLength(1),
+        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
+      ],
+    ],
     Ssn: [null, [Validators.required]],
-    Gender: [null],
-    BirthDate: [null],
+    Gender: [null, [Validators.required]],
+    BirthDate: [{ value: null, disabled: true }, [Validators.required]],
     MaritalStatus: [null],
     Phone1: [null, [Validators.required]],
     Phone2: [null],
@@ -78,7 +104,7 @@ export class ClientWizardService {
   generalInformationForm = this.formBuilder.group({
     AgencyId: [null],
     CoverId: [null],
-    EffectiveDate: [null],
+    EffectiveDate: [{ value: null, disabled: true }],
     HealthPlan: [null],
     MedicareA: [null],
     MedicareB: [null],
@@ -165,12 +191,12 @@ export class ClientWizardService {
       this.generalInformationForm.value
     );
     buff['Tutors'] = [this.tutorInformation.value];
-    console.log(buff);
+    // console.log(buff);
     return buff;
   }
 
   private adaptInfoForGUI(agency: any) {
-    console.log(agency);
+    // console.log(agency);
     this.generalInformationForm.get('AgencyId').setValue(agency);
   }
 
