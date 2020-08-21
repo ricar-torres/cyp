@@ -41,24 +41,23 @@ namespace WebApi.Services
       {
 
         payload = _context.Clients.Where(ag => ag.DeletedAt == null).ToList();
-        payload.ForEach(each =>
-        {
-          //uncoment to only show last 4 in client list
-          // if (each.Ssn != null && each.Ssn.Length >= 9)
-          // {
-          //   var filteredSsn = each.Ssn.Replace("-", "");
-          //   each.Ssn = "XXX-XX-" + filteredSsn.Substring(5, 4);
-          // };
-
-        });
-
+        //uncomment to only show last 4 in client list
+        // payload.ForEach(each =>
+        // {
+        //   if (each.Ssn != null && each.Ssn.Length >= 9)
+        //   {
+        //     var filteredSsn = each.Ssn.Replace("-", "");
+        //     each.Ssn = "XXX-XX-" + filteredSsn.Substring(5, 4);
+        //   };
+        // });
+        return payload;
       }
       catch (Exception ex)
       {
         throw ex;
       }
 
-      return payload;
+
     }
 
     public Clients GetById(int id)
