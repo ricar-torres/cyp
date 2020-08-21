@@ -50,7 +50,6 @@ export class BonaFideListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   loading = true;
-
   @Input() clientId: string;
   @Input() fromWizard: string;
   @ViewChild(MatSort) sort: MatSort;
@@ -79,15 +78,16 @@ export class BonaFideListComponent implements OnInit {
 
   private loadBonafides() {
     if (this.fromWizard) {
+      this.loading = true;
       this.dataSource = new MatTableDataSource();
       this.dataSource.data = this.clietnWizard.BonafideList;
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loading = false;
     } else {
+      this.loading = true;
       this.bonafidesService.getAll(this.clientId).subscribe(
         (res) => {
-          this.loading = true;
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = res;
           this.dataSource.paginator = this.paginator;
@@ -182,7 +182,7 @@ export class BonaFideListComponent implements OnInit {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '50%',
+        height: '30%',
         data: { clientId: this.clientId, bonafideId: id },
       });
 
@@ -192,7 +192,7 @@ export class BonaFideListComponent implements OnInit {
     } else if (this.fromWizard) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '50%',
+        height: '30%',
         data: { clientId: this.clientId, listItem: id },
       });
 
@@ -208,7 +208,7 @@ export class BonaFideListComponent implements OnInit {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '50%',
+        height: '30%',
         data: { clientId: this.clientId, bonafideId: null },
       });
       dialogRef.afterClosed().subscribe((result) => {
@@ -217,7 +217,7 @@ export class BonaFideListComponent implements OnInit {
     } else if (this.fromWizard) {
       const pepe = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '50%',
+        height: '30%',
         data: { clientId: null, bonafideId: null, fromWizard: true },
       });
       pepe.afterClosed().subscribe((result) => {

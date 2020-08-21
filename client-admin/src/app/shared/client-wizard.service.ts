@@ -121,6 +121,8 @@ export class ClientWizardService {
     this.secondFormGroup.reset();
     this.generalInformationForm.reset();
     this.tutorInformation.reset();
+    this.BonafideList = [];
+    this.DependantsList = [];
   }
 
   async preRegister() {
@@ -153,6 +155,7 @@ export class ClientWizardService {
         Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
         Bonafides: this.BonafideList,
+        Dependants: this.DependantsList,
       };
       await this.clientService.create(ClientInforation);
       if (agency) this.adaptInfoForGUI(agency);

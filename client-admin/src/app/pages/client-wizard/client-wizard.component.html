@@ -25,25 +25,14 @@
     <button mat-button matStepperNext>
       {{ 'NEXT' | translate }}
     </button>
-    <button (click)="register()" mat-button matStepperNext>
-      {{ 'SAVE' | translate }}
-    </button>
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>{{
       'CLIENTWIZARD.ASSOCIATE_DEPENDATS' | translate
     }}</ng-template>
     <app-dependants-list [fromWizard]="true"></app-dependants-list>
-    <button mat-button matStepperNext>
-      {{ 'NEXT' | translate }}
+    <button (click)="register()" mat-button matStepperNext>
+      {{ 'SAVE' | translate }}
     </button>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>
   </mat-step>
 </mat-horizontal-stepper>

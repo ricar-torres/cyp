@@ -41,15 +41,15 @@ namespace WebApi.Services
       {
 
         payload = _context.Clients.Where(ag => ag.DeletedAt == null).ToList();
-        //uncomment to only show last 4 in client list
-        // payload.ForEach(each =>
-        // {
-        //   if (each.Ssn != null && each.Ssn.Length >= 9)
-        //   {
-        //     var filteredSsn = each.Ssn.Replace("-", "");
-        //     each.Ssn = "XXX-XX-" + filteredSsn.Substring(5, 4);
-        //   };
-        // });
+        //only show last 4 in client list
+        payload.ForEach(each =>
+        {
+          if (each.Ssn != null && each.Ssn.Length >= 9)
+          {
+            var filteredSsn = each.Ssn.Replace("-", "");
+            each.Ssn = "XXX-XX-" + filteredSsn.Substring(5, 4);
+          };
+        });
         return payload;
       }
       catch (Exception ex)
@@ -97,6 +97,38 @@ namespace WebApi.Services
           payload.Demographic.Id = newClient.Id;
           TutorBuilder(payload);
           ClientChapterAssociationBuilder(payload.Bonafides, newClient.Id);
+
+          List<Dependents> dependentsList = new List<Dependents>();
+          payload.Dependants.ForEach(D =>
+          {
+            var dependat = new Dependents();
+            dependat.Name = D.Name;
+            dependat.Initial = D.Initial;
+            dependat.LastName1 = D.LastName1;
+            dependat.LastName2 = D.LastName2;
+            dependat.Phone1 = D.Phone1;
+            dependat.Phone2 = D.Phone2;
+            dependat.Ssn = D.Ssn;
+            dependat.UpdatedAt = D.UpdatedAt;
+            dependat.Agency = D.Agency;
+            dependat.AgencyId = D.AgencyId;
+            dependat.BirthDate = D.BirthDate;
+            dependat.City = D.City;
+            dependat.CityId = D.CityId;
+            dependat.Client = D.Client;
+            dependat.ClientId = newClient.Id;
+            dependat.ContractNumber = D.ContractNumber;
+            dependat.Cover = D.Cover;
+            dependat.CoverId = D.CoverId;
+            dependat.CreatedAt = D.CreatedAt;
+            dependat.DeletedAt = D.DeletedAt;
+            dependat.EffectiveDate = D.EffectiveDate;
+            dependat.Email = D.Email;
+            dependat.Gender = D.Gender;
+            dependentsList.Add(dependat);
+          });
+          _context.Dependents.AddRange(dependentsList);
+
           _context.SaveChanges();
         }
         return payload;

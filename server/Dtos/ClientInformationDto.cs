@@ -18,5 +18,6 @@ namespace server.Dtos
     public ClientsDto Demographic { get; set; }
     public PhysicalPostalAddresses Address { get; set; }
     public List<BonaFidesDto> Bonafides { get; set; }
+    public List<DependentDto> Dependants { get; set; }
   }
 }
