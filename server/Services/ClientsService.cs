@@ -122,6 +122,7 @@ namespace WebApi.Services
             dependat.EffectiveDate = D.EffectiveDate;
             dependat.Email = D.Email;
             dependat.Gender = D.Gender;
+            dependat.Relationship = D.Relationship.Id;
             dependentsList.Add(dependat);
           });
           _context.Dependents.AddRange(dependentsList);
