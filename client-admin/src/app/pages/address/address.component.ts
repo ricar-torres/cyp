@@ -7,7 +7,6 @@ import { AddressService } from '@app/shared/address.service';
 import { LanguageService } from '@app/shared/Language.service';
 import { AppService } from '@app/shared/app.service';
 import { MatSlideToggleChange } from '@angular/material';
-
 @Component({
   selector: 'app-client-address',
   templateUrl: './address.component.html',
@@ -17,7 +16,7 @@ export class AddressComponent implements OnInit {
   @Input() fromWizard: boolean = false;
   @Input() clientid: string;
 
-  sameAsPhysical: FormControl;
+  sameAsPhysical: FormControl = new FormControl();
 
   countries: [];
   cities: [];
@@ -119,6 +118,11 @@ export class AddressComponent implements OnInit {
       this.reactiveForm.get('PostalAddress').get('State').setValue('PR');
       this.reactiveForm.get('PhysicalAddress').get('State').disable();
       this.reactiveForm.get('PostalAddress').get('State').disable();
+
+      this.isSameAddress(
+        (<FormGroup>this.reactiveForm.get('PhysicalAddress')).value,
+        (<FormGroup>this.reactiveForm.get('PostalAddress')).value
+      );
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -131,6 +135,17 @@ export class AddressComponent implements OnInit {
     this.clientsService.toggleEditControl.subscribe((val) => {
       this.toggleControls(val);
     });
+  }
+
+  isSameAddress(address1, address2) {
+    debugger;
+    if (
+      address1.Line1 == address2.Line1 &&
+      address1.Line2 == address2.Line2 &&
+      address1.City == address2.City
+    ) {
+      this.sameAsPhysical.setValue(1);
+    }
   }
 
   toggleControls(disable: boolean) {
