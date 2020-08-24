@@ -92,7 +92,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       if (!this.fromWizard) {
         this.apiDependant.getAllByClient(this.clientId).subscribe(
           (data: any) => {
-            console.log(data[0]);
+            //console.log(data[0]);
             this.dataSource = new MatTableDataSource();
             this.dataSource.data = data;
             this.dataSource.paginator = this.paginator;
