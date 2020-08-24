@@ -13,7 +13,12 @@
     >
       {{ 'CLIENTWIZARD.PREREGISTER' | translate }}
     </button>
-    <button mat-button matStepperNext>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
@@ -22,10 +27,15 @@
       'CLIENTWIZARD.BONAFIDES_ASSOCIATION' | translate
     }}</ng-template>
     <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
-    <button mat-button matStepperPrevious>
+    <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button mat-button matStepperNext>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
@@ -34,10 +44,16 @@
       'CLIENTWIZARD.ASSOCIATE_DEPENDATS' | translate
     }}</ng-template>
     <app-dependants-list [fromWizard]="true"></app-dependants-list>
-    <button mat-button matStepperPrevious>
+    <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button (click)="register()" mat-button matStepperNext>
+    <button
+      class="button-space"
+      (click)="register()"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
       {{ 'FINISH' | translate }}
     </button>
   </mat-step>
