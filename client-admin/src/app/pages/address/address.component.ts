@@ -7,6 +7,8 @@ import { AddressService } from '@app/shared/address.service';
 import { LanguageService } from '@app/shared/Language.service';
 import { AppService } from '@app/shared/app.service';
 import { MatSlideToggleChange } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-client-address',
   templateUrl: './address.component.html',
@@ -18,6 +20,7 @@ export class AddressComponent implements OnInit {
 
   sameAsPhysical: FormControl = new FormControl();
 
+  sameAddressSubscription: Observable<any>;
   countries: [];
   cities: [];
   reactiveForm: FormGroup;
@@ -37,6 +40,19 @@ export class AddressComponent implements OnInit {
       this.cities = await this.addressService.getCities();
 
       this.reactiveForm = this.clientWizard.clientAddressFormGroup;
+
+      this.sameAddressSubscription = this.reactiveForm
+        .get('PhysicalAddress')
+        .valueChanges.pipe(
+          map(() => {
+            if (this.sameAsPhysical.value) {
+              this.reactiveForm
+                .get('PostalAddress')
+                .patchValue(this.reactiveForm.get('PhysicalAddress').value);
+            }
+          })
+        );
+
       if (!this.fromWizard) {
         var addresses: any = await this.addressService.getClientAddress(
           this.clientid
@@ -171,8 +187,10 @@ export class AddressComponent implements OnInit {
       this.reactiveForm
         .get('PostalAddress')
         .patchValue(this.reactiveForm.get('PhysicalAddress').value);
+      this.sameAddressSubscription.subscribe();
       return;
     }
+    //this.sameAddressSubscription.unsubscribe();
     this.reactiveForm.get('PostalAddress').reset();
   }
 }
