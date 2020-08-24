@@ -138,8 +138,16 @@ export class AddressComponent implements OnInit {
   }
 
   isSameAddress(address1, address2) {
-    debugger;
     if (
+      address1.Line1 == null &&
+      address2.Line1 == null &&
+      address1.Line2 == null &&
+      address2.Line2 == null &&
+      address1.City == null &&
+      address2.City == null
+    ) {
+      this.sameAsPhysical.setValue(0);
+    } else if (
       address1.Line1 == address2.Line1 &&
       address1.Line2 == address2.Line2 &&
       address1.City == address2.City
