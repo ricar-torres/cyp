@@ -189,7 +189,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.finishedLoading();
   }
   finishedLoading() {
-    console.log(this.loadingBonafide, this.loadingCalls, this.loadingDepen);
     return (this.loading =
       this.loadingBonafide || this.loadingCalls || this.loadingDepen);
   }

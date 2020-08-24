@@ -96,20 +96,20 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
       if (!this.fromWizard) {
         this.apiDependant.getAllByClient(this.clientId).subscribe(
           (data: any) => {
+            this.loading = true;
+            this.isLoadingEvent.emit(this.loading);
             this.dataSource = new MatTableDataSource();
             this.dataSource.data = data;
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
-
             this.loading = false;
             this.isLoadingEvent.emit(this.loading);
           },
           (error: any) => {
             this.loading = false;
             this.isLoadingEvent.emit(this.loading);
-
             if (error.status != 401) {
-              console.error('error', error);
+              //console.error('error', error);
               this.app.showErrorMessage('Error interno');
             }
           },
@@ -119,12 +119,14 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
           }
         );
       } else {
+        this.loading = true;
+        this.isLoadingEvent.emit(this.loading);
         this.dataSource = new MatTableDataSource();
         this.dataSource.data = this.clientWizard.DependantsList;
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-
         this.loading = false;
+        this.isLoadingEvent.emit(this.loading);
       }
     } catch (error) {}
   }
