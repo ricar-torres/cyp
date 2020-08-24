@@ -131,7 +131,8 @@
     "MEDICAREA": "Medicare A",
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "El 'SSN' provisto no esta disponible",
-    "SSNREQUIRED": "SSN es requerido"
+    "SSNREQUIRED": "SSN es requerido",
+    "SAMEADDRESS": "Usar dirección fisica"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

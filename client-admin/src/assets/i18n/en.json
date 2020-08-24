@@ -131,7 +131,8 @@
     "MEDICAREA": "Medicare A",
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "Provided SSN is already in record",
-    "SSNREQUIRED": "SSN must be provided"
+    "SSNREQUIRED": "SSN must be provided",
+    "SAMEADDRESS": "Use Physical Address"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
