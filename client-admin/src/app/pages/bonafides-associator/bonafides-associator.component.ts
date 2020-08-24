@@ -33,6 +33,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    debugger;
     this.reactiveForm = this.fb.group({
       Id: [null],
       ChapterId: [null, [Validators.required]],
@@ -48,26 +49,26 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       );
     });
 
-    if (this.data.fromWizard) {
+    if (this.data.clientId) {
+      this.availableBonafides = await this.bonafideService.getAvailableBonafides(
+        this.data.clientId
+      );
+    } else {
       this.availableBonafides = await this.bonafideService
         .getAll(undefined)
         .toPromise();
     }
 
-    if (!this.data.listItem && this.data.fromWizard) {
+    if (this.data.fromWizard) {
       this.clientWizard.BonafideList.forEach((x) => {
         var itmIndex = this.availableBonafides.findIndex((b) => b.id == x.id);
-        if (itmIndex != -1) {
-          // console.log('removed', itmIndex);
+        if (
+          itmIndex != -1 &&
+          this.availableBonafides[itmIndex].id != this.data.listItem
+        ) {
           this.availableBonafides.splice(itmIndex, 1);
         }
       });
-    }
-
-    if (this.data.clientId) {
-      this.availableBonafides = await this.bonafideService.getAvailableBonafides(
-        this.data.clientId
-      );
     }
 
     if (this.data.listItem) {
@@ -113,7 +114,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
   }
 
   async saveChapterClient() {
-    if (this.data.fromWizard) {
+    if (this.data.fromWizard && !this.data.listItem) {
       var bonafidesSelected = this.availableBonafides.find(
         (x) => x.id == this.bonafides.value
       );

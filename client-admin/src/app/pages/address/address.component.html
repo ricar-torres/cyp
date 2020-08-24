@@ -60,13 +60,15 @@
     </mat-card>
 
     <mat-card formGroupName="PostalAddress">
-      <mat-card-header>
+      <mat-card-header fxLayoutAlign="space-between">
         <mat-card-title>
           {{ 'CLIENTS.PHOSTALADDRESS' | translate }}
         </mat-card-title>
-        <!-- <mat-card-subtitle>
-                    {{ clientid ? '#' + clientid : '' }}</mat-card-subtitle
-                  > -->
+        <mat-slide-toggle
+          [formControl]="sameAsPhysical"
+          (change)="usePhysical($event)"
+          >Slide me!</mat-slide-toggle
+        >
       </mat-card-header>
       <mat-card-content>
         <mat-form-field class="width-with-space">

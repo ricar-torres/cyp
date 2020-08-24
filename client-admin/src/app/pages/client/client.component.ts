@@ -59,6 +59,11 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.setupFabButton();
       this.clientid = this.route.snapshot.paramMap.get('id');
       this.client = await this.clientsService.client(this.clientid);
+      this.reactiveForm
+        .get('Ssn')
+        .setAsyncValidators(
+          this.clientWizard.checkSsn(this.client.ssn).bind(this)
+        );
       this.reactiveForm.get('Id').setValue(this.client.id);
       this.reactiveForm.get('Name').setValue(this.client.name);
       this.reactiveForm.get('LastName1').setValue(this.client.lastName1);
@@ -73,11 +78,6 @@ export class ClientComponent implements OnInit, OnDestroy {
         .setValue(this.client.maritalStatus);
       this.reactiveForm.get('Phone1').setValue(this.client.phone1);
       this.reactiveForm.get('Phone2').setValue(this.client.phone2);
-      this.reactiveForm
-        .get('Ssn')
-        .setAsyncValidators(
-          this.clientWizard.checkSsn(this.client.ssn).bind(this)
-        );
     } else {
       this.reactiveForm
         .get('Ssn')

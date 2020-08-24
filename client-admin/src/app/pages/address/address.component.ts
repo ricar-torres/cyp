@@ -1,11 +1,12 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClientService } from '@app/shared/client.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { AddressService } from '@app/shared/address.service';
 import { LanguageService } from '@app/shared/Language.service';
 import { AppService } from '@app/shared/app.service';
+import { MatSlideToggleChange } from '@angular/material';
 
 @Component({
   selector: 'app-client-address',
@@ -15,6 +16,8 @@ import { AppService } from '@app/shared/app.service';
 export class AddressComponent implements OnInit {
   @Input() fromWizard: boolean = false;
   @Input() clientid: string;
+
+  sameAsPhysical: FormControl;
 
   countries: [];
   cities: [];
@@ -28,8 +31,6 @@ export class AddressComponent implements OnInit {
     private languageService: LanguageService,
     private app: AppService
   ) {}
-
-  onSubmit() {}
 
   async ngOnInit() {
     try {
@@ -140,5 +141,15 @@ export class AddressComponent implements OnInit {
         this.reactiveForm.enable();
       }
     }
+  }
+
+  usePhysical(ev: MatSlideToggleChange) {
+    if (ev.checked) {
+      this.reactiveForm
+        .get('PostalAddress')
+        .patchValue(this.reactiveForm.get('PhysicalAddress').value);
+      return;
+    }
+    this.reactiveForm.get('PostalAddress').reset();
   }
 }
