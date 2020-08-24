@@ -51,10 +51,10 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.LASTNAME1' | translate }}</mat-label>
-            <input formControlName="lastname1" matInput />
+            <input formControlName="lastName1" matInput />
             <mat-error
               *ngIf="
-                reactiveForm.get('lastname1').hasError('required') &&
+                reactiveForm.get('lastName1').hasError('required') &&
                 reactiveForm.touched
               "
             >
@@ -62,7 +62,7 @@
             >
             <mat-error
               *ngIf="
-                reactiveForm.get('lastname1').hasError('pattern') &&
+                reactiveForm.get('lastName1').hasError('pattern') &&
                 reactiveForm.touched
               "
             >
@@ -71,17 +71,17 @@
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.LASTNAME2' | translate }}</mat-label>
-            <input formControlName="lastname2" matInput />
+            <input formControlName="lastName2" matInput />
             <mat-error
               *ngIf="
-                reactiveForm.get('lastname2').hasError('required') &&
+                reactiveForm.get('lastName2').hasError('required') &&
                 reactiveForm.touched
               "
             >
               {{ 'REQUIRED' | translate }}</mat-error
             ><mat-error
               *ngIf="
-                reactiveForm.get('lastname2').hasError('pattern') &&
+                reactiveForm.get('lastName2').hasError('pattern') &&
                 reactiveForm.touched
               "
             >

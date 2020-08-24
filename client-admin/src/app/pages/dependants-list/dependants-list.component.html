@@ -6,7 +6,7 @@
       }}</mat-card-title>
     </mat-card-header>
     <mat-card-content>
-      <!-- <div fxLayout fxLayoutAlign="end start">
+      <div fxLayout fxLayoutAlign="end start" *ngIf="fromWizard">
         <button
           type="button"
           mat-raised-button
@@ -17,7 +17,7 @@
           <mat-icon>add</mat-icon>
           {{ 'ADD_BTN' | translate }}
         </button>
-      </div> -->
+      </div>
 
       <div fxLayout>
         <mat-form-field class="search-form">
@@ -107,7 +107,7 @@
               type="button"
               mat-button
               color="accent"
-              (click)="goToDetail(element.id)"
+              (click)="goToDetail(element)"
               *ngIf="editAccess"
             >
               <mat-icon>edit</mat-icon>
@@ -118,7 +118,7 @@
               type="button"
               mat-button
               color="warn"
-              (click)="deleteConfirm(element.id)"
+              (click)="deleteConfirm(element)"
               *ngIf="editAccess"
             >
               <mat-icon>delete</mat-icon>

@@ -200,7 +200,8 @@
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Registro",
     "BONAFIDES_ASSOCIATION": "Asociador de Bona fides",
-    "GENERAL_INFORMATION": "Información General"
+    "GENERAL_INFORMATION": "Información General",
+    "ASSOCIATE_DEPENDATS": "Asociador de Dependientes"
   },
   "USER": {
     "TITLE": "Usuario",

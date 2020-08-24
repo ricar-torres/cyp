@@ -200,7 +200,8 @@
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Register",
     "BONAFIDES_ASSOCIATION": "Bonafides Association",
-    "GENERAL_INFORMATION": "General Information"
+    "GENERAL_INFORMATION": "General Information",
+    "ASSOCIATE_DEPENDATS": "Associate Dependants"
   },
   "USER": {
     "TITLE": "User",
