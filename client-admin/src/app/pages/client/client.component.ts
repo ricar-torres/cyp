@@ -19,7 +19,10 @@ import * as Swal from 'sweetalert2';
 export class ClientComponent implements OnInit, OnDestroy {
   clientid: string;
   client;
-  loading = true;
+  loading: boolean;
+  loadingBonafide: boolean = true;
+  loadingCalls: boolean = true;
+  loadingDepen: boolean = true;
   @Input() fromWizard: boolean = false;
   @ViewChild('dependants')
   dependants: DependantsListComponent;
@@ -54,6 +57,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.loading = true;
     this.reactiveForm = this.clientWizard.clientDemographic;
     if (!this.fromWizard) {
       this.setupFabButton();
@@ -173,7 +177,21 @@ export class ClientComponent implements OnInit, OnDestroy {
     }
   }
   onIsCallsLoading(bool: boolean) {
-    this.loading = bool;
+    this.loadingCalls = bool;
+    this.finishedLoading();
+  }
+  onIsDependentsLoading(bool: boolean) {
+    this.loadingDepen = bool;
+    this.finishedLoading();
+  }
+  onIsBonafideLoading(bool: boolean) {
+    this.loadingBonafide = bool;
+    this.finishedLoading();
+  }
+  finishedLoading() {
+    console.log(this.loadingBonafide, this.loadingCalls, this.loadingDepen);
+    return (this.loading =
+      this.loadingBonafide || this.loadingCalls || this.loadingDepen);
   }
 
   disableControls() {

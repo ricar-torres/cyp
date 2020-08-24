@@ -53,12 +53,14 @@
         </ng-container>
 
         <!-- phone Column -->
-        <ng-container matColumnDef="phone1">
+        <!-- <ng-container matColumnDef="phone1">
           <th mat-header-cell *matHeaderCellDef mat-sort-header="phone1">
             {{ 'PHONE' | translate }}
           </th>
-          <td mat-cell *matCellDef="let element">{{ element.phone1 }}</td>
-        </ng-container>
+          <td mat-cell *matCellDef="let element">
+            {{ element.phone1 }}
+          </td>
+        </ng-container> -->
 
         <!-- relation Column -->
         <ng-container matColumnDef="relationName">
@@ -146,6 +148,6 @@
   </mat-card>
 </md-content>
 
-<div class="loading-indicator" [hidden]="!loading">
+<!-- <div class="loading-indicator" [hidden]="!loading">
   <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
-</div>
+</div> -->

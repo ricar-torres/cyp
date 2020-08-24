@@ -217,6 +217,7 @@
               <app-bona-fide-list
                 #BonafideList
                 [clientId]="clientid"
+                (isLoadingEvent)="onIsBonafideLoading($event)"
               ></app-bona-fide-list>
             </mat-tab>
 
@@ -228,6 +229,7 @@
               <app-dependants-list
                 #dependants
                 [clientId]="clientid"
+                (isLoadingEvent)="onIsDependentsLoading($event)"
               ></app-dependants-list>
             </mat-tab>
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">

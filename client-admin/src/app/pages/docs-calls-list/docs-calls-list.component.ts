@@ -22,10 +22,10 @@ import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-su
 export class DocsCallsListComponent implements OnInit, AfterViewInit {
   threads: any[] = [];
 
-  loading: boolean;
+  loading: boolean = true;
   @Output()
   isLoadingEvent = new EventEmitter<boolean>();
-
+  isloading: boolean;
   @Input()
   clientId: string;
   constructor(
@@ -65,23 +65,32 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
   }
 
   async loadData() {
+    this.isloading = true;
+    this.isLoadingEvent.emit(this.isloading);
     try {
-      this.isLoadingEvent.emit(true);
-      await this.apiDocCall.getClientDocCalls(this.clientId).subscribe(
+      this.apiDocCall.getClientDocCalls(this.clientId).subscribe(
         (data: any) => {
+          this.isloading = true;
+          this.isLoadingEvent.emit(this.isloading);
           this.threads = data;
-          this.isLoadingEvent.emit(false);
+          this.isloading = false;
+          this.isLoadingEvent.emit(this.isloading);
         },
         (error: any) => {
-          this.isLoadingEvent.emit(false);
+          this.isloading = false;
+          this.isLoadingEvent.emit(this.isloading);
           if (error.status != 401) {
-            console.error('error', error);
+            //console.error('error', error);
             this.app.showErrorMessage('Error interno');
           }
         }
       );
     } catch (error) {
-      this.isLoadingEvent.emit(false);
+      this.isloading = false;
+      this.isLoadingEvent.emit(this.isloading);
+    } finally {
+      this.isloading = false;
+      this.isLoadingEvent.emit(this.isloading);
     }
   }
 

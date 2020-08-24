@@ -103,7 +103,7 @@
             >
           </mat-form-field>
           <mat-form-field>
-            <mat-label>{{ 'DEPENDANT.BIRTHDAY' | translate }}</mat-label>
+            <mat-label>{{ 'DEPENDANT.BIRTHDATE' | translate }}</mat-label>
             <input
               #inputBirth
               matInput
@@ -149,19 +149,11 @@
         <div fxLayout="row" fxLayoutGap="5px">
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.PHONE_PRIMARY' | translate }}</mat-label>
-            <input formControlName="phone1" matInput mask="000-00-0000" />
-            <mat-error
-              *ngIf="
-                reactiveForm.get('phone1').hasError('required') &&
-                reactiveForm.touched
-              "
-            >
-              {{ 'REQUIRED' | translate }}</mat-error
-            >
+            <input formControlName="phone1" matInput mask="000-000-0000" />
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.PHONE_SECONDARY' | translate }}</mat-label>
-            <input formControlName="phone2" matInput mask="000-00-0000" />
+            <input formControlName="phone2" matInput mask="000-000-0000" />
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.RELATION' | translate }}</mat-label>
@@ -230,7 +222,7 @@
         </div>
       </mat-card-content>
 
-      <mat-card-actions>
+      <mat-card-actions fxLayoutAlign="flex-end end">
         <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
 
         <button mat-stroked-button type="button" (click)="onBack()">
@@ -242,12 +234,13 @@
           color="primary"
           [disabled]="!reactiveForm.valid"
         >
-          {{ 'SAVE' | translate }}
+          <mat-icon>save</mat-icon>
+          {{ 'DEPENDANT.SAVE' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>
   </form>
 </md-content>
-<div class="loading-indicator" [hidden]="!loading">
+<!-- <div class="loading-indicator" [hidden]="!loading">
   <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
-</div>
+</div> -->

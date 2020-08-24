@@ -6,6 +6,8 @@ import {
   AfterViewInit,
   ViewChild,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   PageEvent,
@@ -23,6 +25,9 @@ import {
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { constructor } from 'moment';
+import { async } from 'rxjs/internal/scheduler/async';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dependants-list',
@@ -30,7 +35,7 @@ import { ClientWizardService } from '@app/shared/client-wizard.service';
   styleUrls: ['./dependants-list.component.css'],
 })
 export class DependantsListComponent implements OnInit, AfterViewInit {
-  loading = true;
+  loading: boolean;
 
   dataSource: any;
   relations: any[] = [];
@@ -39,11 +44,12 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   createAccess: boolean;
   deteleAccess: boolean;
   @Input() clientId: string | number;
+  @Output() isLoadingEvent = new EventEmitter<boolean>();
 
   displayedColumns: string[] = [
     'id',
     'name',
-    'phone1',
+    // 'phone1',
     'relationName',
     'coverName',
     'action',
@@ -80,28 +86,27 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
     try {
       await this.loadData();
       await this.apiDependant.getRelationTypes();
-    } catch (error) {
-      this.loading = false;
-    } finally {
-    }
+    } catch (error) {}
   }
 
   async loadData() {
     try {
       this.loading = true;
+      this.isLoadingEvent.emit(this.loading);
       if (!this.fromWizard) {
         this.apiDependant.getAllByClient(this.clientId).subscribe(
           (data: any) => {
-            console.log(data[0]);
             this.dataSource = new MatTableDataSource();
             this.dataSource.data = data;
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
 
             this.loading = false;
+            this.isLoadingEvent.emit(this.loading);
           },
           (error: any) => {
             this.loading = false;
+            this.isLoadingEvent.emit(this.loading);
 
             if (error.status != 401) {
               console.error('error', error);
@@ -110,6 +115,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
           },
           () => {
             this.loading = false;
+            this.isLoadingEvent.emit(this.loading);
           }
         );
       } else {
