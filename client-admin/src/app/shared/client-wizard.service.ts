@@ -98,8 +98,8 @@ export class ClientWizardService {
       Line2: [null],
       State: [null],
       City: [null],
-      Zipcode: [null],
-      Zip4: [null],
+      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
+      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
     }),
     PostalAddress: this.formBuilder.group({
       Id: [null],
@@ -109,8 +109,8 @@ export class ClientWizardService {
       Line2: [null],
       State: [null],
       City: [null],
-      Zipcode: [null],
-      Zip4: [null],
+      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
+      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
     }),
   });
 
