@@ -193,7 +193,7 @@ export class BonaFideListComponent implements OnInit {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
         height: '30%',
-        data: { clientId: this.clientId, listItem: id },
+        data: { clientId: this.clientId, listItem: id, fromWizard: true },
       });
 
       dialogRef.afterClosed().subscribe((result) => {

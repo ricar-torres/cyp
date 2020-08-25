@@ -12,6 +12,7 @@
   "YES_BTN": "Si",
   "DEL_BTN": "Borrar",
   "EDIT_BTN": "Editar",
+  "GOBACK": "Regresar",
   "COMFIRMATION": "Confirmar",
   "NO_BTN": "No",
   "ADD_BTN": "Agregar",
@@ -41,7 +42,10 @@
   "GENERAL_FILTER": "Filtro",
   "NAME": "Nombre",
   "PHONE": "Teléfono",
+  "FINISH": "Finalizar",
   "SAVESUCCESS": "La información ha sido actualizada",
+  "EDIT": "Editar",
+  "DELETE": "Borrar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -78,7 +82,6 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Grabar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar esta Agencia?"
   },
   "CLIENTS": {
@@ -92,7 +95,6 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Grabar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "Seguro que desea remover este cliente?",
     "SSN": "SSN",
     "PHONE1": "Teléfono Primario",
@@ -131,7 +133,8 @@
     "MEDICAREA": "Medicare A",
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "El 'SSN' provisto no esta disponible",
-    "SSNREQUIRED": "SSN es requerido"
+    "SSNREQUIRED": "SSN es requerido",
+    "SAMEADDRESS": "Usar dirección fisica"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
@@ -144,7 +147,6 @@
     "EDIT": "Editar",
     "SAVE": "Guardar",
     "CREATE": "Guardar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Evento Clasificativo?",
     "REQUIREMENTS": "Requisitos"
   },
@@ -159,7 +161,6 @@
     "EDIT": "Editar",
     "SAVE": "Guardar",
     "CREATE": "Guardar",
-    "GOBACK": "Regresar",
     "CODE": "Código",
     "SIGLAS": "Siglas",
     "SEARCH": "Buscar",
@@ -190,7 +191,6 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Grabar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
     "QUOTA": "Cuota",
     "ACTIONS": "Acciones",
@@ -213,8 +213,7 @@
     "ISACTIVE": "Inactivo?",
     "CANCEL": "Cancelar",
     "ROLES": "Roles",
-    "SAVE": "Guardar",
-    "GOBACK": "Regresar"
+    "SAVE": "Guardar"
   },
   "TUTOR": {
     "NAME": "Nombre",

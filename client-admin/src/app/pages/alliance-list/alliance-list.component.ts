@@ -1,47 +1,39 @@
-import { PreviewSsn } from './../../directives/ssnPipe';
-import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import {
-  PageEvent,
   MatSort,
+  PageEvent,
   MatPaginator,
   MatDialog,
   MatTableDataSource,
 } from '@angular/material';
 import { AppService } from '@app/shared/app.service';
 import { FormBuilder } from '@angular/forms';
-
+import { AgencyService } from '@app/shared/agency.service';
 import { Router } from '@angular/router';
 import { LanguageService } from '@app/shared/Language.service';
 import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
-import { MenuRoles } from '@app/models/enums';
-import { ClientService } from '@app/shared/client.service';
-import { ClientWizardComponent } from '../client-wizard/client-wizard.component';
-import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { AlliancesService } from '@app/shared/alliances.service';
 
 @Component({
-  selector: 'app-client-list',
-  templateUrl: './client-list.component.html',
-  styleUrls: ['./client-list.component.css'],
+  selector: 'app-alliance-list',
+  templateUrl: './alliance-list.component.html',
+  styleUrls: ['./alliance-list.component.css'],
 })
-export class ClientListComponent implements OnInit, OnDestroy {
+export class AllianceListComponent implements OnInit {
+  @Input() clientId: string;
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
   dataSource;
   displayedColumns: string[] = [
     'id',
-    'name',
-    'ssn',
-    //'gender',
-    'phone1',
-    //'phone2',
-    'contract',
-    'email',
+    'cover',
     'createdAt',
-    'updatedAt',
+    'startDate',
+    'elegibleDate',
     'actions',
   ];
   pageSize = 5;
@@ -54,33 +46,30 @@ export class ClientListComponent implements OnInit, OnDestroy {
   constructor(
     private app: AppService,
     private fb: FormBuilder,
+    private agencyApi: AlliancesService,
     private router: Router,
     private languageService: LanguageService,
-    private dialog: MatDialog,
-    private clientService: ClientService,
-    private wizardService: ClientWizardService
+    private dialog: MatDialog
   ) {}
-  ngOnDestroy(): void {
-    this.dataSource = undefined;
-  }
 
   ngOnInit(): void {
     //TODO: Acces
-    // this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.CLIENT_UPDATE);
-    // this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE);
-    // this.deleteAccess = this.app.checkMenuRoleAccess(MenuRoles.CLIENT_DELETE);
+    //this.editAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_UPDATE);
+    //this.createAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_CREATE);
+    //this.deleteAccess = this.app.checkMenuRoleAccess(MenuRoles.AGENCIES_DELETE);
     this.editAccess = true;
     this.createAccess = true;
     this.deleteAccess = true;
   }
 
   ngAfterViewInit(): void {
-    this.LoadClients();
+    this.LoadAgencies();
   }
 
-  private LoadClients() {
-    this.clientService.getClientsByCriteria('A').subscribe(
+  private LoadAgencies() {
+    this.agencyApi.getAll(this.clientId).subscribe(
       (res) => {
+        console.log(res);
         this.loading = true;
         this.dataSource = new MatTableDataSource();
         this.dataSource.data = res;
@@ -110,35 +99,21 @@ export class ClientListComponent implements OnInit, OnDestroy {
     }
   }
 
-  editClient(id: number) {
-    this.router.navigate(['/home/client', id]);
+  editAgency(id: number) {
+    //this.router.navigate(['/home/agency', id]);
   }
 
   goToNew() {
-    this.wizardService.resetFormGroups();
-    const dialogRef = this.dialog.open(ClientWizardComponent, {
-      width: '95%',
-      height: '95%',
-      data: {},
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      this.LoadClients();
-    });
+    //this.router.navigate(['/home/alliance']);
   }
 
-  doFilter(value: string) {
-    //this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
-    if (value.trim())
-      this.clientService
-        .getClientsByCriteria(value.replace(' ', ''))
-        .subscribe((res) => {
-          this.dataSource.data = res;
-        });
+  doFilter(value: any) {
+    this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
   }
 
   async deleteConfirm(id: string) {
     const message = await this.languageService.translate
-      .get('CLIENTS.ARE_YOU_SURE_DELETE')
+      .get('AGENCY.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -160,9 +135,8 @@ export class ClientListComponent implements OnInit, OnDestroy {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          await this.clientService.delete(id).then(() => {
-            this.LoadClients();
-          });
+          await this.agencyApi.delete(id);
+          this.LoadAgencies();
         }
       });
     } catch (error) {

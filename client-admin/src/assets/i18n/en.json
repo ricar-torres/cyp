@@ -21,11 +21,11 @@
   "CLOSE_BTN": "CLOSE",
   "DEL_BTN": "Delete",
   "EDIT_BTN": "Edit",
+  "GOBACK": "Return",
   "GENERIC_ERROR": "An error has occurred please try again later.",
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
   "REQUIRED": "This Field is required",
   "ONLY_LETTERS": "Enter only letters",
-
   "VALIDEMAIL": "Please provide a valid eail address",
   "SEARCH": "Search",
   "MALE": "Male",
@@ -42,6 +42,8 @@
   "NAME": "Name",
   "PHONE": "Phone",
   "SAVESUCCESS": "The information has been updated",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -78,7 +80,7 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "CREATE": "Save",
-    "GOBACK": "Return",
+    "FINISH": "Finish",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?"
   },
   "CLIENTS": {
@@ -92,7 +94,6 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "CREATE": "Save",
-    "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Client?",
     "SSN": "SSN",
     "PHONE1": "Primary Phone",
@@ -131,7 +132,8 @@
     "MEDICAREA": "Medicare A",
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "Provided SSN is already in record",
-    "SSNREQUIRED": "SSN must be provided"
+    "SSNREQUIRED": "SSN must be provided",
+    "SAMEADDRESS": "Use Physical Address"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
@@ -144,7 +146,6 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "CREATE": "Save",
-    "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Qualifying Event?",
     "REQUIREMENTS": "Requirements"
   },
@@ -159,7 +160,6 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "CREATE": "Save",
-    "GOBACK": "Return",
     "CODE": "Code",
     "SIGLAS": "Acronym",
     "SEARCH": "Search",
@@ -190,7 +190,6 @@
     "EDIT": "Edit",
     "SAVE": "Save",
     "CREATE": "Save",
-    "GOBACK": "Return",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this chapter?",
     "QUOTA": "Quota",
     "ACTIONS": "Actions",
@@ -213,8 +212,7 @@
     "ISACTIVE": "Inactive?",
     "CANCEL": "Cancel",
     "ROLES": "Roles",
-    "SAVE": "Save",
-    "GOBACK": "Return"
+    "SAVE": "Save"
   },
   "TUTOR": {
     "NAME": "Name",

@@ -233,6 +233,7 @@ export class ClientWizardService {
 
   checkSsn(ssn: string) {
     return async (control: AbstractControl) => {
+      //console.log(ssn, control.value);
       if (control.value && ssn != control.value) {
         const res: any = await this.clientService.checkSsn({
           ssn: control.value,

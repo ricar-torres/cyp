@@ -121,6 +121,8 @@ import { DependantsListComponent } from './pages/dependants-list/dependants-list
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
 import { DependantComponent } from './pages/dependant/dependant.component';
 import { PreviewSsn } from './directives/ssnPipe';
+import { AllianceComponent } from './pages/alliance/alliance.component';
+import { AllianceListComponent } from './pages/alliance-list/alliance-list.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -176,6 +178,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BonafidesAssociatorComponent,
     DependantComponent,
     PreviewSsn,
+    AllianceComponent,
+    AllianceListComponent,
   ],
   imports: [
     BrowserModule,
