@@ -209,6 +209,11 @@
     "STARTDATE": "Fecha de Inicio",
     "ELEGIBLEDATE": "Fecha de Elegibilidad"
   },
+  "ALLIANCEWIZARD": {
+    "AFILIATIONMETOD": "Método de afiliación",
+    "QUALIFYINGEVENT": "Qualifying Event",
+    "RENOVATIONAFILIATION": "Ranovation / Afiliation"
+  },
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",
