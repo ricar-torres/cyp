@@ -16,6 +16,7 @@ import {
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 import { AlliancesService } from '@app/shared/alliances.service';
+import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
 
 @Component({
   selector: 'app-alliance-list',
@@ -31,6 +32,7 @@ export class AllianceListComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'cover',
+    'qualifyingEvent',
     'createdAt',
     'startDate',
     'elegibleDate',
@@ -104,7 +106,12 @@ export class AllianceListComponent implements OnInit {
   }
 
   goToNew() {
-    //this.router.navigate(['/home/alliance']);
+    const dialogRef = this.dialog.open(AllianceWizardComponent, {
+      width: '70%',
+      height: '70%',
+      data: { clientId: this.clientId, bonafideId: null },
+    });
+    dialogRef.afterClosed().subscribe((result) => {});
   }
 
   doFilter(value: any) {

@@ -204,7 +204,7 @@ export class BonaFideListComponent implements OnInit {
     }
   }
 
-  goToNew() {
+  public goToNew() {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',

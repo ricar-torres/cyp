@@ -10,6 +10,9 @@ import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
 import * as Swal from 'sweetalert2';
+import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
+import { AllianceComponent } from '../alliance/alliance.component';
+import { AllianceListComponent } from '../alliance-list/alliance-list.component';
 
 @Component({
   selector: 'app-client',
@@ -27,6 +30,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   docsCalls: DocsCallsListComponent;
   @ViewChild('BonafideList')
   bonafideList: BonaFideListComponent;
+
+  @ViewChild('alliance') alliance: AllianceListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -135,6 +140,9 @@ export class ClientComponent implements OnInit, OnDestroy {
       case 'Dependents':
         this.dependants.goToNew();
         break;
+      case 'Alliance':
+        this.alliance.goToNew();
+        break;
       default:
         break;
     }
@@ -155,6 +163,11 @@ export class ClientComponent implements OnInit, OnDestroy {
       {
         icon: 'perm_phone_msg',
         tooltip: 'Calls',
+        desc: '',
+      },
+      {
+        icon: 'link',
+        tooltip: 'Alliance',
         desc: '',
       }
     );

@@ -202,6 +202,12 @@
     "GENERAL_INFORMATION": "General Information",
     "ASSOCIATE_DEPENDATS": "Associate Dependants"
   },
+  "ALLIANCELIST": {
+    "QUALIFYINGEVENT": "Qualifying Event",
+    "COVERNAME": "Cover",
+    "STARTDATE": "Start Date",
+    "ELEGIBLEDATE": "Eligibility Date"
+  },
   "USER": {
     "TITLE": "User",
     "USER": "User",

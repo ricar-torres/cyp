@@ -203,6 +203,12 @@
     "GENERAL_INFORMATION": "Información General",
     "ASSOCIATE_DEPENDATS": "Asociador de Dependientes"
   },
+  "ALLIANCELIST": {
+    "QUALIFYINGEVENT": "Evento Calificativo",
+    "COVERNAME": "Cobierta",
+    "STARTDATE": "Fecha de Inicio",
+    "ELEGIBLEDATE": "Fecha de Elegibilidad"
+  },
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",
