@@ -79,7 +79,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   private LoadClients() {
-    this.clientService.getAll().subscribe(
+    this.clientService.getClientsByCriteria('A').subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();
@@ -126,8 +126,14 @@ export class ClientListComponent implements OnInit, OnDestroy {
     });
   }
 
-  doFilter(value: any) {
-    this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
+  doFilter(value: string) {
+    //this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
+    if (value.trim())
+      this.clientService
+        .getClientsByCriteria(value.replace(' ', ''))
+        .subscribe((res) => {
+          this.dataSource.data = res;
+        });
   }
 
   async deleteConfirm(id: string) {

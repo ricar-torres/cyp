@@ -20,6 +20,7 @@ namespace WebApi.Services
     Task<Boolean> ChekcName(string criteria);
     Task<List<Addresses>> GetClientAddress(int clientId);
     Task<Boolean> ChekcSsn(string criteria);
+    Task<List<Clients>> GetClientByCriteria(string criteria);
   }
 
   public class ClientService : IClientService
@@ -396,6 +397,23 @@ namespace WebApi.Services
         }
       }
       return false;
+    }
+
+    public async Task<List<Clients>> GetClientByCriteria(string criteria)
+    {
+      var matchingClients = await _context.Clients.Where(x =>
+      x.Name.ToLower().Contains(criteria)
+      ||
+      x.Ssn.Contains(criteria)
+      ||
+      x.Phone1.Contains(criteria)
+      ||
+      x.Phone2.Contains(criteria)
+      ||
+      x.Email.Contains(criteria)
+      ).Take(100).ToListAsync();
+
+      return matchingClients;
     }
   }
 
