@@ -44,6 +44,8 @@
   "PHONE": "Teléfono",
   "FINISH": "Finalizar",
   "SAVESUCCESS": "La información ha sido actualizada",
+  "EDIT": "Editar",
+  "DELETE": "Borrar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",

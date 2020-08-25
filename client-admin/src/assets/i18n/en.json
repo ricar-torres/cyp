@@ -26,7 +26,6 @@
   "PASSWORD_POLICY": "Passwors must be a least 8 characters and it must contain at least one upper case letter, one lower case letter and one number.",
   "REQUIRED": "This Field is required",
   "ONLY_LETTERS": "Enter only letters",
-
   "VALIDEMAIL": "Please provide a valid eail address",
   "SEARCH": "Search",
   "MALE": "Male",
@@ -43,6 +42,8 @@
   "NAME": "Name",
   "PHONE": "Phone",
   "SAVESUCCESS": "The information has been updated",
+  "EDIT": "Edit",
+  "DELETE": "Delete",
 
   "LOGIN-FORM": {
     "USER": "User",

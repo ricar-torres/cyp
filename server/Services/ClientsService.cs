@@ -411,7 +411,7 @@ namespace WebApi.Services
       x.Phone2.Contains(criteria)
       ||
       x.Email.Contains(criteria)
-      ).Take(100).OrderBy(x => x.Name).ToListAsync();
+      ).Take(100).OrderBy(x => x.Id).ToListAsync();
       matchingClients.ForEach(each =>
         {
           if (each.Ssn != null && each.Ssn.Length >= 9)
