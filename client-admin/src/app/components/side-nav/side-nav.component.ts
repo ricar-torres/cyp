@@ -62,6 +62,14 @@ export class SideNavComponent implements OnInit {
           children: [
             {
               displayName: await this.languageService.translate
+                .get('SIDE_NAV.USERS')
+                .toPromise(),
+              iconName: 'person',
+              route: '/home/user-list',
+              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
                 .get('SIDE_NAV.AGENCIES')
                 .toPromise(),
               iconName: 'account_balance',
@@ -76,6 +84,7 @@ export class SideNavComponent implements OnInit {
               route: '/home/bonafides',
               visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+
             {
               displayName: await this.languageService.translate
                 .get('SIDE_NAV.CAMPAIGNS')
@@ -83,6 +92,14 @@ export class SideNavComponent implements OnInit {
               iconName: 'online_prediction',
               route: '/home/campaigns',
               visible: true, //TODO:this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
+                .get('SIDE_NAV.COMMUNICATION_METHODS')
+                .toPromise(),
+              iconName: 'settings_input_antenna',
+              route: '/home/communication-method-list',
+              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
             {
               displayName: await this.languageService.translate
@@ -94,28 +111,11 @@ export class SideNavComponent implements OnInit {
             },
             {
               displayName: await this.languageService.translate
-                .get('SIDE_NAV.COMMUNICATION_METHODS')
-                .toPromise(),
-              iconName: 'settings_input_antenna',
-              route: '/home/communication-method-list',
-              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
-            },
-
-            {
-              displayName: await this.languageService.translate
                 .get('SIDE_NAV.RETIREMENTS')
                 .toPromise(),
               iconName: 'rowing',
               route: '/home/retirement-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
-            },
-            {
-              displayName: await this.languageService.translate
-                .get('SIDE_NAV.USERS')
-                .toPromise(),
-              iconName: 'person',
-              route: '/home/user-list',
-              visible: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
           ],
         },

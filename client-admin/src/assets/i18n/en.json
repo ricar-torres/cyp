@@ -255,12 +255,11 @@
     "CAMPAIGNS": "Campaigns",
     "HOME": "Home",
     "SETTINGS": "Settings",
-
-    "CLIENTS": "Clients",
-    "RETIREMENTS": "Retirements",
     "COMMUNICATION_METHODS": "Commuication Methods",
     "BONAFIDES": "Bonafides Associations",
-    "QUALIFYIN_EVENTS": "Qualifying Events"
+    "RETIREMENTS": "Retirements",
+    "QUALIFYIN_EVENTS": "Qualifying Events",
+    "CLIENTS": "Clients"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",
