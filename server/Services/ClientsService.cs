@@ -411,7 +411,15 @@ namespace WebApi.Services
       x.Phone2.Contains(criteria)
       ||
       x.Email.Contains(criteria)
-      ).Take(100).ToListAsync();
+      ).Take(100).OrderBy(x => x.Name).ToListAsync();
+      matchingClients.ForEach(each =>
+        {
+          if (each.Ssn != null && each.Ssn.Length >= 9)
+          {
+            var filteredSsn = each.Ssn.Replace("-", "");
+            each.Ssn = "XXX-XX-" + filteredSsn.Substring(5, 4);
+          };
+        });
 
       return matchingClients;
     }
