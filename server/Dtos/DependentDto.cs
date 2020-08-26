@@ -1,5 +1,4 @@
 using System;
-using server.Entities;
 using WebApi.Entities;
 
 namespace server.Dtos

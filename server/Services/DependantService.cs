@@ -4,7 +4,6 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using server.Dtos;
-using server.Entities;
 using WebApi.Entities;
 using WebApi.Helpers;
 
