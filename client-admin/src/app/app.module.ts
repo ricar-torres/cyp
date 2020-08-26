@@ -123,6 +123,7 @@ import { DependantComponent } from './pages/dependant/dependant.component';
 import { PreviewSsn } from './directives/ssnPipe';
 import { AllianceComponent } from './pages/alliance/alliance.component';
 import { AllianceListComponent } from './pages/alliance-list/alliance-list.component';
+import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -180,6 +181,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     PreviewSsn,
     AllianceComponent,
     AllianceListComponent,
+    AllianceWizardComponent,
   ],
   imports: [
     BrowserModule,
@@ -259,6 +261,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ConfirmDialogComponent,
     ClientWizardComponent,
     BonafidesAssociatorComponent,
+    AllianceWizardComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

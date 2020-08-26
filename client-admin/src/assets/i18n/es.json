@@ -156,8 +156,8 @@
     "BTN_ADD": "Nuevo Bonafides",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
-    "BONAFIDEEDIT": "Bona fides",
-    "BONAFIDECREATE": "Bona fides",
+    "BONAFIDEEDIT": "Bonafides",
+    "BONAFIDECREATE": "Bonafides",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Guardar",
@@ -170,12 +170,13 @@
     "BENEFITS": "Beneficios",
     "DISCLAIMER": "Relevo de Responsabilidad",
     "CHAPTER": "Capítulo",
-    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bonafide?",
     "TAKENNAME": "Este Nombre ya existe",
     "TAKENEMAIL": "Este correo electrónico ya existe"
   },
   "BONAFIDESASSOCIATOR": {
-    "BONAFIDES": "Seleccione los Bona Fides deseados",
+    "TITLE": "Bonafides",
+    "BONAFIDES": "Seleccione los Bonafides deseados",
     "CHAPTERS": "Seleccione los capitulos deseados",
     "REGISTERDATE": "Fecha de registro",
     "PRIMARYASSOCIATION": "Primario",
@@ -203,6 +204,23 @@
     "BONAFIDES_ASSOCIATION": "Bonafides",
     "GENERAL_INFORMATION": "General",
     "ASSOCIATE_DEPENDATS": "Dependientes"
+  },
+  "ALLIANCELIST": {
+    "QUALIFYINGEVENT": "Evento",
+    "COVERNAME": "Cubierta",
+    "STARTDATE": "Inicio",
+    "ELEGIBLEDATE": "Elegibilidad",
+    "ENDDATE": "Culminacion"
+  },
+  "ALLIANCEWIZARD": {
+    "AFILIATIONMETOD": "Método de afiliación",
+    "QUALIFYINGEVENT": "Evento",
+    "RENOVATIONAFILIATION": "Renovación / Afiliación",
+    "AFFILIATIONMETHODS": "Métodos de afiliación",
+    "EFFECTIVEDATE": "Efectividad",
+    "ELEGBILITYDATE": "Eligibilidad",
+    "INSCRIPTIONTYPE": "Tipo de Inscripción",
+    "INSCRIPTIONSTATUS": "Estatus de Inscripción"
   },
   "USER": {
     "TITLE": "Usuario",
@@ -345,7 +363,8 @@
     "RELATION_NAME": "Relación",
     "COVER": "Cubierta",
     "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?",
-    "ADD_BTN": "Nuevo Dependiente"
+    "ADD_BTN": "Nuevo Dependiente",
+    "SAVE": "Guardar"
   },
   "DEPENDANT": {
     "PAGE_TITLE": "Dependiente",
@@ -356,7 +375,7 @@
     "MALE": "Masculino",
     "FEMALE": "Femenino",
     "SSN": "Seguro Social",
-    "BIRTHDAY": "Cumpleaños",
+    "BIRTHDATE": "Fecha de Nacimiento",
     "EMAIL": "Email",
     "GENDER": "Genero",
     "PHONE_PRIMARY": "Teléfono Principal",
@@ -366,6 +385,8 @@
     "ACTUALCOVER": "Cubierta Actual",
     "CONTRACT_NUM": "Número de Contrato",
     "EFFECTDATE": "Fecha de efectividad",
-    "THREAD": "Hilo"
+    "THREAD": "Hilo",
+    "ONLY_PATTERN": "Letras solamente",
+    "SAVE": "Guardar"
   }
 }

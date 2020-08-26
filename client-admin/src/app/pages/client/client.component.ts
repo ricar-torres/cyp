@@ -10,6 +10,9 @@ import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
 import * as Swal from 'sweetalert2';
+import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
+import { AllianceComponent } from '../alliance/alliance.component';
+import { AllianceListComponent } from '../alliance-list/alliance-list.component';
 
 @Component({
   selector: 'app-client',
@@ -19,7 +22,10 @@ import * as Swal from 'sweetalert2';
 export class ClientComponent implements OnInit, OnDestroy {
   clientid: string;
   client;
-  loading = true;
+  loading: boolean;
+  loadingBonafide: boolean = true;
+  loadingCalls: boolean = true;
+  loadingDepen: boolean = true;
   @Input() fromWizard: boolean = false;
   @ViewChild('dependants')
   dependants: DependantsListComponent;
@@ -27,6 +33,8 @@ export class ClientComponent implements OnInit, OnDestroy {
   docsCalls: DocsCallsListComponent;
   @ViewChild('BonafideList')
   bonafideList: BonaFideListComponent;
+
+  @ViewChild('alliance') alliance: AllianceListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -54,6 +62,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.loading = true;
     this.reactiveForm = this.clientWizard.clientDemographic;
     if (!this.fromWizard) {
       this.setupFabButton();
@@ -135,6 +144,9 @@ export class ClientComponent implements OnInit, OnDestroy {
       case 'Dependents':
         this.dependants.goToNew();
         break;
+      case 'Alliance':
+        this.alliance.goToNew();
+        break;
       default:
         break;
     }
@@ -166,6 +178,11 @@ export class ClientComponent implements OnInit, OnDestroy {
         icon: 'perm_phone_msg',
         tooltip: 'Calls',
         desc: '',
+      },
+      {
+        icon: 'link',
+        tooltip: 'Alliance',
+        desc: '',
       }
     );
 
@@ -183,7 +200,20 @@ export class ClientComponent implements OnInit, OnDestroy {
     }
   }
   onIsCallsLoading(bool: boolean) {
-    this.loading = bool;
+    this.loadingCalls = bool;
+    this.finishedLoading();
+  }
+  onIsDependentsLoading(bool: boolean) {
+    this.loadingDepen = bool;
+    this.finishedLoading();
+  }
+  onIsBonafideLoading(bool: boolean) {
+    this.loadingBonafide = bool;
+    this.finishedLoading();
+  }
+  finishedLoading() {
+    return (this.loading =
+      this.loadingBonafide || this.loadingCalls || this.loadingDepen);
   }
 
   disableControls() {

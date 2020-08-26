@@ -219,6 +219,7 @@
               <app-bona-fide-list
                 #BonafideList
                 [clientId]="clientid"
+                (isLoadingEvent)="onIsBonafideLoading($event)"
               ></app-bona-fide-list>
             </mat-tab>
 
@@ -230,6 +231,7 @@
               <app-dependants-list
                 #dependants
                 [clientId]="clientid"
+                (isLoadingEvent)="onIsDependentsLoading($event)"
               ></app-dependants-list>
             </mat-tab>
 
@@ -238,7 +240,10 @@
                 <mat-icon>link</mat-icon>
                 {{ 'CLIENTS.ALLIANCE' | translate }}
               </ng-template>
-              <app-alliance-list [clientId]="clientid"></app-alliance-list>
+              <app-alliance-list
+                #alliance
+                [clientId]="clientid"
+              ></app-alliance-list>
             </mat-tab>
 
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">

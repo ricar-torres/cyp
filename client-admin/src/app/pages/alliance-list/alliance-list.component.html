@@ -1,6 +1,6 @@
 <div fxLayoutAlign="space-around center">
   <table
-    style="width: 95%; margin: 20px;"
+    style="width: 95%; margin: 20px"
     mat-table
     [dataSource]="dataSource"
     matSort
@@ -11,19 +11,21 @@
       <td mat-cell *matCellDef="let element">{{ element.id }}</td>
     </ng-container>
 
-    <ng-container matColumnDef="name">
+    <ng-container matColumnDef="qualifyingEvent">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'ALLIANCE.NAME' | translate }}
+        {{ 'ALLIANCELIST.QUALIFYINGEVENT' | translate }}
       </th>
-      <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      <td mat-cell *matCellDef="let element">
+        {{ element.qualifyingEvent.name }}
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="cover">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'UPDATEDAT' | translate }}
+        {{ 'ALLIANCELIST.COVERNAME' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ element.updatedAt | date: 'dd/MM/yyyy hh:mm a' }}
+        {{ element.cover.name }}
       </td>
     </ng-container>
 
@@ -37,24 +39,32 @@
     </ng-container>
     <ng-container matColumnDef="startDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'CREATEDAT' | translate }}
+        {{ 'ALLIANCELIST.STARTDATE' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+        {{ element.startDate | date: 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALLIANCELIST.ENDDATE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.endDate | date: 'dd/MM/yyyy' }}
       </td>
     </ng-container>
     <ng-container matColumnDef="elegibleDate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'CREATEDAT' | translate }}
+        {{ 'ALLIANCELIST.ELEGIBLEDATE' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+        {{ element.elegibleDate | date: 'dd/MM/yyyy' }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="actions">
       <th mat-header-cell *matHeaderCellDef>
-        <!-- {{ 'ALLIANCE.ACTIONS' | translate }} -->
+        <!-- {{ 'ALLIANCELIST.ACTIONS' | translate }} -->
       </th>
       <td mat-cell *matCellDef="let element" align="right">
         <button

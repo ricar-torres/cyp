@@ -30,13 +30,9 @@
     <button mat-raised-button matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button
-      class="button-space"
-      mat-raised-button
-      color="primary"
-      matStepperNext
-    >
-      {{ 'NEXT' | translate }}
+    <button (click)="register()" mat-button matStepperNext>
+      <mat-icon>save</mat-icon>
+      {{ 'DEPENDANTS_LIST.SAVE' | translate }}
     </button>
   </mat-step>
   <mat-step>

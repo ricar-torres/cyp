@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using WebApi.Entities;
 using WebApi.Helpers;
 
+
 namespace WebApi.Services
 {
   public interface IAllianceService
@@ -51,7 +52,13 @@ namespace WebApi.Services
       await (from pr in _context.ClientProduct
              join al in _context.Alianzas on pr.Id equals al.ClientProductId
              where pr.ClientId == clientId.GetValueOrDefault()
-             select al).ToListAsync();
+             select al).Include("Cover").Include("QualifyingEvent").ToListAsync();
+      clientAlliances.ForEach(x =>
+      {
+        x.Cover.Alianza = null;
+        x.Cover.Alianzas = null;
+        x.QualifyingEvent.Alianzas = null;
+      });
       return clientAlliances;
     }
 

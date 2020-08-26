@@ -136,7 +136,6 @@ export class DependantComponent implements OnInit, AfterViewInit {
         Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
       lastName2: this.formBuilder.control('', [
-        Validators.required,
         Validators.maxLength(250),
         Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
