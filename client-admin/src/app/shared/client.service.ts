@@ -15,6 +15,10 @@ export class ClientService {
       .toPromise();
   }
 
+  getClientsByCriteria(value: any) {
+    return this.http.get(`${environment.baseURL}/clients/criteria/${value}`);
+  }
+
   constructor(private http: HttpClient) {}
 
   getAll() {

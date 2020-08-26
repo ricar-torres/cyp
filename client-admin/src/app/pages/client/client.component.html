@@ -25,7 +25,7 @@
               type="button"
               (click)="onBack()"
             >
-              <mat-icon>list</mat-icon>{{ 'CLIENTS.GOBACK' | translate }}
+              <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
             </button>
           </div>
         </mat-card-header>
@@ -237,6 +237,10 @@
                 <mat-icon>link</mat-icon>
                 {{ 'CLIENTS.ALLIANCE' | translate }}
               </ng-template>
+              <app-alliance-list
+                #alliance
+                [clientId]="clientid"
+              ></app-alliance-list>
             </mat-tab>
             <mat-tab>
               <ng-template mat-tab-label>

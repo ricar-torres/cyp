@@ -33,11 +33,12 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    debugger;
     this.reactiveForm = this.fb.group({
       Id: [null],
       ChapterId: [null, [Validators.required]],
       ClientId: [null],
-      RegistrationDate: [null],
+      RegistrationDate: [{ value: null, disabled: true }, null],
       NewRegistration: [null],
       Primary: [null],
     });
@@ -48,26 +49,26 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       );
     });
 
-    if (this.data.fromWizard) {
+    if (this.data.clientId) {
+      this.availableBonafides = await this.bonafideService.getAvailableBonafides(
+        this.data.clientId
+      );
+    } else {
       this.availableBonafides = await this.bonafideService
         .getAll(undefined)
         .toPromise();
     }
 
-    if (!this.data.listItem && this.data.fromWizard) {
+    if (this.data.fromWizard) {
       this.clientWizard.BonafideList.forEach((x) => {
         var itmIndex = this.availableBonafides.findIndex((b) => b.id == x.id);
-        if (itmIndex != -1) {
-          // console.log('removed', itmIndex);
+        if (
+          itmIndex != -1 &&
+          this.availableBonafides[itmIndex].id != this.data.listItem
+        ) {
           this.availableBonafides.splice(itmIndex, 1);
         }
       });
-    }
-
-    if (this.data.clientId) {
-      this.availableBonafides = await this.bonafideService.getAvailableBonafides(
-        this.data.clientId
-      );
     }
 
     if (this.data.listItem) {
@@ -113,11 +114,11 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
   }
 
   async saveChapterClient() {
-    if (this.data.fromWizard) {
+    if (this.data.fromWizard && !this.data.listItem) {
       var bonafidesSelected = this.availableBonafides.find(
         (x) => x.id == this.bonafides.value
       );
-      bonafidesSelected['Chapter'] = this.reactiveForm.value;
+      bonafidesSelected['Chapter'] = this.reactiveForm.getRawValue();
       //if current bonafides is listed as the primary, all other bonafides
       //must yield this property as false
       this.setPrimary();
@@ -135,7 +136,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       // removing the old bonafides information
       this.clientWizard.BonafideList.splice(index, 1);
       //creating the Chapter property in the bonafides
-      bonafide['Chapter'] = this.reactiveForm.value;
+      bonafide['Chapter'] = this.reactiveForm.getRawValue();
       //if current bonafides is listed as the primary, all other bonafides
       //must yield this property as false
       this.setPrimary();
@@ -144,7 +145,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       this.dialogRef.close();
     } else {
       await this.chapterService
-        .saveChapterClient(this.reactiveForm.value)
+        .saveChapterClient(this.reactiveForm.getRawValue())
         .then((rs) => {
           this.dialogRef.close();
         });
@@ -163,5 +164,9 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
         this.clientWizard.BonafideList[index].Chapter.Primary = false;
       }
     }
+  }
+
+  onBack() {
+    this.dialogRef.close();
   }
 }

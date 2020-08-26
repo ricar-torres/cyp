@@ -2,8 +2,8 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
-using server.Dtos;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
@@ -13,32 +13,38 @@ namespace WebApi.Controllers
 {
   [Route("api/[controller]")]
   [ApiController]
-  public class ClientsController : BaseController
+  public class AllianceController : BaseController
   {
-    private IClientService _service;
+
+    private IAllianceService _service;
     private IMapper _mapper;
     private readonly AppSettings _appSettings;
 
-    public ClientsController(
-        IClientService service,
-        IMapper mapper,
-        IOptions<AppSettings> appSettings)
+    public AllianceController(
+    IAllianceService service,
+    IMapper mapper,
+    IOptions<AppSettings> appSettings)
     {
       _service = service;
       _mapper = mapper;
       _appSettings = appSettings.Value;
     }
 
-    [Authorize]
-    [HttpGet()]
-    public IActionResult GetAll()
+
+    [AllowAnonymous]
+    [HttpGet("getall/{clientId}")]
+    public async Task<IActionResult> GetAll(int? clientId)
     {
       try
       {
-        var res = _service.GetAll();
-        if (res == null)
+        var res = new List<Alianzas>();
+        if (clientId == null)
         {
-          return NotFound();
+          res = await _service.GetAll(null);
+        }
+        else
+        {
+          res = await _service.GetAll(clientId);
         }
 
         return Ok(res);
@@ -50,7 +56,7 @@ namespace WebApi.Controllers
       }
     }
 
-    [AllowAnonymous]
+    [Authorize]
     [HttpGet("{id}")]
     public IActionResult GetById(int id)
     {
@@ -71,31 +77,10 @@ namespace WebApi.Controllers
       }
     }
 
-    [AllowAnonymous]
-    [HttpGet("criteria/{criteria}")]
-    public async Task<IActionResult> GetClientsByCriteria(string criteria)
-    {
-      try
-      {
-        var res = await _service.GetClientByCriteria(criteria);
-        if (res == null)
-        {
-          return NotFound();
-        }
-
-        return Ok(res);
-
-      }
-      catch (Exception ex)
-      {
-        return DefaultError(ex);
-      }
-    }
-
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]
-    public IActionResult Create([FromBody] ClientInformationDto payload)
+    public IActionResult Create([FromBody] Alianzas payload)
     {
 
       try
@@ -114,16 +99,21 @@ namespace WebApi.Controllers
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
     [Authorize]
-    [HttpPut()]
-    public async Task<IActionResult> Update(ClientInformationDto payload)
+    [HttpPut("{id}")]
+    public IActionResult Update(int id, [FromBody] Alianzas payload)
     {
       try
       {
-        var res = await _service.Update(payload);
-        return Ok();
+
+        payload.Id = id;
+        var res = _service.Update(payload);
+
+        return Ok(res);
+
       }
       catch (AppException ex)
       {
+        // return error message if there was an exception
         return DefaultError(ex);
       }
     }
@@ -146,36 +136,5 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
-
-    [Authorize]
-    [HttpGet("CheckName/{name}")]
-    public async Task<IActionResult> checkName(string name)
-    {
-      try
-      {
-        var check = await _service.ChekcName(name);
-        return Ok(check);
-      }
-      catch (Exception ex)
-      {
-        return DefaultError(ex);
-      }
-    }
-
-    [Authorize]
-    [HttpPost("checkSsn")]
-    public async Task<IActionResult> checkSsn([FromBody] SsnDto ssn)
-    {
-      try
-      {
-        var check = await _service.ChekcSsn(ssn.SSN);
-        return Ok(check);
-      }
-      catch (Exception ex)
-      {
-        return DefaultError(ex);
-      }
-    }
   }
-
 }

@@ -4,11 +4,7 @@
       <mat-card>
         <mat-card-header>
           <mat-card-title
-            >{{
-              id
-                ? ('BONAFIDE.BONAFIDEEDIT' | translate)
-                : ('BONAFIDE.BONAFIDECREATE' | translate)
-            }}
+            >{{ 'BONAFIDE.BONAFIDECREATE' | translate }}
           </mat-card-title>
           <mat-card-subtitle>{{ id ? '# ' + id : '' }}</mat-card-subtitle>
         </mat-card-header>
@@ -107,7 +103,7 @@
             }}
           </button>
           <button mat-stroked-button type="button" (click)="onBack()">
-            <mat-icon>list</mat-icon>{{ 'BONAFIDE.GOBACK' | translate }}
+            <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
           </button>
         </mat-card-actions>
       </mat-card>
