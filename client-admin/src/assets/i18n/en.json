@@ -217,7 +217,10 @@
     "EFFECTIVEDATE": "Effective Date",
     "ELEGBILITYDATE": "Eligibility Date",
     "INSCRIPTIONTYPE": "Inscription Type",
-    "INSCRIPTIONSTATUS": "Inscription Status"
+    "INSCRIPTIONSTATUS": "Inscription Status",
+    "HEALTHPLAN": "Health Plan",
+    "ADDITIONS": "Addititons",
+    "BENEFITS": "Benefits"
   },
   "USER": {
     "TITLE": "User",

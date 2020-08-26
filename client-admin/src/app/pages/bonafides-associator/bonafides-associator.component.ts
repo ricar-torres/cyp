@@ -33,7 +33,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    debugger;
+    // debugger;
     this.reactiveForm = this.fb.group({
       Id: [null],
       ChapterId: [null, [Validators.required]],

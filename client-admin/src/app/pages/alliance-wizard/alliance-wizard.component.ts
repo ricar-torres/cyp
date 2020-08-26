@@ -37,6 +37,7 @@ export class AllianceWizardComponent implements OnInit {
 
     this.benefits = this._formBuilder.group({
       MedicalPlan: [null],
+      Addititons: [null],
     });
   }
 }
