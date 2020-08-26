@@ -347,7 +347,9 @@
     "CALL_TYPE": "Call Type",
     "COMMENT": "Comment",
     "CONFIRMATION_NAME": "Confirmation Number",
-    "SUCCESS": "Success"
+    "SUCCESS": "Success",
+    "SAVE": "Save",
+    "BACK": "Back"
   },
   "DOCUMENTATION_CALL_LIST": {
     "TITLE": "Calls History",
@@ -359,7 +361,8 @@
     "PAGE_TITLE": "Dependants",
     "RELATION_NAME": "Relation",
     "COVER": "Cover",
-    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Dependent?"
+    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Dependent?",
+    "SAVE": "Save"
   },
   "DEPENDANT": {
     "PAGE_TITLE": "Dependant",
@@ -370,7 +373,7 @@
     "MALE": "Male",
     "FEMALE": "Female",
     "SSN": "Social Security",
-    "BIRTHDAy": "Birth Date",
+    "BIRTHDATE": "Birth Date",
     "EMAIL": "Email",
     "GENDER": "Gender",
     "PHONE_PRIMARY": "Principal Phone",
@@ -381,6 +384,7 @@
     "CONTRACT_NUM": "Contract Number",
     "EFFECTDATE": "Effective date",
     "THREAD": "Thread",
-    "ONLY_LETTERS": "Enter only letters"
+    "ONLY_LETTERS": "Letters only",
+    "SAVE": "Save"
   }
 }

@@ -7,6 +7,11 @@
   fxLayout="column"
   class="full-with"
 >
+  <div fxFlexAlign="flex-start start">
+    <mat-card-title>
+      {{ 'BONAFIDE.TITLE' | translate }}
+    </mat-card-title>
+  </div>
   <mat-form-field fxFlex>
     <mat-label>{{ 'BONAFIDESASSOCIATOR.BONAFIDES' | translate }}</mat-label>
     <mat-select [formControl]="bonafides">

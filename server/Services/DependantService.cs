@@ -101,7 +101,7 @@ namespace server.Services {
 					_context.SaveChanges();
 					return d;
 				} else {
-					throw new AppException("Communication Method not found");
+					throw new AppException("Dependant not found");
 				}
 			} catch (Exception ex) {
 

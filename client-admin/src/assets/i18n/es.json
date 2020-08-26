@@ -363,7 +363,8 @@
     "PAGE_TITLE": "Dependientes",
     "RELATION_NAME": "Relación",
     "COVER": "Cubierta",
-    "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?"
+    "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?",
+    "SAVE": "Guardar"
   },
   "DEPENDANT": {
     "PAGE_TITLE": "Dependiente",
@@ -374,7 +375,7 @@
     "MALE": "Masculino",
     "FEMALE": "Femenino",
     "SSN": "Seguro Social",
-    "BIRTHDAY": "Cumpleaños",
+    "BIRTHDATE": "Fecha de Nacimiento",
     "EMAIL": "Email",
     "GENDER": "Genero",
     "PHONE_PRIMARY": "Teléfono Principal",
@@ -384,6 +385,8 @@
     "ACTUALCOVER": "Cubierta Actual",
     "CONTRACT_NUM": "Número de Contrato",
     "EFFECTDATE": "Fecha de efectividad",
-    "THREAD": "Hilo"
+    "THREAD": "Hilo",
+    "ONLY_PATTERN": "Letras solamente",
+    "SAVE": "Guardar"
   }
 }

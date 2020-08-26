@@ -4,6 +4,8 @@ import {
   AfterViewInit,
   ViewChild,
   Input,
+  Output,
+  EventEmitter,
 } from '@angular/core';
 import {
   PageEvent,
@@ -35,6 +37,7 @@ export class BonaFideListComponent implements OnInit {
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
+
   dataSource;
   displayedColumns: string[] = [
     'id',
@@ -50,6 +53,7 @@ export class BonaFideListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   loading = true;
+  @Output() isLoadingEvent = new EventEmitter<boolean>();
   @Input() clientId: string;
   @Input() fromWizard: string;
   @ViewChild(MatSort) sort: MatSort;
@@ -75,8 +79,9 @@ export class BonaFideListComponent implements OnInit {
     this.deleteAccess = true;
     this.loadBonafides();
   }
-
   private loadBonafides() {
+    this.loading = true;
+    this.isLoadingEvent.emit(this.loading);
     if (this.fromWizard) {
       this.loading = true;
       this.dataSource = new MatTableDataSource();
@@ -84,18 +89,23 @@ export class BonaFideListComponent implements OnInit {
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
       this.loading = false;
+      this.isLoadingEvent.emit(this.loading);
     } else {
       this.loading = true;
       this.bonafidesService.getAll(this.clientId).subscribe(
         (res) => {
+          this.loading = true;
+          this.isLoadingEvent.emit(this.loading);
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = res;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.loading = false;
+          this.isLoadingEvent.emit(this.loading);
         },
         (error) => {
           this.loading = false;
+          this.isLoadingEvent.emit(this.loading);
           // console.log('error', error);
           this.languageService.translate
             .get('GENERIC_ERROR')
@@ -105,6 +115,7 @@ export class BonaFideListComponent implements OnInit {
         },
         () => {
           this.loading = false;
+          this.isLoadingEvent.emit(this.loading);
         }
       );
     }
@@ -182,7 +193,7 @@ export class BonaFideListComponent implements OnInit {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: this.clientId, bonafideId: id },
       });
 
@@ -192,7 +203,7 @@ export class BonaFideListComponent implements OnInit {
     } else if (this.fromWizard) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: this.clientId, listItem: id, fromWizard: true },
       });
 
@@ -208,7 +219,7 @@ export class BonaFideListComponent implements OnInit {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: this.clientId, bonafideId: null },
       });
       dialogRef.afterClosed().subscribe((result) => {
@@ -217,7 +228,7 @@ export class BonaFideListComponent implements OnInit {
     } else if (this.fromWizard) {
       const pepe = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: null, bonafideId: null, fromWizard: true },
       });
       pepe.afterClosed().subscribe((result) => {
