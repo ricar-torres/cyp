@@ -63,7 +63,12 @@
     </button>
   </mat-step>
   <mat-step [stepControl]="finalFormGroup">
-    <form [formGroup]="finalFormGroup">
+    <form
+      [formGroup]="finalFormGroup"
+      fxLayoutAlign="center"
+      fxLayoutGap="10px"
+      fxLayout.lt-md="column"
+    >
       <mat-form-field fxFlex>
         <mat-label>{{ 'ALLIANCEWIZARD.EFFECTIVEDATE' | translate }}</mat-label>
         <input
