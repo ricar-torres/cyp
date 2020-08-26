@@ -79,7 +79,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   private LoadClients() {
-    this.clientService.getClientsByCriteria('A').subscribe(
+    this.clientService.getClientsByCriteria('1').subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();
