@@ -33,9 +33,10 @@ export class AllianceListComponent implements OnInit {
     'id',
     'cover',
     'qualifyingEvent',
-    'createdAt',
     'startDate',
+    'endDate',
     'elegibleDate',
+    'createdAt',
     'actions',
   ];
   pageSize = 5;
