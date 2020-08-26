@@ -71,7 +71,7 @@
   },
   "AGENCY": {
     "TITLE": "Agencies",
-    "BTN_ADD": "Create Agency",
+    "BTN_ADD": "New Agency",
     "NAME": "Name",
     "ACTIONS": "Actions",
     "AGENCYEDIT": "Agency",
@@ -85,7 +85,7 @@
   },
   "CLIENTS": {
     "TITLE": "Client",
-    "BTN_ADD": "Create Client",
+    "BTN_ADD": "New Client",
     "NAME": "Name",
     "ACTIONS": "Actions",
     "AGENCYEDIT": "Client",
@@ -100,15 +100,15 @@
     "PHONE2": "Secondary Phone",
     "CONTRACTNUMBER": "Contract Number",
     "EMAIL": "Email",
-    "FAMILY_NAME_1": "Family Name 1",
-    "FAMILY_NAME_2": "Family Name 2",
+    "FAMILY_NAME_1": "Last Name 1",
+    "FAMILY_NAME_2": "Last Name 2",
     "INITIAL": "Initial",
     "GENDER": "Gender",
     "BIRTHDATE": "Birth Date",
     "MARITALSTATUS": "Marital Status",
     "BONAFIDES": "BonaFides",
     "DEPENDANTS": "Dependants",
-    "GENERALINFORMATION": "General Information",
+    "GENERALINFORMATION": "General",
     "ALLIANCE": "Alliance",
     "CALLHISTORY": "Calls",
     "DIRECTIONS": "Directions",
@@ -133,11 +133,12 @@
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "Provided SSN is already in record",
     "SSNREQUIRED": "SSN must be provided",
-    "SAMEADDRESS": "Use Physical Address"
+    "SAMEADDRESS": "Use Physical Address",
+    "MULTI_ASISTANCE": "Multiple Assistance"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
-    "BTN_ADD": "Create Qualifying Event",
+    "BTN_ADD": "New Event",
     "NAME": "Name",
     "ACTIONS": "Actions",
     "QUALIFYINGEVENTEDIT": "Qualifying Event",
@@ -150,12 +151,12 @@
     "REQUIREMENTS": "Requirements"
   },
   "BONAFIDE": {
-    "TITLE": "Bona Fide Associations",
-    "BTN_ADD": "Create Bona Fide",
+    "TITLE": "Bonafide Associations",
+    "BTN_ADD": "New Bonafide",
     "NAME": "Name",
     "ACTIONS": "Actions",
-    "BONAFIDEEDIT": "Bona Fide",
-    "BONAFIDECREATE": "Bona Fide",
+    "BONAFIDEEDIT": "Bonafide",
+    "BONAFIDECREATE": "Bonafide",
     "DELETE": "Delete",
     "EDIT": "Edit",
     "SAVE": "Save",
@@ -168,11 +169,12 @@
     "BENEFITS": "Benefits",
     "DISCLAIMER": "Disclaimer",
     "CHAPTER": "Chapter",
-    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bona Fide?",
+    "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Bonafide?",
     "TAKENNAME": "this Name is already taken",
     "TAKENEMAIL": "This Email is Already taken"
   },
   "BONAFIDESASSOCIATOR": {
+    "TITLE": "Bonafides",
     "BONAFIDES": "Select the desired Bonafides",
     "CHAPTERS": "select The desired Chapters",
     "REGISTERDATE": "Registration Date",
@@ -198,9 +200,9 @@
   },
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Register",
-    "BONAFIDES_ASSOCIATION": "Bonafides Association",
-    "GENERAL_INFORMATION": "General Information",
-    "ASSOCIATE_DEPENDATS": "Associate Dependants"
+    "BONAFIDES_ASSOCIATION": "Bonafides",
+    "GENERAL_INFORMATION": "General",
+    "ASSOCIATE_DEPENDATS": "Dependants"
   },
   "ALLIANCELIST": {
     "QUALIFYINGEVENT": "Qualifying Event",
@@ -226,7 +228,7 @@
     "TITLE": "User",
     "USER": "User",
     "NAME": "Name",
-    "FAMILY_NAME": "Family name",
+    "FAMILY_NAME": "Last Name",
     "TYPE": "Type",
     "PASSWORD": "Password",
     "ISACTIVE": "Inactive?",
@@ -240,7 +242,7 @@
     "PRIMARYPHONE": "Primary Phone"
   },
   "USER_LIST": {
-    "BTN_ADD": "New user",
+    "BTN_ADD": "New User",
     "USER": "User",
     "NAME": "Name",
     "STATUS": "Status",
@@ -292,7 +294,7 @@
     "ORIGIN": "Origin",
     "PAGE_TITLE": "Campaigns",
     "GENERAL_FILTER": "Filter",
-    "ADD_BTN": "Add Campaign",
+    "ADD_BTN": "New Campaign",
     "EDIT_BTN": "Edit",
     "DEL_BTN": "Delete",
     "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Campaign?"
@@ -307,7 +309,7 @@
     "EXISTS": "Exists a campaign with this name"
   },
   "COMMUNICATION_METHOD_LIST": {
-    "ADD_BTN": "Add",
+    "ADD_BTN": "New Method",
     "GENERAL_FILTER": "Filter",
     "NAME": "Name",
     "EDIT_BTN": "Edit",
@@ -328,7 +330,7 @@
     "CODE": "Code",
     "EDIT_BTN": "Edit",
     "DEL_BTN": "Delete",
-    "ADD_BTN": "Add",
+    "ADD_BTN": "New Retirement",
     "GENERAL_FILTER": "Filter",
     "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Retirement?"
   },
@@ -362,6 +364,7 @@
     "RELATION_NAME": "Relation",
     "COVER": "Cover",
     "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Dependent?",
+    "ADD_BTN": "New Dependant",
     "SAVE": "Save"
   },
   "DEPENDANT": {

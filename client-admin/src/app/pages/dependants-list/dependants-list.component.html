@@ -15,7 +15,7 @@
           *ngIf="createAccess"
         >
           <mat-icon>add</mat-icon>
-          {{ 'ADD_BTN' | translate }}
+          {{ 'DEPENDANTS_LIST.ADD_BTN' | translate }}
         </button>
       </div>
 
@@ -30,7 +30,7 @@
         </mat-form-field>
       </div>
       <table
-        style="width: 100%;"
+        style="width: 100%"
         mat-table
         [dataSource]="dataSource"
         matSort

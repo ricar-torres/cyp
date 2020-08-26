@@ -1,5 +1,7 @@
 <mat-card-header>
-  <mat-card-title>{{ 'BONAFIDE.BONAFIDEEDIT' | translate }} </mat-card-title>
+  <mat-card-title
+    >{{ 'BONAFIDESASSOCIATOR.TITLE' | translate }}
+  </mat-card-title>
 </mat-card-header>
 <form
   (ngSubmit)="saveChapterClient()"
@@ -7,11 +9,6 @@
   fxLayout="column"
   class="full-with"
 >
-  <div fxFlexAlign="flex-start start">
-    <mat-card-title>
-      {{ 'BONAFIDE.TITLE' | translate }}
-    </mat-card-title>
-  </div>
   <mat-form-field fxFlex>
     <mat-label>{{ 'BONAFIDESASSOCIATOR.BONAFIDES' | translate }}</mat-label>
     <mat-select [formControl]="bonafides">

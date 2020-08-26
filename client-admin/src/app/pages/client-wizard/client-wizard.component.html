@@ -27,7 +27,7 @@
       'CLIENTWIZARD.BONAFIDES_ASSOCIATION' | translate
     }}</ng-template>
     <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
-    <button mat-raised-button color="primary" matStepperPrevious>
+    <button mat-raised-button matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button (click)="register()" mat-button matStepperNext>
@@ -40,7 +40,7 @@
       'CLIENTWIZARD.ASSOCIATE_DEPENDATS' | translate
     }}</ng-template>
     <app-dependants-list [fromWizard]="true"></app-dependants-list>
-    <button mat-raised-button color="primary" matStepperPrevious>
+    <button mat-raised-button matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button
