@@ -211,7 +211,8 @@
   "ALLIANCEWIZARD": {
     "AFILIATIONMETOD": "Afiliation Method",
     "QUALIFYINGEVENT": "Qualifying Event",
-    "RENOVATIONAFILIATION": "Ranovation / Afiliation"
+    "RENOVATIONAFILIATION": "Ranovation / Afiliation",
+    "AFFILIATIONMETHODS": "Affiliation Methods"
   },
   "USER": {
     "TITLE": "User",

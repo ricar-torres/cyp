@@ -23,8 +23,8 @@ export class AllianceWizardComponent implements OnInit {
     });
 
     this.affiliationMethod = this._formBuilder.group({
-      affiliationMethod: [null, [Validators.required]],
-      qualifyingEvent: [null, [Validators.required]],
+      affiliationMethod: [null],
+      qualifyingEvent: [null],
     });
     this.secondFormGroup = this._formBuilder.group({
       secondCtrl: [null, [Validators.required]],
