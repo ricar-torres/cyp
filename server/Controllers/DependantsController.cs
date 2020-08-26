@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using server.Dtos;
-using server.Entities;
 using server.Services;
 using WebApi.Controllers;
 using WebApi.Entities;

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using server.Entities;
 
 namespace WebApi.Entities {
 	public partial class Dependents {

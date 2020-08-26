@@ -2,7 +2,6 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using server.Entities;
 using WebApi.Entities;
 using WebApi.Entities.Identity;
 
@@ -69,8 +68,9 @@ namespace WebApi.Helpers {
 		public virtual DbSet<Tutors> Tutors { get; set; }
 		public virtual DbSet<Users> Users { get; set; }
 		public virtual DbSet<Zipcodes> Zipcodes { get; set; }
-
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
+		public virtual DbSet<AffType> AffType { get; set; }
+
 		#endregion
 
 		#region FUNCTIONS
@@ -103,6 +103,7 @@ namespace WebApi.Helpers {
 			new LoginProviderMap(modelBuilder.Entity<LoginProvider>());
 			new OneTimePasswordMap(modelBuilder.Entity<OneTimePassword>());
 			new TypeOfRelationshipMap(modelBuilder.Entity<TypeOfRelationship>());
+			new AffTypeMap(modelBuilder.Entity<AffType>());
 
 			#endregion
 

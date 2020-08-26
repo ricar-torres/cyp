@@ -7,8 +7,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Newtonsoft.Json;
-using server.Entities;
 using WebApi.Entities.Identity;
+using WebApi.Entities;
 
 namespace WebApi.Helpers {
 	public static class DbContextExtension {
@@ -138,6 +138,16 @@ namespace WebApi.Helpers {
 				context.SaveChanges();
 
 				#endregion
+
+				#region AffType
+
+				var affTypes = JsonConvert.DeserializeObject<List<AffType>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "aff_type.json"));
+				affTypes = affTypes.Where(x => !context.AffType.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(affTypes);
+				context.SaveChanges();
+
+				#endregion
+
 			} finally {
 				context.Database.CloseConnection();
 			}
