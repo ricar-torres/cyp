@@ -48,7 +48,12 @@
   </mat-step>
   <mat-step [stepControl]="benefits">
     <form [formGroup]="benefits">
-      <div fxLayout fxLayoutAlign="center" fxLayoutGap="10px">
+      <div
+        fxLayout
+        fxLayoutAlign="center"
+        fxLayout.lt-md="column"
+        fxLayoutGap="10px"
+      >
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.HEALTHPLAN' | translate }}</mat-label>
           <mat-select [formControl]="benefits.get('MedicalPlan')">
@@ -58,7 +63,7 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex>
-          <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
+          <mat-label>{{ 'ALLIANCEWIZARD.BENEFITS' | translate }}</mat-label>
           <mat-select [formControl]="toppings" multiple> </mat-select>
         </mat-form-field>
       </div>
