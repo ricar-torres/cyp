@@ -206,7 +206,8 @@
     "QUALIFYINGEVENT": "Qualifying Event",
     "COVERNAME": "Cover",
     "STARTDATE": "Start Date",
-    "ELEGIBLEDATE": "Eligibility Date"
+    "ELEGIBLEDATE": "Eligibility Date",
+    "ENDDATE": "End Date"
   },
   "ALLIANCEWIZARD": {
     "AFILIATIONMETOD": "Afiliation Method",

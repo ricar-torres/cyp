@@ -204,18 +204,19 @@
     "ASSOCIATE_DEPENDATS": "Asociador de Dependientes"
   },
   "ALLIANCELIST": {
-    "QUALIFYINGEVENT": "Evento Calificativo",
+    "QUALIFYINGEVENT": "Evento",
     "COVERNAME": "Cubierta",
-    "STARTDATE": "Fecha de Inicio",
-    "ELEGIBLEDATE": "Fecha de Elegibilidad"
+    "STARTDATE": "Inicio",
+    "ELEGIBLEDATE": "Elegibilidad",
+    "ENDDATE": "Culminacion"
   },
   "ALLIANCEWIZARD": {
     "AFILIATIONMETOD": "Método de afiliación",
-    "QUALIFYINGEVENT": "Evento Calificativo",
+    "QUALIFYINGEVENT": "Evento",
     "RENOVATIONAFILIATION": "Renovación / Afiliación",
     "AFFILIATIONMETHODS": "Métodos de afiliación",
-    "EFFECTIVEDATE": "Fecha de Efectividad",
-    "ELEGBILITYDATE": "Fecha de Eligibilidad",
+    "EFFECTIVEDATE": "Efectividad",
+    "ELEGBILITYDATE": "Eligibilidad",
     "INSCRIPTIONTYPE": "Tipo de Inscripción",
     "INSCRIPTIONSTATUS": "Estatus de Inscripción"
   },

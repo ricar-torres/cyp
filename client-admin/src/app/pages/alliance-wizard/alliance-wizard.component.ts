@@ -35,6 +35,8 @@ export class AllianceWizardComponent implements OnInit {
       inscriptionStatus: [null, Validators.required],
     });
 
-    this.benefits = this._formBuilder.group({});
+    this.benefits = this._formBuilder.group({
+      MedicalPlan: [null],
+    });
   }
 }
