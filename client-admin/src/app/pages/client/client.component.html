@@ -202,6 +202,7 @@
                 [client]="client"
               ></app-general-information>
             </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>home</mat-icon>
@@ -209,6 +210,7 @@
               </ng-template>
               <app-client-address [clientid]="clientid"></app-client-address>
             </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>group_work</mat-icon>
@@ -230,6 +232,7 @@
                 [clientId]="clientid"
               ></app-dependants-list>
             </mat-tab>
+
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
               <ng-template mat-tab-label>
                 <mat-icon>link</mat-icon>
@@ -237,6 +240,14 @@
               </ng-template>
               <app-alliance-list [clientId]="clientid"></app-alliance-list>
             </mat-tab>
+
+            <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
+              <ng-template mat-tab-label>
+                <mat-icon>queue</mat-icon>
+                {{ 'CLIENTS.MULTI_ASISTANCE' | translate }}
+              </ng-template>
+            </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>perm_phone_msg</mat-icon>

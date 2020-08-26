@@ -73,7 +73,7 @@
   },
   "AGENCY": {
     "TITLE": "Agencias",
-    "BTN_ADD": "Crear Agencia",
+    "BTN_ADD": "Nueva Agencia",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "AGENCYEDIT": "Agencia",
@@ -86,11 +86,11 @@
   },
   "CLIENTS": {
     "TITLE": "Cliente",
-    "BTN_ADD": "Crear Cliente",
+    "BTN_ADD": "Nuevo Cliente",
     "NAME": "Nombre",
     "ACTIONS": "Accion",
     "AGENCYEDIT": "Cliente",
-    "AGENCYCREATE": "Cleinte",
+    "AGENCYCREATE": "Cliente",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Grabar",
@@ -107,9 +107,9 @@
     "GENDER": "Genero",
     "BIRTHDATE": "Fecha de nacimiento",
     "MARITALSTATUS": "Estatus Marital",
-    "BONAFIDES": "Bona Fides",
+    "BONAFIDES": "BonaFides",
     "DEPENDANTS": "Dependientes",
-    "GENERALINFORMATION": "Información General",
+    "GENERALINFORMATION": "General",
     "ALLIANCE": "Alianzas",
     "CALLHISTORY": "Llamadas",
     "DIRECTIONS": "Direcciones",
@@ -134,11 +134,12 @@
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "El 'SSN' provisto no esta disponible",
     "SSNREQUIRED": "SSN es requerido",
-    "SAMEADDRESS": "Usar dirección fisica"
+    "SAMEADDRESS": "Usar dirección fisica",
+    "MULTI_ASISTANCE": "Multiasistencia"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
-    "BTN_ADD": "Crear Eventos Calificativos",
+    "BTN_ADD": "Nuevo Evento",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "QUALIFYINGEVENTEDIT": "Evento Calificativo",
@@ -151,8 +152,8 @@
     "REQUIREMENTS": "Requisitos"
   },
   "BONAFIDE": {
-    "TITLE": "Asociaciones Bona fides",
-    "BTN_ADD": "Crear Bona fides",
+    "TITLE": "Asociaciones Bonafide",
+    "BTN_ADD": "Nuevo Bonafides",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "BONAFIDEEDIT": "Bona fides",
@@ -183,7 +184,7 @@
   },
   "CHAPTER": {
     "TITLE": "Capítulos",
-    "BTN_ADD": "Crear Capítulo",
+    "BTN_ADD": "Nuevo Capítulo",
     "NAME": "Nombre",
     "CHAPTEREDIT": "Capítulo",
     "CHAPTERCREATE": "Capítulo",
@@ -199,9 +200,9 @@
   },
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Registro",
-    "BONAFIDES_ASSOCIATION": "Asociador de Bona fides",
-    "GENERAL_INFORMATION": "Información General",
-    "ASSOCIATE_DEPENDATS": "Asociador de Dependientes"
+    "BONAFIDES_ASSOCIATION": "Bonafides",
+    "GENERAL_INFORMATION": "General",
+    "ASSOCIATE_DEPENDATS": "Dependientes"
   },
   "USER": {
     "TITLE": "Usuario",
@@ -274,7 +275,7 @@
     "ORIGIN": "Origen",
     "PAGE_TITLE": "Campañas",
     "GENERAL_FILTER": "Filter",
-    "ADD_BTN": "Agregar Campaña",
+    "ADD_BTN": "Nueva Campaña",
     "EDIT_BTN": "Editar",
     "DEL_BTN": "Borrar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar ésta Campaña?"
@@ -289,7 +290,7 @@
     "EXISTS": "Existe una campaña con este nombre"
   },
   "COMMUNICATION_METHOD_LIST": {
-    "ADD_BTN": "Agregar",
+    "ADD_BTN": "Nuevo Metodo",
     "GENERAL_FILTER": "Filtro",
     "NAME": "Nombre",
     "EDIT_BTN": "Editar",
@@ -310,7 +311,7 @@
     "CODE": "Código",
     "EDIT_BTN": "Editar",
     "DEL_BTN": "Borrar",
-    "ADD_BTN": "Añadir",
+    "ADD_BTN": "Nuevo Retiro",
     "GENERAL_FILTER": "Filtro",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Retiro?"
   },
@@ -343,7 +344,8 @@
     "PAGE_TITLE": "Dependientes",
     "RELATION_NAME": "Relación",
     "COVER": "Cubierta",
-    "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?"
+    "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?",
+    "ADD_BTN": "Nuevo Dependiente"
   },
   "DEPENDANT": {
     "PAGE_TITLE": "Dependiente",

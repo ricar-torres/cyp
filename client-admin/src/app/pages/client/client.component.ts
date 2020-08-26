@@ -153,6 +153,16 @@ export class ClientComponent implements OnInit, OnDestroy {
         desc: '',
       },
       {
+        icon: 'link',
+        tooltip: 'Alianza',
+        desc: '',
+      },
+      {
+        icon: 'queue',
+        tooltip: 'Multi',
+        desc: '',
+      },
+      {
         icon: 'perm_phone_msg',
         tooltip: 'Calls',
         desc: '',
