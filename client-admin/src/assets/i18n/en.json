@@ -209,7 +209,17 @@
     "COVERNAME": "Cover",
     "STARTDATE": "Start Date",
     "ELEGIBLEDATE": "Eligibility Date",
-    "ENDDATE": "End Date"
+    "ENDDATE": "End Date",
+    "AFFILIATIONTYPE": "Affiliation Type",
+    "Nuevo": "New",
+    "Renovación": "Renovation",
+    "Conversión": "Conversion",
+    "Orientación": "Orientation",
+    "Cancelado": "Cancelled",
+    "Transferencia": "Transfer",
+    "Pre-Afiliación": "Pre-Affiliation",
+    "Nuevo ingreso por representante de TSA": "New entry by TSA representative",
+    "Nuevo ingreso por representante de MMM": "New entry by MMM representative"
   },
   "ALLIANCEWIZARD": {
     "AFILIATIONMETOD": "Afiliation Method",
@@ -222,7 +232,8 @@
     "INSCRIPTIONSTATUS": "Inscription Status",
     "HEALTHPLAN": "Health Plan",
     "ADDITIONS": "Addititons",
-    "BENEFITS": "Benefits"
+    "BENEFITS": "Benefits",
+    "COVER": "Cover"
   },
   "USER": {
     "TITLE": "User",

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { QualifyingEventService } from '@app/shared/qualifying-event.service';
+import { HealthPlanService } from '@app/shared/health-plan.service';
+import { CoverService } from '@app/shared/cover.service';
 
 @Component({
   selector: 'app-alliance-wizard',
@@ -12,10 +14,15 @@ export class AllianceWizardComponent implements OnInit {
   benefits: FormGroup;
   finalFormGroup: FormGroup;
 
+  healthPlans: any = [];
+  covers: any = [];
+
   qualifyingEvents: [] = [];
   constructor(
     private _formBuilder: FormBuilder,
-    private qualifyingEventService: QualifyingEventService
+    private qualifyingEventService: QualifyingEventService,
+    private healthPlansService: HealthPlanService,
+    private coverService: CoverService
   ) {}
 
   ngOnInit(): void {
@@ -36,8 +43,18 @@ export class AllianceWizardComponent implements OnInit {
     });
 
     this.benefits = this._formBuilder.group({
-      MedicalPlan: [null],
+      HealthPlan: [null],
       Addititons: [null],
+    });
+
+    this.healthPlansService.GetAll().subscribe((res) => {
+      this.healthPlans = res;
+    });
+
+    this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
+      this.coverService.GetByPlan(res).subscribe((res) => {
+        this.covers = res;
+      });
     });
   }
 }

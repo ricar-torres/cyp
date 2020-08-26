@@ -10,7 +10,6 @@ import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
 import * as Swal from 'sweetalert2';
-import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
 import { AllianceComponent } from '../alliance/alliance.component';
 import { AllianceListComponent } from '../alliance-list/alliance-list.component';
 
@@ -162,11 +161,6 @@ export class ClientComponent implements OnInit, OnDestroy {
       {
         icon: 'insert_emoticon',
         tooltip: 'Dependents',
-        desc: '',
-      },
-      {
-        icon: 'link',
-        tooltip: 'Alianza',
         desc: '',
       },
       {

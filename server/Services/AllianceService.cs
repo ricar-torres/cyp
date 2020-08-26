@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
 
@@ -12,7 +13,7 @@ namespace WebApi.Services
 {
   public interface IAllianceService
   {
-    Task<List<Alianzas>> GetAll(int? clientId);
+    Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
     Alianzas Create(Alianzas payload);
     Alianzas Update(Alianzas payload);
@@ -41,18 +42,23 @@ namespace WebApi.Services
       throw new NotImplementedException();
     }
 
-    public async Task<List<Alianzas>> GetAll(int? clientId)
+    public async Task<List<AllianceDto>> GetAll(int? clientId)
     {
       if (clientId == null)
       {
-        var allAlliances = await _context.Alianzas.ToListAsync();
+        var allAlliances = await _context.Alianzas.Select(x => new AllianceDto(x)).ToListAsync();
         return allAlliances;
       }
       var clientAlliances =
       await (from pr in _context.ClientProduct
              join al in _context.Alianzas on pr.Id equals al.ClientProductId
+             join aff in _context.AffType on al.AffType.ToString() equals aff.Id.ToString()
+             join cov in _context.Covers on al.CoverId equals cov.Id
+             join qu in _context.QualifyingEvents on al.QualifyingEventId equals qu.Id
              where pr.ClientId == clientId.GetValueOrDefault()
-             select al).Include("Cover").Include("QualifyingEvent").ToListAsync();
+             select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov })
+             .Select(x => new AllianceDto(x.alliance) { Cover = x.cover, QualifyingEvent = x.quallifyingEvent, AffTypeDescription = x.AffType }).ToListAsync();
+
       clientAlliances.ForEach(x =>
       {
         x.Cover.Alianza = null;

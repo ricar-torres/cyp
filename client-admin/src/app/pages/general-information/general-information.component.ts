@@ -34,7 +34,7 @@ export class GeneralInformationComponent implements OnInit {
   async ngOnInit() {
     this.reactiveForm = this.wizadFormGroups.generalInformationForm;
     this.tutorInformation = this.wizadFormGroups.tutorInformation;
-    this.heathPlans = await this.hps.GetAll();
+    this.heathPlans = await this.hps.GetAll().toPromise();
     this.agencies = await this.ag.getAll().toPromise();
     if (this.client) {
       await this.fillForm();
@@ -79,7 +79,7 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   async loadCovers(selection) {
-    this.covers = await this.cs.GetByPlan(selection);
+    this.covers = await this.cs.GetByPlan(selection).toPromise();
   }
 
   displayFnAgencies(selected: any) {

@@ -33,6 +33,7 @@ export class AllianceListComponent implements OnInit {
     'id',
     'cover',
     'qualifyingEvent',
+    'allianceType',
     'startDate',
     'endDate',
     'elegibleDate',
