@@ -102,6 +102,7 @@ import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dial
 import { RetirementListComponent } from './pages/retirement-list/retirement-list.component';
 import { BonaFideListComponent } from './pages/bona-fide-list/bona-fide-list.component';
 import { BonaFideComponent } from './pages/bona-fide/bona-fide.component';
+import { RetirementComponent } from './pages/retirement/retirement.component';
 import { ChapterListComponent } from './pages/chapter-list/chapter-list.component';
 import { ChapterComponent } from './pages/chapter/chapter.component';
 import { NgxMaskModule } from 'ngx-mask';
@@ -113,7 +114,6 @@ import { ClientWizardComponent } from './pages/client-wizard/client-wizard.compo
 import { MatStepperModule } from '@angular/material/stepper';
 import { AddressComponent } from './pages/address/address.component';
 import { GeneralInformationComponent } from './pages/general-information/general-information.component';
-import { RetirementComponent } from './pages/retirement/retirement.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 import { DocsCallsListComponent } from './pages/docs-calls-list/docs-calls-list.component';
 import { DialogSuccessComponent } from './components/dialog-success/dialog-success.component';
@@ -121,6 +121,9 @@ import { DependantsListComponent } from './pages/dependants-list/dependants-list
 import { BonafidesAssociatorComponent } from './pages/bonafides-associator/bonafides-associator.component';
 import { DependantComponent } from './pages/dependant/dependant.component';
 import { PreviewSsn } from './directives/ssnPipe';
+import { AllianceComponent } from './pages/alliance/alliance.component';
+import { AllianceListComponent } from './pages/alliance-list/alliance-list.component';
+import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -176,6 +179,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BonafidesAssociatorComponent,
     DependantComponent,
     PreviewSsn,
+    AllianceComponent,
+    AllianceListComponent,
+    AllianceWizardComponent,
   ],
   imports: [
     BrowserModule,
@@ -255,6 +261,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ConfirmDialogComponent,
     ClientWizardComponent,
     BonafidesAssociatorComponent,
+    AllianceWizardComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

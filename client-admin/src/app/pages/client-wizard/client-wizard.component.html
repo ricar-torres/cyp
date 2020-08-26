@@ -13,7 +13,12 @@
     >
       {{ 'CLIENTWIZARD.PREREGISTER' | translate }}
     </button>
-    <button mat-button matStepperNext>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
@@ -22,8 +27,8 @@
       'CLIENTWIZARD.BONAFIDES_ASSOCIATION' | translate
     }}</ng-template>
     <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
-    <button mat-button matStepperNext>
-      {{ 'NEXT' | translate }}
+    <button mat-raised-button color="primary" matStepperPrevious>
+      {{ 'GOBACK' | translate }}
     </button>
     <button (click)="register()" mat-button matStepperNext>
       <mat-icon>save</mat-icon>
@@ -35,16 +40,17 @@
       'CLIENTWIZARD.ASSOCIATE_DEPENDATS' | translate
     }}</ng-template>
     <app-dependants-list [fromWizard]="true"></app-dependants-list>
-    <button mat-button matStepperNext>
-      {{ 'NEXT' | translate }}
+    <button mat-raised-button color="primary" matStepperPrevious>
+      {{ 'GOBACK' | translate }}
     </button>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>Done</ng-template>
-    <p>You are now done.</p>
-    <div>
-      <button mat-button matStepperPrevious>Back</button>
-      <button mat-button (click)="stepper.reset()">Reset</button>
-    </div>
+    <button
+      class="button-space"
+      (click)="register()"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
+      {{ 'FINISH' | translate }}
+    </button>
   </mat-step>
 </mat-horizontal-stepper>

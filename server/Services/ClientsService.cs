@@ -18,6 +18,7 @@ namespace WebApi.Services {
 		Task<Boolean> ChekcName(string criteria);
 		Task<List<Addresses>> GetClientAddress(int clientId);
 		Task<Boolean> ChekcSsn(string criteria);
+		Task<List<Clients>> GetClientByCriteria(string criteria);
 	}
 
 	public class ClientService : IClientService {
@@ -35,6 +36,7 @@ namespace WebApi.Services {
 			try {
 
 				payload = _context.Clients.Where(ag => ag.DeletedAt == null).ToList();
+				//only show last 4 in client list
 				payload.ForEach(each => {
 					if (each.Ssn != null && each.Ssn.Length >= 9) {
 						var filteredSsn = each.Ssn.Replace("-", "");
@@ -67,6 +69,7 @@ namespace WebApi.Services {
 					_context.Clients.Add(newClient);
 					_context.SaveChanges();
 					payload.Demographic.Id = newClient.Id;
+					AddressBuilder(payload);
 					TutorBuilder(payload);
 					_context.SaveChanges();
 				} else {
@@ -76,8 +79,38 @@ namespace WebApi.Services {
 					_context.Clients.Add(newClient);
 					_context.SaveChanges();
 					payload.Demographic.Id = newClient.Id;
+					AddressBuilder(payload);
 					TutorBuilder(payload);
 					ClientChapterAssociationBuilder(payload.Bonafides, newClient.Id);
+
+					List<Dependents> dependentsList = new List<Dependents>();
+					payload.Dependants.ForEach(D => {
+						var dependat = new Dependents();
+						dependat.Name = D.Name;
+						dependat.Initial = D.Initial;
+						dependat.LastName1 = D.LastName1;
+						dependat.LastName2 = D.LastName2;
+						dependat.Phone1 = D.Phone1;
+						dependat.Phone2 = D.Phone2;
+						dependat.Ssn = D.Ssn;
+						dependat.UpdatedAt = D.UpdatedAt;
+						dependat.AgencyId = D.AgencyId;
+						dependat.BirthDate = D.BirthDate;
+						dependat.City = D.City;
+						dependat.CityId = D.CityId;
+						dependat.ClientId = newClient.Id;
+						dependat.ContractNumber = D.ContractNumber;
+						dependat.CoverId = D.CoverId;
+						dependat.CreatedAt = D.CreatedAt;
+						dependat.DeletedAt = D.DeletedAt;
+						dependat.EffectiveDate = D.EffectiveDate;
+						dependat.Email = D.Email;
+						dependat.Gender = D.Gender;
+						dependat.Relationship = D.Relationship.Id;
+						dependentsList.Add(dependat);
+					});
+					_context.Dependents.AddRange(dependentsList);
+
 					_context.SaveChanges();
 				}
 				return payload;
@@ -107,41 +140,7 @@ namespace WebApi.Services {
 					client.UpdatedAt = DateTime.Now;
 					_context.Clients.Update(client);
 				}
-
-				if (payload.Address?.PhysicalAddress != null) {
-					var physicalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 1);
-
-					if (physicalAddress != null) {
-						PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
-						physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
-						_context.Addresses.Update(physicalAddress);
-					} else {
-						physicalAddress = new Addresses();
-						PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
-						physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
-						physicalAddress.CreatedAt = DateTime.Now;
-						await _context.Addresses.AddAsync(physicalAddress);
-					}
-
-					physicalAddress.UpdatedAt = DateTime.Now;
-
-				}
-
-				if (payload.Address?.PostalAddress != null) {
-					var postalAddress = await _context.Addresses.AsNoTracking().FirstOrDefaultAsync(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 2);
-					if (postalAddress != null) {
-						PostalAddressInformationBuilder(ref payload, ref postalAddress);
-						_context.Addresses.Update(postalAddress);
-					} else {
-						postalAddress = new Addresses();
-						PostalAddressInformationBuilder(ref payload, ref postalAddress);
-						postalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
-						await _context.Addresses.AddAsync(postalAddress);
-					}
-
-					postalAddress.UpdatedAt = DateTime.Now;
-				}
-
+				payload = AddressBuilder(payload);
 				TutorBuilder(payload);
 
 				await _context.SaveChangesAsync();
@@ -149,6 +148,44 @@ namespace WebApi.Services {
 			} catch (Exception ex) {
 				throw ex;
 			}
+		}
+
+		private ClientInformationDto AddressBuilder(ClientInformationDto payload) {
+			if (payload.Address?.PhysicalAddress != null) {
+				var physicalAddress = _context.Addresses.AsNoTracking().FirstOrDefault(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 1);
+
+				if (physicalAddress != null) {
+					PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
+					physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
+					_context.Addresses.Update(physicalAddress);
+				} else {
+					physicalAddress = new Addresses();
+					PhysicalAddressInformationBuilder(ref payload, ref physicalAddress);
+					physicalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
+					physicalAddress.CreatedAt = DateTime.Now;
+					_context.Addresses.Add(physicalAddress);
+				}
+
+				physicalAddress.UpdatedAt = DateTime.Now;
+
+			}
+
+			if (payload.Address?.PostalAddress != null) {
+				var postalAddress = _context.Addresses.AsNoTracking().FirstOrDefault(cl => cl.ClientId == payload.Demographic.Id && cl.Type == 2);
+				if (postalAddress != null) {
+					PostalAddressInformationBuilder(ref payload, ref postalAddress);
+					_context.Addresses.Update(postalAddress);
+				} else {
+					postalAddress = new Addresses();
+					PostalAddressInformationBuilder(ref payload, ref postalAddress);
+					postalAddress.ClientId = payload.Demographic.Id.GetValueOrDefault();
+					_context.Addresses.Add(postalAddress);
+				}
+
+				postalAddress.UpdatedAt = DateTime.Now;
+			}
+
+			return payload;
 		}
 
 		private void TutorBuilder(ClientInformationDto payload) {
@@ -182,7 +219,7 @@ namespace WebApi.Services {
 			Address.Line2 = payload.Address?.PhysicalAddress.Line2;
 			Address.State = payload.Address?.PhysicalAddress.State;
 			Address.City = payload.Address?.PhysicalAddress.City;
-			Address.Type = payload.Address?.PhysicalAddress.Type.GetValueOrDefault();
+			Address.Type = 1;
 			Address.Zip4 = payload.Address?.PhysicalAddress.Zip4;
 			Address.Zipcode = payload.Address?.PhysicalAddress.Zipcode;
 		}
@@ -192,7 +229,7 @@ namespace WebApi.Services {
 			Address.Line2 = payload.Address?.PostalAddress.Line2;
 			Address.State = payload.Address?.PostalAddress.State;
 			Address.City = payload.Address?.PostalAddress.City;
-			Address.Type = payload.Address?.PostalAddress.Type.GetValueOrDefault();
+			Address.Type = 2;
 			Address.Zip4 = payload.Address?.PostalAddress.Zip4;
 			Address.Zipcode = payload.Address?.PostalAddress.Zipcode;
 		}
@@ -286,6 +323,24 @@ namespace WebApi.Services {
 				}
 			}
 			return false;
+		}
+
+		public async Task<List<Clients>> GetClientByCriteria(string criteria) {
+			var matchingClients = await _context.Clients.Where(x =>
+				x.Name.ToLower().Contains(criteria) ||
+				x.Ssn.Contains(criteria) ||
+				x.Phone1.Contains(criteria) ||
+				x.Phone2.Contains(criteria) ||
+				x.Email.Contains(criteria)
+			).Take(100).OrderBy(x => x.Id).ToListAsync();
+			matchingClients.ForEach(each => {
+				if (each.Ssn != null && each.Ssn.Length >= 9) {
+					var filteredSsn = each.Ssn.Replace("-", "");
+					each.Ssn = "XXX-XX-" + filteredSsn.Substring(5, 4);
+				};
+			});
+
+			return matchingClients;
 		}
 	}
 

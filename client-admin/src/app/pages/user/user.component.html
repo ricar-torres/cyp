@@ -43,17 +43,32 @@
 
         <mat-form-field class="full-width">
           <mat-chip-list #chipList aria-label="Role selection">
-            <mat-chip *ngFor="let role of roles" [selectable]="selectable" [removable]="removable"
-              (removed)="remove(role)">
+            <mat-chip
+              *ngFor="let role of roles"
+              [selectable]="selectable"
+              [removable]="removable"
+              (removed)="remove(role)"
+            >
               {{ role.name }}
               <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
             </mat-chip>
-            <input placeholder="{{ 'USER.ROLES' | translate }}" #roleInput formControlName="rolesAlt"
-              [matAutocomplete]="auto" [matChipInputFor]="chipList"
-              [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
+            <input
+              placeholder="{{ 'USER.ROLES' | translate }}"
+              #roleInput
+              formControlName="rolesAlt"
+              [matAutocomplete]="auto"
+              [matChipInputFor]="chipList"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+            />
           </mat-chip-list>
-          <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
-            <mat-option *ngFor="let role of filteredRoles | async" [value]="role">
+          <mat-autocomplete
+            #auto="matAutocomplete"
+            (optionSelected)="selected($event)"
+          >
+            <mat-option
+              *ngFor="let role of filteredRoles | async"
+              [value]="role"
+            >
               {{ role.name }}
             </mat-option>
           </mat-autocomplete>
@@ -64,13 +79,18 @@
         </p>
       </mat-card-content>
       <mat-card-actions>
-        <button mat-raised-button color="primary" type="submit" *ngIf="(id && editAccess) || (!id && createAccess)"
-          [disabled]="!reactiveForm.valid">
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit"
+          *ngIf="(id && editAccess) || (!id && createAccess)"
+          [disabled]="!reactiveForm.valid"
+        >
           <mat-icon>save</mat-icon> {{ 'USER.SAVE' | translate }}
         </button>
 
         <button mat-stroked-button (click)="onBack()">
-          <mat-icon>list</mat-icon>{{ 'USER.GOBACK' | translate }}
+          <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
         </button>
       </mat-card-actions>
     </mat-card>

@@ -1,12 +1,14 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ClientService } from '@app/shared/client.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { AddressService } from '@app/shared/address.service';
 import { LanguageService } from '@app/shared/Language.service';
 import { AppService } from '@app/shared/app.service';
-
+import { MatSlideToggleChange } from '@angular/material';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 @Component({
   selector: 'app-client-address',
   templateUrl: './address.component.html',
@@ -16,6 +18,9 @@ export class AddressComponent implements OnInit {
   @Input() fromWizard: boolean = false;
   @Input() clientid: string;
 
+  sameAsPhysical: FormControl = new FormControl();
+
+  sameAddressSubscription: Observable<any>;
   countries: [];
   cities: [];
   reactiveForm: FormGroup;
@@ -29,14 +34,25 @@ export class AddressComponent implements OnInit {
     private app: AppService
   ) {}
 
-  onSubmit() {}
-
   async ngOnInit() {
     try {
       this.countries = await this.addressService.getCoutries();
       this.cities = await this.addressService.getCities();
 
       this.reactiveForm = this.clientWizard.clientAddressFormGroup;
+
+      this.sameAddressSubscription = this.reactiveForm
+        .get('PhysicalAddress')
+        .valueChanges.pipe(
+          map(() => {
+            if (this.sameAsPhysical.value) {
+              this.reactiveForm
+                .get('PostalAddress')
+                .patchValue(this.reactiveForm.get('PhysicalAddress').value);
+            }
+          })
+        );
+
       if (!this.fromWizard) {
         var addresses: any = await this.addressService.getClientAddress(
           this.clientid
@@ -118,6 +134,11 @@ export class AddressComponent implements OnInit {
       this.reactiveForm.get('PostalAddress').get('State').setValue('PR');
       this.reactiveForm.get('PhysicalAddress').get('State').disable();
       this.reactiveForm.get('PostalAddress').get('State').disable();
+
+      this.isSameAddress(
+        (<FormGroup>this.reactiveForm.get('PhysicalAddress')).value,
+        (<FormGroup>this.reactiveForm.get('PostalAddress')).value
+      );
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -132,6 +153,25 @@ export class AddressComponent implements OnInit {
     });
   }
 
+  isSameAddress(address1, address2) {
+    if (
+      address1.Line1 == null &&
+      address2.Line1 == null &&
+      address1.Line2 == null &&
+      address2.Line2 == null &&
+      address1.City == null &&
+      address2.City == null
+    ) {
+      this.sameAsPhysical.setValue(0);
+    } else if (
+      address1.Line1 == address2.Line1 &&
+      address1.Line2 == address2.Line2 &&
+      address1.City == address2.City
+    ) {
+      this.sameAsPhysical.setValue(1);
+    }
+  }
+
   toggleControls(disable: boolean) {
     if (this.reactiveForm) {
       if (disable) {
@@ -140,5 +180,17 @@ export class AddressComponent implements OnInit {
         this.reactiveForm.enable();
       }
     }
+  }
+
+  usePhysical(ev: MatSlideToggleChange) {
+    if (ev.checked) {
+      this.reactiveForm
+        .get('PostalAddress')
+        .patchValue(this.reactiveForm.get('PhysicalAddress').value);
+      this.sameAddressSubscription.subscribe();
+      return;
+    }
+    //this.sameAddressSubscription.unsubscribe();
+    this.reactiveForm.get('PostalAddress').reset();
   }
 }

@@ -53,7 +53,7 @@ export class ClientWizardService {
         Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ],
     ],
-    Email: [null, [Validators.email]],
+    Email: [null, [Validators.email, Validators.maxLength(250)]],
     Initial: [
       null,
       [
@@ -93,24 +93,24 @@ export class ClientWizardService {
     PhysicalAddress: this.formBuilder.group({
       Id: [null],
       ClientId: [null],
-      Line1: [null],
+      Line1: [null, Validators.maxLength(250)],
       Type: [null],
-      Line2: [null],
+      Line2: [null, Validators.maxLength(250)],
       State: [null],
       City: [null],
-      Zipcode: [null],
-      Zip4: [null],
+      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
+      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
     }),
     PostalAddress: this.formBuilder.group({
       Id: [null],
       ClientId: [null],
-      Line1: [null],
+      Line1: [null, Validators.maxLength(250)],
       Type: [null],
-      Line2: [null],
+      Line2: [null, Validators.maxLength(250)],
       State: [null],
       City: [null],
-      Zipcode: [null],
-      Zip4: [null],
+      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
+      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
     }),
   });
 
@@ -133,6 +133,8 @@ export class ClientWizardService {
     this.secondFormGroup.reset();
     this.generalInformationForm.reset();
     this.tutorInformation.reset();
+    this.BonafideList = [];
+    this.DependantsList = [];
   }
 
   async preRegister() {
@@ -165,6 +167,7 @@ export class ClientWizardService {
         Demographic: clientDemographic,
         Address: this.clientAddressFormGroup.value,
         Bonafides: this.BonafideList,
+        Dependants: this.DependantsList,
       };
       await this.clientService.create(ClientInforation);
       if (agency) this.adaptInfoForGUI(agency);
@@ -230,6 +233,7 @@ export class ClientWizardService {
 
   checkSsn(ssn: string) {
     return async (control: AbstractControl) => {
+      //console.log(ssn, control.value);
       if (control.value && ssn != control.value) {
         const res: any = await this.clientService.checkSsn({
           ssn: control.value,

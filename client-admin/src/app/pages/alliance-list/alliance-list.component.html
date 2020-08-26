@@ -1,0 +1,94 @@
+<div fxLayoutAlign="space-around center">
+  <table
+    style="width: 95%; margin: 20px"
+    mat-table
+    [dataSource]="dataSource"
+    matSort
+    class="mat-elevation-z8"
+  >
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+      <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="qualifyingEvent">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALLIANCELIST.QUALIFYINGEVENT' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.qualifyingEvent.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="cover">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALLIANCELIST.COVERNAME' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.cover.name }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="createdAt">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'CREATEDAT' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="startDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALLIANCELIST.STARTDATE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.startDate | date: 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="endDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALLIANCELIST.ENDDATE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.endDate | date: 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+    <ng-container matColumnDef="elegibleDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALLIANCELIST.ELEGIBLEDATE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ element.elegibleDate | date: 'dd/MM/yyyy' }}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="actions">
+      <th mat-header-cell *matHeaderCellDef>
+        <!-- {{ 'ALLIANCELIST.ACTIONS' | translate }} -->
+      </th>
+      <td mat-cell *matCellDef="let element" align="right">
+        <button
+          type="button"
+          mat-button
+          color="accent"
+          (click)="editAgency(element.id)"
+          *ngIf="editAccess"
+        >
+          <mat-icon>edit</mat-icon> {{ 'EDIT' | translate }}
+        </button>
+        <button
+          type="button"
+          mat-button
+          color="warn"
+          (click)="deleteConfirm(element.id)"
+          *ngIf="deleteAccess"
+        >
+          <mat-icon>delete</mat-icon> {{ 'DELETE' | translate }}
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+</div>
