@@ -1,6 +1,6 @@
 <div fxLayoutAlign="space-around center">
   <table
-    style="width: 95%; margin: 20px;"
+    style="width: 95%; margin: 20px"
     mat-table
     [dataSource]="dataSource"
     matSort
@@ -42,7 +42,7 @@
         {{ 'ALLIANCELIST.STARTDATE' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+        {{ element.startDate | date: 'dd/MM/yyyy hh:mm a' }}
       </td>
     </ng-container>
     <ng-container matColumnDef="elegibleDate">
@@ -50,7 +50,7 @@
         {{ 'ALLIANCELIST.ELEGIBLEDATE' | translate }}
       </th>
       <td mat-cell *matCellDef="let element">
-        {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+        {{ element.elegibleDate | date: 'dd/MM/yyyy hh:mm a' }}
       </td>
     </ng-container>
 

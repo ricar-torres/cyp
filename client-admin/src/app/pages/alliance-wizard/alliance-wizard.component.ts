@@ -9,7 +9,8 @@ import { QualifyingEventService } from '@app/shared/qualifying-event.service';
 })
 export class AllianceWizardComponent implements OnInit {
   affiliationMethod: FormGroup;
-  secondFormGroup: FormGroup;
+  benefits: FormGroup;
+  finalFormGroup: FormGroup;
 
   qualifyingEvents: [] = [];
   constructor(
@@ -26,8 +27,14 @@ export class AllianceWizardComponent implements OnInit {
       affiliationMethod: [null],
       qualifyingEvent: [null],
     });
-    this.secondFormGroup = this._formBuilder.group({
-      secondCtrl: [null, [Validators.required]],
+
+    this.finalFormGroup = this._formBuilder.group({
+      effectiveDate: [{ value: null, disabled: true }, [Validators.required]],
+      eligibiliyDate: [{ value: null, disabled: true }, [Validators.required]],
+      inscriptionType: [null, Validators.required],
+      inscriptionStatus: [null, Validators.required],
     });
+
+    this.benefits = this._formBuilder.group({});
   }
 }

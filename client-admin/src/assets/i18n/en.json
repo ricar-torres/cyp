@@ -212,7 +212,11 @@
     "AFILIATIONMETOD": "Afiliation Method",
     "QUALIFYINGEVENT": "Qualifying Event",
     "RENOVATIONAFILIATION": "Ranovation / Afiliation",
-    "AFFILIATIONMETHODS": "Affiliation Methods"
+    "AFFILIATIONMETHODS": "Affiliation Methods",
+    "EFFECTIVEDATE": "Effective Date",
+    "ELEGBILITYDATE": "Eligibility Date",
+    "INSCRIPTIONTYPE": "Inscription Type",
+    "INSCRIPTIONSTATUS": "Inscription Status"
   },
   "USER": {
     "TITLE": "User",

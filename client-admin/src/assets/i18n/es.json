@@ -205,7 +205,7 @@
   },
   "ALLIANCELIST": {
     "QUALIFYINGEVENT": "Evento Calificativo",
-    "COVERNAME": "Cobierta",
+    "COVERNAME": "Cubierta",
     "STARTDATE": "Fecha de Inicio",
     "ELEGIBLEDATE": "Fecha de Elegibilidad"
   },
@@ -213,7 +213,11 @@
     "AFILIATIONMETOD": "Método de afiliación",
     "QUALIFYINGEVENT": "Evento Calificativo",
     "RENOVATIONAFILIATION": "Renovación / Afiliación",
-    "AFFILIATIONMETHODS": "Métodos de afiliación"
+    "AFFILIATIONMETHODS": "Métodos de afiliación",
+    "EFFECTIVEDATE": "Fecha de Efectividad",
+    "ELEGBILITYDATE": "Fecha de Eligibilidad",
+    "INSCRIPTIONTYPE": "Tipo de Inscripción",
+    "INSCRIPTIONSTATUS": "Estatus de Inscripción"
   },
   "USER": {
     "TITLE": "Usuario",
