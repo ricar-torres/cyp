@@ -344,7 +344,9 @@
     "CALL_TYPE": "Call Type",
     "COMMENT": "Comment",
     "CONFIRMATION_NAME": "Confirmation Number",
-    "SUCCESS": "Success"
+    "SUCCESS": "Success",
+    "SAVE": "Save",
+    "BACK": "Back"
   },
   "DOCUMENTATION_CALL_LIST": {
     "TITLE": "Calls History",

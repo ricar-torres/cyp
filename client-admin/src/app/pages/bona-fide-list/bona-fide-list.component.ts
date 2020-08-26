@@ -193,7 +193,7 @@ export class BonaFideListComponent implements OnInit {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: this.clientId, bonafideId: id },
       });
 
@@ -203,7 +203,7 @@ export class BonaFideListComponent implements OnInit {
     } else if (this.fromWizard) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: this.clientId, listItem: id, fromWizard: true },
       });
 
@@ -219,7 +219,7 @@ export class BonaFideListComponent implements OnInit {
     if (this.clientId) {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: this.clientId, bonafideId: null },
       });
       dialogRef.afterClosed().subscribe((result) => {
@@ -228,7 +228,7 @@ export class BonaFideListComponent implements OnInit {
     } else if (this.fromWizard) {
       const pepe = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
-        height: '30%',
+        height: '45%',
         data: { clientId: null, bonafideId: null, fromWizard: true },
       });
       pepe.afterClosed().subscribe((result) => {
