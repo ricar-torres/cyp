@@ -182,16 +182,16 @@ namespace WebApi.Services
       {
         if (clientId != 0)
         {
-          var chaptersClients = _context.ChapterClient.Where(cc => cc.ClientId == clientId).ToList();
+          var chaptersClients = _context.ChapterClient.Include(c => c.Chapter).Where(cc => cc.ClientId == clientId).ToList();
           var idList = new List<int>();
           chaptersClients.ForEach(el =>
           {
-            idList.Add(el.ChapterId);
+            idList.Add(el.Chapter.BonaFideId);
           });
           var bonafidesNotInClient = (from ch in _context.Chapters
                                       join bn in _context.BonaFides
                                       on ch.BonaFideId equals bn.Id
-                                      where !idList.Contains(ch.Id)
+                                      where !idList.Contains(bn.Id)
                                       orderby bn.Name ascending
                                       select bn).Distinct().ToList();
           return bonafidesNotInClient;

@@ -33,7 +33,6 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
-    // debugger;
     this.reactiveForm = this.fb.group({
       Id: [null],
       ChapterId: [null, [Validators.required]],
@@ -53,6 +52,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       this.availableBonafides = await this.bonafideService.getAvailableBonafides(
         this.data.clientId
       );
+      if (this.data.bonafide) this.availableBonafides.push(this.data.bonafide);
     } else {
       this.availableBonafides = await this.bonafideService
         .getAll(undefined)
@@ -87,8 +87,8 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       this.reactiveForm.get('Primary').setValue(bonafide.Chapter.Primary);
     }
 
-    if (this.data.bonafideId) {
-      this.bonafides.setValue(this.data.bonafideId);
+    if (this.data.bonafide) {
+      this.bonafides.setValue(this.data.bonafide.id);
       var chapter: any = await this.chapterService.getChapterOfClientByBonafideId(
         this.data
       );
