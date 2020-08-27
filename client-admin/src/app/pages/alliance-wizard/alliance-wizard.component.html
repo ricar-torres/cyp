@@ -67,7 +67,10 @@
         </mat-form-field>
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
-          <mat-select [formControl]="benefits.get('Addititons')">
+          <mat-select
+            #coverSelection
+            [formControl]="benefits.get('Addititons')"
+          >
             <mat-option [value]="item.id" *ngFor="let item of covers">{{
               item.name
             }}</mat-option>
@@ -75,10 +78,55 @@
         </mat-form-field>
       </div>
     </form>
-    <div *ngFor="let item of benefits.get('Addititons').value">
-      item
-      <form *ngIf="item == 2"></form>
-    </div>
+
+    <mat-card *ngIf="coverSelection.value" class="margin-bottom-10">
+      <div>
+        <mat-slide-toggle #dependantsEnabled>Seguro de vida</mat-slide-toggle>
+      </div>
+      <mat-card-content *ngIf="dependantsEnabled.checked">
+        <div>
+          <div *ngFor="let item of percentageDependent; let i = index">
+            <form [formGroup]="item">
+              <div
+                fxLayout
+                fxLayoutAlign="center"
+                fxLayout.lt-md="column"
+                fxLayoutGap="10px"
+              >
+                <mat-form-field fxFlex="20%">
+                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
+                  <input matInput [formControl]="item.get('name')" />
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
+                  <input matInput [formControl]="item.get('lastName1')" />
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
+                  <input matInput [formControl]="item.get('lastName2')" />
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
+                  <input matInput [formControl]="item.get('percent')" />
+                </mat-form-field>
+                <button
+                  fxFlex="20%"
+                  type="button"
+                  color="warn"
+                  mat-button
+                  (click)="deleteDependant(i)"
+                >
+                  <mat-icon>delete</mat-icon> Delete
+                </button>
+              </div>
+            </form>
+          </div>
+          <button mat-raised-button color="primary" (click)="addDependant()">
+            Añadir Beneficiario
+          </button>
+        </div>
+      </mat-card-content>
+    </mat-card>
 
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}

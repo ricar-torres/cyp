@@ -13,7 +13,7 @@ export class AllianceWizardComponent implements OnInit {
   affiliationMethod: FormGroup;
   benefits: FormGroup;
   finalFormGroup: FormGroup;
-
+  percentageDependent: FormGroup[] = [];
   healthPlans: any = [];
   covers: any = [];
 
@@ -56,5 +56,28 @@ export class AllianceWizardComponent implements OnInit {
         this.covers = res;
       });
     });
+  }
+
+  addDependant() {
+    var newForm = this._formBuilder.group({
+      name: [null],
+      lastName1: [null],
+      lastName2: [null],
+      percent: [null],
+    });
+    this.percentageDependent.push(newForm);
+    this.calculatePercent();
+  }
+
+  private calculatePercent() {
+    var distr = 100 / this.percentageDependent.length;
+    this.percentageDependent.forEach((el) => {
+      el.get('percent').setValue(distr);
+    });
+  }
+
+  deleteDependant(i: number) {
+    this.percentageDependent.splice(i, 1);
+    this.calculatePercent();
   }
 }
