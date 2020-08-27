@@ -47,8 +47,8 @@ export class DependantsAPIService {
     );
   }
   getRelationTypes() {
-    return this.http
-      .get(`${environment.baseURL}/${this._apiName}/GetRelationTypes`)
-      .toPromise();
+    return this.http.get(
+      `${environment.baseURL}/${this._apiName}/GetRelationTypes`
+    );
   }
 }

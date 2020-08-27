@@ -111,7 +111,7 @@ export class DependantComponent implements OnInit, AfterViewInit {
     try {
       this.covers = await this.apiCovers.GetAll();
       this.healthPlans = await this.apiHealthPlan.GetAll().toPromise();
-      this.relations = await this.apiDependant.getRelationTypes();
+      this.relations = await this.apiDependant.getRelationTypes().toPromise();
     } catch (error) {
     } finally {
       this.loading = false;

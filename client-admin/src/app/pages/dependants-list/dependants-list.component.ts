@@ -85,7 +85,7 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   async ngAfterViewInit() {
     try {
       await this.loadData();
-      await this.apiDependant.getRelationTypes();
+      await this.apiDependant.getRelationTypes().toPromise();
     } catch (error) {}
   }
 

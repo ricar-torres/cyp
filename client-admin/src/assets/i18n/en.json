@@ -44,6 +44,9 @@
   "SAVESUCCESS": "The information has been updated",
   "EDIT": "Edit",
   "DELETE": "Delete",
+  "GENDER": "Gender",
+  "BIRTHDATE": "Birth Date",
+  "RELATION": "Relation",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -233,7 +236,8 @@
     "HEALTHPLAN": "Health Plan",
     "ADDITIONS": "Addititons",
     "BENEFITS": "Benefits",
-    "COVER": "Cover"
+    "COVER": "Cover",
+    "LIFEINSURANCE": "Life Insurance"
   },
   "USER": {
     "TITLE": "User",

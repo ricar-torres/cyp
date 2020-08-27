@@ -81,11 +81,18 @@
 
     <mat-card *ngIf="coverSelection.value" class="margin-bottom-10">
       <div>
-        <mat-slide-toggle #dependantsEnabled>Seguro de vida</mat-slide-toggle>
+        <mat-slide-toggle
+          (change)="clearIsuranceDependants($event.checked)"
+          #dependantsEnabled
+          >{{ 'ALLIANCEWIZARD.LIFEINSURANCE' | translate }}</mat-slide-toggle
+        >
       </div>
       <mat-card-content *ngIf="dependantsEnabled.checked">
         <div>
-          <div *ngFor="let item of percentageDependent; let i = index">
+          <div
+            @fadeAnimation
+            *ngFor="let item of percentageDependent; let i = index"
+          >
             <form [formGroup]="item">
               <div
                 fxLayout
@@ -94,16 +101,51 @@
                 fxLayoutGap="10px"
               >
                 <mat-form-field fxFlex="20%">
-                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
+                  <mat-label>{{ 'NAME' | translate }}</mat-label>
                   <input matInput [formControl]="item.get('name')" />
                 </mat-form-field>
                 <mat-form-field fxFlex="20%">
-                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
-                  <input matInput [formControl]="item.get('lastName1')" />
+                  <mat-label>{{ 'GENDER' | translate }}</mat-label>
+                  <mat-select
+                    #coverSelection
+                    [formControl]="item.get('gender')"
+                  >
+                    <mat-option [value]="1">{{
+                      'MALE' | translate
+                    }}</mat-option>
+                    <mat-option [value]="2">{{
+                      'FEMALE' | translate
+                    }}</mat-option>
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field fxFlex="20%">
-                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
-                  <input matInput [formControl]="item.get('lastName2')" />
+                  <mat-label>{{ 'BIRTHDATE' | translate }}</mat-label>
+                  <input
+                    [matDatepicker]="birthDatePiker"
+                    matInput
+                    [formControl]="item.get('birthDate')"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="birthDatePiker"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #birthDatePiker
+                    disabled="false"
+                  ></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <mat-label>{{ 'RELATION' | translate }}</mat-label>
+                  <mat-select
+                    #coverSelection
+                    [formControl]="item.get('relation')"
+                  >
+                    <mat-option
+                      *ngFor="let item of typesOfRelation"
+                      [value]="item.id"
+                      >{{ item.name }}</mat-option
+                    >
+                  </mat-select>
                 </mat-form-field>
                 <mat-form-field fxFlex="20%">
                   <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
