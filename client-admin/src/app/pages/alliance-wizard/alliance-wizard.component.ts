@@ -1,10 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { QualifyingEventService } from '@app/shared/qualifying-event.service';
 import { HealthPlanService } from '@app/shared/health-plan.service';
 import { CoverService } from '@app/shared/cover.service';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
+import { MatStepper, MatSnackBar } from '@angular/material';
+import * as Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-alliance-wizard',
@@ -32,6 +34,7 @@ export class AllianceWizardComponent implements OnInit {
   covers: any = [];
 
   qualifyingEvents: [] = [];
+  @ViewChild('stepper') stepper: MatStepper;
 
   typesOfRelation: any;
 
@@ -40,7 +43,8 @@ export class AllianceWizardComponent implements OnInit {
     private qualifyingEventService: QualifyingEventService,
     private healthPlansService: HealthPlanService,
     private coverService: CoverService,
-    private DependantsServices: DependantsAPIService
+    private DependantsServices: DependantsAPIService,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -77,5 +81,19 @@ export class AllianceWizardComponent implements OnInit {
         this.covers = res;
       });
     });
+  }
+
+  checkPercent() {
+    var percentage: number = 0;
+    this.percentageDependent.forEach((x) => {
+      percentage += Number.parseFloat(x.get('percent').value);
+    });
+    console.log(percentage);
+    if (percentage == 100) this.stepper.next();
+    else
+      this.percentageDependent.forEach((x) => {
+        x.get('percent').markAsDirty();
+        x.get('percent').setErrors({ BadPercentage: true });
+      });
   }
 }

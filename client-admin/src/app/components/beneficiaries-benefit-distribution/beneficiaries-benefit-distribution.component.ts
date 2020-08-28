@@ -43,6 +43,7 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
       relation: [null],
       percent: [null],
     });
+
     newForm.get('birthDate').disable();
     this.percentageDependent.push(newForm);
     this.calculatePercent();
@@ -62,5 +63,13 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
 
   clearIsuranceDependants(event) {
     if (!event) this.percentageDependent = [];
+  }
+
+  get currentPercentage() {
+    var percentage: number = 0;
+    this.percentageDependent.forEach((x) => {
+      percentage += Number.parseFloat(x.get('percent').value);
+    });
+    return percentage;
   }
 }
