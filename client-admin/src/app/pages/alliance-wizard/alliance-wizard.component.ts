@@ -78,33 +78,4 @@ export class AllianceWizardComponent implements OnInit {
       });
     });
   }
-
-  // addDependant() {
-  //   var newForm = this._formBuilder.group({
-  //     name: [null],
-  //     gender: [null],
-  //     birthDate: [null],
-  //     relation: [null],
-  //     percent: [null],
-  //   });
-  //   newForm.get('birthDate').disable();
-  //   this.percentageDependent.push(newForm);
-  //   this.calculatePercent();
-  // }
-
-  // private calculatePercent() {
-  //   var distr = 100 / this.percentageDependent.length;
-  //   this.percentageDependent.forEach((el) => {
-  //     el.get('percent').setValue(distr);
-  //   });
-  // }
-
-  // deleteDependant(i: number) {
-  //   this.percentageDependent.splice(i, 1);
-  //   this.calculatePercent();
-  // }
-
-  // clearIsuranceDependants(event) {
-  //   if (!event) this.percentageDependent = [];
-  // }
 }
