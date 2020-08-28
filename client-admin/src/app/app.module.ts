@@ -124,6 +124,7 @@ import { PreviewSsn } from './directives/ssnPipe';
 import { AllianceComponent } from './pages/alliance/alliance.component';
 import { AllianceListComponent } from './pages/alliance-list/alliance-list.component';
 import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard.component';
+import { BeneficiariesBenefitDistributionComponent } from './components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -182,6 +183,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AllianceComponent,
     AllianceListComponent,
     AllianceWizardComponent,
+    BeneficiariesBenefitDistributionComponent,
   ],
   imports: [
     BrowserModule,

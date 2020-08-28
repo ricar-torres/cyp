@@ -78,8 +78,11 @@
         </mat-form-field>
       </div>
     </form>
-
-    <mat-card *ngIf="coverSelection.value" class="margin-bottom-10">
+    <app-beneficiaries-benefit-distribution
+      [percentageDependent]="percentageDependent"
+      [coverSelection]="coverSelection"
+    ></app-beneficiaries-benefit-distribution>
+    <!-- <mat-card *ngIf="coverSelection.value" class="margin-bottom-10">
       <div>
         <mat-slide-toggle
           (change)="clearIsuranceDependants($event.checked)"
@@ -87,7 +90,7 @@
           >{{ 'ALLIANCEWIZARD.LIFEINSURANCE' | translate }}</mat-slide-toggle
         >
       </div>
-      <mat-card-content *ngIf="dependantsEnabled.checked">
+       <mat-card-content *ngIf="dependantsEnabled.checked">
         <div>
           <div
             @fadeAnimation
@@ -148,7 +151,7 @@
                   </mat-select>
                 </mat-form-field>
                 <mat-form-field fxFlex="20%">
-                  <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
+                
                   <input matInput [formControl]="item.get('percent')" />
                 </mat-form-field>
                 <button
@@ -168,19 +171,20 @@
           </button>
         </div>
       </mat-card-content>
-    </mat-card>
-
-    <button mat-raised-button color="primary" matStepperPrevious>
-      {{ 'GOBACK' | translate }}
-    </button>
-    <button
-      class="button-space"
-      mat-raised-button
-      color="primary"
-      matStepperNext
-    >
-      {{ 'NEXT' | translate }}
-    </button>
+    </mat-card> -->
+    <div class="">
+      <button mat-raised-button color="primary" matStepperPrevious>
+        {{ 'GOBACK' | translate }}
+      </button>
+      <button
+        class="button-space"
+        mat-raised-button
+        color="primary"
+        matStepperNext
+      >
+        {{ 'NEXT' | translate }}
+      </button>
+    </div>
   </mat-step>
   <mat-step [stepControl]="finalFormGroup">
     <form
