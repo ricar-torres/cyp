@@ -70,13 +70,11 @@
                 <mat-form-field fxFlex="15%">
                   <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
                   <input matInput [formControl]="item.get('percent')" />
-                  <mat-error>
-                    <mat-error
-                      *ngIf="item.get('percent').hasError('BadPercentage')"
-                    >
-                      the sum of the percentages should be 100 your sum yields
-                      {{ currentPercentage }}
-                    </mat-error>
+                  <mat-error
+                    *ngIf="item.get('percent').hasError('BadPercentage')"
+                  >
+                    the sum of the percentages should be 100 your sum yields
+                    {{ currentPercentage }}
                   </mat-error>
                 </mat-form-field>
                 <button
