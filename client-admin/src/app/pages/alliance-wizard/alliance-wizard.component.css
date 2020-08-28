@@ -20,3 +20,7 @@ button {
 .margin-top-10 {
   margin-top: 10px;
 }
+
+::ng-deep .mat-horizontal-stepper-header {
+  pointer-events: none !important;
+}
