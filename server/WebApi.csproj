@@ -41,6 +41,10 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.2" />
     <PackageReference Include="SendGrid" Version="9.16.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="3.1.0" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="2.10.1" />
+    <PackageReference Include="EPPlus" Version="5.3.0" />
+    <PackageReference Include="ExcelDataReader" Version="3.6.0" />
+    <PackageReference Include="ExcelDataReader.DataSet" Version="3.6.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +72,14 @@
     <Compile Remove="Services\FileCommentService.cs" />
     <Compile Remove="Services\FileDocumentService.cs" />
     <Compile Remove="Services\FileService.cs" />
+    <Compile Remove="Entities\Tools\InsuranceEstimatePlan.cs" />
+    <Compile Remove="Entities\Tools\InsuranceEstimate.cs" />
+    <Compile Remove="Entities\Tools\InsuranceCompanyOptionalCover.cs" />
+    <Compile Remove="Entities\Tools\InsuranceEstimateAddOns.cs" />
+    <Compile Remove="Entities\Tools\InsuranceClient.cs" />
+    <Compile Remove="Entities\Tools\InsuranceEstimateMember.cs" />
+    <Compile Remove="Entities\Tools\InsuranceCompanyOptionalCoverMap.cs" />
+    <Compile Remove="Entities\Tools\InsuranceEstimateAddOnsMap.cs" />
   </ItemGroup>
   <ItemGroup>
    

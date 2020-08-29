@@ -77,7 +77,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Addresses", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -618,7 +618,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.ChapterClient", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -919,7 +919,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Clients", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -1139,6 +1139,13 @@ namespace WebApi.Migrations
                         .HasColumnType("bit")
                         .HasDefaultValueSql("('0')");
 
+                    b.Property<bool?>("Beneficiary")
+                        .IsRequired()
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("beneficiary")
+                        .HasColumnType("bit")
+                        .HasDefaultValueSql("('0')");
+
                     b.Property<string>("Code")
                         .HasColumnName("code")
                         .HasColumnType("nvarchar(255)")
@@ -1169,6 +1176,11 @@ namespace WebApi.Migrations
 
                     b.Property<string>("SobImg")
                         .HasColumnName("sob_img")
+                        .HasColumnType("nvarchar(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<string>("Type")
+                        .HasColumnName("type")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
@@ -1882,6 +1894,260 @@ namespace WebApi.Migrations
                     b.ToTable("UserRole");
                 });
 
+            modelBuilder.Entity("WebApi.Entities.InsuranceAddOns", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool?>("Beneficiary")
+                        .HasColumnType("bit");
+
+                    b.Property<decimal>("CoverageCoupleRate")
+                        .HasColumnName("coverage_couple_rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("CoverageFamilyRate")
+                        .HasColumnName("coverage_family_rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("CoverageSingleRate")
+                        .HasColumnName("coverage_single_rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("HealthPlanId")
+                        .HasColumnName("health_plan_id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("IndividualRate")
+                        .HasColumnName("individual_rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<int>("MinimumEE")
+                        .HasColumnName("minimum_EE")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnName("name")
+                        .HasColumnType("VARCHAR(80)")
+                        .HasMaxLength(255);
+
+                    b.Property<int>("TypeCalculate")
+                        .HasColumnName("type_calculate")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("HealthPlanId");
+
+                    b.ToTable("insurance_addOns");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsuranceAddOnsRateAge", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnName("age")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("InsuranceAddOnsId")
+                        .HasColumnName("insurance_addOns_id")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("Rate")
+                        .HasColumnName("rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InsuranceAddOnsId");
+
+                    b.ToTable("insurance_addOns_rate_age");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsuranceBenefitType", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("BenefitType")
+                        .IsRequired()
+                        .HasColumnName("benefit_type")
+                        .HasColumnType("NVARCHAR(255)")
+                        .HasMaxLength(255);
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("ParentBenefitTypeID")
+                        .HasColumnName("parent_benefit_type_id")
+                        .HasColumnType("int");
+
+                    b.Property<int>("RowOrder")
+                        .HasColumnName("row_order")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("insurance_benefit_type");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsurancePlanAddOns", b =>
+                {
+                    b.Property<int>("CoverId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("InsuranceAddOnsId")
+                        .HasColumnType("int");
+
+                    b.HasKey("CoverId", "InsuranceAddOnsId");
+
+                    b.HasIndex("InsuranceAddOnsId");
+
+                    b.ToTable("InsurancePlanAddOns");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsurancePlanBenefit", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("CoverId")
+                        .HasColumnName("cover_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<int>("InsuranceBenefitTypeId")
+                        .HasColumnName("insurance_benefit_type_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Value")
+                        .HasColumnName("value")
+                        .HasColumnType("VARCHAR(max)")
+                        .HasMaxLength(255);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoverId");
+
+                    b.HasIndex("InsuranceBenefitTypeId");
+
+                    b.ToTable("insurance_plan_benefit");
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsuranceRate", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("id")
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Age")
+                        .HasColumnName("age")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CoverId")
+                        .HasColumnName("cover_id")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("CreatedAt")
+                        .HasColumnName("created_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<DateTime?>("DeletedAt")
+                        .HasColumnName("deleted_at")
+                        .HasColumnType("datetime");
+
+                    b.Property<decimal>("IndividualRate")
+                        .HasColumnName("individual_rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("IndividualTobaccoRate")
+                        .HasColumnName("individual_tobacco_rate")
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<int>("PolicyYear")
+                        .HasColumnName("policy_year")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("RateEffectiveDate")
+                        .HasColumnName("rate_effective_date")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime>("RateExpirationDate")
+                        .HasColumnName("rate_expiration_date")
+                        .HasColumnType("date");
+
+                    b.Property<DateTime?>("UpdatedAt")
+                        .HasColumnName("updated_at")
+                        .HasColumnType("datetime");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CoverId");
+
+                    b.ToTable("insurance_rate");
+                });
+
             modelBuilder.Entity("WebApi.Entities.PasswordResets", b =>
                 {
                     b.Property<DateTime?>("CreatedAt")
@@ -2211,7 +2477,7 @@ namespace WebApi.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Tutors", b =>
                 {
-                    b.Property<int?>("Id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnName("id")
                         .HasColumnType("int")
@@ -2676,6 +2942,63 @@ namespace WebApi.Migrations
                         .WithMany("Roles")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsuranceAddOns", b =>
+                {
+                    b.HasOne("WebApi.Entities.HealthPlans", "HealthPlans")
+                        .WithMany("InsuranceAddOns")
+                        .HasForeignKey("HealthPlanId")
+                        .HasConstraintName("insurance_addOns_health_plan_id_foreign")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsuranceAddOnsRateAge", b =>
+                {
+                    b.HasOne("WebApi.Entities.InsuranceAddOns", "InsuranceAddOns")
+                        .WithMany("RatesByAge")
+                        .HasForeignKey("InsuranceAddOnsId")
+                        .HasConstraintName("rates_by_age_insurance_addOns_id_foreign")
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsurancePlanAddOns", b =>
+                {
+                    b.HasOne("WebApi.Entities.Covers", "Covers")
+                        .WithMany("AddOns")
+                        .HasForeignKey("CoverId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Entities.InsuranceAddOns", "InsuranceAddOns")
+                        .WithMany()
+                        .HasForeignKey("InsuranceAddOnsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsurancePlanBenefit", b =>
+                {
+                    b.HasOne("WebApi.Entities.Covers", "Covers")
+                        .WithMany("BenefitTypes")
+                        .HasForeignKey("CoverId")
+                        .HasConstraintName("cover_insurance_plan_benefit_foreign")
+                        .IsRequired();
+
+                    b.HasOne("WebApi.Entities.InsuranceBenefitType", "InsuranceBenefitType")
+                        .WithMany()
+                        .HasForeignKey("InsuranceBenefitTypeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("WebApi.Entities.InsuranceRate", b =>
+                {
+                    b.HasOne("WebApi.Entities.Covers", "Covers")
+                        .WithMany("Rate")
+                        .HasForeignKey("CoverId")
+                        .HasConstraintName("cover_insurance_rate_foreign")
                         .IsRequired();
                 });
 

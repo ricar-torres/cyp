@@ -91,8 +91,9 @@ namespace WebApi
       services.AddScoped<ICoverService, CoverService>();
       services.AddScoped<IRetirementService, RetirementService>();
       services.AddScoped<IDocumentationCallService, DocumentationCallService>();
+      services.AddScoped<IInsuranceBenefitTypeService, InsuranceBenefitTypeService>();
 
-    }
+        }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)

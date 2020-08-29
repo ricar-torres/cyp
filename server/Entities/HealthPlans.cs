@@ -7,7 +7,8 @@ namespace WebApi.Entities
     {
         public HealthPlans()
         {
-            Covers = new HashSet<Covers>();
+            Covers = new HashSet<Covers>();//InsurancePlans
+            InsuranceAddOns = new HashSet<InsuranceAddOns>();
         }
 
         public int Id { get; set; }
@@ -18,5 +19,7 @@ namespace WebApi.Entities
         public DateTime? DeletedAt { get; set; }
 
         public virtual ICollection<Covers> Covers { get; set; }
+        //[JsonIgnore]
+        public virtual ICollection<InsuranceAddOns> InsuranceAddOns { get; set; }
     }
 }

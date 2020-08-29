@@ -70,6 +70,15 @@ namespace WebApi.Helpers {
 		public virtual DbSet<Users> Users { get; set; }
 		public virtual DbSet<Zipcodes> Zipcodes { get; set; }
 
+
+		public DbSet<InsuranceBenefitType> InsuranceBenefitType { get; set; }
+		public DbSet<InsurancePlanBenefit> InsurancePlanBenefit { get; set; }
+		public DbSet<InsuranceRate> InsuranceRate { get; set; }
+		//public DbSet<InsuranceClient> InsuranceClient { get; set; }
+		public DbSet<InsuranceAddOns> InsuranceAddOns { get; set; }
+		public DbSet<InsurancePlanAddOns> InsurancePlanAddOns { get; set; }
+		public DbSet<InsuranceAddOnsRateAge> InsuranceAddOnsRateAge { get; set; }
+
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		#endregion
 
@@ -104,9 +113,212 @@ namespace WebApi.Helpers {
 			new OneTimePasswordMap(modelBuilder.Entity<OneTimePassword>());
 			new TypeOfRelationshipMap(modelBuilder.Entity<TypeOfRelationship>());
 
+
+			new InsurancePlanAddOnsMap(modelBuilder.Entity<InsurancePlanAddOns>());
+
+
 			#endregion
 
 			#region Cyprus Tables
+
+
+			modelBuilder.Entity<InsuranceBenefitType>(entity => {
+				entity.ToTable("insurance_benefit_type");
+
+				entity.Property(e => e.Id).HasColumnName("id");
+				entity.HasKey(t => t.Id);
+
+				entity.Property(e => e.ParentBenefitTypeID).HasColumnName("parent_benefit_type_id");
+
+				entity.Property(e => e.BenefitType)
+					.IsRequired()
+					.HasColumnName("benefit_type")
+					.HasMaxLength(255);
+
+				entity.Property(e => e.RowOrder).HasColumnName("row_order");
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+
+
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+
+			});
+
+			modelBuilder.Entity<InsuranceAddOns>(entity => {
+				entity.ToTable("insurance_addOns");
+
+				entity.Property(e => e.Id).HasColumnName("id");
+				entity.HasKey(t => t.Id);
+
+				entity.Property(e => e.HealthPlanId).HasColumnName("health_plan_id");
+
+				entity.Property(e => e.Name)
+					.IsRequired()
+					.HasColumnName("name")
+					.HasMaxLength(255);
+
+				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate");
+
+				entity.Property(e => e.CoverageSingleRate).HasColumnName("coverage_single_rate");
+
+				entity.Property(e => e.CoverageCoupleRate).HasColumnName("coverage_couple_rate");
+
+				entity.Property(e => e.CoverageFamilyRate).HasColumnName("coverage_family_rate");
+
+				entity.Property(e => e.MinimumEE).HasColumnName("minimum_EE");
+
+				entity.Property(e => e.TypeCalculate).HasColumnName("type_calculate");
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+
+
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+
+				entity.HasOne(d => d.HealthPlans)
+					.WithMany(p => p.InsuranceAddOns)
+					.HasForeignKey(d => d.HealthPlanId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("insurance_addOns_health_plan_id_foreign");
+
+			});
+
+			modelBuilder.Entity<InsuranceAddOnsRateAge>(entity => {
+				entity.ToTable("insurance_addOns_rate_age");
+
+				entity.Property(e => e.Id).HasColumnName("id");
+				entity.HasKey(t => t.Id);
+
+				entity.Property(e => e.InsuranceAddOnsId).HasColumnName("insurance_addOns_id");
+
+				entity.Property(e => e.Age).HasColumnName("age");
+
+				entity.Property(e => e.Rate).HasColumnName("rate");
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+
+
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+
+				entity.HasOne(d => d.InsuranceAddOns)
+					.WithMany(p => p.RatesByAge)
+					.HasForeignKey(d => d.InsuranceAddOnsId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("rates_by_age_insurance_addOns_id_foreign");
+
+			});
+
+			modelBuilder.Entity<InsurancePlanBenefit>(entity => {
+				entity.ToTable("insurance_plan_benefit");
+
+
+				entity.Property(e => e.Id).HasColumnName("id");
+				entity.HasKey(t => t.Id);
+
+				entity.Property(e => e.CoverId)
+					.IsRequired().HasColumnName("cover_id");
+
+				entity.Property(e => e.InsuranceBenefitTypeId)
+					.IsRequired()
+					.HasColumnName("insurance_benefit_type_id");
+
+				entity.Property(e => e.Value)
+					.HasColumnName("value")
+					.HasMaxLength(255);
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+
+
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+				entity.HasOne(d => d.Covers)
+					.WithMany(p => p.BenefitTypes)
+					.HasForeignKey(d => d.CoverId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("cover_insurance_plan_benefit_foreign");
+
+			});
+
+			modelBuilder.Entity<InsuranceRate>(entity => {
+				entity.ToTable("insurance_rate");
+
+				entity.Property(e => e.Id).HasColumnName("id");
+				entity.HasKey(t => t.Id);
+
+				entity.Property(e => e.CoverId)
+					.IsRequired().HasColumnName("cover_id");
+
+				entity.Property(e => e.Age).HasColumnName("age");
+
+				entity.Property(e => e.RateEffectiveDate)
+					.HasColumnName("rate_effective_date")
+					.HasColumnType("date");
+
+				entity.Property(e => e.RateExpirationDate)
+					.HasColumnName("rate_expiration_date")
+					.HasColumnType("date");
+
+				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate");
+
+				entity.Property(e => e.IndividualTobaccoRate).HasColumnName("individual_tobacco_rate");
+
+				entity.Property(e => e.PolicyYear).HasColumnName("policy_year");
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+
+
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+
+				entity.HasOne(d => d.Covers)
+					.WithMany(p => p.Rate)
+					.HasForeignKey(d => d.CoverId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("cover_insurance_rate_foreign");
+
+			});
 
 			modelBuilder.Entity<ActivityLog>(entity => {
 				entity.ToTable("activity_log");
@@ -1039,11 +1251,25 @@ namespace WebApi.Helpers {
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
 
+				entity.Property(e => e.Type)
+					.HasColumnName("type")
+					.HasMaxLength(255);
+
+
+				entity.Property(e => e.Beneficiary)
+					.IsRequired()
+					.HasColumnName("beneficiary")
+					.HasDefaultValueSql("('0')");
+
 				entity.HasOne(d => d.HealthPlan)
 					.WithMany(p => p.Covers)
 					.HasForeignKey(d => d.HealthPlanId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("covers_health_plan_id_foreign");
+
+
+				entity.Ignore(t => t.AddOnsAlt);
+
 			});
 
 			modelBuilder.Entity<CsvDatas>(entity => {

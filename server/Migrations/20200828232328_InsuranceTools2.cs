@@ -6,6 +6,7 @@ namespace WebApi.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+
             migrationBuilder.DropForeignKey(
                 name: "FK_insurance_plan_benefit_covers_CoversId",
                 table: "insurance_plan_benefit");
@@ -60,8 +61,14 @@ namespace WebApi.Migrations
                 principalTable: "covers",
                 principalColumn: "id",
                 onDelete: ReferentialAction.Restrict);
-        }
 
+            migrationBuilder.Sql("Update dbo.covers set type='-65' where alianza = 1 and (name like '%PSM%' or name like '%First%' or name like '%FM %')");
+
+            migrationBuilder.Sql("Update dbo.covers set type='+65' where alianza = 1 and (name like '%TSA%' or name like '%MMM%'  or name like '%Triple-S%')");
+
+
+        }
+       
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
