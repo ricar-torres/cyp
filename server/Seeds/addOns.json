@@ -1,0 +1,55 @@
+﻿[
+  {
+    "id": 1,
+    "HealthPlanId": 7,
+    "name": "Seguro de Vida",
+    "Beneficiary": true,
+    "IndividualRate": 3.00,
+    "CoverageSingleRate": 0.00,
+    "CoverageCoupleRate": 0.00,
+    "CoverageFamilyRate": 0.00,
+    "MinimumEE": 0,
+    "TypeCalculate": 1,
+    "CreatedAt": "08/28/2020"
+  },
+  {
+    "id": 2,
+    "HealthPlanId": 7,
+    "name": "Mayor Medical",
+    "Beneficiary": false,
+    "IndividualRate": 0,
+    "CoverageSingleRate": 10,
+    "CoverageCoupleRate": 15,
+    "CoverageFamilyRate": 22,
+    "MinimumEE": 0,
+    "TypeCalculate": 3,
+    "CreatedAt": "08/28/2020"
+  },
+  {
+    "id": 3,
+    "HealthPlanId": 16,
+    "name": "Seguro de Vida",
+    "Beneficiary": true,
+    "IndividualRate": 3.00,
+    "CoverageSingleRate": 0.00,
+    "CoverageCoupleRate": 0.00,
+    "CoverageFamilyRate": 0.00,
+    "MinimumEE": 0,
+    "TypeCalculate": 1,
+    "CreatedAt": "08/28/2020"
+  },
+  {
+    "id": 4,
+    "HealthPlanId": 16,
+    "name": "Mayor Medical",
+    "Beneficiary": false,
+    "IndividualRate": 0,
+    "CoverageSingleRate": 10,
+    "CoverageCoupleRate": 15,
+    "CoverageFamilyRate": 22,
+    "MinimumEE": 0,
+    "TypeCalculate": 3,
+    "CreatedAt": "08/28/2020"
+  }
+]
+

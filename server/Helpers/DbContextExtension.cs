@@ -148,7 +148,21 @@ namespace WebApi.Helpers {
 
 				#endregion
 
-			} finally {
+				#region InsuranceAddOns
+
+				if (!context.InsuranceAddOns.Any())
+				{
+					var InsuranceAddOns = JsonConvert.DeserializeObject<List<InsuranceAddOns>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "AddOns.json"));
+					context.AddRange(InsuranceAddOns);
+					_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.insurance_addOns ON");
+					context.SaveChanges();
+					_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.insurance_addOns OFF");
+				}
+
+				#endregion
+
+			}
+			finally {
 				context.Database.CloseConnection();
 			}
 

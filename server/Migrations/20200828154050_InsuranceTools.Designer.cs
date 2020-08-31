@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200828154050_InsuranceTools")]
+    partial class InsuranceTools
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -144,20 +146,6 @@ namespace WebApi.Migrations
                         .HasName("ix_cyprus_address_client_id_type");
 
                     b.ToTable("addresses");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.AffType", b =>
-                {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AffType");
                 });
 
             modelBuilder.Entity("WebApi.Entities.AffiliationPeriods", b =>
@@ -1916,9 +1904,6 @@ namespace WebApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<bool?>("Beneficiary")
-                        .HasColumnType("bit");
-
                     b.Property<decimal>("CoverageCoupleRate")
                         .HasColumnName("coverage_couple_rate")
                         .HasColumnType("decimal(12,2)");
@@ -2077,6 +2062,9 @@ namespace WebApi.Migrations
                         .HasColumnName("cover_id")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CoversId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnName("created_at")
                         .HasColumnType("datetime");
@@ -2100,7 +2088,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoverId");
+                    b.HasIndex("CoversId");
 
                     b.HasIndex("InsuranceBenefitTypeId");
 
@@ -2121,6 +2109,9 @@ namespace WebApi.Migrations
 
                     b.Property<int>("CoverId")
                         .HasColumnName("cover_id")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CoversId")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("CreatedAt")
@@ -2157,7 +2148,7 @@ namespace WebApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CoverId");
+                    b.HasIndex("CoversId");
 
                     b.ToTable("insurance_rate");
                 });
@@ -2543,19 +2534,6 @@ namespace WebApi.Migrations
                     b.ToTable("tutors");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.TypeOfRelationship", b =>
-                {
-                    b.Property<byte?>("Id")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeOfRelationship");
-                });
-
             modelBuilder.Entity("WebApi.Entities.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -2666,6 +2644,19 @@ namespace WebApi.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("zipcodes");
+                });
+
+            modelBuilder.Entity("server.Entities.TypeOfRelationship", b =>
+                {
+                    b.Property<byte?>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeOfRelationship");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Alianzas", b =>
@@ -2996,9 +2987,7 @@ namespace WebApi.Migrations
                 {
                     b.HasOne("WebApi.Entities.Covers", "Covers")
                         .WithMany("BenefitTypes")
-                        .HasForeignKey("CoverId")
-                        .HasConstraintName("cover_insurance_plan_benefit_foreign")
-                        .IsRequired();
+                        .HasForeignKey("CoversId");
 
                     b.HasOne("WebApi.Entities.InsuranceBenefitType", "InsuranceBenefitType")
                         .WithMany()
@@ -3010,10 +2999,8 @@ namespace WebApi.Migrations
             modelBuilder.Entity("WebApi.Entities.InsuranceRate", b =>
                 {
                     b.HasOne("WebApi.Entities.Covers", "Covers")
-                        .WithMany("Rate")
-                        .HasForeignKey("CoverId")
-                        .HasConstraintName("cover_insurance_rate_foreign")
-                        .IsRequired();
+                        .WithMany()
+                        .HasForeignKey("CoversId");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Prospects", b =>
