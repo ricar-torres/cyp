@@ -5,6 +5,7 @@ import { HealthPlanService } from '@app/shared/health-plan.service';
 import { AgencyService } from '@app/shared/agency.service';
 import { CoverService } from '@app/shared/cover.service';
 import { ClientService } from '@app/shared/client.service';
+import { startWith, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-general-information',
@@ -23,6 +24,7 @@ export class GeneralInformationComponent implements OnInit {
   reactiveForm: FormGroup;
   tutorInformation: FormGroup;
   loading = true;
+  filteredOptions: any;
   constructor(
     public wizadFormGroups: ClientWizardService,
     private hps: HealthPlanService,
@@ -34,8 +36,15 @@ export class GeneralInformationComponent implements OnInit {
   async ngOnInit() {
     this.reactiveForm = this.wizadFormGroups.generalInformationForm;
     this.tutorInformation = this.wizadFormGroups.tutorInformation;
-    this.heathPlans = await this.hps.GetAll();
+    this.heathPlans = await this.hps.GetAll().toPromise();
     this.agencies = await this.ag.getAll().toPromise();
+    this.filteredOptions = this.wizadFormGroups.generalInformationForm
+      .get('AgencyId')
+      .valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) => (name ? this._filter(name) : this.agencies.slice()))
+      );
     if (this.client) {
       await this.fillForm();
     }
@@ -79,7 +88,7 @@ export class GeneralInformationComponent implements OnInit {
   }
 
   async loadCovers(selection) {
-    this.covers = await this.cs.GetByPlan(selection);
+    this.covers = await this.cs.GetByPlan(selection).toPromise();
   }
 
   displayFnAgencies(selected: any) {
@@ -104,5 +113,13 @@ export class GeneralInformationComponent implements OnInit {
         this.tutorInformation.enable();
       }
     }
+  }
+
+  private _filter(name: string) {
+    const filterValue = name.toLowerCase();
+
+    return this.agencies.filter(
+      (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+    );
   }
 }

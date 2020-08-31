@@ -9,6 +9,6 @@ export class HealthPlanService {
   constructor(private http: HttpClient) {}
 
   GetAll() {
-    return this.http.get(`${environment.baseURL}/HealthPlan`).toPromise();
+    return this.http.get(`${environment.baseURL}/HealthPlan`);
   }
 }

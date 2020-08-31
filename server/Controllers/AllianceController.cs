@@ -2,6 +2,7 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
+using server.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -37,7 +38,7 @@ namespace WebApi.Controllers
     {
       try
       {
-        var res = new List<Alianzas>();
+        var res = new List<AllianceDto>();
         if (clientId == null)
         {
           res = await _service.GetAll(null);

@@ -77,10 +77,6 @@ namespace WebApi.Controllers
       try
       {
         var res = _BonaFidesServices.GetBonafidesNotInClient(clientId);
-        if (res == null)
-        {
-          return NotFound();
-        }
         return Ok(res);
       }
       catch (Exception ex)

@@ -17,7 +17,7 @@ export class ChapterServiceService {
   getChapterOfClientByBonafideId(data: any) {
     return this.http
       .get<any>(
-        `${environment.baseURL}/chapter/${data.clientId}/${data.bonafideId}`
+        `${environment.baseURL}/chapter/${data.clientId}/${data.bonafide.id}`
       )
       .toPromise();
   }

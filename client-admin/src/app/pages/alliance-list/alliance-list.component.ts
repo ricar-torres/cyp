@@ -33,6 +33,7 @@ export class AllianceListComponent implements OnInit {
     'id',
     'cover',
     'qualifyingEvent',
+    'allianceType',
     'startDate',
     'endDate',
     'elegibleDate',
@@ -72,7 +73,7 @@ export class AllianceListComponent implements OnInit {
   private LoadAgencies() {
     this.agencyApi.getAll(this.clientId).subscribe(
       (res) => {
-        console.log(res);
+        //console.log(res);
         this.loading = true;
         this.dataSource = new MatTableDataSource();
         this.dataSource.data = res;

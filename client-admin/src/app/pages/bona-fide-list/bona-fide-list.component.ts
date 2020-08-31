@@ -53,6 +53,7 @@ export class BonaFideListComponent implements OnInit {
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   loading = true;
+  availableBonafides: [] = [];
   @Output() isLoadingEvent = new EventEmitter<boolean>();
   @Input() clientId: string;
   @Input() fromWizard: string;
@@ -98,6 +99,7 @@ export class BonaFideListComponent implements OnInit {
           this.isLoadingEvent.emit(this.loading);
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = res;
+          this.availableBonafides = res;
           this.dataSource.paginator = this.paginator;
           this.dataSource.sort = this.sort;
           this.loading = false;
@@ -191,10 +193,11 @@ export class BonaFideListComponent implements OnInit {
 
   editBonafide(id: number) {
     if (this.clientId) {
+      var bonafides = this.availableBonafides.find((bn) => (<any>bn).id == id);
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
         height: '45%',
-        data: { clientId: this.clientId, bonafideId: id },
+        data: { clientId: this.clientId, bonafide: bonafides },
       });
 
       dialogRef.afterClosed().subscribe((result) => {

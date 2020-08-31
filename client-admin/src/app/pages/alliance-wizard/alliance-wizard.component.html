@@ -47,6 +47,9 @@
     </form>
   </mat-step>
   <mat-step [stepControl]="benefits">
+    <ng-template matStepLabel>{{
+      'ALLIANCEWIZARD.BENEFITS' | translate
+    }}</ng-template>
     <form [formGroup]="benefits">
       <div
         fxLayout
@@ -56,31 +59,44 @@
       >
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.HEALTHPLAN' | translate }}</mat-label>
-          <mat-select [formControl]="benefits.get('MedicalPlan')">
-            <mat-option *ngFor="let qfe of qualifyingEvents" [value]="qfe.id">
-              {{ qfe.name }}
-            </mat-option>
+          <mat-select [formControl]="benefits.get('HealthPlan')">
+            <mat-option [value]="item.id" *ngFor="let item of healthPlans">{{
+              item.name
+            }}</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field fxFlex>
-          <mat-label>{{ 'ALLIANCEWIZARD.BENEFITS' | translate }}</mat-label>
-          <mat-select [formControl]="toppings" multiple> </mat-select>
+          <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
+          <mat-select
+            #coverSelection
+            [formControl]="benefits.get('Addititons')"
+          >
+            <mat-option [value]="item.id" *ngFor="let item of covers">{{
+              item.name
+            }}</mat-option>
+          </mat-select>
         </mat-form-field>
       </div>
     </form>
-    <button mat-raised-button color="primary" matStepperPrevious>
-      {{ 'GOBACK' | translate }}
-    </button>
-    <button
-      class="button-space"
-      mat-raised-button
-      color="primary"
-      matStepperNext
-    >
-      {{ 'NEXT' | translate }}
-    </button>
+    <app-beneficiaries-benefit-distribution
+      [percentageDependent]="percentageDependent"
+      [coverSelection]="coverSelection"
+    ></app-beneficiaries-benefit-distribution>
+    <div class="">
+      <button mat-raised-button color="primary" matStepperPrevious>
+        {{ 'GOBACK' | translate }}
+      </button>
+      <button
+        class="button-space"
+        mat-raised-button
+        color="primary"
+        (click)="checkPercent()"
+      >
+        {{ 'NEXT' | translate }}
+      </button>
+    </div>
   </mat-step>
-  <mat-step [stepControl]="finalFormGroup">
+  <!-- <mat-step [stepControl]="finalFormGroup">
     <form
       [formGroup]="finalFormGroup"
       fxLayoutAlign="center"
@@ -129,8 +145,45 @@
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button mat-raised-button color="primary" matStepperNext>
-      {{ 'FINISH' | translate }}
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      (click)="checkPercent()"
+    >
+      {{ 'NEXT' | translate }}
     </button>
+  </mat-step> -->
+  <mat-step>
+    <div fxLayout fxLayoutAlign="center">
+      <mat-card style="width: 70%">
+        <mat-card-header>
+          <!-- <mat-card-title>
+          {{ 'CLIENTS.TITLE' | translate }}
+        </mat-card-title> -->
+        </mat-card-header>
+        <mat-card-content>
+          <div fxLayout="Column">
+            <div>Costos de cubierta</div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>Cubierta Básica:</div>
+              <div>$380.00</div>
+            </div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>Major Médical:</div>
+              <div>$0.00</div>
+            </div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>Seguro de Vida:</div>
+              <div>$3.00</div>
+            </div>
+            <hr />
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
   </mat-step>
 </mat-horizontal-stepper>

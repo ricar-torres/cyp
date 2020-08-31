@@ -46,6 +46,9 @@
   "SAVESUCCESS": "La información ha sido actualizada",
   "EDIT": "Editar",
   "DELETE": "Borrar",
+  "GENDER": "Género",
+  "BIRTHDATE": "Fecha de Nacimiento",
+  "RELATION": "Relacion",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -210,7 +213,17 @@
     "COVERNAME": "Cubierta",
     "STARTDATE": "Inicio",
     "ELEGIBLEDATE": "Elegibilidad",
-    "ENDDATE": "Culminacion"
+    "ENDDATE": "Culminacion",
+    "AFFILIATIONTYPE": "Tipo de Afiliacion",
+    "Nuevo": "Nuevo",
+    "Renovación": "Renovación",
+    "Conversión": "Conversión",
+    "Orientación": "Orientación",
+    "Cancelado": "Cancelado",
+    "Transferencia": "Transferencia",
+    "Pre-Afiliación": "Pre-Afiliación",
+    "Nuevo ingreso por representante de TSA": "Nuevo ingreso por representante de TSA",
+    "Nuevo ingreso por representante de MMM": "Nuevo ingreso por representante de MMM"
   },
   "ALLIANCEWIZARD": {
     "AFILIATIONMETOD": "Método de afiliación",
@@ -220,7 +233,15 @@
     "EFFECTIVEDATE": "Efectividad",
     "ELEGBILITYDATE": "Eligibilidad",
     "INSCRIPTIONTYPE": "Tipo de Inscripción",
-    "INSCRIPTIONSTATUS": "Estatus de Inscripción"
+    "INSCRIPTIONSTATUS": "Estatus de Inscripción",
+    "HEALTHPLAN": "Plan Medico",
+    "ADDITIONS": "Adiciones",
+    "BENEFITS": "Beneficios",
+    "COVER": "Cubierta",
+    "LIFEINSURANCE": "Seguro de Vida"
+  },
+  "BENEFICIERIES": {
+    "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
   },
   "USER": {
     "TITLE": "Usuario",

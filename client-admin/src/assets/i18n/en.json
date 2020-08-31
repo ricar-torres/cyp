@@ -44,6 +44,9 @@
   "SAVESUCCESS": "The information has been updated",
   "EDIT": "Edit",
   "DELETE": "Delete",
+  "GENDER": "Gender",
+  "BIRTHDATE": "Birth Date",
+  "RELATION": "Relation",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -209,7 +212,17 @@
     "COVERNAME": "Cover",
     "STARTDATE": "Start Date",
     "ELEGIBLEDATE": "Eligibility Date",
-    "ENDDATE": "End Date"
+    "ENDDATE": "End Date",
+    "AFFILIATIONTYPE": "Affiliation Type",
+    "Nuevo": "New",
+    "Renovación": "Renovation",
+    "Conversión": "Conversion",
+    "Orientación": "Orientation",
+    "Cancelado": "Cancelled",
+    "Transferencia": "Transfer",
+    "Pre-Afiliación": "Pre-Affiliation",
+    "Nuevo ingreso por representante de TSA": "New entry by TSA representative",
+    "Nuevo ingreso por representante de MMM": "New entry by MMM representative"
   },
   "ALLIANCEWIZARD": {
     "AFILIATIONMETOD": "Afiliation Method",
@@ -219,7 +232,15 @@
     "EFFECTIVEDATE": "Effective Date",
     "ELEGBILITYDATE": "Eligibility Date",
     "INSCRIPTIONTYPE": "Inscription Type",
-    "INSCRIPTIONSTATUS": "Inscription Status"
+    "INSCRIPTIONSTATUS": "Inscription Status",
+    "HEALTHPLAN": "Health Plan",
+    "ADDITIONS": "Addititons",
+    "BENEFITS": "Benefits",
+    "COVER": "Cover",
+    "LIFEINSURANCE": "Life Insurance"
+  },
+  "BENEFICIERIES": {
+    "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "
   },
   "USER": {
     "TITLE": "User",

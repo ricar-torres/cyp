@@ -20,7 +20,7 @@
         [displayWith]="displayFnAgencies"
         #agencyAutoComplete="matAutocomplete"
       >
-        <mat-option *ngFor="let ag of agencies" [value]="ag">
+        <mat-option *ngFor="let ag of filteredOptions | async" [value]="ag">
           {{ ag.name }}
         </mat-option>
       </mat-autocomplete>
