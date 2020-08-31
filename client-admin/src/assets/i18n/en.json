@@ -239,6 +239,9 @@
     "COVER": "Cover",
     "LIFEINSURANCE": "Life Insurance"
   },
+  "BENEFICIERIES": {
+    "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "
+  },
   "USER": {
     "TITLE": "User",
     "USER": "User",

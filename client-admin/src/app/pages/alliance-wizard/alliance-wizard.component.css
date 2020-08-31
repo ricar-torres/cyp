@@ -24,3 +24,9 @@ button {
 ::ng-deep .mat-horizontal-stepper-header {
   pointer-events: none !important;
 }
+
+.separator {
+  background-color: rgba(128, 128, 128, 0.548);
+  height: 1px;
+  width: 100%;
+}

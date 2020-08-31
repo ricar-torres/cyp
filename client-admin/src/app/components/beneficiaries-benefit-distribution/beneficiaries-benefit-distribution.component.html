@@ -73,7 +73,7 @@
                   <mat-error
                     *ngIf="item.get('percent').hasError('BadPercentage')"
                   >
-                    the sum of the percentages should be 100 your sum yields
+                    {{ 'BENEFICIERIES.SUMERROR' | translate }}
                     {{ currentPercentage }}
                   </mat-error>
                 </mat-form-field>

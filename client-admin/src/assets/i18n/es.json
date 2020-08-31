@@ -240,6 +240,9 @@
     "COVER": "Cubierta",
     "LIFEINSURANCE": "Seguro de Vida"
   },
+  "BENEFICIERIES": {
+    "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
+  },
   "USER": {
     "TITLE": "Usuario",
     "USER": "Usuario",
