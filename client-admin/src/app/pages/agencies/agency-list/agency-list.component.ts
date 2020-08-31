@@ -133,7 +133,6 @@ export class AgencyListComponent implements OnInit, AfterViewInit {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          console.log(id);
           await this.agencyApi.delete(id);
           this.LoadAgencies();
         }

@@ -71,6 +71,27 @@ namespace WebApi.Controllers
       }
     }
 
+    [AllowAnonymous]
+    [HttpGet("criteria/{criteria}")]
+    public async Task<IActionResult> GetClientsByCriteria(string criteria)
+    {
+      try
+      {
+        var res = await _service.GetClientByCriteria(criteria);
+        if (res == null)
+        {
+          return NotFound();
+        }
+
+        return Ok(res);
+
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]

@@ -1,0 +1,246 @@
+<md-content layout-margin layout-padding>
+  <!-- <div fxLayout="row" fxLayoutAlign="end center">
+    <button mat-raised-button color="primary" *ngIf="editAccess">
+      {{ actionName | translate }}
+    </button>
+  </div> -->
+  <form [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+    <mat-card class="mat-elevation-z0">
+      <mat-card-header>
+        <mat-card-title
+          >{{ 'DEPENDANT.PAGE_TITLE' | translate }}
+          <caption *ngIf="dependantId != '0'">
+            <small> #{{ dependantId }} </small>
+          </caption>
+        </mat-card-title>
+      </mat-card-header>
+
+      <mat-card-content fxLayout="column" fxLayoutGap="5" class="full-width">
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
+            <input formControlName="name" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('name').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'DEPENDANT.ONLY_PATTERN' | translate }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                reactiveForm.get('name').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.INITIAL' | translate }}</mat-label>
+            <input formControlName="initial" matInput mask="A" />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('initial').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'ONLY_LETTERS' | translate }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.LASTNAME1' | translate }}</mat-label>
+            <input formControlName="lastName1" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('lastName1').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+            <mat-error
+              *ngIf="
+                reactiveForm.get('lastName1').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'ONLY_LETTERS' | translate }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.LASTNAME2' | translate }}</mat-label>
+            <input formControlName="lastName2" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('lastName2').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            ><mat-error
+              *ngIf="
+                reactiveForm.get('lastName2').hasError('pattern') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'ONLY_LETTERS' | translate }}</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.SSN' | translate }}</mat-label>
+            <input formControlName="ssn" matInput mask="000-00-0000" />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('ssn').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.BIRTHDATE' | translate }}</mat-label>
+            <input
+              #inputBirth
+              matInput
+              [matDatepicker]="pickerBirth"
+              formControlName="birthDate"
+              [value]="pickerBirth"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerBirth"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerBirth disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.EMAIL' | translate }}</mat-label>
+            <input formControlName="email" matInput />
+            <mat-error
+              *ngIf="
+                reactiveForm.get('email').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.GENDER' | translate }}</mat-label>
+
+            <mat-select formControlName="gender">
+              <mat-option [value]="1">{{ 'MALE' | translate }}</mat-option>
+              <mat-option [value]="2">{{ 'FEMALE' | translate }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                reactiveForm.get('gender').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.PHONE_PRIMARY' | translate }}</mat-label>
+            <input formControlName="phone1" matInput mask="000-000-0000" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.PHONE_SECONDARY' | translate }}</mat-label>
+            <input formControlName="phone2" matInput mask="000-000-0000" />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.RELATION' | translate }}</mat-label>
+            <mat-select formControlName="relationship">
+              <mat-option *ngFor="let rel of relations" [value]="rel.id">{{
+                rel.name
+              }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                reactiveForm.get('relationship').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+          </mat-form-field>
+        </div>
+        <div fxLayout="row" fxLayoutGap="5px">
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.ACTUALPLAN' | translate }}</mat-label>
+            <mat-select formControlName="healthPlanId" matInput>
+              <mat-option *ngFor="let hp of healthPlans" [value]="hp.id">{{
+                hp.name
+              }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.ACTUALCOVER' | translate }}</mat-label>
+            <mat-select formControlName="coverId" matInput>
+              <mat-option *ngFor="let c of covers" [value]="c.id">{{
+                c.name
+              }}</mat-option>
+            </mat-select>
+            <mat-error
+              *ngIf="
+                reactiveForm.get('coverId').hasError('required') &&
+                reactiveForm.touched
+              "
+            >
+              {{ 'REQUIRED' | translate }}</mat-error
+            >
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.CONTRACT_NUM' | translate }}</mat-label>
+            <input formControlName="contractNumber" matInput />
+          </mat-form-field>
+          <mat-form-field>
+            <mat-label>{{ 'DEPENDANT.EFFECTDATE' | translate }}</mat-label>
+            <input
+              matInput
+              [matDatepicker]="pickerEff"
+              formControlName="effectiveDate"
+              [value]="pickerEff"
+            />
+            <mat-datepicker-toggle
+              matSuffix
+              [for]="pickerEff"
+            ></mat-datepicker-toggle>
+            <mat-datepicker #pickerEff disabled="false"></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field hidden>
+            <input matInput formControlName="id" />
+            <input matInput formControlName="clientId" />
+          </mat-form-field>
+        </div>
+      </mat-card-content>
+
+      <mat-card-actions fxLayoutAlign="flex-end end">
+        <!-- *ngIf="(id && editAccess) || (!id && createAccess)" -->
+
+        <button mat-stroked-button type="button" (click)="onBack()">
+          <mat-icon>list</mat-icon>{{ 'BACK' | translate }}
+        </button>
+        <button
+          type="submit"
+          mat-raised-button
+          color="primary"
+          [disabled]="!reactiveForm.valid"
+        >
+          <mat-icon>save</mat-icon>
+          {{ 'DEPENDANT.SAVE' | translate }}
+        </button>
+      </mat-card-actions>
+    </mat-card>
+  </form>
+</md-content>
+<!-- <div class="loading-indicator" [hidden]="!loading">
+  <mat-progress-spinner [mode]="'indeterminate'"> </mat-progress-spinner>
+</div> -->

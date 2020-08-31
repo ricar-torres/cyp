@@ -1,4 +1,14 @@
-import { Component, OnInit, AfterViewInit, ViewChild } from '@angular/core';
+import { DependantComponent } from './../dependant/dependant.component';
+import { DependantsAPIService } from './../../shared/dependants.api.service';
+import {
+  Component,
+  OnInit,
+  AfterViewInit,
+  ViewChild,
+  Input,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import {
   PageEvent,
   MatSort,
@@ -14,6 +24,10 @@ import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
+import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { constructor } from 'moment';
+import { async } from 'rxjs/internal/scheduler/async';
+import { element } from 'protractor';
 
 @Component({
   selector: 'app-dependants-list',
@@ -21,27 +35,40 @@ import {
   styleUrls: ['./dependants-list.component.css'],
 })
 export class DependantsListComponent implements OnInit, AfterViewInit {
-  loading = true;
+  loading: boolean;
 
   dataSource: any;
+  relations: any[] = [];
 
   editAccess: boolean;
   createAccess: boolean;
   deteleAccess: boolean;
+  @Input() clientId: string | number;
+  @Output() isLoadingEvent = new EventEmitter<boolean>();
 
-  displayedColumns: string[] = ['id', 'name', 'phone', 'action'];
+  displayedColumns: string[] = [
+    'id',
+    'name',
+    // 'phone1',
+    'relationName',
+    'coverName',
+    'action',
+  ];
   pageSizeOptions: number[] = [5, 10, 25, 100];
   pageEvent: PageEvent;
   pageSize = 10;
+
+  @Input() fromWizard: boolean;
   @ViewChild(MatSort) sort: MatSort;
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private apiCommunicationMethod: CommunicationMethodsAPIService,
+    private apiDependant: DependantsAPIService,
     private app: AppService,
-    private dialog: MatDialog
+    private dialog: MatDialog,
+    private clientWizard: ClientWizardService
   ) {}
   ngOnInit(): void {
     //TODO: Get access priviliges
@@ -57,52 +84,107 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
   }
   async ngAfterViewInit() {
     try {
-      await this.loadCommunicationMethods();
-    } catch (error) {
-      this.loading = false;
-    } finally {
-    }
+      await this.loadData();
+      await this.apiDependant.getRelationTypes();
+    } catch (error) {}
   }
 
-  async loadCommunicationMethods() {
+  async loadData() {
     try {
       this.loading = true;
-      await this.apiCommunicationMethod.getAll().subscribe(
-        (data: any) => {
-          this.dataSource = new MatTableDataSource();
-          this.dataSource.data = data;
-          this.dataSource.paginator = this.paginator;
-          this.dataSource.sort = this.sort;
-
-          this.loading = false;
-        },
-        (error: any) => {
-          this.loading = false;
-
-          if (error.status != 401) {
-            console.error('error', error);
-            this.app.showErrorMessage('Error interno');
+      this.isLoadingEvent.emit(this.loading);
+      if (!this.fromWizard) {
+        this.apiDependant.getAllByClient(this.clientId).subscribe(
+          (data: any) => {
+            this.loading = true;
+            this.isLoadingEvent.emit(this.loading);
+            this.dataSource = new MatTableDataSource();
+            this.dataSource.data = data;
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.loading = false;
+            this.isLoadingEvent.emit(this.loading);
+          },
+          (error: any) => {
+            this.loading = false;
+            this.isLoadingEvent.emit(this.loading);
+            if (error.status != 401) {
+              //console.error('error', error);
+              this.app.showErrorMessage('Error interno');
+            }
+          },
+          () => {
+            this.loading = false;
+            this.isLoadingEvent.emit(this.loading);
           }
-        }
-      );
-    } catch (error) {
-      this.loading = false;
+        );
+      } else {
+        this.loading = true;
+        this.isLoadingEvent.emit(this.loading);
+        this.dataSource = new MatTableDataSource();
+        this.dataSource.data = this.clientWizard.DependantsList;
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+        this.loading = false;
+        this.isLoadingEvent.emit(this.loading);
+      }
+    } catch (error) {}
+  }
+
+  goToNew(dependantId?: string | number) {
+    if (!this.fromWizard) {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { id: 0, clientId: this.clientId },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    } else {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { fromWizard: true },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
     }
   }
-  goToNew() {
-    this.router.navigate(['/home/communication-method', 0]);
-  }
 
-  goToDetail(id) {
-    this.router.navigate(['/home/communication-method', id]);
+  goToDetail(element) {
+    if (!this.fromWizard) {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { id: element.id, clientId: this.clientId },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    } else {
+      const dialogRef = this.dialog.open(DependantComponent, {
+        width: '90%',
+        height: '60%',
+        minWidth: '90%',
+        data: { dependantFromWizard: element, fromWizard: true },
+      });
+      dialogRef.afterClosed().subscribe(async (result) => {
+        await this.loadData();
+      });
+    }
   }
 
   doFilter(value: any) {
     this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
   }
-  async deleteConfirm(id: string) {
+  async deleteConfirm(element) {
     const message = await this.languageService.translate
-      .get('COMMUNICATION_METHOD_LIST.ARE_YOU_SURE_DELETE')
+      .get('DEPENDANTS_LIST.ARE_YOU_SURE_DELETE')
       .toPromise();
 
     const title = await this.languageService.translate
@@ -124,16 +206,24 @@ export class DependantsListComponent implements OnInit, AfterViewInit {
 
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
       if (dialogResult) {
-        console.log(id);
-        await this.delete(id);
-        await this.loadCommunicationMethods();
+        if (!this.fromWizard) {
+          await this.delete(element.id).then(async () => {
+            await this.loadData();
+          });
+        } else {
+          var i = this.clientWizard.DependantsList.findIndex(
+            (x) => x.id == element.id
+          );
+          this.clientWizard.DependantsList.splice(i, 1);
+          await this.loadData();
+        }
       }
     });
   }
 
   async delete(id: string) {
     try {
-      await this.apiCommunicationMethod.delete(id);
+      await this.apiDependant.delete(id);
     } catch (error) {}
   }
 

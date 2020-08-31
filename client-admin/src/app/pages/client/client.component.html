@@ -25,7 +25,7 @@
               type="button"
               (click)="onBack()"
             >
-              <mat-icon>list</mat-icon>{{ 'CLIENTS.GOBACK' | translate }}
+              <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
             </button>
           </div>
         </mat-card-header>
@@ -47,6 +47,9 @@
                 >
                   {{ 'REQUIRED' | translate }}
                 </mat-error>
+                <mat-error *ngIf="reactiveForm.get('Name').hasError('pattern')">
+                  {{ 'ONLY_LETTERS' | translate }}
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex="30%">
@@ -66,7 +69,7 @@
 
               <mat-form-field fxFlex="10%">
                 <mat-label>{{ 'CLIENTS.INITIAL' | translate }}</mat-label>
-                <input matInput formControlName="Initial" />
+                <input matInput formControlName="Initial" mask="A" />
               </mat-form-field>
             </div>
             <!-- contact row -->
@@ -147,6 +150,13 @@
                     'FEMALE' | translate
                   }}</mat-option>
                 </mat-select>
+                <mat-error>
+                  <mat-error
+                    *ngIf="reactiveForm.get('Gender').hasError('required')"
+                  >
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-error>
               </mat-form-field>
 
               <mat-form-field fxFlex>
@@ -160,7 +170,10 @@
                   matSuffix
                   [for]="birthDatePiker"
                 ></mat-datepicker-toggle>
-                <mat-datepicker #birthDatePiker></mat-datepicker>
+                <mat-datepicker
+                  #birthDatePiker
+                  disabled="false"
+                ></mat-datepicker>
               </mat-form-field>
             </div>
             <!-- <mat-form-field fxFlex>
@@ -189,6 +202,7 @@
                 [client]="client"
               ></app-general-information>
             </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>home</mat-icon>
@@ -196,6 +210,7 @@
               </ng-template>
               <app-client-address [clientid]="clientid"></app-client-address>
             </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>group_work</mat-icon>
@@ -204,26 +219,47 @@
               <app-bona-fide-list
                 #BonafideList
                 [clientId]="clientid"
+                (isLoadingEvent)="onIsBonafideLoading($event)"
               ></app-bona-fide-list>
             </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>insert_emoticon</mat-icon>
                 {{ 'CLIENTS.DEPENDANTS' | translate }}
               </ng-template>
+              <app-dependants-list
+                #dependants
+                [clientId]="clientid"
+                (isLoadingEvent)="onIsDependentsLoading($event)"
+              ></app-dependants-list>
             </mat-tab>
+
             <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
               <ng-template mat-tab-label>
                 <mat-icon>link</mat-icon>
                 {{ 'CLIENTS.ALLIANCE' | translate }}
               </ng-template>
+              <app-alliance-list
+                #alliance
+                [clientId]="clientid"
+              ></app-alliance-list>
             </mat-tab>
+
+            <mat-tab label="{{ 'CLIENTS.ALLIANCE' | translate }}">
+              <ng-template mat-tab-label>
+                <mat-icon>queue</mat-icon>
+                {{ 'CLIENTS.MULTI_ASISTANCE' | translate }}
+              </ng-template>
+            </mat-tab>
+
             <mat-tab>
               <ng-template mat-tab-label>
                 <mat-icon>perm_phone_msg</mat-icon>
                 {{ 'CLIENTS.CALLHISTORY' | translate }}
               </ng-template>
               <app-docs-calls-list
+                #docsCalls
                 [clientId]="clientid"
                 (isLoadingEvent)="onIsCallsLoading($event)"
               ></app-docs-calls-list>

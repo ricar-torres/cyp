@@ -1,23 +1,18 @@
+import { DocsCallsListComponent } from './../docs-calls-list/docs-calls-list.component';
+import { DependantsListComponent } from './../dependants-list/dependants-list.component';
 import { Component, OnInit, ViewChild, Input, OnDestroy } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormControl,
-  FormArray,
-} from '@angular/forms';
+import { FormGroup, FormBuilder } from '@angular/forms';
 import { ClientService } from '@app/shared/client.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debug } from 'console';
-import { Route } from '@angular/compiler/src/core';
-import { faLessThanEqual } from '@fortawesome/free-solid-svg-icons';
-import { MatDatepicker, MatDatepickerToggle } from '@angular/material';
 import { AppService } from '@app/shared/app.service';
-import { MenuRoles, PERMISSION } from '@app/models/enums';
+import { PERMISSION } from '@app/models/enums';
 import { LanguageService } from '@app/shared/Language.service';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
 import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.component';
 import * as Swal from 'sweetalert2';
+import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
+import { AllianceComponent } from '../alliance/alliance.component';
+import { AllianceListComponent } from '../alliance-list/alliance-list.component';
 
 @Component({
   selector: 'app-client',
@@ -27,10 +22,19 @@ import * as Swal from 'sweetalert2';
 export class ClientComponent implements OnInit, OnDestroy {
   clientid: string;
   client;
-  loading = true;
+  loading: boolean;
+  loadingBonafide: boolean = true;
+  loadingCalls: boolean = true;
+  loadingDepen: boolean = true;
   @Input() fromWizard: boolean = false;
+  @ViewChild('dependants')
+  dependants: DependantsListComponent;
+  @ViewChild('docsCalls')
+  docsCalls: DocsCallsListComponent;
   @ViewChild('BonafideList')
   bonafideList: BonaFideListComponent;
+
+  @ViewChild('alliance') alliance: AllianceListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -46,7 +50,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     buttons: [],
   };
   constructor(
-    private fb: FormBuilder,
     private clientsService: ClientService,
     private route: ActivatedRoute,
     private router: Router,
@@ -59,11 +62,17 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   async ngOnInit() {
+    this.loading = true;
     this.reactiveForm = this.clientWizard.clientDemographic;
     if (!this.fromWizard) {
       this.setupFabButton();
       this.clientid = this.route.snapshot.paramMap.get('id');
       this.client = await this.clientsService.client(this.clientid);
+      this.reactiveForm
+        .get('Ssn')
+        .setAsyncValidators(
+          this.clientWizard.checkSsn(this.client.ssn).bind(this)
+        );
       this.reactiveForm.get('Id').setValue(this.client.id);
       this.reactiveForm.get('Name').setValue(this.client.name);
       this.reactiveForm.get('LastName1').setValue(this.client.lastName1);
@@ -78,11 +87,6 @@ export class ClientComponent implements OnInit, OnDestroy {
         .setValue(this.client.maritalStatus);
       this.reactiveForm.get('Phone1').setValue(this.client.phone1);
       this.reactiveForm.get('Phone2').setValue(this.client.phone2);
-      this.reactiveForm
-        .get('Ssn')
-        .setAsyncValidators(
-          this.clientWizard.checkSsn(this.client.ssn).bind(this)
-        );
     } else {
       this.reactiveForm
         .get('Ssn')
@@ -129,14 +133,19 @@ export class ClientComponent implements OnInit, OnDestroy {
     this.router.navigate(['home/clients']);
   }
 
-  onSpeedDialFabClicked(ev) {
+  async onSpeedDialFabClicked(ev) {
     switch (ev.tooltip) {
       case 'Bonafide':
         this.bonafideList.goToNew();
         break;
-      case 'Dependents':
-        break;
       case 'Calls':
+        await this.docsCalls.createThread();
+        break;
+      case 'Dependents':
+        this.dependants.goToNew();
+        break;
+      case 'Alliance':
+        this.alliance.goToNew();
         break;
       default:
         break;
@@ -156,8 +165,23 @@ export class ClientComponent implements OnInit, OnDestroy {
         desc: '',
       },
       {
+        icon: 'link',
+        tooltip: 'Alianza',
+        desc: '',
+      },
+      {
+        icon: 'queue',
+        tooltip: 'Multi',
+        desc: '',
+      },
+      {
         icon: 'perm_phone_msg',
         tooltip: 'Calls',
+        desc: '',
+      },
+      {
+        icon: 'link',
+        tooltip: 'Alliance',
         desc: '',
       }
     );
@@ -168,18 +192,31 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   toggleControls(disable: boolean) {
     if (this.reactiveForm) {
-      for (var property in this.reactiveForm.controls) {
-        if (this.reactiveForm.controls.hasOwnProperty(property)) {
-          if (disable) {
-            this.reactiveForm.get(property).disable();
-          } else {
-            this.reactiveForm.get(property).enable();
-          }
-        }
+      if (disable) {
+        this.reactiveForm.disable();
+      } else {
+        this.reactiveForm.enable();
       }
     }
   }
   onIsCallsLoading(bool: boolean) {
-    this.loading = bool;
+    this.loadingCalls = bool;
+    this.finishedLoading();
+  }
+  onIsDependentsLoading(bool: boolean) {
+    this.loadingDepen = bool;
+    this.finishedLoading();
+  }
+  onIsBonafideLoading(bool: boolean) {
+    this.loadingBonafide = bool;
+    this.finishedLoading();
+  }
+  finishedLoading() {
+    return (this.loading =
+      this.loadingBonafide || this.loadingCalls || this.loadingDepen);
+  }
+
+  disableControls() {
+    this.clientsService.toggleEditControl.emit(true);
   }
 }

@@ -10,6 +10,9 @@
   "SEND_BTN": "Enviar",
   "OK_BTN": "Ok",
   "YES_BTN": "Si",
+  "DEL_BTN": "Borrar",
+  "EDIT_BTN": "Editar",
+  "GOBACK": "Regresar",
   "COMFIRMATION": "Confirmar",
   "NO_BTN": "No",
   "ADD_BTN": "Agregar",
@@ -24,6 +27,7 @@
   "PASSWORD_POLICY": "La contraseña debe tener al menos 8 caracteres y debe contener al menos una letra mayúscula, una letra minúscula y un número.",
   "REQUIRED": "Este Campo es requerido",
   "VALIDEMAIL": "Porfavor provea una dirección de email valida",
+  "ONLY_LETTERS": "Entrar solo letras",
   "SEARCH": "Buscar",
   "MALE": "Hombre",
   "FEMALE": "Mujer",
@@ -35,7 +39,13 @@
   "BACK": "Regresar",
   "YES": "Si",
   "NO": "No",
+  "GENERAL_FILTER": "Filtro",
+  "NAME": "Nombre",
+  "PHONE": "Teléfono",
+  "FINISH": "Finalizar",
   "SAVESUCCESS": "La información ha sido actualizada",
+  "EDIT": "Editar",
+  "DELETE": "Borrar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -63,7 +73,7 @@
   },
   "AGENCY": {
     "TITLE": "Agencias",
-    "BTN_ADD": "Crear Agencia",
+    "BTN_ADD": "Nueva Agencia",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "AGENCYEDIT": "Agencia",
@@ -72,21 +82,19 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Grabar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar esta Agencia?"
   },
   "CLIENTS": {
     "TITLE": "Cliente",
-    "BTN_ADD": "Crear Cliente",
+    "BTN_ADD": "Nuevo Cliente",
     "NAME": "Nombre",
     "ACTIONS": "Accion",
     "AGENCYEDIT": "Cliente",
-    "AGENCYCREATE": "Cleinte",
+    "AGENCYCREATE": "Cliente",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Grabar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "Seguro que desea remover este cliente?",
     "SSN": "SSN",
     "PHONE1": "Teléfono Primario",
@@ -99,9 +107,9 @@
     "GENDER": "Genero",
     "BIRTHDATE": "Fecha de nacimiento",
     "MARITALSTATUS": "Estatus Marital",
-    "BONAFIDES": "Bona Fides",
+    "BONAFIDES": "BonaFides",
     "DEPENDANTS": "Dependientes",
-    "GENERALINFORMATION": "Información General",
+    "GENERALINFORMATION": "General",
     "ALLIANCE": "Alianzas",
     "CALLHISTORY": "Llamadas",
     "DIRECTIONS": "Direcciones",
@@ -125,11 +133,13 @@
     "MEDICAREA": "Medicare A",
     "MEDICAREB": "Medicare B",
     "SSNTAKEN": "El 'SSN' provisto no esta disponible",
-    "SSNREQUIRED": "SSN es requerido"
+    "SSNREQUIRED": "SSN es requerido",
+    "SAMEADDRESS": "Usar dirección fisica",
+    "MULTI_ASISTANCE": "Multiasistencia"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
-    "BTN_ADD": "Crear Eventos Calificativos",
+    "BTN_ADD": "Nuevo Evento",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
     "QUALIFYINGEVENTEDIT": "Evento Calificativo",
@@ -138,22 +148,20 @@
     "EDIT": "Editar",
     "SAVE": "Guardar",
     "CREATE": "Guardar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Evento Clasificativo?",
     "REQUIREMENTS": "Requisitos"
   },
   "BONAFIDE": {
-    "TITLE": "Asociaciones Bona fides",
-    "BTN_ADD": "Crear Bona fides",
+    "TITLE": "Asociaciones Bonafide",
+    "BTN_ADD": "Nuevo Bonafides",
     "NAME": "Nombre",
     "ACTIONS": "Acciones",
-    "BONAFIDEEDIT": "Bona fides",
-    "BONAFIDECREATE": "Bona fides",
+    "BONAFIDEEDIT": "Bonafides",
+    "BONAFIDECREATE": "Bonafides",
     "DELETE": "Borrar",
     "EDIT": "Editar",
     "SAVE": "Guardar",
     "CREATE": "Guardar",
-    "GOBACK": "Regresar",
     "CODE": "Código",
     "SIGLAS": "Siglas",
     "SEARCH": "Buscar",
@@ -162,12 +170,13 @@
     "BENEFITS": "Beneficios",
     "DISCLAIMER": "Relevo de Responsabilidad",
     "CHAPTER": "Capítulo",
-    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bona Fide?",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este Bonafide?",
     "TAKENNAME": "Este Nombre ya existe",
     "TAKENEMAIL": "Este correo electrónico ya existe"
   },
   "BONAFIDESASSOCIATOR": {
-    "BONAFIDES": "Seleccione los Bona Fides deseados",
+    "TITLE": "Bonafides",
+    "BONAFIDES": "Seleccione los Bonafides deseados",
     "CHAPTERS": "Seleccione los capitulos deseados",
     "REGISTERDATE": "Fecha de registro",
     "PRIMARYASSOCIATION": "Primario",
@@ -176,7 +185,7 @@
   },
   "CHAPTER": {
     "TITLE": "Capítulos",
-    "BTN_ADD": "Crear Capítulo",
+    "BTN_ADD": "Nuevo Capítulo",
     "NAME": "Nombre",
     "CHAPTEREDIT": "Capítulo",
     "CHAPTERCREATE": "Capítulo",
@@ -184,7 +193,6 @@
     "EDIT": "Editar",
     "SAVE": "Grabar",
     "CREATE": "Grabar",
-    "GOBACK": "Regresar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar este capítulo?",
     "QUOTA": "Cuota",
     "ACTIONS": "Acciones",
@@ -193,8 +201,26 @@
   },
   "CLIENTWIZARD": {
     "PREREGISTER": "Pre Registro",
-    "BONAFIDES_ASSOCIATION": "Asociador de Bona fides",
-    "GENERAL_INFORMATION": "Información General"
+    "BONAFIDES_ASSOCIATION": "Bonafides",
+    "GENERAL_INFORMATION": "General",
+    "ASSOCIATE_DEPENDATS": "Dependientes"
+  },
+  "ALLIANCELIST": {
+    "QUALIFYINGEVENT": "Evento",
+    "COVERNAME": "Cubierta",
+    "STARTDATE": "Inicio",
+    "ELEGIBLEDATE": "Elegibilidad",
+    "ENDDATE": "Culminacion"
+  },
+  "ALLIANCEWIZARD": {
+    "AFILIATIONMETOD": "Método de afiliación",
+    "QUALIFYINGEVENT": "Evento",
+    "RENOVATIONAFILIATION": "Renovación / Afiliación",
+    "AFFILIATIONMETHODS": "Métodos de afiliación",
+    "EFFECTIVEDATE": "Efectividad",
+    "ELEGBILITYDATE": "Eligibilidad",
+    "INSCRIPTIONTYPE": "Tipo de Inscripción",
+    "INSCRIPTIONSTATUS": "Estatus de Inscripción"
   },
   "USER": {
     "TITLE": "Usuario",
@@ -206,8 +232,7 @@
     "ISACTIVE": "Inactivo?",
     "CANCEL": "Cancelar",
     "ROLES": "Roles",
-    "SAVE": "Guardar",
-    "GOBACK": "Regresar"
+    "SAVE": "Guardar"
   },
   "TUTOR": {
     "NAME": "Nombre",
@@ -268,7 +293,7 @@
     "ORIGIN": "Origen",
     "PAGE_TITLE": "Campañas",
     "GENERAL_FILTER": "Filter",
-    "ADD_BTN": "Agregar Campaña",
+    "ADD_BTN": "Nueva Campaña",
     "EDIT_BTN": "Editar",
     "DEL_BTN": "Borrar",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar ésta Campaña?"
@@ -283,7 +308,7 @@
     "EXISTS": "Existe una campaña con este nombre"
   },
   "COMMUNICATION_METHOD_LIST": {
-    "ADD_BTN": "Agregar",
+    "ADD_BTN": "Nuevo Metodo",
     "GENERAL_FILTER": "Filtro",
     "NAME": "Nombre",
     "EDIT_BTN": "Editar",
@@ -304,7 +329,7 @@
     "CODE": "Código",
     "EDIT_BTN": "Editar",
     "DEL_BTN": "Borrar",
-    "ADD_BTN": "Añadir",
+    "ADD_BTN": "Nuevo Retiro",
     "GENERAL_FILTER": "Filtro",
     "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar éste Retiro?"
   },
@@ -332,5 +357,36 @@
     "ADD_BTN": "Agregar",
     "TYPE_CALL": "Tipo de llamada",
     "THREAD": "Hilo"
+  },
+  "DEPENDANTS_LIST": {
+    "PAGE_TITLE": "Dependientes",
+    "RELATION_NAME": "Relación",
+    "COVER": "Cubierta",
+    "ARE_YOU_SURE_DELETE": "Seguro que desea remover este Dependiente?",
+    "ADD_BTN": "Nuevo Dependiente",
+    "SAVE": "Guardar"
+  },
+  "DEPENDANT": {
+    "PAGE_TITLE": "Dependiente",
+    "NAME": "Nombre",
+    "LASTNAME1": "Primer Apellido",
+    "LASTNAME2": "Segundo Apellido",
+    "INITIAL": "Inicial",
+    "MALE": "Masculino",
+    "FEMALE": "Femenino",
+    "SSN": "Seguro Social",
+    "BIRTHDATE": "Fecha de Nacimiento",
+    "EMAIL": "Email",
+    "GENDER": "Genero",
+    "PHONE_PRIMARY": "Teléfono Principal",
+    "PHONE_SECONDARY": "Teléfono Secundario",
+    "RELATION": "Relación",
+    "ACTUALPLAN": "Plan médico actual",
+    "ACTUALCOVER": "Cubierta Actual",
+    "CONTRACT_NUM": "Número de Contrato",
+    "EFFECTDATE": "Fecha de efectividad",
+    "THREAD": "Hilo",
+    "ONLY_PATTERN": "Letras solamente",
+    "SAVE": "Guardar"
   }
 }

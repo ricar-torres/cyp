@@ -1,3 +1,4 @@
+import { PreviewSsn } from './../../directives/ssnPipe';
 import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 import {
   PageEvent,
@@ -33,7 +34,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   displayedColumns: string[] = [
     'id',
     'name',
-    //'ssn',
+    'ssn',
     //'gender',
     'phone1',
     //'phone2',
@@ -78,7 +79,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
   }
 
   private LoadClients() {
-    this.clientService.getAll().subscribe(
+    this.clientService.getClientsByCriteria('1').subscribe(
       (res) => {
         this.loading = true;
         this.dataSource = new MatTableDataSource();
@@ -125,8 +126,14 @@ export class ClientListComponent implements OnInit, OnDestroy {
     });
   }
 
-  doFilter(value: any) {
-    this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
+  doFilter(value: string) {
+    //this.dataSource.filter = value.toString().trim().toLocaleLowerCase();
+    if (value.trim())
+      this.clientService
+        .getClientsByCriteria(value.replace(' ', ''))
+        .subscribe((res) => {
+          this.dataSource.data = res;
+        });
   }
 
   async deleteConfirm(id: string) {
@@ -153,9 +160,9 @@ export class ClientListComponent implements OnInit, OnDestroy {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          console.log(id);
-          await this.clientService.delete(id);
-          this.LoadClients();
+          await this.clientService.delete(id).then(() => {
+            this.LoadClients();
+          });
         }
       });
     } catch (error) {

@@ -2,7 +2,6 @@
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-using server.Entities;
 using WebApi.Entities;
 using WebApi.Entities.Identity;
 
@@ -69,8 +68,6 @@ namespace WebApi.Helpers {
 		public virtual DbSet<Tutors> Tutors { get; set; }
 		public virtual DbSet<Users> Users { get; set; }
 		public virtual DbSet<Zipcodes> Zipcodes { get; set; }
-
-
 		public DbSet<InsuranceBenefitType> InsuranceBenefitType { get; set; }
 		public DbSet<InsurancePlanBenefit> InsurancePlanBenefit { get; set; }
 		public DbSet<InsuranceRate> InsuranceRate { get; set; }
@@ -80,6 +77,8 @@ namespace WebApi.Helpers {
 		public DbSet<InsuranceAddOnsRateAge> InsuranceAddOnsRateAge { get; set; }
 
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
+		public virtual DbSet<AffType> AffType { get; set; }
+
 		#endregion
 
 		#region FUNCTIONS
@@ -112,6 +111,7 @@ namespace WebApi.Helpers {
 			new LoginProviderMap(modelBuilder.Entity<LoginProvider>());
 			new OneTimePasswordMap(modelBuilder.Entity<OneTimePassword>());
 			new TypeOfRelationshipMap(modelBuilder.Entity<TypeOfRelationship>());
+			new AffTypeMap(modelBuilder.Entity<AffType>());
 
 
 			new InsurancePlanAddOnsMap(modelBuilder.Entity<InsurancePlanAddOns>());
@@ -1398,6 +1398,7 @@ namespace WebApi.Helpers {
 					.HasForeignKey(d => d.CoverId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("dependents_cover_id_foreign");
+
 			});
 
 			modelBuilder.Entity<DocumentCategories>(entity => {

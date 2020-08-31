@@ -34,7 +34,6 @@ namespace WebApi
       // ===== Add CORS ========
       services.AddCors();
 
-
       services.AddDbContext<DataContext>(options => options.UseSqlServer(appSettings.DefaultConnection));
 
       services.AddControllers().AddNewtonsoftJson();
@@ -50,7 +49,6 @@ namespace WebApi
       IMapper mapper = mappingConfig.CreateMapper();
       services.AddSingleton(mapper);
 
-
       // ===== Add jwt authentication ========
       var key = Encoding.ASCII.GetBytes(appSettings.Secret);
       services.AddAuthentication(x =>
@@ -58,18 +56,18 @@ namespace WebApi
         x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
         x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
       })
-      .AddJwtBearer(x =>
-      {
-        x.RequireHttpsMetadata = false;
-        x.SaveToken = true;
-        x.TokenValidationParameters = new TokenValidationParameters
+        .AddJwtBearer(x =>
         {
-          ValidateIssuerSigningKey = true,
-          IssuerSigningKey = new SymmetricSecurityKey(key),
-          ValidateIssuer = false,
-          ValidateAudience = false
-        };
-      });
+          x.RequireHttpsMetadata = false;
+          x.SaveToken = true;
+          x.TokenValidationParameters = new TokenValidationParameters
+          {
+            ValidateIssuerSigningKey = true,
+            IssuerSigningKey = new SymmetricSecurityKey(key),
+            ValidateIssuer = false,
+            ValidateAudience = false
+          };
+        });
 
       // configure DI for application services
       services.AddScoped<IUserService, UserService>();
@@ -92,8 +90,10 @@ namespace WebApi
       services.AddScoped<IRetirementService, RetirementService>();
       services.AddScoped<IDocumentationCallService, DocumentationCallService>();
       services.AddScoped<IInsuranceBenefitTypeService, InsuranceBenefitTypeService>();
+      services.AddScoped<IDependantService, DependantService>();
+      services.AddScoped<IAllianceService, AllianceService>();
 
-        }
+    }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -117,7 +117,6 @@ namespace WebApi
       {
         endpoints.MapControllers();
       });
-
 
       //Sedding Database
       using (var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope())

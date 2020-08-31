@@ -146,6 +146,20 @@ namespace WebApi.Migrations
                     b.ToTable("addresses");
                 });
 
+            modelBuilder.Entity("WebApi.Entities.AffType", b =>
+                {
+                    b.Property<int>("Id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AffType");
+                });
+
             modelBuilder.Entity("WebApi.Entities.AffiliationPeriods", b =>
                 {
                     b.Property<int>("Id")
@@ -2529,6 +2543,19 @@ namespace WebApi.Migrations
                     b.ToTable("tutors");
                 });
 
+            modelBuilder.Entity("WebApi.Entities.TypeOfRelationship", b =>
+                {
+                    b.Property<byte?>("Id")
+                        .HasColumnType("tinyint");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TypeOfRelationship");
+                });
+
             modelBuilder.Entity("WebApi.Entities.Users", b =>
                 {
                     b.Property<int>("Id")
@@ -2639,19 +2666,6 @@ namespace WebApi.Migrations
                     b.HasIndex("CityId");
 
                     b.ToTable("zipcodes");
-                });
-
-            modelBuilder.Entity("server.Entities.TypeOfRelationship", b =>
-                {
-                    b.Property<byte?>("Id")
-                        .HasColumnType("tinyint");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("TypeOfRelationship");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Alianzas", b =>

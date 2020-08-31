@@ -45,13 +45,24 @@ namespace server.Controllers {
 		[AllowAnonymous]
 		[HttpGet("{id}")]
 		public IActionResult Get(int id) {
+			IEnumerable<TypeOfRelationship> relationships;
+			DependentDto dependent = null;
 			try {
-				var res = _service.GetById(id);
-				if (res == null) {
+				relationships = _service.GetRelationTypes().ToList();
+				if (_service.GetById(id) is Dependents d && d.Cover is Covers c && c.Dependents is object) {
+					d.Cover.Dependents = null;
+					if (c.HealthPlan is HealthPlans hp) {
+						hp.Covers = null;
+					}
+					dependent = new DependentDto(d);
+					dependent.Relationship = relationships.Where(_ => _.Id == d.Relationship).FirstOrDefault() is TypeOfRelationship relationship ?
+						relationship : new TypeOfRelationship();
+				}
+				if (dependent is object) {
+					return Ok(dependent);
+				} else {
 					return NotFound();
 				}
-				return Ok(res);
-
 			} catch (Exception ex) {
 				return DefaultError(ex);
 			}
@@ -60,31 +71,47 @@ namespace server.Controllers {
 		// POST: api/CommunicationMethod
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult Create([FromBody] ClientUser payload) {
+		public IActionResult Create([FromBody] Dependents payload) {
+			try {
+				//payload.Cover = null;
+				// (payload as Dependents).Relationship = payload.Relationship.Id;
+				//payload.Relationship = null;
+				var res = _service.Create(payload);
+				return Ok(res);
 
-			// try {
-			// 	payload.ConfirmationNumber = payload.ConfirmationNumber.Contains("000000000000") ?
-			// 		CreateConfirmationCode() : payload.ConfirmationNumber;
-			// 	_service.Create(payload);
-			// 	return Ok(payload);
-
-			// } catch (AppException ex) {
-			// 	// return error message if there was an exception
-			// 	return DefaultError(ex);
-			// }
-			return Ok();
+			} catch (AppException ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
 		}
 
 		[AllowAnonymous]
 		[HttpGet("[action]/{clientId:int}")]
 		public IActionResult GetAllByClient(int clientId) {
+			//List<DependentDto> dependentsDtoList = new List<DependentDto>();
+			List<DependentDto> dependents;
+			IEnumerable<TypeOfRelationship> relationships;
 			try {
-				var res = _service.GetAllByClient(clientId);
-				if (res == null) {
+				dependents = new List<DependentDto>();
+				relationships = _service.GetRelationTypes().ToList();
+				var list = _service.GetAllByClient(clientId).ToList();
+				list.ForEach((item) => {
+					if (item is Dependents d && d.Cover is Covers c && c.Dependents is object) {
+						d.Cover.Dependents = null;
+						if (c.HealthPlan is HealthPlans hp) {
+							hp.Covers = null;
+						}
+						item = d;
+					}
+					dependents.Add(new DependentDto(item));
+					dependents.Last().Relationship = relationships.Where(_ => _.Id == item.Relationship).FirstOrDefault() is TypeOfRelationship relationship ?
+						relationship : new TypeOfRelationship();
+				});
+				if (dependents is object) {
+					return Ok(dependents);
+				} else {
 					return NotFound();
 				}
-				return Ok(res);
-
 			} catch (Exception ex) {
 				return DefaultError(ex);
 			}
@@ -92,7 +119,7 @@ namespace server.Controllers {
 
 		[AllowAnonymous]
 		[HttpGet("[action]")]
-		public IActionResult GetCallTypes() {
+		public IActionResult GetRelationTypes() {
 			try {
 				var res = _service.GetRelationTypes();
 				if (res == null) {
@@ -105,5 +132,59 @@ namespace server.Controllers {
 			}
 		}
 
+		[AllowAnonymous]
+		[HttpPut]
+		public IActionResult Put(Dependents dependent) {
+			Dependents updatedDependent;
+			try {
+
+				updatedDependent = _service.Update(dependent);
+
+				return Ok(updatedDependent);
+
+			} catch (AppException ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
+
+		}
+
+		[AllowAnonymous]
+		[HttpDelete("{id}")]
+		public IActionResult Delete(int id) {
+			try {
+
+				_service.Delete(id);
+
+				return Ok();
+
+			} catch (AppException ex) {
+				// return error message if there was an exception
+				return DefaultError(ex);
+			}
+
+		}
+
+		[HttpGet("test")]
+		public IActionResult GetCovers() {
+			try {
+				var res = this._service.GetCovers();
+				return Ok(res);
+			} catch (System.Exception) {
+
+				throw;
+			}
+		}
+
+		[HttpGet("test1")]
+		public IActionResult GetHealthPlans() {
+			try {
+				var res = this._service.GetHealthPlans();
+				return Ok(res);
+			} catch (System.Exception) {
+
+				throw;
+			}
+		}
 	}
 }

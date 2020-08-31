@@ -1,8 +1,13 @@
+<mat-card-header>
+  <mat-card-title
+    >{{ 'BONAFIDESASSOCIATOR.TITLE' | translate }}
+  </mat-card-title>
+</mat-card-header>
 <form
   (ngSubmit)="saveChapterClient()"
   [formGroup]="reactiveForm"
   fxLayout="column"
-  class="full-with full-height"
+  class="full-with"
 >
   <mat-form-field fxFlex>
     <mat-label>{{ 'BONAFIDESASSOCIATOR.BONAFIDES' | translate }}</mat-label>
@@ -35,7 +40,7 @@
         [matDatepicker]="picker"
       />
       <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-      <mat-datepicker #picker></mat-datepicker>
+      <mat-datepicker [disabled]="false" #picker></mat-datepicker>
     </mat-form-field>
     <div fxFlex="25%">
       <mat-label>Primaria</mat-label>
@@ -58,12 +63,16 @@
   </div>
 
   <div fxLayoutAlign="flex-end end" fxFlex="100%">
+    <button mat-stroked-button type="button" (click)="onBack()">
+      <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
+    </button>
     <button
       type="submit"
       [disabled]="reactiveForm.invalid"
       mat-raised-button
       color="primary"
     >
+      <mat-icon>save</mat-icon>
       {{ 'BONAFIDESASSOCIATOR.ADD' | translate }}
     </button>
   </div>
