@@ -8,6 +8,7 @@ namespace WebApi.Entities
         public ClientProduct()
         {
             Alianzas = new HashSet<Alianzas>();
+            MultiAssists = new HashSet<MultiAssists>();
         }
 
         public int Id { get; set; }
@@ -21,5 +22,7 @@ namespace WebApi.Entities
         public virtual Clients Client { get; set; }
         public virtual Products Product { get; set; }
         public virtual ICollection<Alianzas> Alianzas { get; set; }
+        public virtual ICollection<MultiAssists> MultiAssists { get; set; }
+
     }
 }

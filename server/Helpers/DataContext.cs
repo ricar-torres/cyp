@@ -593,11 +593,22 @@ namespace WebApi.Helpers {
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
 
+				entity.Property(e => e.Ssn)
+					.HasColumnName("ssn")
+					.HasColumnType("VARCHAR").
+					HasMaxLength(255);
+
 				entity.HasOne(d => d.Alianza)
 					.WithMany(p => p.Beneficiaries)
 					.HasForeignKey(d => d.AlianzaId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("beneficiaries_alianza_id_foreign");
+
+				entity.HasOne(d => d.MultiAssists)
+					.WithMany(p => p.Beneficiaries)
+					.HasForeignKey(d => d.MultiAssistId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("beneficiaries_multi_assists_id_foreign");
 			});
 
 			modelBuilder.Entity<BonaFides>(entity => {
@@ -1929,6 +1940,171 @@ namespace WebApi.Helpers {
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("zipcodes_city_id_foreign");
 			});
+
+            modelBuilder.Entity<MultiAssists>(entity => {
+				entity.ToTable("multi_assists");
+
+				entity.HasKey(t => t.Id);
+				entity.Property(e => e.Id)
+				.HasColumnName("id")
+				.ValueGeneratedOnAdd();
+				
+				entity.Property(e => e.ClientProductId)
+				.HasColumnName("client_product_id")
+				.IsRequired();
+
+				entity.Property(e => e.CoverId).HasColumnName("cover_id")
+				.IsRequired();
+
+				entity.Property(e => e.EffectiveDate)
+					.HasColumnName("efective_date")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.EligibleWaitingPeriodDate)
+					.HasColumnName("eligible_waiting_period_date")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.EndDate)
+					.HasColumnName("end_date")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.SentDate)
+					.HasColumnName("sent_date")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.Cost).HasColumnName("cost");
+
+				entity.Property(e => e.StatusId)
+				.HasColumnName("status_id")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(10);
+
+				entity.Property(e => e.Ref1)
+					.HasColumnName("ref1")
+					.HasColumnType("VARCHAR")
+					.HasMaxLength(30);
+				
+				entity.Property(e => e.Ref2)
+					.HasColumnName("ref2")
+					.HasColumnType("VARCHAR")
+					.HasMaxLength(30);
+
+				entity.Property(e => e.Ref3)
+					.HasColumnName("ref3")
+					.HasColumnType("VARCHAR")
+					.HasMaxLength(30);
+
+				entity.Property(e => e.AccountType)
+				.HasColumnName("account_type")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(4);
+
+				entity.Property(e => e.BankName)
+				.HasColumnName("bank_name")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(60);
+
+				entity.Property(e => e.AccountHolderName)
+				.HasColumnName("account_holder_name")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(60);
+
+				entity.Property(e => e.RoutingNum)
+				.HasColumnName("routing_num")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(9);
+
+				entity.Property(e => e.AccountNum)
+				.HasColumnName("account_num")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(12);
+
+				entity.Property(e => e.ExpDate)
+				.HasColumnName("exp_date")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(4);
+
+				entity.Property(e => e.DebDay)
+				.HasColumnName("deb_day");
+
+				entity.Property(e => e.DebRecurringType)
+				.HasColumnName("deb_recurring_type")
+				.HasColumnType("VARCHAR")
+				.HasMaxLength(10);
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+				
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+					
+				entity.HasOne(d => d.ClientProduct)
+					.WithMany(p => p.MultiAssists)
+					.HasForeignKey(d => d.ClientProductId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("multi_assists_client_product_id_foreign");
+
+				entity.HasOne(d => d.Cover)
+					.WithMany(p => p.MultiAssists)
+					.HasForeignKey(d => d.CoverId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("multi_assists_cover_id_foreign");
+			});
+
+			modelBuilder.Entity<MultiAssistsVehicle>(entity => {
+				entity.ToTable("multi_assists_vehicle");
+
+				entity.Property(e => e.Id).HasColumnName("id")
+				.ValueGeneratedOnAdd();
+				entity.HasKey(t => t.Id);
+
+				entity.Property(e => e.MultiAssistId).HasColumnName("multi_assist_id")
+				.IsRequired();
+
+				entity.Property(e => e.Make)
+					.IsRequired()
+					.HasColumnName("make")
+					.HasMaxLength(30);
+
+				entity.Property(e => e.Model)
+					.IsRequired()
+					.HasColumnName("model")
+					.HasMaxLength(30);
+
+				entity.Property(e => e.Year)
+					.IsRequired()
+					.HasColumnName("year");
+
+				entity.Property(e => e.Vin)
+					.IsRequired()
+					.HasColumnName("vin")
+					.HasMaxLength(17);
+
+				entity.Property(e => e.CreatedAt)
+					.HasColumnName("created_at")
+					.HasColumnType("datetime");
+				
+				entity.Property(e => e.UpdatedAt)
+					.HasColumnName("updated_at")
+					.HasColumnType("datetime");
+
+				entity.Property(e => e.DeletedAt)
+					.HasColumnName("deleted_at")
+					.HasColumnType("datetime");
+
+				entity.HasOne(d => d.MultiAssists)
+					.WithMany(p => p.MultiAssistsVehicle)
+					.HasForeignKey(d => d.MultiAssistId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("multi_assists_vehicle_multi_assists_id_foreign");
+			});
+
 
 			#endregion
 

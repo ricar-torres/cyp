@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200831201635_BeneficiariesSSN")]
+    partial class BeneficiariesSSN
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -347,7 +349,7 @@ namespace WebApi.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AlianzaId")
+                    b.Property<int>("AlianzaId")
                         .HasColumnName("alianza_id")
                         .HasColumnType("int");
 
@@ -368,9 +370,6 @@ namespace WebApi.Migrations
                         .HasColumnName("gender")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
-
-                    b.Property<int?>("MultiAssistId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -402,8 +401,6 @@ namespace WebApi.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("AlianzaId");
-
-                    b.HasIndex("MultiAssistId");
 
                     b.ToTable("beneficiaries");
                 });
@@ -2172,175 +2169,6 @@ namespace WebApi.Migrations
                     b.ToTable("insurance_rate");
                 });
 
-            modelBuilder.Entity("WebApi.Entities.MultiAssists", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("AccountHolderName")
-                        .HasColumnName("account_holder_name")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(60);
-
-                    b.Property<string>("AccountNum")
-                        .HasColumnName("account_num")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(12);
-
-                    b.Property<string>("AccountType")
-                        .HasColumnName("account_type")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(4);
-
-                    b.Property<string>("BankName")
-                        .HasColumnName("bank_name")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(60);
-
-                    b.Property<int>("ClientProductId")
-                        .HasColumnName("client_product_id")
-                        .HasColumnType("int");
-
-                    b.Property<double?>("Cost")
-                        .HasColumnName("cost")
-                        .HasColumnType("float");
-
-                    b.Property<int>("CoverId")
-                        .HasColumnName("cover_id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnName("created_at")
-                        .HasColumnType("datetime");
-
-                    b.Property<int?>("DebDay")
-                        .HasColumnName("deb_day")
-                        .HasColumnType("int");
-
-                    b.Property<string>("DebRecurringType")
-                        .HasColumnName("deb_recurring_type")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(10);
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("EffectiveDate")
-                        .HasColumnName("efective_date")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("EligibleWaitingPeriodDate")
-                        .HasColumnName("eligible_waiting_period_date")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("EndDate")
-                        .HasColumnName("end_date")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("ExpDate")
-                        .HasColumnName("exp_date")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(4);
-
-                    b.Property<string>("Ref1")
-                        .HasColumnName("ref1")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("Ref2")
-                        .HasColumnName("ref2")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("Ref3")
-                        .HasColumnName("ref3")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("RoutingNum")
-                        .HasColumnName("routing_num")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(9);
-
-                    b.Property<DateTime?>("SentDate")
-                        .HasColumnName("sent_date")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("StatusId")
-                        .HasColumnName("status_id")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(10);
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at")
-                        .HasColumnType("datetime");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ClientProductId");
-
-                    b.HasIndex("CoverId");
-
-                    b.ToTable("multi_assists");
-                });
-
-            modelBuilder.Entity("WebApi.Entities.MultiAssistsVehicle", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnName("id")
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime?>("CreatedAt")
-                        .HasColumnName("created_at")
-                        .HasColumnType("datetime");
-
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnName("deleted_at")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Make")
-                        .IsRequired()
-                        .HasColumnName("make")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<string>("Model")
-                        .IsRequired()
-                        .HasColumnName("model")
-                        .HasColumnType("nvarchar(30)")
-                        .HasMaxLength(30);
-
-                    b.Property<int>("MultiAssistId")
-                        .HasColumnName("multi_assist_id")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime?>("UpdatedAt")
-                        .HasColumnName("updated_at")
-                        .HasColumnType("datetime");
-
-                    b.Property<string>("Vin")
-                        .IsRequired()
-                        .HasColumnName("vin")
-                        .HasColumnType("nvarchar(17)")
-                        .HasMaxLength(17);
-
-                    b.Property<int>("Year")
-                        .HasColumnName("year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("MultiAssistId");
-
-                    b.ToTable("multi_assists_vehicle");
-                });
-
             modelBuilder.Entity("WebApi.Entities.PasswordResets", b =>
                 {
                     b.Property<DateTime?>("CreatedAt")
@@ -2873,12 +2701,8 @@ namespace WebApi.Migrations
                     b.HasOne("WebApi.Entities.Alianzas", "Alianza")
                         .WithMany("Beneficiaries")
                         .HasForeignKey("AlianzaId")
-                        .HasConstraintName("beneficiaries_alianza_id_foreign");
-
-                    b.HasOne("WebApi.Entities.MultiAssists", "MultiAssists")
-                        .WithMany("Beneficiaries")
-                        .HasForeignKey("MultiAssistId")
-                        .HasConstraintName("beneficiaries_multi_assists_id_foreign");
+                        .HasConstraintName("beneficiaries_alianza_id_foreign")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("WebApi.Entities.CanceledCategories", b =>
@@ -3196,30 +3020,6 @@ namespace WebApi.Migrations
                         .WithMany("Rate")
                         .HasForeignKey("CoverId")
                         .HasConstraintName("cover_insurance_rate_foreign")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WebApi.Entities.MultiAssists", b =>
-                {
-                    b.HasOne("WebApi.Entities.ClientProduct", "ClientProduct")
-                        .WithMany("MultiAssists")
-                        .HasForeignKey("ClientProductId")
-                        .HasConstraintName("multi_assists_client_product_id_foreign")
-                        .IsRequired();
-
-                    b.HasOne("WebApi.Entities.Covers", "Cover")
-                        .WithMany("MultiAssists")
-                        .HasForeignKey("CoverId")
-                        .HasConstraintName("multi_assists_cover_id_foreign")
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("WebApi.Entities.MultiAssistsVehicle", b =>
-                {
-                    b.HasOne("WebApi.Entities.MultiAssists", "MultiAssists")
-                        .WithMany("MultiAssistsVehicle")
-                        .HasForeignKey("MultiAssistId")
-                        .HasConstraintName("multi_assists_vehicle_multi_assists_id_foreign")
                         .IsRequired();
                 });
 

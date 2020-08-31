@@ -13,6 +13,7 @@ namespace WebApi.Entities
             BenefitTypes = new HashSet<InsurancePlanBenefit>();
             AddOns = new HashSet<InsurancePlanAddOns>();
             Rate = new HashSet<InsuranceRate>();
+            MultiAssists = new HashSet<MultiAssists>();
         }
 
         public int Id { get; set; }
@@ -39,6 +40,8 @@ namespace WebApi.Entities
         public virtual ICollection<InsurancePlanAddOns> AddOns { get; set; }
         public virtual ICollection<InsuranceRate> Rate { get; set; }
         public int[] AddOnsAlt { get; set; }
+
+        public virtual ICollection<MultiAssists> MultiAssists { get; set; }
 
 
     }

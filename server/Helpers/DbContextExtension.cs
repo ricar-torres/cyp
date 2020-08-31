@@ -161,6 +161,27 @@ namespace WebApi.Helpers {
 
 				#endregion
 
+				#region HealthPlans
+
+				var healhPlans = JsonConvert.DeserializeObject<List<HealthPlans>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "helth_plans.json"));
+				healhPlans = healhPlans.Where(x => !context.HealthPlans.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(healhPlans);
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.health_plans ON");
+				context.SaveChanges();
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.health_plans OFF");
+				#endregion
+
+				#region Covers
+
+				var covers = JsonConvert.DeserializeObject<List<Covers>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "covers.json"));
+				covers = covers.Where(x => !context.Covers.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(covers);
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.covers ON");
+				context.SaveChanges();
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.covers OFF");
+
+				#endregion
+
 			}
 			finally {
 				context.Database.CloseConnection();
