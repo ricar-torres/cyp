@@ -10,6 +10,8 @@ export class MultiAssistComponent implements OnInit {
   multiassist: FormGroup;
   healthPlans: any = [];
   covers: any = [];
+  filteredHealthPlans: any;
+  filteredCovers: any;
   constructor(private _formBuilder: FormBuilder) {}
 
   ngOnInit(): void {

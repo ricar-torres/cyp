@@ -7,18 +7,39 @@
   >
     <mat-form-field fxFlex>
       <mat-label>{{ 'ALLIANCEWIZARD.HEALTHPLAN' | translate }}</mat-label>
-      <mat-select [formControl]="multiassist.get('HealthPlan')">
-        <mat-option [value]="item.id" *ngFor="let item of healthPlans">{{
-          item.name
-        }}</mat-option>
-      </mat-select>
+      <input
+        type="text"
+        matInput
+        [formControl]="multiassist.get('HealthPlan')"
+        required
+        [matAutocomplete]="autoGroup"
+      />
+      <mat-autocomplete
+        autoActiveFirstOption
+        #autoGroup="matAutocomplete"
+        [displayWith]="displayNameFn"
+      >
+        <mat-option
+          *ngFor="let cover of filteredHealthPlans | async"
+          [value]="cover"
+        >
+          {{ cover.name }}
+        </mat-option>
+      </mat-autocomplete>
+      <!-- <mat-select [formControl]="benefits.get('HealthPlan')">
+            <mat-option [value]="item.id" *ngFor="let item of healthPlans">{{
+              item.name
+            }}</mat-option>
+          </mat-select> -->
     </mat-form-field>
     <mat-form-field fxFlex>
       <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
       <mat-select #coverSelection [formControl]="multiassist.get('Addititons')">
-        <mat-option [value]="item.id" *ngFor="let item of covers">{{
-          item.name
-        }}</mat-option>
+        <mat-option
+          *ngFor="let item of filteredCovers | async"
+          [value]="item"
+          >{{ item.name }}</mat-option
+        >
       </mat-select>
     </mat-form-field>
   </div>
