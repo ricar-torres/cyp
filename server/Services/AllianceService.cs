@@ -48,13 +48,9 @@ namespace WebApi.Services
       TimeSpan ts = PresentYear - dob;
       int years = (new DateTime() + ts).Year - 1;
       //getting informationbased on client age
-      if (payload.QualifyingEvetId != 0)
+      if (payload.QualifyingEvetId != 0 || years > 65)
       {
-        healthPlanList = await getHP("+65 -65");
-      }
-      else if (years > 65)
-      {
-        healthPlanList = await getHP("+65");
+        healthPlanList = await getHP("+65,-65");
       }
       else
       {
