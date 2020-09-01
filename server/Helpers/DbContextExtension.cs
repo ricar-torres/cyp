@@ -130,6 +130,17 @@ namespace WebApi.Helpers {
 
 				#endregion
 
+				#region Products
+
+				var products = JsonConvert.DeserializeObject<List<Products>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "products.json"));
+				products = products.Where(x => !context.Products.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(products);
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.products ON");
+				context.SaveChanges();
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.products OFF");
+
+				#endregion
+
 				#region TypeOfRelationship
 
 				var typeOfRelationships = JsonConvert.DeserializeObject<List<TypeOfRelationship>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "types_relationship.json"));
@@ -158,6 +169,27 @@ namespace WebApi.Helpers {
 					context.SaveChanges();
 					_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.insurance_addOns OFF");
 				}
+
+				#endregion
+
+				#region HealthPlans
+
+				var healhPlans = JsonConvert.DeserializeObject<List<HealthPlans>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "helth_plans.json"));
+				healhPlans = healhPlans.Where(x => !context.HealthPlans.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(healhPlans);
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.health_plans ON");
+				context.SaveChanges();
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.health_plans OFF");
+				#endregion
+
+				#region Covers
+
+				var covers = JsonConvert.DeserializeObject<List<Covers>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "covers.json"));
+				covers = covers.Where(x => !context.Covers.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(covers);
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.covers ON");
+				context.SaveChanges();
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.covers OFF");
 
 				#endregion
 

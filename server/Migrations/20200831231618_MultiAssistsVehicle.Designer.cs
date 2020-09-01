@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200831231618_MultiAssistsVehicle")]
+    partial class MultiAssistsVehicle
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -2270,10 +2272,9 @@ namespace WebApi.Migrations
                         .HasColumnName("sent_date")
                         .HasColumnType("datetime");
 
-                    b.Property<string>("StatusId")
+                    b.Property<int>("StatusId")
                         .HasColumnName("status_id")
-                        .HasColumnType("VARCHAR")
-                        .HasMaxLength(10);
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at")
