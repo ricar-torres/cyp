@@ -125,6 +125,7 @@ import { AllianceComponent } from './pages/alliance/alliance.component';
 import { AllianceListComponent } from './pages/alliance-list/alliance-list.component';
 import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard.component';
 import { BeneficiariesBenefitDistributionComponent } from './components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
+import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -184,6 +185,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AllianceListComponent,
     AllianceWizardComponent,
     BeneficiariesBenefitDistributionComponent,
+    MultiAssistComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,0 +1,25 @@
+<form [formGroup]="multiassist">
+  <div
+    fxLayout
+    fxLayoutAlign="center"
+    fxLayout.lt-md="column"
+    fxLayoutGap="10px"
+  >
+    <mat-form-field fxFlex>
+      <mat-label>{{ 'ALLIANCEWIZARD.HEALTHPLAN' | translate }}</mat-label>
+      <mat-select [formControl]="multiassist.get('HealthPlan')">
+        <mat-option [value]="item.id" *ngFor="let item of healthPlans">{{
+          item.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+    <mat-form-field fxFlex>
+      <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
+      <mat-select #coverSelection [formControl]="multiassist.get('Addititons')">
+        <mat-option [value]="item.id" *ngFor="let item of covers">{{
+          item.name
+        }}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+</form>
