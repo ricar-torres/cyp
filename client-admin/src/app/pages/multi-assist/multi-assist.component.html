@@ -1,4 +1,4 @@
-<form [formGroup]="multiassist">
+<form [formGroup]="multi_assist">
   <div
     fxLayout
     fxLayoutAlign="center"
@@ -10,7 +10,7 @@
       <input
         type="text"
         matInput
-        [formControl]="multiassist.get('HealthPlan')"
+        [formControl]="multi_assist.get('HealthPlan')"
         required
         [matAutocomplete]="autoGroup"
       />
@@ -19,10 +19,7 @@
         #autoGroup="matAutocomplete"
         [displayWith]="displayNameFn"
       >
-        <mat-option
-          *ngFor="let cover of filteredHealthPlans | async"
-          [value]="cover"
-        >
+        <mat-option *ngFor="let cover of filteredHPs | async" [value]="cover">
           {{ cover.name }}
         </mat-option>
       </mat-autocomplete>
@@ -34,13 +31,27 @@
     </mat-form-field>
     <mat-form-field fxFlex>
       <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
-      <mat-select #coverSelection [formControl]="multiassist.get('Addititons')">
-        <mat-option
-          *ngFor="let item of filteredCovers | async"
-          [value]="item"
-          >{{ item.name }}</mat-option
-        >
+      <!-- <input
+            type="text"
+            matInput
+            [formControl]="benefits.get('Addititons')"
+            required
+            [matAutocomplete]="addOn"
+          /> -->
+      <!-- <mat-autocomplete
+            autoActiveFirstOption
+            #addOn="matAutocomplete"
+            [displayWith]="displayNameFn"
+          > -->
+      <mat-select
+        #coverSelection
+        [formControl]="multi_assist.get('Addititons')"
+      >
+        <mat-option *ngFor="let item of covers" [value]="item.name">{{
+          item.name
+        }}</mat-option>
       </mat-select>
+      <!-- </mat-autocomplete> -->
     </mat-form-field>
   </div>
 </form>
