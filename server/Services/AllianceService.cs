@@ -15,7 +15,7 @@ namespace WebApi.Services
   {
     Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
-    Alianzas Create(Alianzas payload);
+    Task<Alianzas> Create(AllianceDto payload);
     Alianzas Update(Alianzas payload);
     void Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
@@ -60,7 +60,7 @@ namespace WebApi.Services
       return healthPlanList;
     }
 
-    public Alianzas Create(Alianzas payload)
+    public async Task<Alianzas> Create(AllianceDto payload)
     {
       throw new NotImplementedException();
     }
