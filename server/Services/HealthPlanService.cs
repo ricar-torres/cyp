@@ -1,683 +1,557 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
+using OfficeOpenXml;
 using WebApi.Entities;
 using WebApi.Helpers;
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
-
-namespace WebApi.Services
-{
-  public interface IHealthPlanService
-  {
-    Task<List<HealthPlans>> GetAll();
-        IActionResult GetById(int id);
-        HealthPlans Create(HealthPlans item);
-        HealthPlans Update(HealthPlans item);
-        void Delete(HealthPlans item);
-
-       
-        //addons
-        InsuranceAddOns GetAddOnsById(int id);
-        InsuranceAddOns CreateAddOns(InsuranceAddOns item);
-        InsuranceAddOns UpdateAddOns(InsuranceAddOns item);
-        void DeleteAddOns(InsuranceAddOns item);
-        ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream);
-        ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream);
-        IActionResult GetAllAddOns(int HealthPlanId);
-    }
-
-    public class HealthPlanService : Controller, IHealthPlanService
-  {
-    private readonly DataContext _context;
-    private readonly AppSettings _appSettings;
-
-    public HealthPlanService(DataContext context, IOptions<AppSettings> appSettings)
-    {
-      _context = context;
-      _appSettings = appSettings.Value;
-    }
-    public async Task<List<HealthPlans>> GetAll()
-    {
-      var healthPlans = await _context.HealthPlans.Where(hp => hp.DeletedAt == null).ToListAsync();
-      return healthPlans;
-    }
-
-
-
-        public IActionResult GetById(int id)
-        {
-
-            HealthPlans l = null;
-
-            try
-            {
-
-                l = _context.HealthPlans.Include(u => u.Covers).ThenInclude(r => r.AddOns)
-                                                .Include(u => u.InsuranceAddOns).ThenInclude(r => r.RatesByAge).Where(u => u.Id == id).FirstOrDefault();
-
-                if (l == null)
-                {
-                    throw new AppException("Insurance Company not found");
-
-
-
-                }
-                var company = new
-                {
-                    id = l.Id,
-                    name = l.Name,
-                    url = l.Url,
-                    InsurancePlans = from r in l.Covers
-                                     select new
-                                     {
-                                         r.Id,
-                                         r.Name,
-                                         AddOns = from h in r.AddOns
-                                                  select new
-                                                  {
-                                                      id = h.InsuranceAddOnsId,
-                                                      h.CoverId,
-                                                      h.InsuranceAddOns.Name,
-                                                      h.InsuranceAddOns.IndividualRate,
-                                                      h.InsuranceAddOns.CoverageSingleRate,
-                                                      h.InsuranceAddOns.CoverageCoupleRate,
-                                                      h.InsuranceAddOns.CoverageFamilyRate,
-                                                      h.InsuranceAddOns.MinimumEE,
-                                                      h.InsuranceAddOns.TypeCalculate
-                                                  }
-                                     }
-                           //l.InsurancePlans.Select(r => r.AddOns).ToList()
-                           ,
-                    InsuranceAddOns = from r in l.InsuranceAddOns
-                                      where r.DeletedAt == null
-                                      select new
-                                      {
-                                          r.Id,
-                                          r.HealthPlanId,
-                                          r.Name,
-                                          r.IndividualRate,
-                                          r.CoverageSingleRate,
-                                          r.CoverageCoupleRate,
-                                          r.CoverageFamilyRate,
-                                          r.MinimumEE,
-                                          r.TypeCalculate,
-                                          RatesByAge = (from h in r.RatesByAge
-                                                        select new { h.Age, h.Rate }).OrderBy(h => h.Age)
-                                      }
-                };
 
-                /* from r in l.InsurancePlans
-                                             select new { 
-                                                 r.Id, r.PlanName, 
-                                                 AddOns = String.Join(", ", (from h in r.AddOns 
-                                             select new { h.InsuranceAddOns.Name}).Select(h => h.Name).ToArray()) }*/
+namespace WebApi.Services {
+	public interface IHealthPlanService {
+		Task<List<HealthPlans>> GetAll();
+		IActionResult GetById(int id);
+		HealthPlans Create(HealthPlans item);
+		HealthPlans Update(HealthPlans item);
+		void Delete(HealthPlans item);
+
+		//addons
+		InsuranceAddOns GetAddOnsById(int id);
+		InsuranceAddOns CreateAddOns(InsuranceAddOns item);
+		InsuranceAddOns UpdateAddOns(InsuranceAddOns item);
+		void DeleteAddOns(InsuranceAddOns item);
+		ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream);
+		ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream);
+		IActionResult GetAllAddOns(int HealthPlanId);
+	}
+
+	public class HealthPlanService : Controller, IHealthPlanService {
+		private readonly DataContext _context;
+		private readonly AppSettings _appSettings;
+
+		public HealthPlanService(DataContext context, IOptions<AppSettings> appSettings) {
+			_context = context;
+			_appSettings = appSettings.Value;
+		}
+		public async Task<List<HealthPlans>> GetAll() {
+			var healthPlans = await _context.HealthPlans.Where(hp => hp.DeletedAt == null).ToListAsync();
+			return healthPlans;
+		}
+
+		public IActionResult GetById(int id) {
+
+			HealthPlans l = null;
+
+			try {
+
+				l = _context.HealthPlans.Include(u => u.Covers).ThenInclude(r => r.AddOns)
+					.Include(u => u.InsuranceAddOns).ThenInclude(r => r.RatesByAge).Where(u => u.Id == id).FirstOrDefault();
+
+				if (l == null) {
+					throw new AppException("Insurance Company not found");
+
+				}
+				var company = new {
+					id = l.Id,
+						name = l.Name,
+						url = l.Url,
+						InsurancePlans = from r in l.Covers
+					select new {
+						r.Id,
+							r.Name,
+							AddOns = from h in r.AddOns
+						select new {
+							id = h.InsuranceAddOnsId,
+								h.CoverId,
+								h.InsuranceAddOns.Name,
+								h.InsuranceAddOns.IndividualRate,
+								h.InsuranceAddOns.CoverageSingleRate,
+								h.InsuranceAddOns.CoverageCoupleRate,
+								h.InsuranceAddOns.CoverageFamilyRate,
+								h.InsuranceAddOns.MinimumEE,
+								h.InsuranceAddOns.TypeCalculate
+						}
+					}
+					//l.InsurancePlans.Select(r => r.AddOns).ToList()
+					,
+					InsuranceAddOns = from r in l.InsuranceAddOns
+					where r.DeletedAt == null
+					select new {
+						r.Id,
+							r.HealthPlanId,
+							r.Name,
+							r.IndividualRate,
+							r.CoverageSingleRate,
+							r.CoverageCoupleRate,
+							r.CoverageFamilyRate,
+							r.MinimumEE,
+							r.TypeCalculate,
+							RatesByAge = (from h in r.RatesByAge select new { h.Age, h.Rate }).OrderBy(h => h.Age)
+					}
+				};
+
+				/* from r in l.InsurancePlans
+				                             select new { 
+				                                 r.Id, r.PlanName, 
+				                                 AddOns = String.Join(", ", (from h in r.AddOns 
+				                             select new { h.InsuranceAddOns.Name}).Select(h => h.Name).ToArray()) }*/
+
+				return Ok(company);
+
+				//if (item != null)
+				//{
+				//    if (item.OptionalCovers != null)
+				//    { 
+				//        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
+				//    }
+
+				//}
+
+			} catch (Exception ex) {
+				throw ex;
+			}
 
-                return Ok(company);
+		}
 
-                //if (item != null)
-                //{
-                //    if (item.OptionalCovers != null)
-                //    { 
-                //        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
-                //    }
+		public HealthPlans Create(HealthPlans item) {
 
-                //}
+			String exception = string.Empty;
 
+			// validation
+			//if (item.LoginProviderId == 0)
+			//    throw new AppException("LoginProviderId is required");
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+			//if (!_context.LoginProvider.Any(lp => lp.Id == item.LoginProviderId && lp.DelFlag == false))
+			//    throw new AppException("LoginProviderId is invalid");
 
+			//if (string.IsNullOrWhiteSpace(password) && item.LoginProviderId == (int)LoginProviderEnum.Local)
+			//    throw new AppException("Password is required");
 
-        }
+			//if (string.IsNullOrWhiteSpace(item.UserName))
+			//    throw new AppException("UserName is required");
 
+			if (!ValidateRequireField(item, out exception))
+				throw new AppException(exception);
 
-        public HealthPlans Create(HealthPlans item)
-        {
+			if (_context.HealthPlans.Any(x => x.Name == item.Name))
+				throw new AppException("Company Name " + item.Name + " is already exists");
 
-            String exception = string.Empty;
+			item.CreatedAt = DateTime.Now;
+			_context.HealthPlans.Add(item);
+			_context.SaveChanges();
 
-            // validation
-            //if (item.LoginProviderId == 0)
-            //    throw new AppException("LoginProviderId is required");
+			return item;
 
-            //if (!_context.LoginProvider.Any(lp => lp.Id == item.LoginProviderId && lp.DelFlag == false))
-            //    throw new AppException("LoginProviderId is invalid");
+		}
 
-            //if (string.IsNullOrWhiteSpace(password) && item.LoginProviderId == (int)LoginProviderEnum.Local)
-            //    throw new AppException("Password is required");
+		public HealthPlans Update(HealthPlans item) {
 
-            //if (string.IsNullOrWhiteSpace(item.UserName))
-            //    throw new AppException("UserName is required");
+			String exception = string.Empty;
 
-            if (!ValidateRequireField(item, out exception))
-                throw new AppException(exception);
+			var _HealthPlans = _context.HealthPlans.Find(item.Id);
 
-            if (_context.HealthPlans.Any(x => x.Name == item.Name))
-                throw new AppException("Company Name " + item.Name + " is already exists");
+			if (_HealthPlans == null)
+				throw new AppException("Insurance Company not found");
 
-            item.CreatedAt = DateTime.Now;
-            _context.HealthPlans.Add(item);
-            _context.SaveChanges();
+			// validation
+			if (!ValidateRequireField(item, out exception))
+				throw new AppException(exception);
 
-            return item;
+			if (item.Name.ToLower() != _HealthPlans.Name.ToLower()) {
+				// Company Name has changed so check if the new Company Name is already exists
+				if (_context.HealthPlans.Any(x => x.Name == item.Name))
+					throw new AppException("Company Name " + item.Name + " is already exists");
+			}
 
-        }
+			_HealthPlans.Name = item.Name;
+			_HealthPlans.Url = item.Url;
+			_HealthPlans.DeletedAt = item.DeletedAt;
+			_HealthPlans.UpdatedAt = DateTime.Now;
 
+			_context.HealthPlans.Update(_HealthPlans);
+			_context.SaveChanges();
 
-        public HealthPlans Update(HealthPlans item)
-        {
+			return item;
 
-            String exception = string.Empty;
+		}
 
-            var _HealthPlans = _context.HealthPlans.Find(item.Id);
+		public void Delete(HealthPlans item) {
+			var _HealthPlans = _context.HealthPlans.Find(item.Id);
 
+			if (_HealthPlans != null) {
+				_HealthPlans.UpdatedAt = DateTime.Now;
+				_HealthPlans.DeletedAt = DateTime.Now;
 
-            if (_HealthPlans == null)
-                throw new AppException("Insurance Company not found");
+				_context.HealthPlans.Update(_HealthPlans);
+				_context.SaveChanges();
+			} else
+				throw new AppException("Insurance Company not found");
 
-            // validation
-            if (!ValidateRequireField(item, out exception))
-                throw new AppException(exception);
+		}
 
-            if (item.Name.ToLower() != _HealthPlans.Name.ToLower())
-            {
-                // Company Name has changed so check if the new Company Name is already exists
-                if (_context.HealthPlans.Any(x => x.Name == item.Name))
-                    throw new AppException("Company Name " + item.Name + " is already exists");
-            }
+		public IActionResult GetAllAddOns(int HealthPlanId) {
 
-            _HealthPlans.Name = item.Name;
-            _HealthPlans.Url = item.Url;
-            _HealthPlans.DeletedAt = item.DeletedAt;
-            _HealthPlans.UpdatedAt = DateTime.Now;
+			// InsuranceAddOns item = null;
+			IQueryable<InsuranceAddOns> item = null;
 
-            _context.HealthPlans.Update(_HealthPlans);
-            _context.SaveChanges();
+			try {
 
-            return item;
+				item = _context.InsuranceAddOns.Include(u => u.RatesByAge).Where(u => u.HealthPlanId == HealthPlanId && u.DeletedAt == null);
 
-        }
+				//if (item != null)
+				//{
+				//    if (item.OptionalCovers != null)
+				//    { 
+				//        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
+				//    }
 
+				//}
 
-        public void Delete(HealthPlans item)
-        {
-            var _HealthPlans = _context.HealthPlans.Find(item.Id);
+			} catch (Exception ex) {
+				throw ex;
+			}
 
-            if (_HealthPlans != null)
-            {
-                _HealthPlans.UpdatedAt = DateTime.Now;
-                _HealthPlans.DeletedAt = DateTime.Now;
+			return Ok(item);
+		}
 
-                _context.HealthPlans.Update(_HealthPlans);
-                _context.SaveChanges();
-            }
-            else
-                throw new AppException("Insurance Company not found");
+		public InsuranceAddOns GetAddOnsById(int id) {
 
-        }
+			InsuranceAddOns item = null;
 
+			try {
 
+				item = _context.InsuranceAddOns.Include(u => u.RatesByAge).Where(u => u.Id == id).FirstOrDefault();
 
+				//if (item != null)
+				//{
+				//    if (item.OptionalCovers != null)
+				//    { 
+				//        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
+				//    }
 
-        public IActionResult GetAllAddOns(int HealthPlanId)
-        {
+				//}
 
-            // InsuranceAddOns item = null;
-            IQueryable<InsuranceAddOns> item = null;
+			} catch (Exception ex) {
+				throw ex;
+			}
 
-            try
-            {
+			return item;
+		}
 
-                item = _context.InsuranceAddOns.Include(u => u.RatesByAge).Where(u => u.HealthPlanId == HealthPlanId && u.DeletedAt == null);
+		public InsuranceAddOns CreateAddOns(InsuranceAddOns item) {
 
-                //if (item != null)
-                //{
-                //    if (item.OptionalCovers != null)
-                //    { 
-                //        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
-                //    }
+			//var OptionalCover = _context.OptionalCover.Find(item.OptionalCoverId);
 
-                //}
+			if (string.IsNullOrWhiteSpace(item.Name)) {
+				throw new AppException("AddOns name is required!");
+				//throw new AppException("LoginProviderId is required");
+			}
+			if (item.TypeCalculate <= 0) {
+				throw new AppException("Type calculate is required!");
+				//throw new AppException("LoginProviderId is required");
+			}
 
+			if (!_context.HealthPlans.Any(u => u.Id == item.HealthPlanId))
+				throw new AppException("Insurance Company not found");
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+			if (_context.InsuranceAddOns.Any(r => r.HealthPlanId == item.HealthPlanId && r.Name == item.Name)) {
 
+				throw new AppException("AddOns " + item.Name + " is already exists");
 
-            return Ok(item);
-        }
+			} else {
+				item.CreatedAt = DateTime.Now;
+				_context.InsuranceAddOns.Add(item);
+			}
 
+			_context.SaveChanges();
 
+			return item;
 
-        public InsuranceAddOns GetAddOnsById(int id)
-        {
+		}
 
-            InsuranceAddOns item = null;
+		public InsuranceAddOns UpdateAddOns(InsuranceAddOns item) {
 
-            try
-            {
+			var _AddOns = _context.InsuranceAddOns.Find(item.Id);
 
-                item = _context.InsuranceAddOns.Include(u => u.RatesByAge).Where(u => u.Id == id).FirstOrDefault();
+			if (_AddOns == null)
+				throw new AppException("AddOns not found");
 
-                //if (item != null)
-                //{
-                //    if (item.OptionalCovers != null)
-                //    { 
-                //        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
-                //    }
+			if (string.IsNullOrWhiteSpace(item.Name)) {
+				throw new AppException("AddOns name is required!");
+				//throw new AppException("LoginProviderId is required");
+			}
+			if (item.TypeCalculate <= 0) {
+				throw new AppException("Type calculate is required!");
+				//throw new AppException("LoginProviderId is required");
+			}
 
-                //}
+			if (!_context.HealthPlans.Any(u => u.Id == item.HealthPlanId))
+				throw new AppException("Insurance Company not found");
 
+			if (item.Name.ToLower() != _AddOns.Name.ToLower()) {
+				if (_context.InsuranceAddOns.Any(r => r.HealthPlanId == item.HealthPlanId && r.Name == item.Name)) {
+					throw new AppException("AddOns " + item.Name + " is already exists");
+				}
+			}
 
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+			_AddOns.Name = item.Name;
+			//_AddOns.Age = item.Age;
+			_AddOns.IndividualRate = item.IndividualRate;
+			_AddOns.CoverageSingleRate = item.CoverageSingleRate;
+			_AddOns.CoverageCoupleRate = item.CoverageCoupleRate;
+			_AddOns.CoverageFamilyRate = item.CoverageFamilyRate;
+			_AddOns.MinimumEE = item.MinimumEE;
+			_AddOns.TypeCalculate = item.TypeCalculate;
 
+			_AddOns.UpdatedAt = DateTime.Now;
 
-            return item;
-        }
+			_context.InsuranceAddOns.Update(_AddOns);
 
-        public InsuranceAddOns CreateAddOns(InsuranceAddOns item)
-        {
+			_context.SaveChanges();
 
-            //var OptionalCover = _context.OptionalCover.Find(item.OptionalCoverId);
+			return item;
 
+		}
 
-            if (string.IsNullOrWhiteSpace(item.Name))
-            {
-                throw new AppException("AddOns name is required!");
-                //throw new AppException("LoginProviderId is required");
-            }
-            if (item.TypeCalculate <= 0)
-            {
-                throw new AppException("Type calculate is required!");
-                //throw new AppException("LoginProviderId is required");
-            }
+		public void DeleteAddOns(InsuranceAddOns item) {
+			var _AddOns = _context.InsuranceAddOns.Find(item.Id);
 
-            if (!_context.HealthPlans.Any(u => u.Id == item.HealthPlanId))
-                throw new AppException("Insurance Company not found");
+			if (_AddOns != null) {
 
+				_AddOns.UpdatedAt = DateTime.Now;
+				_AddOns.DeletedAt = DateTime.Now;
 
-            if (_context.InsuranceAddOns.Any(r => r.HealthPlanId == item.HealthPlanId && r.Name == item.Name))
-            {
+				//var EstimateAddOns = _context.InsuranceEstimateAddOns.Where(r => r.InsuranceAddOnsId == _AddOns.Id);
 
-                throw new AppException("AddOns " + item.Name + " is already exists");
+				//if (EstimateAddOns != null)
+				//{
+				//    _context.InsuranceEstimateAddOns.RemoveRange(EstimateAddOns);
+				//    _context.SaveChanges();
+				//}
 
-            }
-            else
-            {
-                item.CreatedAt = DateTime.Now;
-                _context.InsuranceAddOns.Add(item);
-            }
+				var PlanAddons = _context.InsurancePlanAddOns.Where(r => r.InsuranceAddOnsId == _AddOns.Id);
 
+				if (PlanAddons != null) {
+					_context.InsurancePlanAddOns.RemoveRange(PlanAddons);
+					_context.SaveChanges();
+				}
 
-            _context.SaveChanges();
+				var AddOnsRateAge = _context.InsuranceAddOnsRateAge.Where(r => r.InsuranceAddOnsId == _AddOns.Id);
 
-            return item;
+				if (AddOnsRateAge != null) {
+					_context.InsuranceAddOnsRateAge.RemoveRange(AddOnsRateAge);
+					_context.SaveChanges();
+				}
 
-        }
+				_context.InsuranceAddOns.Update(_AddOns);
+				_context.SaveChanges();
 
-        public InsuranceAddOns UpdateAddOns(InsuranceAddOns item)
-        {
+			} else
+				throw new AppException("Insurance Company not found");
 
-            var _AddOns = _context.InsuranceAddOns.Find(item.Id);
+		}
 
-            if (_AddOns == null)
-                throw new AppException("AddOns not found");
+		public ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream) {
 
+			try {
 
-            if (string.IsNullOrWhiteSpace(item.Name))
-            {
-                throw new AppException("AddOns name is required!");
-                //throw new AppException("LoginProviderId is required");
-            }
-            if (item.TypeCalculate <= 0)
-            {
-                throw new AppException("Type calculate is required!");
-                //throw new AppException("LoginProviderId is required");
-            }
+				// ICollection<InsuranceRate> list = null;
+				var list = new List<InsuranceAddOnsRateAge>();
 
-            if (!_context.HealthPlans.Any(u => u.Id == item.HealthPlanId))
-                throw new AppException("Insurance Company not found");
+				using(var package = new ExcelPackage(stream)) {
+					ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+					var rowCount = worksheet.Dimension.Rows;
 
-            if (item.Name.ToLower() != _AddOns.Name.ToLower())
-            {
-                if (_context.InsuranceAddOns.Any(r => r.HealthPlanId == item.HealthPlanId && r.Name == item.Name))
-                {
-                    throw new AppException("AddOns " + item.Name + " is already exists");
-                }
-            }
+					for (int row = 2; row <= rowCount; row++) {
 
-            _AddOns.Name = item.Name;
-            //_AddOns.Age = item.Age;
-            _AddOns.IndividualRate = item.IndividualRate;
-            _AddOns.CoverageSingleRate = item.CoverageSingleRate;
-            _AddOns.CoverageCoupleRate = item.CoverageCoupleRate;
-            _AddOns.CoverageFamilyRate = item.CoverageFamilyRate;
-            _AddOns.MinimumEE = item.MinimumEE;
-            _AddOns.TypeCalculate = item.TypeCalculate;
+						InsuranceAddOns _AddOns = new InsuranceAddOns();
+						_AddOns = _context.InsuranceAddOns.Where(u => u.Name == worksheet.Cells[row, 3].Value.ToString()).FirstOrDefault();
 
-            _AddOns.UpdatedAt = DateTime.Now;
+						if (_AddOns == null) {
 
+							_AddOns = new InsuranceAddOns();
+							_AddOns.Name = worksheet.Cells[row, 3].Value.ToString();
+							//_AddOns.Age = item.Age;
+							_AddOns.IndividualRate = 0;
+							_AddOns.CoverageSingleRate = 0;
+							_AddOns.CoverageCoupleRate = 0;
+							_AddOns.CoverageFamilyRate = 0;
+							_AddOns.MinimumEE = 0;
+							_AddOns.TypeCalculate = 4;
+							_AddOns.HealthPlanId = InsuranceCompanyId;
 
-            _context.InsuranceAddOns.Update(_AddOns);
+							_AddOns.CreatedAt = DateTime.Now;
 
-            _context.SaveChanges();
+							_context.InsuranceAddOns.Add(_AddOns);
 
-            return item;
+							_context.SaveChanges();
 
-        }
+						}
+						int Age = 0;
 
+						string s = worksheet.Cells[row, 1].Value.ToString().Trim();
+						int index = s.IndexOf('-');
 
-        public void DeleteAddOns(InsuranceAddOns item)
-        {
-            var _AddOns = _context.InsuranceAddOns.Find(item.Id);
+						if (index == -1) {
+							index = s.IndexOf('+');
 
-            if (_AddOns != null)
-            {
+							if (index == -1) {
 
-                _AddOns.UpdatedAt = DateTime.Now;
-                _AddOns.DeletedAt = DateTime.Now;
+								Age = int.Parse(worksheet.Cells[row, 1].Value.ToString().Trim());
+								list.Add(new InsuranceAddOnsRateAge {
+									InsuranceAddOnsId = _AddOns.Id,
+										Age = Age,
+										Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
 
+								});
+							} else {
+								string InitialAge = s.Substring(0, index);
 
-                //var EstimateAddOns = _context.InsuranceEstimateAddOns.Where(r => r.InsuranceAddOnsId == _AddOns.Id);
+								for (int i = int.Parse(InitialAge); i < 100 + 1; i++) {
+									list.Add(new InsuranceAddOnsRateAge {
+										InsuranceAddOnsId = _AddOns.Id,
+											Age = i,
+											Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
 
-                //if (EstimateAddOns != null)
-                //{
-                //    _context.InsuranceEstimateAddOns.RemoveRange(EstimateAddOns);
-                //    _context.SaveChanges();
-                //}
+									});
+								}
 
-                var PlanAddons = _context.InsurancePlanAddOns.Where(r => r.InsuranceAddOnsId == _AddOns.Id);
+							}
+						} else {
+							string InitialAge = s.Substring(0, index);
+							string FinalAge = s.Substring(index + 1);
 
-                if (PlanAddons != null)
-                {
-                    _context.InsurancePlanAddOns.RemoveRange(PlanAddons);
-                    _context.SaveChanges();
-                }
+							for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++) {
+								list.Add(new InsuranceAddOnsRateAge {
+									InsuranceAddOnsId = _AddOns.Id,
+										Age = i,
+										Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
 
-                var AddOnsRateAge = _context.InsuranceAddOnsRateAge.Where(r => r.InsuranceAddOnsId == _AddOns.Id);
+								});
+							}
 
-                if (AddOnsRateAge != null)
-                {
-                    _context.InsuranceAddOnsRateAge.RemoveRange(AddOnsRateAge);
-                    _context.SaveChanges();
-                }
+						}
 
-                _context.InsuranceAddOns.Update(_AddOns);
-                _context.SaveChanges();
+						var ActualRate = _context.InsuranceAddOnsRateAge.Where(r => r.InsuranceAddOnsId == _AddOns.Id).AsQueryable();
 
-            }
-            else
-                throw new AppException("Insurance Company not found");
+						if (ActualRate != null) {
+							_context.InsuranceAddOnsRateAge.RemoveRange(ActualRate);
+						}
+					}
 
-        }
+					_context.InsuranceAddOnsRateAge.AddRange(list);
+					_context.SaveChanges();
 
+				}
 
-        public ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream)
-        {
+				return list;
+			} catch (Exception ex) {
+				throw ex;
+			}
 
-            try
-            {
+		}
 
-                // ICollection<InsuranceRate> list = null;
-                var list = new List<InsuranceAddOnsRateAge>();
+		public ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream) {
 
-                using (var package = new ExcelPackage(stream))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                    var rowCount = worksheet.Dimension.Rows;
+			try {
 
-                    for (int row = 2; row <= rowCount; row++)
-                    {
+				// ICollection<InsuranceRate> list = null;
+				var list = new List<InsuranceAddOnsRateAge>();
 
+				using(var package = new ExcelPackage(stream)) {
+					ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+					var rowCount = worksheet.Dimension.Rows;
 
-                        InsuranceAddOns _AddOns = new InsuranceAddOns();
-                        _AddOns = _context.InsuranceAddOns.Where(u => u.Name == worksheet.Cells[row, 3].Value.ToString()).FirstOrDefault();
+					for (int row = 2; row <= rowCount; row++) {
 
-                        if (_AddOns == null)
-                        {
+						InsuranceAddOns _AddOns = new InsuranceAddOns();
+						_AddOns = _context.InsuranceAddOns.Find(id);
 
-                            _AddOns = new InsuranceAddOns();
-                            _AddOns.Name = worksheet.Cells[row, 3].Value.ToString();
-                            //_AddOns.Age = item.Age;
-                            _AddOns.IndividualRate = 0;
-                            _AddOns.CoverageSingleRate = 0;
-                            _AddOns.CoverageCoupleRate = 0;
-                            _AddOns.CoverageFamilyRate = 0;
-                            _AddOns.MinimumEE = 0;
-                            _AddOns.TypeCalculate = 4;
-                            _AddOns.HealthPlanId = InsuranceCompanyId;
+						if (_AddOns == null || InsuranceCompanyId == 0) {
+							throw new AppException("AddOns not found");
 
-                            _AddOns.CreatedAt = DateTime.Now;
+						}
+						int Age = 0;
 
+						string s = worksheet.Cells[row, 1].Value.ToString().Trim();
+						int index = s.IndexOf('-');
 
-                            _context.InsuranceAddOns.Add(_AddOns);
+						if (index == -1) {
+							index = s.IndexOf('+');
 
-                            _context.SaveChanges();
+							if (index == -1) {
 
-                        }
-                        int Age = 0;
+								Age = int.Parse(worksheet.Cells[row, 1].Value.ToString().Trim());
+								list.Add(new InsuranceAddOnsRateAge {
+									InsuranceAddOnsId = _AddOns.Id,
+										Age = Age,
+										Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
 
+								});
+							} else {
+								string InitialAge = s.Substring(0, index);
 
-                        string s = worksheet.Cells[row, 1].Value.ToString().Trim();
-                        int index = s.IndexOf('-');
+								for (int i = int.Parse(InitialAge); i < 100 + 1; i++) {
+									list.Add(new InsuranceAddOnsRateAge {
+										InsuranceAddOnsId = _AddOns.Id,
+											Age = i,
+											Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
 
-                        if (index == -1)
-                        {
-                            index = s.IndexOf('+');
+									});
+								}
 
-                            if (index == -1)
-                            {
+							}
+						} else {
+							string InitialAge = s.Substring(0, index);
+							string FinalAge = s.Substring(index + 1);
 
+							for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++) {
+								list.Add(new InsuranceAddOnsRateAge {
+									InsuranceAddOnsId = _AddOns.Id,
+										Age = i,
+										Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
 
-                                Age = int.Parse(worksheet.Cells[row, 1].Value.ToString().Trim());
-                                list.Add(new InsuranceAddOnsRateAge
-                                {
-                                    InsuranceAddOnsId = _AddOns.Id,
-                                    Age = Age,
-                                    Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
+								});
+							}
 
-                                });
-                            }
-                            else
-                            {
-                                string InitialAge = s.Substring(0, index);
+						}
 
-                                for (int i = int.Parse(InitialAge); i < 100 + 1; i++)
-                                {
-                                    list.Add(new InsuranceAddOnsRateAge
-                                    {
-                                        InsuranceAddOnsId = _AddOns.Id,
-                                        Age = i,
-                                        Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
+						var ActualRate = _context.InsuranceAddOnsRateAge.Where(r => r.InsuranceAddOnsId == _AddOns.Id).AsQueryable();
 
-                                    });
-                                }
+						if (ActualRate != null) {
+							_context.InsuranceAddOnsRateAge.RemoveRange(ActualRate);
+						}
+					}
 
-                            }
-                        }
-                        else
-                        {
-                            string InitialAge = s.Substring(0, index);
-                            string FinalAge = s.Substring(index + 1);
+					_context.InsuranceAddOnsRateAge.AddRange(list);
+					_context.SaveChanges();
 
-                            for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++)
-                            {
-                                list.Add(new InsuranceAddOnsRateAge
-                                {
-                                    InsuranceAddOnsId = _AddOns.Id,
-                                    Age = i,
-                                    Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
+				}
 
-                                });
-                            }
+				return list;
+			} catch (Exception ex) {
+				throw ex;
+			}
 
-                        }
+		}
 
-                        var ActualRate = _context.InsuranceAddOnsRateAge.Where(r => r.InsuranceAddOnsId == _AddOns.Id).AsQueryable();
+		private Boolean ValidateRequireField(HealthPlans item, out String exception) {
 
-                        if (ActualRate != null)
-                        {
-                            _context.InsuranceAddOnsRateAge.RemoveRange(ActualRate);
-                        }
-                    }
+			exception = string.Empty;
 
-                    _context.InsuranceAddOnsRateAge.AddRange(list);
-                    _context.SaveChanges();
+			// validation
+			if (string.IsNullOrWhiteSpace(item.Name)) {
+				exception = "Company Name is required";
+				return false;
+				//throw new AppException("LoginProviderId is required");
+			}
 
-                }
+			return true;
 
-                return list;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+		}
 
-        }
-
-
-        public ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream)
-        {
-
-            try
-            {
-
-                // ICollection<InsuranceRate> list = null;
-                var list = new List<InsuranceAddOnsRateAge>();
-
-                using (var package = new ExcelPackage(stream))
-                {
-                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-                    var rowCount = worksheet.Dimension.Rows;
-
-                    for (int row = 2; row <= rowCount; row++)
-                    {
-
-
-                        InsuranceAddOns _AddOns = new InsuranceAddOns();
-                        _AddOns = _context.InsuranceAddOns.Find(id);
-
-                        if (_AddOns == null || InsuranceCompanyId == 0)
-                        {
-                            throw new AppException("AddOns not found");
-
-                        }
-                        int Age = 0;
-
-
-                        string s = worksheet.Cells[row, 1].Value.ToString().Trim();
-                        int index = s.IndexOf('-');
-
-                        if (index == -1)
-                        {
-                            index = s.IndexOf('+');
-
-                            if (index == -1)
-                            {
-
-
-                                Age = int.Parse(worksheet.Cells[row, 1].Value.ToString().Trim());
-                                list.Add(new InsuranceAddOnsRateAge
-                                {
-                                    InsuranceAddOnsId = _AddOns.Id,
-                                    Age = Age,
-                                    Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
-
-                                });
-                            }
-                            else
-                            {
-                                string InitialAge = s.Substring(0, index);
-
-                                for (int i = int.Parse(InitialAge); i < 100 + 1; i++)
-                                {
-                                    list.Add(new InsuranceAddOnsRateAge
-                                    {
-                                        InsuranceAddOnsId = _AddOns.Id,
-                                        Age = i,
-                                        Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
-
-                                    });
-                                }
-
-                            }
-                        }
-                        else
-                        {
-                            string InitialAge = s.Substring(0, index);
-                            string FinalAge = s.Substring(index + 1);
-
-                            for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++)
-                            {
-                                list.Add(new InsuranceAddOnsRateAge
-                                {
-                                    InsuranceAddOnsId = _AddOns.Id,
-                                    Age = i,
-                                    Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
-
-                                });
-                            }
-
-                        }
-
-                        var ActualRate = _context.InsuranceAddOnsRateAge.Where(r => r.InsuranceAddOnsId == _AddOns.Id).AsQueryable();
-
-                        if (ActualRate != null)
-                        {
-                            _context.InsuranceAddOnsRateAge.RemoveRange(ActualRate);
-                        }
-                    }
-
-                    _context.InsuranceAddOnsRateAge.AddRange(list);
-                    _context.SaveChanges();
-
-                }
-
-                return list;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-        }
-
-
-
-        private Boolean ValidateRequireField(HealthPlans item, out String exception)
-        {
-
-            exception = string.Empty;
-
-            // validation
-            if (string.IsNullOrWhiteSpace(item.Name))
-            {
-                exception = "Company Name is required";
-                return false;
-                //throw new AppException("LoginProviderId is required");
-            }
-
-
-            return true;
-
-        }
-
-
-
-    }
+	}
 }
