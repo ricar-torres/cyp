@@ -111,7 +111,7 @@ export class AllianceListComponent implements OnInit {
     const dialogRef = this.dialog.open(AllianceWizardComponent, {
       width: '70%',
       height: '70%',
-      data: { clientId: this.clientId, bonafideId: null },
+      data: { clientid: this.clientId },
     });
     dialogRef.afterClosed().subscribe((result) => {});
   }

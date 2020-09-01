@@ -34,6 +34,12 @@ export class AlliancesService {
     return this.http.get(`${environment.baseURL}/Alliance/${id}`).toPromise();
   }
 
+  AlianceRequest(request) {
+    return this.http.get(`${environment.baseURL}/Alliance/AlianceRequest`, {
+      params: request,
+    });
+  }
+
   update(alliance: any) {
     return this.http
       .put(`${environment.baseURL}/Alliance/${alliance.Id}`, alliance)

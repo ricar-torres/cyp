@@ -137,5 +137,22 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("AlianceRequest")]
+    public async Task<IActionResult> AlianceRequest([FromQuery] AlianceRequestDto payload)
+    {
+      try
+      {
+        var availableHP = await _service.AvailableHealthPlansForClient(payload);
+        return Ok(availableHP);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
   }
 }

@@ -18,6 +18,7 @@ namespace WebApi.Services
     Alianzas Create(Alianzas payload);
     Alianzas Update(Alianzas payload);
     void Delete(int id);
+    Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
   }
 
   public class AllianceService : IAllianceService
@@ -30,6 +31,37 @@ namespace WebApi.Services
     {
       _context = context;
       _appSettings = appSettings.Value;
+    }
+
+    public async Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload)
+    {
+      var healthPlanList = new List<HealthPlans>();
+      Func<string, Task<List<HealthPlans>>> getHP = async type =>
+        await (from hp in _context.HealthPlans
+               join cv in _context.Covers on hp.Id equals cv.HealthPlanId
+               where (type.Contains(cv.Type) || cv.Type == null) && cv.Alianza == true
+               select hp).Distinct().ToListAsync();
+      var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == payload.ClientId);
+      //calculate client age
+      DateTime dob = client.BirthDate.GetValueOrDefault();
+      DateTime PresentYear = DateTime.Now;
+      TimeSpan ts = PresentYear - dob;
+      int years = (new DateTime() + ts).Year - 1;
+      //getting informationbased on client age
+      if (payload.QualifyingEvetId != 0)
+      {
+        healthPlanList = await getHP("+65 -65");
+      }
+      else if (years > 65)
+      {
+        healthPlanList = await getHP("+65");
+      }
+      else
+      {
+        healthPlanList = await getHP("-65");
+      }
+
+      return healthPlanList;
     }
 
     public Alianzas Create(Alianzas payload)
