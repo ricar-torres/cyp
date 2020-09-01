@@ -130,6 +130,17 @@ namespace WebApi.Helpers {
 
 				#endregion
 
+				#region Products
+
+				var products = JsonConvert.DeserializeObject<List<Products>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "products.json"));
+				products = products.Where(x => !context.Products.Any(y => y.Id == x.Id)).ToList();
+				context.AddRange(products);
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.products ON");
+				context.SaveChanges();
+				_ = context.Database.ExecuteSqlRaw("SET IDENTITY_INSERT dbo.products OFF");
+
+				#endregion
+
 				#region TypeOfRelationship
 
 				var typeOfRelationships = JsonConvert.DeserializeObject<List<TypeOfRelationship>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "types_relationship.json"));
