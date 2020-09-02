@@ -153,5 +153,24 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("client/{clientid}/iselegible")]
+    public async Task<IActionResult> ValidateClient(int clientid)
+    {
+      try
+      {
+        var reasons = await _service.IsElegible(clientid);
+        return Ok(reasons);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+
   }
 }

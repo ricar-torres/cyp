@@ -95,7 +95,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     });
 
     this.affiliationMethod = this._formBuilder.group({
-      affiliationMethod: [null],
+      affiliationMethod: [2],
       qualifyingEvent: [null],
     });
 
@@ -148,8 +148,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   }
 
   async submitAliance() {
-    var baneficiariesList = [];
-    this.BeneficiariesList.forEach((itm) => baneficiariesList.push(itm.value));
     await this.AlianceService.create({
       //Id: null, //new item
       //ClientProductId: null, //create item in table with this name to fill with the created id this field
@@ -163,8 +161,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       AffStatus: null,
       AffFlag: null,
       Coordination: null,
-      LifeInsurance: null,
-      MajorMedical: null,
+      //LifeInsurance: null, //will be moved to other table
+      //MajorMedical: null, //will be moved to other table
       Prima: null,
       CreatedAt: null,
       UpdatedAt: null,
@@ -174,8 +172,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       LifeInsuranceAmount: null,
       MajorMedicalAmount: null,
       SubTotal: null,
-      Beneficiaries: baneficiariesList,
-      clientId: this.data.clientid,
+      Beneficiaries: null,
     }).then(() => {
       this.dialogRef.close();
     });

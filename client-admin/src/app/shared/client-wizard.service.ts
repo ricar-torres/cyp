@@ -61,7 +61,10 @@ export class ClientWizardService {
         Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ],
     ],
-    Ssn: [null, [Validators.required]],
+    Ssn: [
+      null,
+      [Validators.required, Validators.minLength(4), Validators.maxLength(9)],
+    ],
     Gender: [null, [Validators.required]],
     BirthDate: [{ value: null, disabled: true }, [Validators.required]],
     MaritalStatus: [null],

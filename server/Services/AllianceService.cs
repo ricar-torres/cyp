@@ -19,6 +19,7 @@ namespace WebApi.Services
     Alianzas Update(Alianzas payload);
     void Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
+    Task<List<string>> IsElegible(int clientid);
   }
 
   public class AllianceService : IAllianceService
@@ -71,16 +72,21 @@ namespace WebApi.Services
         ProductId = 1,
         Status = 0
       };
-      //create produc to receive a product id and store
-      //it in the aliance
       await _context.ClientProduct.AddAsync(clientProduct);
       await _context.SaveChangesAsync();
 
+      // creating actual aliance
       var alianza = new Alianzas()
       {
-        ClientProductId = payload.ClientProductId.GetValueOrDefault(),
-        CoverId = payload.CoverId.GetValueOrDefault()
+        ClientProductId = clientProduct.Id,
+        CoverId = payload.CoverId.GetValueOrDefault(),
+        CreatedAt = DateTime.Now,
+        UpdatedAt = DateTime.Now,
+        EndDate = DateTime.Now.AddYears(1)
       };
+
+      await _context.Alianzas.AddRangeAsync(alianza);
+      await _context.SaveChangesAsync();
 
       return alianza;
     }
@@ -119,6 +125,40 @@ namespace WebApi.Services
     public Alianzas GetById(int id)
     {
       throw new NotImplementedException();
+    }
+
+    public async Task<List<string>> IsElegible(int clientid)
+    {
+      var declineList = new List<string>();
+      var client = await _context.Clients.Include(c => c.ChapterClient).FirstOrDefaultAsync(x => x.Id == clientid);
+      if (client != null)
+      {
+
+        if (client.Ssn == null || (client.Ssn != null && client?.Ssn?.Length == 4))
+        {
+          declineList.Add("SSNNOTCOMPLETE");
+        }
+
+        if (client.BirthDate == null)
+        {
+          declineList.Add("MISSINGDOB");
+        }
+
+        if (client.ChapterClient.FirstOrDefault() == null)
+        {
+          declineList.Add("MISSINGBONAFIDES");
+        }
+
+      }
+      else
+      {
+        throw new Exception("No client with provided Id");
+      }
+
+      if (declineList.FirstOrDefault() != null)
+        return declineList;
+      return null;
+
     }
 
     public Alianzas Update(Alianzas payload)

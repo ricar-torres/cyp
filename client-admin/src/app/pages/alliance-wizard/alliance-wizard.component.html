@@ -24,7 +24,9 @@
             'ALLIANCEWIZARD.RENOVATIONAFILIATION' | translate
           }}</mat-radio-button>
         </mat-radio-group>
-        <mat-form-field>
+        <mat-form-field
+          *ngIf="affiliationMethod.get('affiliationMethod').value == 1"
+        >
           <mat-label>{{
             'ALLIANCEWIZARD.QUALIFYINGEVENT' | translate
           }}</mat-label>
