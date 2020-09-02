@@ -12,6 +12,7 @@ namespace WebApi.Entities
         public InsuranceAddOns()
         {
             RatesByAge = new HashSet<InsuranceAddOnsRateAge>();
+            AlianzaAddOns = new HashSet<AlianzaAddOns>();
         }
 
         [Column(Order = 1)]
@@ -52,6 +53,8 @@ namespace WebApi.Entities
         public HealthPlans HealthPlans { get; set; }
 
         public ICollection<InsuranceAddOnsRateAge> RatesByAge { get; set; }
+
+        public virtual ICollection<AlianzaAddOns> AlianzaAddOns { get; set; }
 
 
     }
