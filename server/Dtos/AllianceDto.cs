@@ -40,6 +40,7 @@ namespace server.Dtos
       this.QualifyingEvent = Alianza.QualifyingEvent;
       this.ClientUser = Alianza.ClientUser;
     }
+    public int? ClientId { get; set; }
     public new int? Id { get; set; }
     public new int? ClientProductId { get; set; }
     public new int? QualifyingEventId { get; set; }

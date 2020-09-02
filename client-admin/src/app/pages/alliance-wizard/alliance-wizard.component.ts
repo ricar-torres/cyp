@@ -148,6 +148,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   }
 
   async submitAliance() {
+    var baneficiariesList = [];
+    this.BeneficiariesList.forEach((itm) => baneficiariesList.push(itm.value));
     await this.AlianceService.create({
       //Id: null, //new item
       //ClientProductId: null, //create item in table with this name to fill with the created id this field
@@ -172,7 +174,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       LifeInsuranceAmount: null,
       MajorMedicalAmount: null,
       SubTotal: null,
-      Beneficiaries: null,
+      Beneficiaries: baneficiariesList,
+      clientId: this.data.clientid,
     }).then(() => {
       this.dialogRef.close();
     });

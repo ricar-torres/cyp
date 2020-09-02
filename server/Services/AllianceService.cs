@@ -62,7 +62,27 @@ namespace WebApi.Services
 
     public async Task<Alianzas> Create(AllianceDto payload)
     {
-      throw new NotImplementedException();
+      //adding productclient to fill required field in aliance
+      var clientProduct = new ClientProduct()
+      {
+        ClientId = payload.ClientId.GetValueOrDefault(),
+        CreatedAt = DateTime.Now,
+        UpdatedAt = DateTime.Now,
+        ProductId = 1,
+        Status = 0
+      };
+      //create produc to receive a product id and store
+      //it in the aliance
+      await _context.ClientProduct.AddAsync(clientProduct);
+      await _context.SaveChangesAsync();
+
+      var alianza = new Alianzas()
+      {
+        ClientProductId = payload.ClientProductId.GetValueOrDefault(),
+        CoverId = payload.CoverId.GetValueOrDefault()
+      };
+
+      return alianza;
     }
 
     public void Delete(int id)
