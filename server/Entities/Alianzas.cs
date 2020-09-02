@@ -9,6 +9,7 @@ namespace WebApi.Entities
         {
             Beneficiaries = new HashSet<Beneficiaries>();
             ClientUser = new HashSet<ClientUser>();
+            AlianzaAddOns = new HashSet<AlianzaAddOns>();
         }
 
         public int Id { get; set; }
@@ -40,5 +41,6 @@ namespace WebApi.Entities
         public virtual QualifyingEvents QualifyingEvent { get; set; }
         public virtual ICollection<Beneficiaries> Beneficiaries { get; set; }
         public virtual ICollection<ClientUser> ClientUser { get; set; }
+        public virtual ICollection<AlianzaAddOns> AlianzaAddOns { get; set; }
     }
 }
