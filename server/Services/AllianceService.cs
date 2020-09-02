@@ -63,6 +63,9 @@ namespace WebApi.Services
 
     public async Task<Alianzas> Create(AllianceDto payload)
     {
+      var afftype = 1;
+      //setting aff type
+      afftype = await defineAfftype(payload, afftype);
       //adding productclient to fill required field in aliance
       var clientProduct = new ClientProduct()
       {
@@ -81,7 +84,7 @@ namespace WebApi.Services
         ClientProductId = clientProduct.Id,
         QualifyingEventId = payload.QualifyingEventId == null ? 1 : payload.QualifyingEventId.Value,
         CoverId = payload.CoverId.GetValueOrDefault(),
-        AffType = 1,
+        AffType = (byte?)afftype,
         AffStatus = 1,
         CreatedAt = DateTime.Now,
         UpdatedAt = DateTime.Now,
@@ -107,6 +110,35 @@ namespace WebApi.Services
       await _context.SaveChangesAsync();
 
       return alianza;
+    }
+
+    private async Task<int> defineAfftype(AllianceDto payload, int afftype)
+    {
+      var lastAliance = await _context.ClientProduct
+      .Join(_context.Alianzas.Include(x => x.Cover).ThenInclude(s => s.HealthPlan)
+      , c => c.Id,
+      a => a.ClientProductId,
+      (c, a) => a).FirstOrDefaultAsync(s => s.ClientProduct.ClientId == payload.ClientId);
+      var newPlan = _context.Covers.Include(x => x.HealthPlan).FirstOrDefaultAsync(x => x.Id == payload.CoverId);
+
+
+      if (lastAliance?.Cover?.HealthPlan?.Id == null)
+      {
+        afftype = 1;
+      }
+      else if (lastAliance?.Cover?.HealthPlan?.Id == newPlan.Id)
+      {
+        if (lastAliance?.Cover?.Id == payload.CoverId)
+          afftype = 3;
+        else
+          afftype = 2;
+      }
+      else if (lastAliance?.Cover?.HealthPlan?.Id != newPlan.Id)
+      {
+        afftype = 6;
+      }
+
+      return afftype;
     }
 
     public void Delete(int id)
