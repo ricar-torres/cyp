@@ -16,9 +16,11 @@ import {
   MatSnackBar,
   MatDialogRef,
   MAT_DIALOG_DATA,
+  MatSelectChange,
 } from '@angular/material';
 import * as Swal from 'sweetalert2';
 import { AlliancesService } from '@app/shared/alliances.service';
+import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 
 @Component({
   selector: 'app-alliance-wizard',
@@ -41,14 +43,19 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   affiliationMethod: FormGroup;
   benefits: FormGroup;
   finalFormGroup: FormGroup;
-  percentageDependent: FormGroup[] = [];
+  BeneficiariesList: FormGroup[] = [];
   healthPlans: any = [];
   covers: any = [];
 
   qualifyingEvents: [] = [];
   @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('beneficiaries')
+  beneficiaries: BeneficiariesBenefitDistributionComponent;
 
   typesOfRelation: any;
+  availableAddons: any;
+
+  dependantsEnabled = false;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -58,6 +65,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     private DependantsServices: DependantsAPIService,
     private _snackBar: MatSnackBar,
     public dialogRef: MatDialogRef<AllianceWizardComponent>,
+    private halthPanService: HealthPlanService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   ngAfterViewInit(): void {
@@ -100,7 +108,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
 
     this.benefits = this._formBuilder.group({
       HealthPlan: [null],
-      Addititons: [null],
+      cover: [null],
     });
 
     this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
@@ -112,15 +120,64 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
 
   checkPercent() {
     var percentage: number = 0;
-    this.percentageDependent.forEach((x) => {
-      percentage += Number.parseFloat(x.get('percent').value);
-    });
-    //console.log(percentage);
-    if (percentage == 100) this.stepper.next();
-    else
-      this.percentageDependent.forEach((x) => {
-        x.get('percent').markAsDirty();
-        x.get('percent').setErrors({ BadPercentage: true });
+    if (
+      this.beneficiaries &&
+      this.beneficiaries.dependantsEnabled &&
+      this.beneficiaries.dependantsEnabled.checked
+    ) {
+      //debugger;
+      this.BeneficiariesList.forEach((x) => {
+        percentage += Number.parseFloat(x.get('percent').value);
       });
+      console.log(percentage);
+      if (percentage == 100) this.stepper.next();
+      else
+        this.BeneficiariesList.forEach((x) => {
+          x.get('percent').markAsDirty();
+          x.get('percent').setErrors({ BadPercentage: true });
+        });
+    } else {
+      this.stepper.next();
+    }
+  }
+
+  planChanged(event: MatSelectChange) {
+    this.halthPanService.GetAllAddOns(event.value).subscribe((res) => {
+      this.availableAddons = res;
+    });
+  }
+
+  async submitAliance() {
+    var baneficiariesList = [];
+    this.BeneficiariesList.forEach((itm) => baneficiariesList.push(itm.value));
+    await this.AlianceService.create({
+      //Id: null, //new item
+      //ClientProductId: null, //create item in table with this name to fill with the created id this field
+      QualifyingEventId: this.affiliationMethod.get('qualifyingEvent').value,
+      CoverId: this.benefits.get('cover').value,
+      StartDate: null,
+      ElegibleDate: null,
+      EndDate: null,
+      EndReason: null,
+      AffType: null,
+      AffStatus: null,
+      AffFlag: null,
+      Coordination: null,
+      LifeInsurance: null,
+      MajorMedical: null,
+      Prima: null,
+      CreatedAt: null,
+      UpdatedAt: null,
+      DeletedAt: null,
+      Joint: null,
+      CoverAmount: null,
+      LifeInsuranceAmount: null,
+      MajorMedicalAmount: null,
+      SubTotal: null,
+      Beneficiaries: baneficiariesList,
+      clientId: this.data.clientid,
+    }).then(() => {
+      this.dialogRef.close();
+    });
   }
 }

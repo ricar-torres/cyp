@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using WebApi.Entities;
 
 namespace server.Dtos
@@ -37,9 +38,16 @@ namespace server.Dtos
       this.ClientProduct = Alianza.ClientProduct;
       this.Cover = Alianza.Cover;
       this.QualifyingEvent = Alianza.QualifyingEvent;
-      this.Beneficiaries = Alianza.Beneficiaries;
       this.ClientUser = Alianza.ClientUser;
     }
+    public int? ClientId { get; set; }
+    public new int? Id { get; set; }
+    public new int? ClientProductId { get; set; }
+    public new int? QualifyingEventId { get; set; }
+    public new int? CoverId { get; set; }
+    public new byte? AffStatus { get; set; }
+    public new DateTime? ElegibleDate { get; set; }
+    public new List<BeneficiariesDto> Beneficiaries { get; set; }
     public AffType AffTypeDescription { get; set; }
   }
 }

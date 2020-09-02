@@ -12,4 +12,8 @@ export class HealthPlanService {
   GetAll() {
     return this.http.get(`${environment.baseURL}/HealthPlan`);
   }
+
+  GetAllAddOns(id: string) {
+    return this.http.get(`${environment.baseURL}/HealthPlan/${id}/addons`);
+  }
 }

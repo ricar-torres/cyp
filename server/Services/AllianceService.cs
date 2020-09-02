@@ -15,7 +15,7 @@ namespace WebApi.Services
   {
     Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
-    Alianzas Create(Alianzas payload);
+    Task<Alianzas> Create(AllianceDto payload);
     Alianzas Update(Alianzas payload);
     void Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
@@ -60,9 +60,29 @@ namespace WebApi.Services
       return healthPlanList;
     }
 
-    public Alianzas Create(Alianzas payload)
+    public async Task<Alianzas> Create(AllianceDto payload)
     {
-      throw new NotImplementedException();
+      //adding productclient to fill required field in aliance
+      var clientProduct = new ClientProduct()
+      {
+        ClientId = payload.ClientId.GetValueOrDefault(),
+        CreatedAt = DateTime.Now,
+        UpdatedAt = DateTime.Now,
+        ProductId = 1,
+        Status = 0
+      };
+      //create produc to receive a product id and store
+      //it in the aliance
+      await _context.ClientProduct.AddAsync(clientProduct);
+      await _context.SaveChangesAsync();
+
+      var alianza = new Alianzas()
+      {
+        ClientProductId = payload.ClientProductId.GetValueOrDefault(),
+        CoverId = payload.CoverId.GetValueOrDefault()
+      };
+
+      return alianza;
     }
 
     public void Delete(int id)

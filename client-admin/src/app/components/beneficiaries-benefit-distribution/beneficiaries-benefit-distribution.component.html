@@ -1,4 +1,4 @@
-<mat-card *ngIf="coverSelection.value" class="margin-bottom-10">
+<mat-card class="margin-bottom-10">
   <div>
     <mat-slide-toggle
       (change)="clearIsuranceDependants($event.checked)"
@@ -8,10 +8,7 @@
   </div>
   <mat-card-content *ngIf="dependantsEnabled.checked">
     <div>
-      <div
-        @fadeAnimation
-        *ngFor="let item of percentageDependent; let i = index"
-      >
+      <div @fadeAnimation *ngFor="let item of BeneficiariesList; let i = index">
         <mat-card class="margin-top-bottom-5">
           <mat-card-content>
             <form [formGroup]="item">

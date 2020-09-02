@@ -81,13 +81,12 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]
-    public IActionResult Create([FromBody] Alianzas payload)
+    public async Task<IActionResult> Create([FromBody] AllianceDto payload)
     {
 
       try
       {
-
-        _service.Create(payload);
+        await _service.Create(payload);
         return Ok(payload);
 
       }
