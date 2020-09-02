@@ -111,6 +111,65 @@
     </div>
     <div></div>
   </mat-step>
+  <!-- <mat-step [stepControl]="finalFormGroup">
+    <form
+      [formGroup]="finalFormGroup"
+      fxLayoutAlign="center"
+      fxLayoutGap="10px"
+      fxLayout.lt-md="column"
+    >
+      <mat-form-field fxFlex>
+        <mat-label>{{ 'ALLIANCEWIZARD.EFFECTIVEDATE' | translate }}</mat-label>
+        <input
+          [matDatepicker]="effectiveDatePiker"
+          matInput
+          formControlName="effectiveDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="effectiveDatePiker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #effectiveDatePiker disabled="false"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-label>{{ 'ALLIANCEWIZARD.ELEGBILITYDATE' | translate }}</mat-label>
+        <input
+          [matDatepicker]="eligibiliyDatePiker"
+          matInput
+          formControlName="eligibiliyDate"
+        />
+        <mat-datepicker-toggle
+          matSuffix
+          [for]="eligibiliyDatePiker"
+        ></mat-datepicker-toggle>
+        <mat-datepicker #eligibiliyDatePiker disabled="false"></mat-datepicker>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-label>{{
+          'ALLIANCEWIZARD.INSCRIPTIONTYPE' | translate
+        }}</mat-label>
+        <mat-select formControlName="inscriptionType"> </mat-select>
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <mat-label>{{
+          'ALLIANCEWIZARD.INSCRIPTIONSTATUS' | translate
+        }}</mat-label>
+        <mat-select formControlName="inscriptionStatus"> </mat-select>
+      </mat-form-field>
+    </form>
+    <button mat-raised-button color="primary" matStepperPrevious>
+      {{ 'GOBACK' | translate }}
+    </button>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      (click)="checkPercent()"
+    >
+      {{ 'NEXT' | translate }}
+    </button>
+  </mat-step> -->
+
   <mat-step>
     <div fxLayout fxLayoutAlign="center">
       <mat-card style="width: 70%">
