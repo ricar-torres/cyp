@@ -40,6 +40,12 @@ export class AlliancesService {
     });
   }
 
+  iselegible(clientid) {
+    return this.http.get(
+      `${environment.baseURL}/Alliance/client/${clientid}/iselegible`
+    );
+  }
+
   update(alliance: any) {
     return this.http
       .put(`${environment.baseURL}/Alliance/${alliance.Id}`, alliance)

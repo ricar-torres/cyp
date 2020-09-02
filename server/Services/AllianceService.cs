@@ -19,6 +19,7 @@ namespace WebApi.Services
     Alianzas Update(Alianzas payload);
     void Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
+    Task<List<string>> IsElegible(int clientid);
   }
 
   public class AllianceService : IAllianceService
@@ -62,6 +63,9 @@ namespace WebApi.Services
 
     public async Task<Alianzas> Create(AllianceDto payload)
     {
+      var afftype = 1;
+      //setting aff type
+      afftype = await defineAfftype(payload, afftype);
       //adding productclient to fill required field in aliance
       var clientProduct = new ClientProduct()
       {
@@ -71,18 +75,70 @@ namespace WebApi.Services
         ProductId = 1,
         Status = 0
       };
-      //create produc to receive a product id and store
-      //it in the aliance
       await _context.ClientProduct.AddAsync(clientProduct);
       await _context.SaveChangesAsync();
 
+      // creating actual aliance
       var alianza = new Alianzas()
       {
-        ClientProductId = payload.ClientProductId.GetValueOrDefault(),
-        CoverId = payload.CoverId.GetValueOrDefault()
+        ClientProductId = clientProduct.Id,
+        QualifyingEventId = payload.QualifyingEventId == null ? 1 : payload.QualifyingEventId.Value,
+        CoverId = payload.CoverId.GetValueOrDefault(),
+        AffType = (byte?)afftype,
+        AffStatus = 1,
+        CreatedAt = DateTime.Now,
+        UpdatedAt = DateTime.Now,
+        EndDate = DateTime.Now.AddYears(1)
       };
 
+      foreach (var item in payload.Beneficiaries)
+      {
+        var beneficiary = new Beneficiaries()
+        {
+          Name = item.Name,
+          BirthDate = item.BirthDate,
+          Gender = item.Gender,
+          Percent = item.Percent,
+          Relationship = item.Relationship,
+          CreatedAt = DateTime.Now,
+          UpdatedAt = DateTime.Now,
+        };
+        await _context.Beneficiaries.AddAsync(beneficiary);
+      }
+
+      await _context.Alianzas.AddAsync(alianza);
+      await _context.SaveChangesAsync();
+
       return alianza;
+    }
+
+    private async Task<int> defineAfftype(AllianceDto payload, int afftype)
+    {
+      var lastAliance = await _context.ClientProduct
+      .Join(_context.Alianzas.Include(x => x.Cover).ThenInclude(s => s.HealthPlan)
+      , c => c.Id,
+      a => a.ClientProductId,
+      (c, a) => a).FirstOrDefaultAsync(s => s.ClientProduct.ClientId == payload.ClientId);
+      var newPlan = _context.Covers.Include(x => x.HealthPlan).FirstOrDefaultAsync(x => x.Id == payload.CoverId);
+
+
+      if (lastAliance?.Cover?.HealthPlan?.Id == null)
+      {
+        afftype = 1;
+      }
+      else if (lastAliance?.Cover?.HealthPlan?.Id == newPlan.Id)
+      {
+        if (lastAliance?.Cover?.Id == payload.CoverId)
+          afftype = 3;
+        else
+          afftype = 2;
+      }
+      else if (lastAliance?.Cover?.HealthPlan?.Id != newPlan.Id)
+      {
+        afftype = 6;
+      }
+
+      return afftype;
     }
 
     public void Delete(int id)
@@ -119,6 +175,40 @@ namespace WebApi.Services
     public Alianzas GetById(int id)
     {
       throw new NotImplementedException();
+    }
+
+    public async Task<List<string>> IsElegible(int clientid)
+    {
+      var declineList = new List<string>();
+      var client = await _context.Clients.Include(c => c.ChapterClient).FirstOrDefaultAsync(x => x.Id == clientid);
+      if (client != null)
+      {
+
+        if (client.Ssn == null || (client.Ssn != null && client?.Ssn?.Length == 4))
+        {
+          declineList.Add("SSNNOTCOMPLETE");
+        }
+
+        if (client.BirthDate == null)
+        {
+          declineList.Add("MISSINGDOB");
+        }
+
+        if (client.ChapterClient.FirstOrDefault() == null)
+        {
+          declineList.Add("MISSINGBONAFIDES");
+        }
+
+      }
+      else
+      {
+        throw new Exception("No client with provided Id");
+      }
+
+      if (declineList.FirstOrDefault() != null)
+        return declineList;
+      return null;
+
     }
 
     public Alianzas Update(Alianzas payload)

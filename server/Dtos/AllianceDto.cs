@@ -48,6 +48,8 @@ namespace server.Dtos
     public new byte? AffStatus { get; set; }
     public new DateTime? ElegibleDate { get; set; }
     public new List<BeneficiariesDto> Beneficiaries { get; set; }
+
+    public List<string> AddonList { get; set; }
     public AffType AffTypeDescription { get; set; }
   }
 }

@@ -2105,6 +2105,28 @@ namespace WebApi.Helpers {
 					.HasConstraintName("multi_assists_vehicle_multi_assists_id_foreign");
 			});
 
+			modelBuilder.Entity<AlianzaAddOns>(entity => {
+				entity.ToTable("alianza_addons");
+
+				entity.Property(e => e.AlianzaId).HasColumnName("alianza_id").IsRequired();
+				entity.Property(e => e.InsuranceAddOnId).HasColumnName("insurance_addon_id").IsRequired();
+				entity.HasKey(t => new {t.AlianzaId, t.InsuranceAddOnId});
+
+				//FK
+            	entity.HasOne(d => d.Alianza)
+					.WithMany(p => p.AlianzaAddOns)
+					.HasForeignKey(d => d.AlianzaId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("alianza_addons_alianza_id_foreign");
+				
+				//FK
+            	entity.HasOne(d => d.InsuranceAddOn)
+					.WithMany(p => p.AlianzaAddOns)
+					.HasForeignKey(d => d.InsuranceAddOnId)
+					.OnDelete(DeleteBehavior.ClientSetNull)
+					.HasConstraintName("alianza_addons_insurance_addons_id_foreign");
+
+			});
 
 			#endregion
 

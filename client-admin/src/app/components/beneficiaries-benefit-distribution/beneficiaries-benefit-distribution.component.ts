@@ -1,4 +1,11 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
@@ -23,6 +30,7 @@ import { MatSlideToggle } from '@angular/material';
 })
 export class BeneficiariesBenefitDistributionComponent implements OnInit {
   @Input() BeneficiariesList: FormGroup[] = [];
+  @Output() benefitChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   @ViewChild('dependantsEnabled') dependantsEnabled: MatSlideToggle;
   typesOfRelation: Object;
@@ -45,6 +53,7 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
       birthDate: [null],
       relation: [null],
       ssn: [null],
+      relationship: [null],
       percent: [null],
     });
 
@@ -66,6 +75,7 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
   }
 
   clearIsuranceDependants(event) {
+    this.benefitChecked.emit(event);
     if (!event) this.BeneficiariesList = [];
   }
 

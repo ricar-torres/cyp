@@ -137,7 +137,12 @@
     "SSNTAKEN": "Provided SSN is already in record",
     "SSNREQUIRED": "SSN must be provided",
     "SAMEADDRESS": "Use Physical Address",
-    "MULTI_ASISTANCE": "Multiple Assistance"
+    "MULTI_ASISTANCE": "Multiple Assistance",
+    "SSNMIN": "Atleas 4 characters of ssn have to be provided",
+    "SSNMAX": "The maximun number of characters is 9 in ssn",
+    "SSNNOTCOMPLETE": "The SSN must be complete to proceed",
+    "MISSINGDOB": "The DOB must be provided to proceed",
+    "MISSINGBONAFIDES": "The client must be part of a bona fide association to proceed"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",

@@ -138,7 +138,12 @@
     "SSNTAKEN": "El 'SSN' provisto no esta disponible",
     "SSNREQUIRED": "SSN es requerido",
     "SAMEADDRESS": "Usar dirección fisica",
-    "MULTI_ASISTANCE": "Multiasistencia"
+    "MULTI_ASISTANCE": "Multiasistencia",
+    "SSNMIN": "Un minimo de 4 caracteres son requeridos para el 'ssn'",
+    "SSNMAX": "El maximo de caracteres para el 'ssn' es de 9",
+    "SSNNOTCOMPLETE": "El SSN del cliente debe ser complatado para continuar",
+    "MISSINGDOB": "La fecha de nacimiento del cliente debe ser completada para continuar",
+    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

@@ -35,7 +35,10 @@ export class ClientWizardService {
     LastName2: [null, [Validators.maxLength(250)]],
     Email: [null, [Validators.email, Validators.maxLength(250)]],
     Initial: [null, [Validators.maxLength(1)]],
-    Ssn: [null, [Validators.required]],
+    Ssn: [
+      null,
+      [Validators.required, Validators.minLength(4), Validators.maxLength(9)],
+    ],
     Gender: [null, [Validators.required]],
     BirthDate: [{ value: null, disabled: true }, [Validators.required]],
     MaritalStatus: [null],

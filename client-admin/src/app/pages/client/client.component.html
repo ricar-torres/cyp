@@ -128,17 +128,22 @@
 
               <mat-form-field fxFlex>
                 <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
-                <input
-                  #ssnFormControl
-                  matInput
-                  formControlName="Ssn"
-                  mask="000-00-0000"
-                />
+                <input #ssnFormControl matInput formControlName="Ssn" />
                 <mat-error *ngIf="reactiveForm.get('Ssn').hasError('ssnTaken')">
                   {{ 'CLIENTS.SSNTAKEN' | translate }}
                 </mat-error>
                 <mat-error *ngIf="reactiveForm.get('Ssn').hasError('required')">
                   {{ 'CLIENTS.SSNREQUIRED' | translate }}
+                </mat-error>
+                <mat-error
+                  *ngIf="reactiveForm.get('Ssn').hasError('minlength')"
+                >
+                  {{ 'CLIENTS.SSNMIN' | translate }}
+                </mat-error>
+                <mat-error
+                  *ngIf="reactiveForm.get('Ssn').hasError('maxlength')"
+                >
+                  {{ 'CLIENTS.SSNMAX' | translate }}
                 </mat-error>
               </mat-form-field>
 
@@ -162,6 +167,7 @@
               <mat-form-field fxFlex>
                 <mat-label>{{ 'CLIENTS.BIRTHDATE' | translate }}</mat-label>
                 <input
+                  [max]="maxDate"
                   [matDatepicker]="birthDatePiker"
                   matInput
                   formControlName="BirthDate"
