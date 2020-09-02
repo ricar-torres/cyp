@@ -31,7 +31,7 @@ export class DocumentationCallComponent implements OnInit {
   @ViewChild('num') num: ElementRef;
   loading: boolean;
   retirement: any;
-  id: string;
+  id: number;
   editAccess: boolean;
   createAccess: boolean;
   reactiveForm: FormGroup;
@@ -50,7 +50,7 @@ export class DocumentationCallComponent implements OnInit {
     public dialogRef: MatDialogRef<DocumentationCallComponent>,
     @Inject(MAT_DIALOG_DATA) data
   ) {
-    this.id = data.clientId;
+    this.clientId = data.clientId;
     this.confirmationNumber = data.confirmationNumber;
   }
 
@@ -121,7 +121,7 @@ export class DocumentationCallComponent implements OnInit {
         this.reactiveForm.get('comment').value,
         this.num.nativeElement.value,
         this.clientId,
-        1 //this.app.getLoggedInUser().Id
+        this.app.getLoggedInUser().id
       );
       const res: any = await this.apiDocCall.create(payload);
       this.dialogRef.close(res.confirmationNumber);
