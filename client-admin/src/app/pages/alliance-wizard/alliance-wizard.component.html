@@ -97,13 +97,16 @@
       <app-beneficiaries-benefit-distribution
         *ngIf="addon.id == 1 || addon.id == 3"
         [BeneficiariesList]="BeneficiariesList"
+        (benefitChecked)="lifeInsuranceToggle($event, addon)"
         #beneficiaries
       ></app-beneficiaries-benefit-distribution>
       <mat-card
         *ngIf="addon.id == 2 || addon.id == 4"
         class="top-bottom-margin"
       >
-        <mat-slide-toggle>Mayor Medical</mat-slide-toggle>
+        <mat-slide-toggle (change)="mayorMedical($event.checked, addon)"
+          >Mayor Medical</mat-slide-toggle
+        >
       </mat-card>
     </div>
     <div></div>

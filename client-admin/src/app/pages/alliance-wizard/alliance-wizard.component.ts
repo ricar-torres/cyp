@@ -17,6 +17,7 @@ import {
   MatDialogRef,
   MAT_DIALOG_DATA,
   MatSelectChange,
+  MatSlideToggle,
 } from '@angular/material';
 import * as Swal from 'sweetalert2';
 import { AlliancesService } from '@app/shared/alliances.service';
@@ -47,10 +48,13 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   healthPlans: any = [];
   covers: any = [];
 
+  addonsList: any[] = new Array<any>();
+
   qualifyingEvents: [] = [];
   @ViewChild('stepper') stepper: MatStepper;
   @ViewChild('beneficiaries')
   beneficiaries: BeneficiariesBenefitDistributionComponent;
+  @ViewChild('mayorMadical') mayorMadical: MatSlideToggle;
 
   typesOfRelation: any;
   availableAddons: any;
@@ -84,6 +88,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
         });
       }
     });
+
+    this.affiliationMethod.get('affiliationMethod').setValue('2');
   }
 
   ngOnInit(): void {
@@ -95,7 +101,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     });
 
     this.affiliationMethod = this._formBuilder.group({
-      affiliationMethod: [2],
+      affiliationMethod: [null],
       qualifyingEvent: [null],
     });
 
@@ -147,12 +153,38 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     });
   }
 
+  lifeInsuranceToggle(chekced, addon) {
+    this.toggleAddon(chekced, addon);
+  }
+
+  mayorMedical(chekced, addon) {
+    this.toggleAddon(chekced, addon);
+  }
+
+  private toggleAddon(chekced: any, addon: any) {
+    if (chekced) {
+      this.addonsList.push(addon.id);
+    } else {
+      var index = this.addonsList.findIndex((x) => x == addon.id);
+      if (index > -1) {
+        this.addonsList.splice(index, 1);
+      }
+    }
+    console.log(this.addonsList);
+  }
+
   async submitAliance() {
+    var addonsSelected = [];
+    var beneficiarieslist = [];
+    this.BeneficiariesList.forEach((fg) => {
+      beneficiarieslist.push(fg.value);
+    });
     await this.AlianceService.create({
       //Id: null, //new item
       //ClientProductId: null, //create item in table with this name to fill with the created id this field
       QualifyingEventId: this.affiliationMethod.get('qualifyingEvent').value,
       CoverId: this.benefits.get('cover').value,
+      ClientId: this.data.clientid,
       StartDate: null,
       ElegibleDate: null,
       EndDate: null,
@@ -172,7 +204,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       LifeInsuranceAmount: null,
       MajorMedicalAmount: null,
       SubTotal: null,
-      Beneficiaries: null,
+      AddonList: this.addonsList,
+      Beneficiaries: beneficiarieslist,
     }).then(() => {
       this.dialogRef.close();
     });

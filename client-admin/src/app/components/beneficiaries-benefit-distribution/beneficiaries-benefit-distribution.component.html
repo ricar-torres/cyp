@@ -55,7 +55,7 @@
                   <mat-label>{{ 'RELATION' | translate }}</mat-label>
                   <mat-select
                     #coverSelection
-                    [formControl]="item.get('relation')"
+                    [formControl]="item.get('relationship')"
                   >
                     <mat-option
                       *ngFor="let item of typesOfRelation"

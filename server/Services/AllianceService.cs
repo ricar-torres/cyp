@@ -79,13 +79,31 @@ namespace WebApi.Services
       var alianza = new Alianzas()
       {
         ClientProductId = clientProduct.Id,
+        QualifyingEventId = payload.QualifyingEventId == null ? 1 : payload.QualifyingEventId.Value,
         CoverId = payload.CoverId.GetValueOrDefault(),
+        AffType = 1,
+        AffStatus = 1,
         CreatedAt = DateTime.Now,
         UpdatedAt = DateTime.Now,
         EndDate = DateTime.Now.AddYears(1)
       };
 
-      await _context.Alianzas.AddRangeAsync(alianza);
+      foreach (var item in payload.Beneficiaries)
+      {
+        var beneficiary = new Beneficiaries()
+        {
+          Name = item.Name,
+          BirthDate = item.BirthDate,
+          Gender = item.Gender,
+          Percent = item.Percent,
+          Relationship = item.Relationship,
+          CreatedAt = DateTime.Now,
+          UpdatedAt = DateTime.Now,
+        };
+        await _context.Beneficiaries.AddAsync(beneficiary);
+      }
+
+      await _context.Alianzas.AddAsync(alianza);
       await _context.SaveChangesAsync();
 
       return alianza;
