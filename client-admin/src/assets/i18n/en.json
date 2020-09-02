@@ -407,5 +407,15 @@
     "THREAD": "Thread",
     "ONLY_LETTERS": "Letters only",
     "SAVE": "Save"
+  },
+  "MULTI_ASSIST": {
+    "PAGE_TITLE": "Multi Assistance",
+    "HEALTH_PLAN_LABEL": "Plan",
+    "COVER_LABEL": "Cover",
+    "VEHICLE_BRAND": "Vehicle Brand",
+    "VEHICLE_MODEL": "Vehicle Model",
+    "VEHICLE_PLATE": "Plate",
+    "VEHICLE_INFO_LABEL": "Vehicle Info",
+    "VEHICLE_YEAR": "Year"
   }
 }

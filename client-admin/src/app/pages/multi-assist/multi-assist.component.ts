@@ -7,7 +7,7 @@ import { HealthPlanService } from '@app/shared/health-plan.service';
 import { CoverService } from '@app/shared/cover.service';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MatStepper, MatSnackBar } from '@angular/material';
+import { MatStepper, MatSnackBar, MatSelectChange } from '@angular/material';
 import * as Swal from 'sweetalert2';
 
 @Component({
@@ -21,6 +21,11 @@ export class MultiAssistComponent implements OnInit {
   filteredHPs: any;
   filteredCovers: any;
   covers: any = [];
+  selectedCover: any;
+  hasBeneficiary: boolean = false;
+  hasVehicule: boolean = false;
+  BeneficiariesList: FormGroup[] = [];
+  multi_assist_vehicule: FormGroup;
   constructor(
     private _formBuilder: FormBuilder,
     private qualifyingEventService: QualifyingEventService,
@@ -35,6 +40,13 @@ export class MultiAssistComponent implements OnInit {
     this.multi_assist = this._formBuilder.group({
       HealthPlan: [null],
       Addititons: [null],
+    });
+    this.multi_assist_vehicule;
+    this.multi_assist_vehicule = this._formBuilder.group({
+      model: [null],
+      plateNum: [null],
+      brand: [null],
+      year: [null],
     });
     this.healthPlans = await this.multiAssistApiService
       .GetAllMultiAssist()
@@ -61,5 +73,12 @@ export class MultiAssistComponent implements OnInit {
   }
   displayNameFn(selected: any) {
     if (selected) return selected.name;
+  }
+  coverChange(event: MatSelectChange) {
+    this.selectedCover = event.value;
+    if (this.selectedCover) {
+      this.hasBeneficiary = this.selectedCover.beneficiary;
+      this.hasVehicule = this.selectedCover.type == 'ASSIST-VEH';
+    }
   }
 }

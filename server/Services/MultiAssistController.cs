@@ -20,6 +20,11 @@ namespace server.Services {
 				var covers = new List<Covers>(x.Covers);
 				covers.ForEach((c) => {
 					c.HealthPlan = null;
+					var masList = new List<MultiAssists>(c.MultiAssists);
+					masList.ForEach((ma) => {
+						ma.Cover = null;
+					});
+					c.MultiAssists = masList;
 				});
 				x.Covers = covers;
 			});

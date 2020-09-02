@@ -64,6 +64,21 @@
                     >
                   </mat-select>
                 </mat-form-field>
+                <mat-form-field fxFlex>
+                  <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
+                  <input
+                    #ssnFormControl
+                    matInput
+                    [formControl]="item.get('ssn')"
+                    mask="000-00-0000"
+                  />
+                  <!-- <mat-error *ngIf="item.get('ssn').hasError('ssnTaken')">
+                  {{ 'CLIENTS.SSNTAKEN' | translate }}
+                </mat-error>
+                <mat-error *ngIf="item.get('Ssn').hasError('required')">
+                  {{ 'CLIENTS.SSNREQUIRED' | translate }}
+                </mat-error> -->
+                </mat-form-field>
                 <mat-form-field fxFlex="15%">
                   <!-- <mat-label>{{ 'USER.NAME' | translate }}</mat-label> -->
                   <input matInput [formControl]="item.get('percent')" />
