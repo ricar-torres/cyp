@@ -1,0 +1,126 @@
+<md-content layout-margin layout-padding flex="50">
+
+    <mat-card>
+  
+      <mat-card-header>
+        <mat-card-title>{{ 'INSURANCE_COMPANY.TITLE' | translate }}</mat-card-title>
+        <!-- <mat-card-subtitle>Dog Breed</mat-card-subtitle> -->
+      </mat-card-header>
+      <mat-card-content>
+  
+        <div fxLayout fxLayoutAlign="end start">
+          <button
+            type="button"
+            mat-raised-button
+            color="primary"
+            (click)="goToNew()"
+            *ngIf="createAccess"
+          >
+            <mat-icon>add</mat-icon> {{ 'INSURANCE_COMPANY.BTN_ADD' | translate }}
+          </button>
+        </div>
+
+
+      <div fxLayout>
+        <mat-form-field class="search-form">
+          <input
+            matInput
+            placeholder="{{ 'SEARCH' | translate }}"
+            type="text"
+            (keyup)="applyFilter($event.target.value)"
+          />
+        </mat-form-field>
+      </div>
+         
+      <table
+      mat-table
+      [dataSource]="dataSource"
+      matSort
+      class="mat-elevation-z8"
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>Id</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'INSURANCE_COMPANY.NAME' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+
+
+      <ng-container matColumnDef="updatedAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'UPDATEDAT' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.updatedAt | date: 'dd/MM/yyyy hh:mm a' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="createdAt">
+        <th mat-header-cell *matHeaderCellDef mat-sort-header>
+          {{ 'CREATEDAT' | translate }}
+        </th>
+        <td mat-cell *matCellDef="let element">
+          {{ element.createdAt | date: 'dd/MM/yyyy hh:mm a' }}
+        </td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>
+          <!-- {{ 'INSURANCE_COMPANY.ACTIONS' | translate }} -->
+        </th>
+        <td mat-cell *matCellDef="let element" align="right">
+          <button
+            mat-button
+            color="accent"
+            (click)="editINSURANCE_COMPANY(element.id)"
+            *ngIf="editAccess"
+          >
+            <mat-icon>edit</mat-icon> {{ 'INSURANCE_COMPANY.EDIT' | translate }}
+          </button>
+          <button
+            mat-button
+            color="warn"
+            (click)="deleteConfirm(element.id)"
+            *ngIf="deleteAccess"
+          >
+            <mat-icon>delete</mat-icon>
+            {{ 'INSURANCE_COMPANY.DELETE' | translate }}
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  
+  
+      </mat-card-content>
+      <mat-card-actions>
+  
+        <mat-paginator  [pageSize]="pageSize" [pageSizeOptions]="pageSizeOptions" (page)="pageEvent = $event">
+        </mat-paginator>
+  
+        <!-- <mat-paginator #paginator
+            [length] = "length"
+            [pageIndex]="0"
+            [pageSize]="pageSize"
+            (page)="pageLoad($event)">
+        </mat-paginator> -->
+  
+        <!-- <button mat-button>LIKE</button>
+        <button mat-button>SHARE</button> -->
+      </mat-card-actions>
+    </mat-card>
+  </md-content>
+  
+  <!-- loader.component.html -->
+  <div class="loading-indicator" [hidden]="!loading">
+    <mat-progress-spinner [mode]="'indeterminate'" >
+    </mat-progress-spinner>
+  </div>
+  

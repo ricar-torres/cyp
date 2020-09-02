@@ -31,6 +31,7 @@ import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-ev
 import { ClientListComponent } from './pages/client-list/client-list.component';
 import { ClientComponent } from './pages/client/client.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
+import { InsuranceCompanyComponent } from './pages/insurance-company/insurance-company.component';
 
 const routes: Routes = [
   {
@@ -271,6 +272,14 @@ const routes: Routes = [
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+        },
+      },
+      {
+        path: 'insurance-company',
+        component: InsuranceCompanyComponent,
+        //canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
         },
       },
     ],
