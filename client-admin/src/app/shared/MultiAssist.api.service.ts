@@ -5,11 +5,10 @@ import { environment } from '@environments/environment';
 @Injectable({
   providedIn: 'root',
 })
-export class HealthPlanService {
-  readonly controllerName = 'HealthPlan';
+export class MultiAssistAPIService {
+  controllerName = 'MultiAssist';
   constructor(private http: HttpClient) {}
-
-  GetAll() {
-    return this.http.get(`${environment.baseURL}/HealthPlan`);
+  GetAllMultiAssist() {
+    return this.http.get(`${environment.baseURL}/${this.controllerName}/`);
   }
 }

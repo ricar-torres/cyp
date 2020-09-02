@@ -1,3 +1,4 @@
+import { MultiAssistAPIService } from '@app/shared/MultiAssist.api.service';
 import { startWith, map } from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -26,6 +27,7 @@ export class MultiAssistComponent implements OnInit {
     private healthPlansService: HealthPlanService,
     private coverService: CoverService,
     private DependantsServices: DependantsAPIService,
+    private multiAssistApiService: MultiAssistAPIService,
     private _snackBar: MatSnackBar
   ) {}
 
@@ -34,7 +36,9 @@ export class MultiAssistComponent implements OnInit {
       HealthPlan: [null],
       Addititons: [null],
     });
-    this.healthPlans = await this.healthPlansService.GetAll().toPromise();
+    this.healthPlans = await this.multiAssistApiService
+      .GetAllMultiAssist()
+      .toPromise();
 
     this.filteredHPs = this.multi_assist.get('HealthPlan').valueChanges.pipe(
       startWith(''),
@@ -42,9 +46,10 @@ export class MultiAssistComponent implements OnInit {
       map((name) => (name ? this.filter(name) : this.healthPlans.slice()))
     );
     this.multi_assist.get('HealthPlan').valueChanges.subscribe(async (res) => {
-      this.coverService.GetByPlan(res.id).subscribe(async (res) => {
-        this.covers = res;
-      });
+      // this.coverService.GetByPlan(res.id).subscribe(async (res) => {
+      //   this.covers = res;
+      // });
+      this.covers = res.covers;
     });
   }
   public filter(value: string) {

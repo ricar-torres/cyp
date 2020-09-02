@@ -18,7 +18,13 @@ namespace server.Services {
 		}
 		public IQueryable<HealthPlans> GetAllMultiAssist() {
 			try {
-				var res = this._context.Covers.Include(hp => hp.HealthPlan).Where(c => c.Type == "ASSIST" || c.Type == "ASSIST-VEH").Select(_ => _.HealthPlan).AsNoTracking();
+				var res = this._context.Covers
+					.Include(hp => hp.HealthPlan)
+					.ThenInclude(_ => _.Covers)
+					.Where(c => c.Type == "ASSIST" || c.Type == "ASSIST-VEH")
+					.Select(_ => _.HealthPlan)
+					.Distinct()
+					.AsNoTracking();
 				//  this._context.HealthPlans.Include(_ => _.Covers.Where(c => c.Type == "ASSIST" || c.Type == "ASSIST-VEH")).ThenInclude(_ => _.Type).AsNoTracking();
 				return res;
 			} catch (System.Exception ex) {
