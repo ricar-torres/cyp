@@ -23,7 +23,7 @@ export class ClientWizardComponent implements OnInit, OnDestroy {
   ngOnInit(): void {}
 
   onNoClick(): void {
-    this.dialogRef.close();
+    //this.dialogRef.close();
   }
 
   async register() {
