@@ -1,58 +1,75 @@
-<mat-card class="mat-elevation-z0">
-  <mat-card-content>
-    <form [formGroup]="multi_assist">
-      <div
-        fxLayout
-        fxLayoutAlign="center"
-        fxLayout.lt-md="column"
-        fxLayoutGap="10px"
-      >
-        <mat-form-field fxFlex>
-          <mat-label>{{
-            'MULTI_ASSIST.HEALTH_PLAN_LABEL' | translate
-          }}</mat-label>
-          <input
-            type="text"
-            matInput
-            [formControl]="multi_assist.get('HealthPlan')"
-            required
-            [matAutocomplete]="autoGroup"
-          />
-          <mat-autocomplete
-            autoActiveFirstOption
-            #autoGroup="matAutocomplete"
-            [displayWith]="displayNameFn"
+<mat-horizontal-stepper [linear]="true" #stepper>
+  <mat-step [stepControl]="this.multi_assist">
+    <ng-template matStepLabel>{{
+      'MULTI_ASSIST.PAGE_TITLE' | translate
+    }}</ng-template>
+    <mat-card class="mat-elevation-z0">
+      <mat-card-content>
+        <form [formGroup]="multi_assist">
+          <div
+            fxLayout
+            fxLayoutAlign="center"
+            fxLayout.lt-md="column"
+            fxLayoutGap="10px"
           >
-            <mat-option *ngFor="let hp of filteredHPs | async" [value]="hp">
-              {{ hp.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field fxFlex>
-          <mat-label>{{ 'MULTI_ASSIST.COVER_LABEL' | translate }}</mat-label>
+            <mat-form-field fxFlex>
+              <mat-label>{{
+                'MULTI_ASSIST.HEALTH_PLAN_LABEL' | translate
+              }}</mat-label>
+              <input
+                type="text"
+                matInput
+                [formControl]="multi_assist.get('HealthPlan')"
+                required
+                [matAutocomplete]="autoGroup"
+              />
+              <mat-autocomplete
+                autoActiveFirstOption
+                #autoGroup="matAutocomplete"
+                [displayWith]="displayNameFn"
+              >
+                <mat-option *ngFor="let hp of filteredHPs | async" [value]="hp">
+                  {{ hp.name }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field fxFlex>
+              <mat-label>{{
+                'MULTI_ASSIST.COVER_LABEL' | translate
+              }}</mat-label>
 
-          <mat-select
-            #coverSelection
-            [formControl]="multi_assist.get('Addititons')"
-            (selectionChange)="coverChange($event)"
-          >
-            <mat-option *ngFor="let cov of covers" [value]="cov">{{
-              cov.name
-            }}</mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-    </form>
-    <app-beneficiaries-benefit-distribution
-      *ngIf="hasBeneficiary"
-      [BeneficiariesList]="BeneficiariesList"
-      #beneficiaries
-    ></app-beneficiaries-benefit-distribution>
-    <div *ngIf="hasVehicule" fxLayout="column" fxLayoutGap="10px">
-      <mat-card class="full-width">
-        <mat-card-subtitle>
-          {{ 'MULTI_ASSIST.VEHICLE_INFO_LABEL' | translate }}
-        </mat-card-subtitle>
+              <mat-select
+                #coverSelection
+                [formControl]="multi_assist.get('Addititons')"
+                (selectionChange)="coverChange($event)"
+              >
+                <mat-option *ngFor="let cov of covers" [value]="cov">{{
+                  cov.name
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-step>
+  <mat-step *ngIf="hasBeneficiary">
+    <ng-template matStepLabel>{{
+      'MULTI_ASSIST.BENEFICIARY_PAGE_TITLE' | translate
+    }}</ng-template>
+    <div class="mt-1 mb-1">
+      <app-beneficiaries-benefit-distribution
+        [BeneficiariesList]="BeneficiariesList"
+        #beneficiaries
+      ></app-beneficiaries-benefit-distribution>
+    </div>
+  </mat-step>
+  <mat-step [stepControl]="this.multi_assist_vehicule" *ngIf="hasVehicule">
+    <ng-template matStepLabel>{{
+      'MULTI_ASSIST.VEHICLE_PAGE_TITLE' | translate
+    }}</ng-template>
+    <div fxLayout="column" fxLayoutGap="10px" class="mb-1">
+      <mat-card class="full-width mat-elevation-z0">
         <mat-card-content>
           <form [formGroup]="multi_assist_vehicule" fxLayoutGap="5px">
             <mat-form-field fxFlex="25">
@@ -95,5 +112,132 @@
         </mat-card-content>
       </mat-card>
     </div>
-  </mat-card-content>
-</mat-card>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>{{
+      'MULTI_ASSIST.ACCOUNT_PAGE_TITLE' | translate
+    }}</ng-template>
+    <mat-card class="full-width mat-elevation-z0">
+      <mat-card-content>
+        <form [formGroup]="multi_assist_bank">
+          <div fxLayout fxLayoutGap="5px">
+            <mat-form-field fxFlex>
+              <mat-label>{{
+                'MULTI_ASSIST.ACCOUNT_TYPE_LABEL' | translate
+              }}</mat-label>
+              <mat-select
+                [formControl]="multi_assist_bank.get('accType')"
+                #accountType
+              >
+                <mat-option [value]="1">{{
+                  'MULTI_ASSIST.ACCOUNT_TYPE_BANK' | translate
+                }}</mat-option>
+                <mat-option [value]="2">{{
+                  'MULTI_ASSIST.ACCOUNT_TYPE_CARD' | translate
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <div *ngIf="accountType.value == 1">
+              <mat-form-field fxFlex>
+                <mat-label>{{
+                  'MULTI_ASSIST.ACCOUNT_BANKNAME' | translate
+                }}</mat-label>
+                <input
+                  matInput
+                  [formControl]="multi_assist_bank.get('bankName')"
+                />
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <mat-label>{{
+                  'MULTI_ASSIST.ROUTING_NUMBER' | translate
+                }}</mat-label>
+                <input
+                  matInput
+                  [formControl]="multi_assist_bank.get('routingNum')"
+                />
+              </mat-form-field>
+            </div>
+            <div *ngIf="accountType.value == 2">
+              <mat-form-field fxFlex>
+                <mat-label>{{
+                  'MULTI_ASSIST.HOLDERNAME' | translate
+                }}</mat-label>
+                <input
+                  matInput
+                  [formControl]="multi_assist_bank.get('holderName')"
+                />
+              </mat-form-field>
+              <mat-form-field fxFlex>
+                <mat-label>{{ 'MULTI_ASSIST.EXPDATE' | translate }}</mat-label>
+                <input
+                  matInput
+                  [matDatepicker]="picker"
+                  [formControl]="multi_assist_bank.get('expDate')"
+                />
+                <mat-datepicker-toggle
+                  matSuffix
+                  [for]="picker"
+                  disabled="false"
+                ></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <mat-form-field fxFlex>
+              <mat-label>{{
+                'MULTI_ASSIST.ACCOUNT_NUM' | translate
+              }}</mat-label>
+              <input
+                matInput
+                [formControl]="multi_assist_bank.get('accountNum')"
+              />
+            </mat-form-field>
+          </div>
+
+          <div fxLayout fxLayoutGap="5px" class="full-width">
+            <mat-form-field>
+              <mat-label>{{
+                'MULTI_ASSIST.RECURRING_TYPE_LABEL' | translate
+              }}</mat-label>
+              <mat-select
+                [formControl]="multi_assist_bank.get('depRecurringType')"
+                #accountType
+              >
+                <mat-option [value]="1">{{
+                  'MULTI_ASSIST.RECURRING_WEEK_TYPE' | translate
+                }}</mat-option>
+                <mat-option [value]="2">{{
+                  'MULTI_ASSIST.RECURRING_MONTH_TYPE' | translate
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{
+                'MULTI_ASSIST.RECURRING_TYPE_LABEL' | translate
+              }}</mat-label>
+              <mat-select
+                [formControl]="multi_assist_bank.get('depRecurringType')"
+              >
+                <mat-option [value]="1">{{
+                  'MULTI_ASSIST.RECURRING_WEEK_TYPE' | translate
+                }}</mat-option>
+                <mat-option [value]="2">{{
+                  'MULTI_ASSIST.RECURRING_MONTH_TYPE' | translate
+                }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field>
+              <mat-label>{{
+                'MULTI_ASSIST.RECURRING_TYPE_DAY_LABEL' | translate
+              }}</mat-label>
+              <mat-select [formControl]="multi_assist_bank.get('depdate')">
+                <mat-option *ngFor="let i of 30" [value]="i">
+                  {{ i }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form></mat-card-content
+      >
+    </mat-card>
+  </mat-step>
+</mat-horizontal-stepper>

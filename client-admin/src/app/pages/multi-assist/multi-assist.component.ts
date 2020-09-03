@@ -26,6 +26,7 @@ export class MultiAssistComponent implements OnInit {
   hasVehicule: boolean = false;
   BeneficiariesList: FormGroup[] = [];
   multi_assist_vehicule: FormGroup;
+  multi_assist_bank: FormGroup;
   constructor(
     private _formBuilder: FormBuilder,
     private qualifyingEventService: QualifyingEventService,
@@ -37,17 +38,7 @@ export class MultiAssistComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    this.multi_assist = this._formBuilder.group({
-      HealthPlan: [null],
-      Addititons: [null],
-    });
-    this.multi_assist_vehicule;
-    this.multi_assist_vehicule = this._formBuilder.group({
-      model: [null],
-      plateNum: [null],
-      brand: [null],
-      year: [null],
-    });
+    this.initForms();
     this.healthPlans = await this.multiAssistApiService
       .GetAllMultiAssist()
       .toPromise();
@@ -58,9 +49,6 @@ export class MultiAssistComponent implements OnInit {
       map((name) => (name ? this.filter(name) : this.healthPlans.slice()))
     );
     this.multi_assist.get('HealthPlan').valueChanges.subscribe(async (res) => {
-      // this.coverService.GetByPlan(res.id).subscribe(async (res) => {
-      //   this.covers = res;
-      // });
       this.covers = res.covers;
     });
   }
@@ -80,5 +68,28 @@ export class MultiAssistComponent implements OnInit {
       this.hasBeneficiary = this.selectedCover.beneficiary;
       this.hasVehicule = this.selectedCover.type == 'ASSIST-VEH';
     }
+  }
+  initForms() {
+    this.multi_assist = this._formBuilder.group({
+      HealthPlan: [null],
+      Addititons: [null],
+    });
+    this.multi_assist_vehicule;
+    this.multi_assist_vehicule = this._formBuilder.group({
+      model: [null],
+      plateNum: [null],
+      brand: [null],
+      year: [null],
+    });
+    this.multi_assist_bank = this._formBuilder.group({
+      accType: [null],
+      bankName: [null],
+      holderName: [null],
+      routingNum: [null],
+      accountNum: [null],
+      expDate: [{ value: null, disabled: true }],
+      depdate: [{ value: null, disabled: true }],
+      depRecurringType: [null],
+    });
   }
 }

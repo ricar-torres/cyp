@@ -21,6 +21,7 @@ namespace server.Services {
 				var res = this._context.Covers
 					.Include(hp => hp.HealthPlan)
 					.ThenInclude(_ => _.Covers)
+					.ThenInclude(_ => _.MultiAssists)
 					.Where(c => c.Type == "ASSIST" || c.Type == "ASSIST-VEH")
 					.Select(_ => _.HealthPlan)
 					.Distinct()
