@@ -414,5 +414,15 @@
     "THREAD": "Hilo",
     "ONLY_PATTERN": "Letras solamente",
     "SAVE": "Guardar"
+  },
+  "MULTI_ASSIST": {
+    "PAGE_TITLE": "Multi Asistencia",
+    "HEALTH_PLAN_LABEL": "Plan",
+    "COVER_LABEL": "Cobertura",
+    "VEHICLE_BRAND": "Marca de Vehiculo",
+    "VEHICLE_MODEL": "Modelo de Vehiculo",
+    "VEHICLE_PLATE": "Tablilla",
+    "VEHICLE_INFO_LABEL": "Información de Vehiculo",
+    "VEHICLE_YEAR": "Año"
   }
 }

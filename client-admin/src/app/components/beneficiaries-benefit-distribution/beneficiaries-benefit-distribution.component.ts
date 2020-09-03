@@ -51,6 +51,8 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
       name: [null],
       gender: [null],
       birthDate: [null],
+      relation: [null],
+      ssn: [null],
       relationship: [null],
       percent: [null],
     });

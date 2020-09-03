@@ -1,0 +1,99 @@
+<mat-card class="mat-elevation-z0">
+  <mat-card-content>
+    <form [formGroup]="multi_assist">
+      <div
+        fxLayout
+        fxLayoutAlign="center"
+        fxLayout.lt-md="column"
+        fxLayoutGap="10px"
+      >
+        <mat-form-field fxFlex>
+          <mat-label>{{
+            'MULTI_ASSIST.HEALTH_PLAN_LABEL' | translate
+          }}</mat-label>
+          <input
+            type="text"
+            matInput
+            [formControl]="multi_assist.get('HealthPlan')"
+            required
+            [matAutocomplete]="autoGroup"
+          />
+          <mat-autocomplete
+            autoActiveFirstOption
+            #autoGroup="matAutocomplete"
+            [displayWith]="displayNameFn"
+          >
+            <mat-option *ngFor="let hp of filteredHPs | async" [value]="hp">
+              {{ hp.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'MULTI_ASSIST.COVER_LABEL' | translate }}</mat-label>
+
+          <mat-select
+            #coverSelection
+            [formControl]="multi_assist.get('Addititons')"
+            (selectionChange)="coverChange($event)"
+          >
+            <mat-option *ngFor="let cov of covers" [value]="cov">{{
+              cov.name
+            }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </form>
+    <app-beneficiaries-benefit-distribution
+      *ngIf="hasBeneficiary"
+      [BeneficiariesList]="BeneficiariesList"
+      #beneficiaries
+    ></app-beneficiaries-benefit-distribution>
+    <div *ngIf="hasVehicule" fxLayout="column" fxLayoutGap="10px">
+      <mat-card class="full-width">
+        <mat-card-subtitle>
+          {{ 'MULTI_ASSIST.VEHICLE_INFO_LABEL' | translate }}
+        </mat-card-subtitle>
+        <mat-card-content>
+          <form [formGroup]="multi_assist_vehicule" fxLayoutGap="5px">
+            <mat-form-field fxFlex="25">
+              <mat-label>{{
+                'MULTI_ASSIST.VEHICLE_BRAND' | translate
+              }}</mat-label>
+              <input
+                matInput
+                [formControl]="multi_assist_vehicule.get('brand')"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <mat-label>{{
+                'MULTI_ASSIST.VEHICLE_MODEL' | translate
+              }}</mat-label>
+              <input
+                matInput
+                [formControl]="multi_assist_vehicule.get('model')"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <mat-label>{{
+                'MULTI_ASSIST.VEHICLE_YEAR' | translate
+              }}</mat-label>
+              <input
+                matInput
+                [formControl]="multi_assist_vehicule.get('year')"
+              />
+            </mat-form-field>
+            <mat-form-field fxFlex="25">
+              <mat-label>{{
+                'MULTI_ASSIST.VEHICLE_PLATE' | translate
+              }}</mat-label>
+              <input
+                matInput
+                [formControl]="multi_assist_vehicule.get('plateNum')"
+              />
+            </mat-form-field>
+          </form>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </mat-card-content>
+</mat-card>

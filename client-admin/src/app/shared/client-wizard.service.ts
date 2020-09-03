@@ -30,37 +30,11 @@ export class ClientWizardService {
 
   clientDemographic = this.formBuilder.group({
     Id: [null],
-    Name: [
-      null,
-      [
-        Validators.required,
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
-    LastName1: [
-      null,
-      [
-        Validators.required,
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
-    LastName2: [
-      null,
-      [
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
+    Name: [null, [Validators.required, Validators.maxLength(250)]],
+    LastName1: [null, [Validators.required, Validators.maxLength(250)]],
+    LastName2: [null, [Validators.maxLength(250)]],
     Email: [null, [Validators.email, Validators.maxLength(250)]],
-    Initial: [
-      null,
-      [
-        Validators.maxLength(1),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
+    Initial: [null, [Validators.maxLength(1)]],
     Ssn: [
       null,
       [Validators.required, Validators.minLength(4), Validators.maxLength(9)],
@@ -75,20 +49,8 @@ export class ClientWizardService {
   tutorInformation = this.formBuilder.group({
     Id: [''],
     ClientId: [''],
-    Name: [
-      '',
-      [
-        Validators.pattern('^[A-Za-z\u00C0-\u00FF]*$'),
-        Validators.maxLength(250),
-      ],
-    ],
-    LastName: [
-      '',
-      [
-        Validators.pattern('^[A-Za-z\u00C0-\u00FF]*$'),
-        Validators.maxLength(250),
-      ],
-    ],
+    Name: ['', [Validators.maxLength(250)]],
+    LastName: ['', [Validators.maxLength(250)]],
     Phone: [''],
   });
 

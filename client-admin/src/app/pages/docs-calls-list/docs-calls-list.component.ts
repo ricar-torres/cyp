@@ -46,7 +46,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(DocumentationCallComponent, {
       data: {
         confirmationNumber: masterThreadId,
-        clientId: 1,
+        clientId: this.clientId,
       },
     });
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
