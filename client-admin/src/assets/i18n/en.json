@@ -417,12 +417,27 @@
   },
   "MULTI_ASSIST": {
     "PAGE_TITLE": "Multi Assistance",
+    "ACCOUNT_PAGE_TITLE": "Account Information",
+    "VEHICLE_PAGE_TITLE": "Vehicle Information",
+    "BENEFICIARY_PAGE_TITLE": "Beneficiaries",
     "HEALTH_PLAN_LABEL": "Plan",
     "COVER_LABEL": "Cover",
     "VEHICLE_BRAND": "Vehicle Brand",
     "VEHICLE_MODEL": "Vehicle Model",
     "VEHICLE_PLATE": "Plate",
     "VEHICLE_INFO_LABEL": "Vehicle Info",
-    "VEHICLE_YEAR": "Year"
+    "VEHICLE_YEAR": "Year",
+    "ACCOUNT_TYPE_LABEL": "Account Type",
+    "ACCOUNT_TYPE_BANK": "Bank Account",
+    "ACCOUNT_TYPE_CARD": "Card",
+    "ACCOUNT_BANKNAME": "Bank Name",
+    "ROUTING_NUMBER": "Routing Number",
+    "HOLDERNAME": "Card Holder Name",
+    "EXPDATE": "Expiration Date",
+    "ACCOUNT_NUM": "Account Number",
+    "RECURRING_MONTH_TYPE": "Weekly",
+    "RECURRING_WEEK_TYPE": "Monthly",
+    "RECURRING_TYPE_LABEL": "Recurring Type",
+    "RECURRING_TYPE_DAY_LABEL": "Day of Charge"
   }
 }
