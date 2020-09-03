@@ -27,6 +27,10 @@
             >
               <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
             </button>
+            <button type="button" mat-stroked-button type="button">
+              <mat-icon>airline_seat_individual_suite</mat-icon
+              >{{ 'DEAD' | translate }}
+            </button>
           </div>
         </mat-card-header>
         <mat-card-content>
@@ -167,6 +171,7 @@
               <mat-form-field fxFlex>
                 <mat-label>{{ 'CLIENTS.BIRTHDATE' | translate }}</mat-label>
                 <input
+                  #birthDateInput
                   [max]="maxDate"
                   [matDatepicker]="birthDatePiker"
                   matInput

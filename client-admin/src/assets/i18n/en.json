@@ -47,6 +47,8 @@
   "GENDER": "Gender",
   "BIRTHDATE": "Birth Date",
   "RELATION": "Relation",
+  "CLOSE": "Close",
+  "DEAD": "deceased",
 
   "LOGIN-FORM": {
     "USER": "User",

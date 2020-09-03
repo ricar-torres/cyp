@@ -111,9 +111,12 @@ export class AllianceListComponent implements OnInit {
     const dialogRef = this.dialog.open(AllianceWizardComponent, {
       width: '70%',
       height: '70%',
+      disableClose: true,
       data: { clientid: this.clientId },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.LoadAgencies();
+    });
   }
 
   doFilter(value: any) {

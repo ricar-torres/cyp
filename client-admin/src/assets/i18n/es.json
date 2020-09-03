@@ -49,6 +49,8 @@
   "GENDER": "Género",
   "BIRTHDATE": "Fecha de Nacimiento",
   "RELATION": "Relacion",
+  "CLOSE": "Cerrar",
+  "DEAD": "Fallecido",
 
   "LOGIN-FORM": {
     "USER": "Usuario",

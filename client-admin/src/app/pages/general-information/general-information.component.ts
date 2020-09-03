@@ -25,6 +25,7 @@ export class GeneralInformationComponent implements OnInit {
   tutorInformation: FormGroup;
   loading = true;
   filteredOptions: any;
+  planFilteredOptions: any;
   constructor(
     public wizadFormGroups: ClientWizardService,
     private hps: HealthPlanService,
@@ -45,9 +46,15 @@ export class GeneralInformationComponent implements OnInit {
         map((value) => (typeof value === 'string' ? value : value.name)),
         map((name) => (name ? this._filter(name) : this.agencies.slice()))
       );
+    this.planFilteredOptions = this.healthPlan.valueChanges.pipe(
+      startWith(''),
+      map((value) => (typeof value === 'string' ? value : value.name)),
+      map((name) => (name ? this._filterHP(name) : this.heathPlans.slice()))
+    );
     if (this.client) {
       await this.fillForm();
     }
+    if (!this.client) this.hasTutor.setValue(0);
     this.loading = false;
   }
 
@@ -119,6 +126,14 @@ export class GeneralInformationComponent implements OnInit {
     const filterValue = name.toLowerCase();
 
     return this.agencies.filter(
+      (option) => option.name.toLowerCase().indexOf(filterValue) === 0
+    );
+  }
+
+  private _filterHP(name: string) {
+    const filterValue = name.toLowerCase();
+
+    return this.heathPlans.filter(
       (option) => option.name.toLowerCase().indexOf(filterValue) === 0
     );
   }

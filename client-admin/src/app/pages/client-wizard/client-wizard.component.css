@@ -1,5 +1,5 @@
 .button-space {
-  margin-left: 5px;
+  margin: 5px !important;
 }
 
 button {

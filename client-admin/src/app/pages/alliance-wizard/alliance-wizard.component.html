@@ -37,7 +37,14 @@
           </mat-select>
         </mat-form-field>
       </div>
-
+      <button
+        class="button-space"
+        mat-raised-button
+        color="primary"
+        (click)="close()"
+      >
+        {{ 'CLOSE' | translate }}
+      </button>
       <button
         class="button-space"
         mat-raised-button
@@ -62,8 +69,8 @@
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.HEALTHPLAN' | translate }}</mat-label>
           <mat-select
+            (selectionChange)="healthPlanSelected()"
             [formControl]="benefits.get('HealthPlan')"
-            (selectionChange)="planChanged($event)"
           >
             <mat-option [value]="item.id" *ngFor="let item of healthPlans">{{
               item.name
@@ -72,7 +79,11 @@
         </mat-form-field>
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
-          <mat-select #coverSelection [formControl]="benefits.get('cover')">
+          <mat-select
+            (selectionChange)="coverChanged($event)"
+            #coverSelection
+            [formControl]="benefits.get('cover')"
+          >
             <mat-option [value]="item.id" *ngFor="let item of covers">{{
               item.name
             }}</mat-option>
@@ -81,6 +92,14 @@
       </div>
     </form>
     <div class="top-bottom-margin">
+      <button
+        class="button-space"
+        mat-raised-button
+        color="primary"
+        (click)="close()"
+      >
+        {{ 'CLOSE' | translate }}
+      </button>
       <button mat-raised-button color="primary" matStepperPrevious>
         {{ 'GOBACK' | translate }}
       </button>
@@ -109,7 +128,6 @@
         >
       </mat-card>
     </div>
-    <div></div>
   </mat-step>
   <!-- <mat-step [stepControl]="finalFormGroup">
     <form
@@ -201,6 +219,14 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      (click)="close()"
+    >
+      {{ 'CLOSE' | translate }}
+    </button>
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>

@@ -53,6 +53,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
       await this.loadData();
       if (dialogResult) {
         this.dialog.open(DialogSuccessComponent, {
+          disableClose: true,
           width: '300px',
           height: '200px',
           data: new GenericSucessModel(
@@ -96,6 +97,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
 
   callSuccessDialog() {
     this.dialog.open(DialogSuccessComponent, {
+      disableClose: true,
       width: '350px',
       height: '200px',
       data: new GenericSucessModel('SUCCESS', '0000000000'),

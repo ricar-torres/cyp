@@ -18,7 +18,7 @@ namespace WebApi.Services
     Task<Alianzas> Create(AllianceDto payload);
     Alianzas Update(Alianzas payload);
     void Delete(int id);
-    Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
+    Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
   }
 
@@ -34,7 +34,7 @@ namespace WebApi.Services
       _appSettings = appSettings.Value;
     }
 
-    public async Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload)
+    public async Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId)
     {
       var healthPlanList = new List<HealthPlans>();
       Func<string, Task<List<HealthPlans>>> getHP = async type =>
@@ -42,14 +42,16 @@ namespace WebApi.Services
                join cv in _context.Covers on hp.Id equals cv.HealthPlanId
                where (type.Contains(cv.Type) || cv.Type == null) && cv.Alianza == true
                select hp).Distinct().ToListAsync();
-      var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == payload.ClientId);
+      var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == clientId);
       //calculate client age
-      DateTime dob = client.BirthDate.GetValueOrDefault();
-      DateTime PresentYear = DateTime.Now;
-      TimeSpan ts = PresentYear - dob;
-      int years = (new DateTime() + ts).Year - 1;
+      // DateTime dob = client.BirthDate.GetValueOrDefault();
+      // DateTime PresentYear = DateTime.Now;
+      // TimeSpan ts = PresentYear - dob;
+      // int years = (new DateTime() + ts).Year - 1;
       //getting informationbased on client age
-      if (payload.QualifyingEvetId != 0 || years > 65)
+      var medicareA = client.MedicareA == false || client.MedicareA == null ? false : true;
+      var medicareB = client.MedicareB == false || client.MedicareB == null ? false : true;
+      if (medicareA && medicareB)
       {
         healthPlanList = await getHP("+65,-65");
       }
@@ -66,6 +68,7 @@ namespace WebApi.Services
       var afftype = 1;
       //setting aff type
       afftype = await defineAfftype(payload, afftype);
+
       //adding productclient to fill required field in aliance
       var clientProduct = new ClientProduct()
       {
@@ -109,6 +112,13 @@ namespace WebApi.Services
       await _context.Alianzas.AddAsync(alianza);
       await _context.SaveChangesAsync();
 
+      foreach (var item in payload.AddonList)
+      {
+        var addonId = int.Parse(item);
+        await _context.AlianzaAddOns.AddAsync(new AlianzaAddOns() { AlianzaId = alianza.Id, InsuranceAddOnId = addonId });
+      }
+
+      await _context.SaveChangesAsync();
       return alianza;
     }
 

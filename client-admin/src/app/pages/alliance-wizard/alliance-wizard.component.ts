@@ -22,6 +22,7 @@ import {
 import * as Swal from 'sweetalert2';
 import { AlliancesService } from '@app/shared/alliances.service';
 import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-alliance-wizard',
@@ -73,19 +74,14 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   ngAfterViewInit(): void {
-    console.log({
-      ClientId: this.data.clientid,
-      QualifyingEvetId: this.affiliationMethod.get('qualifyingEvent').value,
-    });
     this.stepper.selectionChange.subscribe((ev) => {
       var qlf = this.affiliationMethod.get('qualifyingEvent').value;
       if (ev.selectedIndex == 1) {
-        this.AlianceService.AlianceRequest({
-          ClientId: this.data.clientid,
-          QualifyingEvetId: qlf == null ? 0 : qlf,
-        }).subscribe((res) => {
-          this.healthPlans = res;
-        });
+        this.AlianceService.AlianceRequest(this.data.clientid).subscribe(
+          (res) => {
+            this.healthPlans = res;
+          }
+        );
       }
     });
 
@@ -135,7 +131,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       this.BeneficiariesList.forEach((x) => {
         percentage += Number.parseFloat(x.get('percent').value);
       });
-      console.log(percentage);
       if (percentage == 100) this.stepper.next();
       else
         this.BeneficiariesList.forEach((x) => {
@@ -147,8 +142,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  planChanged(event: MatSelectChange) {
-    this.halthPanService.GetAllAddOns(event.value).subscribe((res) => {
+  coverChanged(event: MatSelectChange) {
+    this.coverService.GetAllAddOns(event.value).subscribe((res) => {
       this.availableAddons = res;
     });
   }
@@ -170,7 +165,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
         this.addonsList.splice(index, 1);
       }
     }
-    console.log(this.addonsList);
   }
 
   async submitAliance() {
@@ -209,5 +203,14 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     }).then(() => {
       this.dialogRef.close();
     });
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  healthPlanSelected() {
+    this.benefits.get('cover').setValue(null);
+    this.availableAddons = [];
   }
 }

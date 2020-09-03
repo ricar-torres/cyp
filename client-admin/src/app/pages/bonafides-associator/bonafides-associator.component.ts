@@ -37,7 +37,7 @@ export class BonafidesAssociatorComponent implements OnInit, OnDestroy {
       Id: [null],
       ChapterId: [null, [Validators.required]],
       ClientId: [null],
-      RegistrationDate: [{ value: null, disabled: true }, null],
+      RegistrationDate: [{ value: null, disabled: true }, Validators.required],
       NewRegistration: [null],
       Primary: [null],
     });
