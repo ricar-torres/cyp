@@ -84,14 +84,21 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
         );
       }
     });
-
-    this.affiliationMethod.get('affiliationMethod').setValue('2');
+    console.log('test');
+    if (this.data.alliance) {
+      var alliance = this.data.alliance;
+      console.log(alliance.qualifyingEvent.id);
+      if (alliance.qualifyingEvent.id == 1) {
+        this.affiliationMethod.get('affiliationMethod').setValue('2');
+      } else {
+        this.affiliationMethod.get('affiliationMethod').setValue('1');
+      }
+    } else {
+      this.affiliationMethod.get('affiliationMethod').setValue('2');
+    }
   }
 
   ngOnInit(): void {
-    // this.DependantsServices.getRelationTypes().subscribe((res) => {
-    //   this.typesOfRelation = res;
-    // });
     this.qualifyingEventService.getAll().subscribe((res) => {
       this.qualifyingEvents = <any>res;
     });
@@ -131,7 +138,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       //debugger;
       this.BeneficiariesList.forEach((x) => {
         percentage += Number.parseFloat(x.get('percent').value);
-        console.log(x);
         if (x.invalid) {
           AllBeneficieriesAreValid = false;
         }
