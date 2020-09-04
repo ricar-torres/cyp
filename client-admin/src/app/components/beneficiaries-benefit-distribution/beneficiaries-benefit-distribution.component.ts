@@ -7,7 +7,7 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { MatSlideToggle } from '@angular/material';
 
@@ -46,15 +46,13 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
   }
 
   addDependant() {
-    console.log(this.BeneficiariesList);
     var newForm = this._formBuilder.group({
-      name: [null],
-      gender: [null],
-      birthDate: [null],
-      relation: [null],
-      ssn: [null],
-      relationship: [null],
-      percent: [null],
+      name: [null, [Validators.required]],
+      gender: [null, [Validators.required]],
+      birthDate: [null, [Validators.required]],
+      ssn: [null, [Validators.required]],
+      relationship: [null, [Validators.required]],
+      percent: [null, [Validators.required]],
     });
 
     newForm.get('birthDate').disable();

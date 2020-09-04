@@ -27,7 +27,12 @@
             >
               <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
             </button>
-            <button type="button" mat-stroked-button type="button">
+            <button
+              (click)="deceased()"
+              type="button"
+              mat-stroked-button
+              type="button"
+            >
               <mat-icon>airline_seat_individual_suite</mat-icon
               >{{ 'DEAD' | translate }}
             </button>

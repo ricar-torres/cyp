@@ -112,6 +112,23 @@ namespace WebApi.Controllers
       }
     }
 
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
+    [Authorize]
+    [HttpGet("{clientId}/Deceased")]
+    public IActionResult DeceasedCLient(int clientId)
+    {
+      try
+      {
+        _service.Deceased(clientId);
+        return Ok();
+      }
+      catch (AppException ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
     [Authorize]
     [HttpPut()]

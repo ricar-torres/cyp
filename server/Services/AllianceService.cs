@@ -17,7 +17,7 @@ namespace WebApi.Services
     Alianzas GetById(int id);
     Task<Alianzas> Create(AllianceDto payload);
     Alianzas Update(Alianzas payload);
-    void Delete(int id);
+    Task Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
   }
@@ -94,6 +94,8 @@ namespace WebApi.Services
         EndDate = DateTime.Now.AddYears(1)
       };
 
+      //TODO: check if the status of the aliance is complete or pending
+
       foreach (var item in payload.Beneficiaries)
       {
         var beneficiary = new Beneficiaries()
@@ -151,9 +153,12 @@ namespace WebApi.Services
       return afftype;
     }
 
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
-      throw new NotImplementedException();
+      var alliance = await _context.Alianzas.FirstOrDefaultAsync(x => x.Id == id);
+      alliance.DeletedAt = DateTime.Today;
+      _context.Alianzas.Update(alliance);
+      await _context.SaveChangesAsync();
     }
 
     public async Task<List<AllianceDto>> GetAll(int? clientId)
@@ -169,7 +174,7 @@ namespace WebApi.Services
              join aff in _context.AffType on al.AffType.ToString() equals aff.Id.ToString()
              join cov in _context.Covers on al.CoverId equals cov.Id
              join qu in _context.QualifyingEvents on al.QualifyingEventId equals qu.Id
-             where pr.ClientId == clientId.GetValueOrDefault()
+             where pr.ClientId == clientId.GetValueOrDefault() && al.DeletedAt == null
              select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov })
              .Select(x => new AllianceDto(x.alliance) { Cover = x.cover, QualifyingEvent = x.quallifyingEvent, AffTypeDescription = x.AffType }).ToListAsync();
 

@@ -121,12 +121,12 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
     [Authorize]
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
       try
       {
 
-        _service.Delete(id);
+        await _service.Delete(id);
         return Ok();
 
       }

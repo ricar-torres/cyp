@@ -122,6 +122,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
 
   checkPercent() {
     var percentage: number = 0;
+    var AllBeneficieriesAreValid = true;
     if (
       this.beneficiaries &&
       this.beneficiaries.dependantsEnabled &&
@@ -130,13 +131,20 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       //debugger;
       this.BeneficiariesList.forEach((x) => {
         percentage += Number.parseFloat(x.get('percent').value);
+        console.log(x);
+        if (x.invalid) {
+          AllBeneficieriesAreValid = false;
+        }
       });
-      if (percentage == 100) this.stepper.next();
-      else
-        this.BeneficiariesList.forEach((x) => {
-          x.get('percent').markAsDirty();
-          x.get('percent').setErrors({ BadPercentage: true });
-        });
+      if (percentage == 100 && AllBeneficieriesAreValid) this.stepper.next();
+      else {
+        if (percentage != 100) {
+          this.BeneficiariesList.forEach((x) => {
+            x.get('percent').markAsDirty();
+            x.get('percent').setErrors({ BadPercentage: true });
+          });
+        }
+      }
     } else {
       this.stepper.next();
     }
