@@ -51,6 +51,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   healthPlans: any = [];
   covers: any = [];
 
+  affTypes: [];
   addonsList: any[] = new Array<any>();
 
   qualifyingEvents: [] = [];
@@ -67,10 +68,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     private qualifyingEventService: QualifyingEventService,
     private AlianceService: AlliancesService,
     private coverService: CoverService,
-    private DependantsServices: DependantsAPIService,
-    private _snackBar: MatSnackBar,
+
     public dialogRef: MatDialogRef<AllianceWizardComponent>,
-    private halthPanService: HealthPlanService,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
   async ngAfterViewInit() {
@@ -126,6 +125,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
 
           <[]>alliance.beneficiaries.forEach((intm) => {
             var Beneficiary = this._formBuilder.group({
+              id: [intm.id],
               name: [intm.name, [Validators.required]],
               gender: [intm.gender, [Validators.required]],
               birthDate: [intm.birthDate, [Validators.required]],
@@ -159,6 +159,10 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.qualifyingEventService.getAll().subscribe((res) => {
       this.qualifyingEvents = <any>res;
+    });
+
+    this.AlianceService.getAllAffTypes().subscribe((res) => {
+      this.affTypes = <[]>res;
     });
 
     this.affiliationMethod = this._formBuilder.group({
@@ -247,7 +251,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     this.BeneficiariesList.forEach((fg) => {
       beneficiarieslist.push(fg.getRawValue());
     });
-    console.log(beneficiarieslist);
 
     await this.AlianceService.create({
       Id: this.data.alliance ? this.data.alliance.id : null,
@@ -257,20 +260,25 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       QualifyingEventId: this.affiliationMethod.get('qualifyingEvent').value,
       CoverId: this.benefits.get('cover').value,
       ClientId: this.data.clientid,
-      // StartDate: null,
-      // ElegibleDate: null,
+      StartDate: this.finalFormGroup.get('effectiveDate').value
+        ? this.finalFormGroup.get('effectiveDate').value
+        : null,
+      ElegibleDate: this.finalFormGroup.get('eligibiliyDate').value
+        ? this.finalFormGroup.get('eligibiliyDate').value
+        : null,
       // EndDate: null,
       // EndReason: null,
-      // AffType: null,
-      // AffStatus: null,
+      AffType: this.finalFormGroup.get('inscriptionType').value
+        ? this.finalFormGroup.get('inscriptionType').value
+        : null,
+      AffStatus: this.finalFormGroup.get('inscriptionStatus').value
+        ? this.finalFormGroup.get('inscriptionStatus').value
+        : null,
       // AffFlag: null,
       // Coordination: null,
-      //LifeInsurance: null, //will be moved to other table
-      //MajorMedical: null, //will be moved to other table
+      // LifeInsurance: null, //will be moved to other table
+      // MajorMedical: null, //will be moved to other table
       // Prima: null,
-      // CreatedAt: null,
-      // UpdatedAt: null,
-      // DeletedAt: null,
       // Joint: null,
       // CoverAmount: null,
       // LifeInsuranceAmount: null,

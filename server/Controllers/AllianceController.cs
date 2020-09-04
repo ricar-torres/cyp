@@ -86,7 +86,10 @@ namespace WebApi.Controllers
 
       try
       {
-        await _service.Create(payload);
+        if (payload.Id == null)
+          await _service.Create(payload);
+        else
+          await this.Update(payload);
         return Ok(payload);
 
       }
@@ -100,14 +103,11 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
     [Authorize]
     [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Alianzas payload)
+    public async Task<IActionResult> Update([FromBody] AllianceDto payload)
     {
       try
       {
-
-        payload.Id = id;
         var res = _service.Update(payload);
-
         return Ok(res);
 
       }
@@ -162,6 +162,23 @@ namespace WebApi.Controllers
       try
       {
         var reasons = await _service.IsElegible(clientid);
+        return Ok(reasons);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("AffiliationTypes")]
+    public async Task<IActionResult> GetAllAffTypes()
+    {
+      try
+      {
+        var reasons = await _service.GetAllAffTypes();
         return Ok(reasons);
       }
       catch (Exception ex)

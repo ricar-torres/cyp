@@ -46,6 +46,10 @@ export class AlliancesService {
     );
   }
 
+  getAllAffTypes() {
+    return this.http.get(`${environment.baseURL}/Alliance/AffiliationTypes`);
+  }
+
   update(alliance: any) {
     return this.http
       .put(`${environment.baseURL}/Alliance/${alliance.Id}`, alliance)
