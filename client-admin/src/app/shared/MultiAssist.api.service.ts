@@ -11,4 +11,9 @@ export class MultiAssistAPIService {
   GetAllMultiAssist() {
     return this.http.get(`${environment.baseURL}/${this.controllerName}/`);
   }
+  AttatchMultiAssist(payload) {
+    return this.http
+      .post(`${environment.baseURL}/${this.controllerName}`, payload)
+      .toPromise();
+  }
 }

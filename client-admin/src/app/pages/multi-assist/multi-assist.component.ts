@@ -1,3 +1,4 @@
+import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 import { MultiAssistAPIService } from '@app/shared/MultiAssist.api.service';
 import { startWith, map } from 'rxjs/operators';
 import { Component, OnInit, ViewChild } from '@angular/core';
@@ -27,6 +28,8 @@ export class MultiAssistComponent implements OnInit {
   BeneficiariesList: FormGroup[] = [];
   multi_assist_vehicule: FormGroup;
   multi_assist_bank: FormGroup;
+  daysNums: Array<number>;
+  @ViewChild('beneficiaries') beneficiaries;
   constructor(
     private _formBuilder: FormBuilder,
     private qualifyingEventService: QualifyingEventService,
@@ -39,6 +42,7 @@ export class MultiAssistComponent implements OnInit {
 
   async ngOnInit() {
     this.initForms();
+    this.daysNums = Array.from(Array(30), (x, i) => i + 1);
     this.healthPlans = await this.multiAssistApiService
       .GetAllMultiAssist()
       .toPromise();
@@ -71,8 +75,8 @@ export class MultiAssistComponent implements OnInit {
   }
   initForms() {
     this.multi_assist = this._formBuilder.group({
-      HealthPlan: [null],
-      Addititons: [null],
+      HealthPlan: [null, [Validators.required]],
+      Addititons: [null, [Validators.required]],
     });
     this.multi_assist_vehicule;
     this.multi_assist_vehicule = this._formBuilder.group({
@@ -82,14 +86,24 @@ export class MultiAssistComponent implements OnInit {
       year: [null],
     });
     this.multi_assist_bank = this._formBuilder.group({
-      accType: [null],
+      accType: [null, [Validators.required]],
       bankName: [null],
       holderName: [null],
       routingNum: [null],
-      accountNum: [null],
+      accountNum: [null, [Validators.required]],
       expDate: [{ value: null, disabled: true }],
-      depdate: [{ value: null, disabled: true }],
-      depRecurringType: [null],
+      depdate: [null, [Validators.required]],
+      depRecurringType: [null, [Validators.required]],
     });
+  }
+
+  register() {
+    var multiAssist = this.multi_assist.getRawValue();
+    var bank = this.multi_assist_bank.getRawValue();
+    var vehicle = this.multi_assist_vehicule.getRawValue();
+    // var benefi = new Arra
+    var payload = Object.assign(multiAssist, bank, vehicle, benefi);
+    console.log(JSON.stringify(payload));
+    this.multiAssistApiService.AttatchMultiAssist(payload);
   }
 }

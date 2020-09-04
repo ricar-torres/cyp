@@ -2,10 +2,11 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using server.Services;
 using WebApi.Controllers;
 using WebApi.Entities;
 
-namespace server.Services {
+namespace WebApi.Controllers {
 	public class MultiAssistController : BaseController {
 		readonly IMultiAssistService _service;
 		public MultiAssistController(IMultiAssistService service) {
@@ -29,6 +30,12 @@ namespace server.Services {
 				x.Covers = covers;
 			});
 			return Ok(list);
+		}
+
+		[AllowAnonymous]
+		[HttpPost]
+		public IActionResult AttatchMultiAssist([FromBody] Covers payload) {
+			return Ok(payload);
 		}
 	}
 }
