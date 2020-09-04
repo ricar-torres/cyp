@@ -35,6 +35,7 @@
         'BONAFIDESASSOCIATOR.REGISTERDATE' | translate
       }}</mat-label>
       <input
+        #registrationDate
         formControlName="RegistrationDate"
         matInput
         [matDatepicker]="picker"
@@ -68,7 +69,7 @@
     </button>
     <button
       type="submit"
-      [disabled]="reactiveForm.invalid"
+      [disabled]="reactiveForm.invalid || !registrationDate.value"
       mat-raised-button
       color="primary"
     >

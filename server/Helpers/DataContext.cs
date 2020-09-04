@@ -78,6 +78,7 @@ namespace WebApi.Helpers {
 
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		public virtual DbSet<AffType> AffType { get; set; }
+		public virtual DbSet<AlianzaAddOns> AlianzaAddOns { get; set; }
 
 		#endregion
 
@@ -581,8 +582,8 @@ namespace WebApi.Helpers {
 					.HasColumnType("datetime");
 
 				entity.Property(e => e.Ssn)
-					.HasColumnName("ssn")
-					.HasMaxLength(255);
+					.HasColumnName("ssn").
+				HasMaxLength(255);
 
 				entity.HasOne(d => d.Alianza)
 					.WithMany(p => p.Beneficiaries)

@@ -35,9 +35,9 @@ export class AlliancesService {
   }
 
   AlianceRequest(request) {
-    return this.http.get(`${environment.baseURL}/Alliance/AlianceRequest`, {
-      params: request,
-    });
+    return this.http.get(
+      `${environment.baseURL}/Alliance/AlianceRequest/${request}`
+    );
   }
 
   iselegible(clientid) {

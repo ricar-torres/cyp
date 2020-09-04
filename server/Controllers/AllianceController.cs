@@ -121,12 +121,12 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
     [Authorize]
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
       try
       {
 
-        _service.Delete(id);
+        await _service.Delete(id);
         return Ok();
 
       }
@@ -139,12 +139,12 @@ namespace WebApi.Controllers
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
     [Authorize]
-    [HttpGet("AlianceRequest")]
-    public async Task<IActionResult> AlianceRequest([FromQuery] AlianceRequestDto payload)
+    [HttpGet("AlianceRequest/{clientId}")]
+    public async Task<IActionResult> AlianceRequest(int clientId)
     {
       try
       {
-        var availableHP = await _service.AvailableHealthPlansForClient(payload);
+        var availableHP = await _service.AvailableHealthPlansForClient(clientId);
         return Ok(availableHP);
       }
       catch (Exception ex)

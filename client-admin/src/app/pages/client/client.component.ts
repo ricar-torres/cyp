@@ -250,4 +250,17 @@ export class ClientComponent implements OnInit, OnDestroy {
   disableControls() {
     this.clientsService.toggleEditControl.emit(true);
   }
+
+  async deceased() {
+    try {
+      await this.clientsService
+        .Decesed(this.client.id)
+        .toPromise()
+        .then(() => {
+          //TODO: disable all controls
+        });
+    } catch (ex) {
+      this.app.showErrorMessage(ex);
+    }
+  }
 }

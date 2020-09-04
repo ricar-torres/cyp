@@ -47,6 +47,8 @@
   "GENDER": "Gender",
   "BIRTHDATE": "Birth Date",
   "RELATION": "Relation",
+  "CLOSE": "Close",
+  "DEAD": "deceased",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -242,7 +244,8 @@
     "ADDITIONS": "Addititons",
     "BENEFITS": "Benefits",
     "COVER": "Cover",
-    "LIFEINSURANCE": "Life Insurance"
+    "LIFEINSURANCE": "Life Insurance",
+    "DATES": "Dates"
   },
   "BENEFICIERIES": {
     "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "

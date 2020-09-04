@@ -17,8 +17,8 @@ namespace WebApi.Services
     Alianzas GetById(int id);
     Task<Alianzas> Create(AllianceDto payload);
     Alianzas Update(Alianzas payload);
-    void Delete(int id);
-    Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload);
+    Task Delete(int id);
+    Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
   }
 
@@ -34,7 +34,7 @@ namespace WebApi.Services
       _appSettings = appSettings.Value;
     }
 
-    public async Task<List<HealthPlans>> AvailableHealthPlansForClient(AlianceRequestDto payload)
+    public async Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId)
     {
       var healthPlanList = new List<HealthPlans>();
       Func<string, Task<List<HealthPlans>>> getHP = async type =>
@@ -42,14 +42,16 @@ namespace WebApi.Services
                join cv in _context.Covers on hp.Id equals cv.HealthPlanId
                where (type.Contains(cv.Type) || cv.Type == null) && cv.Alianza == true
                select hp).Distinct().ToListAsync();
-      var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == payload.ClientId);
+      var client = await _context.Clients.FirstOrDefaultAsync(x => x.Id == clientId);
       //calculate client age
-      DateTime dob = client.BirthDate.GetValueOrDefault();
-      DateTime PresentYear = DateTime.Now;
-      TimeSpan ts = PresentYear - dob;
-      int years = (new DateTime() + ts).Year - 1;
+      // DateTime dob = client.BirthDate.GetValueOrDefault();
+      // DateTime PresentYear = DateTime.Now;
+      // TimeSpan ts = PresentYear - dob;
+      // int years = (new DateTime() + ts).Year - 1;
       //getting informationbased on client age
-      if (payload.QualifyingEvetId != 0 || years > 65)
+      var medicareA = client.MedicareA == false || client.MedicareA == null ? false : true;
+      var medicareB = client.MedicareB == false || client.MedicareB == null ? false : true;
+      if (medicareA && medicareB)
       {
         healthPlanList = await getHP("+65,-65");
       }
@@ -66,6 +68,7 @@ namespace WebApi.Services
       var afftype = 1;
       //setting aff type
       afftype = await defineAfftype(payload, afftype);
+
       //adding productclient to fill required field in aliance
       var clientProduct = new ClientProduct()
       {
@@ -91,6 +94,10 @@ namespace WebApi.Services
         EndDate = DateTime.Now.AddYears(1)
       };
 
+      //TODO: check if the status of the aliance is complete or pending
+      await _context.Alianzas.AddAsync(alianza);
+      await _context.SaveChangesAsync();
+
       foreach (var item in payload.Beneficiaries)
       {
         var beneficiary = new Beneficiaries()
@@ -102,13 +109,19 @@ namespace WebApi.Services
           Relationship = item.Relationship,
           CreatedAt = DateTime.Now,
           UpdatedAt = DateTime.Now,
+          AlianzaId = alianza.Id,
+          Ssn = item.Ssn
         };
         await _context.Beneficiaries.AddAsync(beneficiary);
       }
 
-      await _context.Alianzas.AddAsync(alianza);
-      await _context.SaveChangesAsync();
+      foreach (var item in payload.AddonList)
+      {
+        var addonId = item;
+        await _context.AlianzaAddOns.AddAsync(new AlianzaAddOns() { AlianzaId = alianza.Id, InsuranceAddOnId = addonId });
+      }
 
+      await _context.SaveChangesAsync();
       return alianza;
     }
 
@@ -141,9 +154,12 @@ namespace WebApi.Services
       return afftype;
     }
 
-    public void Delete(int id)
+    public async Task Delete(int id)
     {
-      throw new NotImplementedException();
+      var alliance = await _context.Alianzas.FirstOrDefaultAsync(x => x.Id == id);
+      alliance.DeletedAt = DateTime.Today;
+      _context.Alianzas.Update(alliance);
+      await _context.SaveChangesAsync();
     }
 
     public async Task<List<AllianceDto>> GetAll(int? clientId)
@@ -159,15 +175,21 @@ namespace WebApi.Services
              join aff in _context.AffType on al.AffType.ToString() equals aff.Id.ToString()
              join cov in _context.Covers on al.CoverId equals cov.Id
              join qu in _context.QualifyingEvents on al.QualifyingEventId equals qu.Id
-             where pr.ClientId == clientId.GetValueOrDefault()
+             where pr.ClientId == clientId.GetValueOrDefault() && al.DeletedAt == null
              select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov })
              .Select(x => new AllianceDto(x.alliance) { Cover = x.cover, QualifyingEvent = x.quallifyingEvent, AffTypeDescription = x.AffType }).ToListAsync();
-
-      clientAlliances.ForEach(x =>
+      //removing loop reference and adding additional info
+      clientAlliances.ForEach((x) =>
       {
         x.Cover.Alianza = null;
         x.Cover.Alianzas = null;
         x.QualifyingEvent.Alianzas = null;
+        x.AddonList = _context.AlianzaAddOns.Where(s => s.AlianzaId == x.Id).Select(s => s.InsuranceAddOnId).ToList();
+        x.Beneficiaries = _context.Beneficiaries.Where(s => s.AlianzaId == x.Id).Select(s => new BeneficiariesDto(s)).ToList();
+        x.Beneficiaries.ForEach(x =>
+        {
+          x.Alianza = null;
+        });
       });
       return clientAlliances;
     }

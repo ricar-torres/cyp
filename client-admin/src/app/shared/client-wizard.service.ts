@@ -12,6 +12,7 @@ import { AppService } from './app.service';
 import { bonaFideservice } from './bonafide.service';
 import { ClientService } from './client.service';
 import { debug } from 'console';
+import { validateBasis } from '@angular/flex-layout';
 
 @Injectable({
   providedIn: 'root',
@@ -58,24 +59,48 @@ export class ClientWizardService {
     PhysicalAddress: this.formBuilder.group({
       Id: [null],
       ClientId: [null],
-      Line1: [null, Validators.maxLength(250)],
+      Line1: [null, [Validators.maxLength(250), Validators.required]],
       Type: [null],
       Line2: [null, Validators.maxLength(250)],
-      State: [null],
-      City: [null],
-      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
-      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
+      State: [null, [Validators.required]],
+      City: [null, [Validators.required]],
+      Zipcode: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?')),
+          Validators.required,
+        ],
+      ],
+      Zip4: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?')),
+          Validators.required,
+        ],
+      ],
     }),
     PostalAddress: this.formBuilder.group({
       Id: [null],
       ClientId: [null],
-      Line1: [null, Validators.maxLength(250)],
+      Line1: [null, [Validators.maxLength(250), Validators.required]],
       Type: [null],
-      Line2: [null, Validators.maxLength(250)],
-      State: [null],
-      City: [null],
-      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
-      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
+      Line2: [null, [Validators.maxLength(250), Validators.required]],
+      State: [null, [Validators.required]],
+      City: [null, [Validators.required]],
+      Zipcode: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?')),
+          Validators.required,
+        ],
+      ],
+      Zip4: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?')),
+          Validators.required,
+        ],
+      ],
     }),
   });
 
@@ -199,7 +224,7 @@ export class ClientWizardService {
   checkSsn(ssn: string) {
     return async (control: AbstractControl) => {
       //console.log(ssn, control.value);
-      if (control.value && ssn != control.value) {
+      if (control.value && ssn != control.value && control.value.length > 4) {
         const res: any = await this.clientService.checkSsn({
           ssn: control.value,
         });

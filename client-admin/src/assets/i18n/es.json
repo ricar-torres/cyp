@@ -49,6 +49,8 @@
   "GENDER": "Género",
   "BIRTHDATE": "Fecha de Nacimiento",
   "RELATION": "Relacion",
+  "CLOSE": "Cerrar",
+  "DEAD": "Fallecido",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -243,7 +245,8 @@
     "ADDITIONS": "Adiciones",
     "BENEFITS": "Beneficios",
     "COVER": "Cubierta",
-    "LIFEINSURANCE": "Seguro de Vida"
+    "LIFEINSURANCE": "Seguro de Vida",
+    "DATES": "Fechas"
   },
   "BENEFICIERIES": {
     "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
