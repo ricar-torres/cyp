@@ -123,13 +123,18 @@
         *ngIf="addon.id == 2 || addon.id == 4"
         class="top-bottom-margin"
       >
-        <mat-slide-toggle (change)="mayorMedical($event.checked, addon)"
+        <mat-slide-toggle
+          #mayorMedicalToggle
+          (change)="mayorMedical($event.checked, addon)"
           >Mayor Medical</mat-slide-toggle
         >
       </mat-card>
     </div>
   </mat-step>
-  <!-- <mat-step [stepControl]="finalFormGroup">
+  <mat-step *ngIf="data.alliance" [stepControl]="finalFormGroup">
+    <ng-template matStepLabel>{{
+      'ALLIANCEWIZARD.DATES' | translate
+    }}</ng-template>
     <form
       [formGroup]="finalFormGroup"
       fxLayoutAlign="center"
@@ -175,6 +180,14 @@
         <mat-select formControlName="inscriptionStatus"> </mat-select>
       </mat-form-field>
     </form>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="warn"
+      (click)="close()"
+    >
+      {{ 'CLOSE' | translate }}
+    </button>
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
@@ -186,7 +199,7 @@
     >
       {{ 'NEXT' | translate }}
     </button>
-  </mat-step> -->
+  </mat-step>
 
   <mat-step>
     <div fxLayout fxLayoutAlign="center">

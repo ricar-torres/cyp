@@ -253,7 +253,12 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   async deceased() {
     try {
-      await this.clientsService.Decesed(this.client.id).toPromise();
+      await this.clientsService
+        .Decesed(this.client.id)
+        .toPromise()
+        .then(() => {
+          //TODO: disable all controls
+        });
     } catch (ex) {
       this.app.showErrorMessage(ex);
     }

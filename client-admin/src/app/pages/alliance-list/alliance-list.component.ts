@@ -108,7 +108,7 @@ export class AllianceListComponent implements OnInit {
       width: '70%',
       height: '70%',
       disableClose: true,
-      data: { alliance: alliance },
+      data: { alliance: alliance, clientid: this.clientId },
     });
     dialogRef.afterClosed().subscribe((result) => {
       this.LoadAgencies();

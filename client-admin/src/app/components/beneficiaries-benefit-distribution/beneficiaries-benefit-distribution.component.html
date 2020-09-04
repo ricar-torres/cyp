@@ -30,10 +30,8 @@
                     #coverSelection
                     [formControl]="item.get('gender')"
                   >
-                    <mat-option [value]="1">{{
-                      'MALE' | translate
-                    }}</mat-option>
-                    <mat-option [value]="2">{{
+                    <mat-option value="1">{{ 'MALE' | translate }}</mat-option>
+                    <mat-option value="2">{{
                       'FEMALE' | translate
                     }}</mat-option>
                   </mat-select>
@@ -65,7 +63,7 @@
                   >
                     <mat-option
                       *ngFor="let item of typesOfRelation"
-                      [value]="item.id"
+                      value="{{ item.id }}"
                       >{{ item.name }}</mat-option
                     >
                   </mat-select>
@@ -78,7 +76,6 @@
                 <mat-form-field fxFlex>
                   <mat-label>{{ 'CLIENTS.SSN' | translate }}</mat-label>
                   <input
-                    #ssnFormControl
                     matInput
                     [formControl]="item.get('ssn')"
                     mask="000-00-0000"

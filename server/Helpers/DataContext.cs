@@ -610,8 +610,7 @@ namespace WebApi.Helpers
           .HasColumnType("datetime");
 
         entity.Property(e => e.Ssn)
-          .HasColumnName("ssn")
-          .HasColumnType("VARCHAR").
+          .HasColumnName("ssn").
           HasMaxLength(255);
 
         entity.HasOne(d => d.Alianza)

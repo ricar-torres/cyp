@@ -95,6 +95,8 @@ namespace WebApi.Services
       };
 
       //TODO: check if the status of the aliance is complete or pending
+      await _context.Alianzas.AddAsync(alianza);
+      await _context.SaveChangesAsync();
 
       foreach (var item in payload.Beneficiaries)
       {
@@ -107,16 +109,15 @@ namespace WebApi.Services
           Relationship = item.Relationship,
           CreatedAt = DateTime.Now,
           UpdatedAt = DateTime.Now,
+          AlianzaId = alianza.Id,
+          Ssn = item.Ssn
         };
         await _context.Beneficiaries.AddAsync(beneficiary);
       }
 
-      await _context.Alianzas.AddAsync(alianza);
-      await _context.SaveChangesAsync();
-
       foreach (var item in payload.AddonList)
       {
-        var addonId = int.Parse(item);
+        var addonId = item;
         await _context.AlianzaAddOns.AddAsync(new AlianzaAddOns() { AlianzaId = alianza.Id, InsuranceAddOnId = addonId });
       }
 
@@ -177,12 +178,18 @@ namespace WebApi.Services
              where pr.ClientId == clientId.GetValueOrDefault() && al.DeletedAt == null
              select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov })
              .Select(x => new AllianceDto(x.alliance) { Cover = x.cover, QualifyingEvent = x.quallifyingEvent, AffTypeDescription = x.AffType }).ToListAsync();
-
-      clientAlliances.ForEach(x =>
+      //removing loop reference and adding additional info
+      clientAlliances.ForEach((x) =>
       {
         x.Cover.Alianza = null;
         x.Cover.Alianzas = null;
         x.QualifyingEvent.Alianzas = null;
+        x.AddonList = _context.AlianzaAddOns.Where(s => s.AlianzaId == x.Id).Select(s => s.InsuranceAddOnId).ToList();
+        x.Beneficiaries = _context.Beneficiaries.Where(s => s.AlianzaId == x.Id).Select(s => new BeneficiariesDto(s)).ToList();
+        x.Beneficiaries.ForEach(x =>
+        {
+          x.Alianza = null;
+        });
       });
       return clientAlliances;
     }
