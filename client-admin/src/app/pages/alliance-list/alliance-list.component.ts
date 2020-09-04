@@ -50,7 +50,7 @@ export class AllianceListComponent implements OnInit {
   constructor(
     private app: AppService,
     private fb: FormBuilder,
-    private agencyApi: AlliancesService,
+    private allianceService: AlliancesService,
     private router: Router,
     private languageService: LanguageService,
     private dialog: MatDialog
@@ -71,7 +71,7 @@ export class AllianceListComponent implements OnInit {
   }
 
   private LoadAgencies() {
-    this.agencyApi.getAll(this.clientId).subscribe(
+    this.allianceService.getAll(this.clientId).subscribe(
       (res) => {
         //console.log(res);
         this.loading = true;
@@ -103,17 +103,28 @@ export class AllianceListComponent implements OnInit {
     }
   }
 
-  editAgency(id: number) {
-    //this.router.navigate(['/home/agency', id]);
+  editAlliance(alliance) {
+    const dialogRef = this.dialog.open(AllianceWizardComponent, {
+      width: '70%',
+      height: '70%',
+      disableClose: true,
+      data: { alliance: alliance },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.LoadAgencies();
+    });
   }
 
   goToNew() {
     const dialogRef = this.dialog.open(AllianceWizardComponent, {
       width: '70%',
       height: '70%',
-      data: { clientId: this.clientId, bonafideId: null },
+      disableClose: true,
+      data: { clientid: this.clientId },
     });
-    dialogRef.afterClosed().subscribe((result) => {});
+    dialogRef.afterClosed().subscribe((result) => {
+      this.LoadAgencies();
+    });
   }
 
   doFilter(value: any) {
@@ -144,8 +155,9 @@ export class AllianceListComponent implements OnInit {
     try {
       dialogRef.afterClosed().subscribe(async (dialogResult) => {
         if (dialogResult) {
-          await this.agencyApi.delete(id);
-          this.LoadAgencies();
+          await this.allianceService.delete(id).then(() => {
+            this.LoadAgencies();
+          });
         }
       });
     } catch (error) {

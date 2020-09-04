@@ -12,6 +12,7 @@ import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.componen
 import * as Swal from 'sweetalert2';
 import { AllianceComponent } from '../alliance/alliance.component';
 import { AllianceListComponent } from '../alliance-list/alliance-list.component';
+import { AlliancesService } from '@app/shared/alliances.service';
 
 @Component({
   selector: 'app-client',
@@ -44,6 +45,8 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   reactiveForm: FormGroup;
 
+  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
+
   fabMenuButtons = {
     visible: false,
     buttons: [],
@@ -54,7 +57,8 @@ export class ClientComponent implements OnInit, OnDestroy {
     private router: Router,
     private app: AppService,
     private languageService: LanguageService,
-    private clientWizard: ClientWizardService
+    private clientWizard: ClientWizardService,
+    private alianceService: AlliancesService
   ) {}
   ngOnDestroy(): void {
     this.clientWizard.resetFormGroups();
@@ -144,7 +148,40 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.dependants.goToNew();
         break;
       case 'Alliance':
-        this.alliance.goToNew();
+        this.alianceService.iselegible(this.clientid).subscribe(
+          (res: string[]) => {
+            var validationNotMeetText = '';
+            var promiseArray: Promise<string>[] = new Array();
+            if (res)
+              res.forEach((s) =>
+                promiseArray.push(
+                  this.languageService.translate
+                    .get(`CLIENTS.${s}`)
+                    .toPromise()
+                    .then(
+                      (txt) =>
+                        (validationNotMeetText += `<div style="margin:20px;" >${txt}</div>`)
+                    )
+                )
+              );
+
+            Promise.all(promiseArray).then(() => {
+              if (!res) {
+                this.alliance.goToNew();
+              } else {
+                Swal.default.fire({
+                  position: 'center',
+                  icon: 'error',
+                  title: 'Error',
+                  html: validationNotMeetText,
+                  showConfirmButton: false,
+                  heightAuto: false,
+                });
+              }
+            });
+          },
+          (err) => {}
+        );
         break;
       default:
         break;
@@ -212,5 +249,13 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   disableControls() {
     this.clientsService.toggleEditControl.emit(true);
+  }
+
+  async deceased() {
+    try {
+      await this.clientsService.Decesed(this.client.id).toPromise();
+    } catch (ex) {
+      this.app.showErrorMessage(ex);
+    }
   }
 }

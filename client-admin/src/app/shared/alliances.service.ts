@@ -34,6 +34,18 @@ export class AlliancesService {
     return this.http.get(`${environment.baseURL}/Alliance/${id}`).toPromise();
   }
 
+  AlianceRequest(request) {
+    return this.http.get(
+      `${environment.baseURL}/Alliance/AlianceRequest/${request}`
+    );
+  }
+
+  iselegible(clientid) {
+    return this.http.get(
+      `${environment.baseURL}/Alliance/client/${clientid}/iselegible`
+    );
+  }
+
   update(alliance: any) {
     return this.http
       .put(`${environment.baseURL}/Alliance/${alliance.Id}`, alliance)

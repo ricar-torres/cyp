@@ -1,7 +1,15 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input,
+  ViewChild,
+  Output,
+  EventEmitter,
+} from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
+import { MatSlideToggle } from '@angular/material';
 
 @Component({
   selector: 'app-beneficiaries-benefit-distribution',
@@ -21,8 +29,10 @@ import { DependantsAPIService } from '@app/shared/dependants.api.service';
   ],
 })
 export class BeneficiariesBenefitDistributionComponent implements OnInit {
-  @Input() percentageDependent: FormGroup[] = [];
-  @Input() coverSelection: any;
+  @Input() BeneficiariesList: FormGroup[] = [];
+  @Output() benefitChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
+
+  @ViewChild('dependantsEnabled') dependantsEnabled: MatSlideToggle;
   typesOfRelation: Object;
   constructor(
     private _formBuilder: FormBuilder,
@@ -37,37 +47,39 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
 
   addDependant() {
     var newForm = this._formBuilder.group({
-      name: [null],
-      gender: [null],
-      birthDate: [null],
-      relation: [null],
-      percent: [null],
+      name: [null, [Validators.required]],
+      gender: [null, [Validators.required]],
+      birthDate: [null, [Validators.required]],
+      ssn: [null, [Validators.required]],
+      relationship: [null, [Validators.required]],
+      percent: [null, [Validators.required]],
     });
 
     newForm.get('birthDate').disable();
-    this.percentageDependent.push(newForm);
+    this.BeneficiariesList.push(newForm);
     this.calculatePercent();
   }
 
   private calculatePercent() {
-    var distr = 100 / this.percentageDependent.length;
-    this.percentageDependent.forEach((el) => {
+    var distr = 100 / this.BeneficiariesList.length;
+    this.BeneficiariesList.forEach((el) => {
       el.get('percent').setValue(distr);
     });
   }
 
   deleteDependant(i: number) {
-    this.percentageDependent.splice(i, 1);
+    this.BeneficiariesList.splice(i, 1);
     this.calculatePercent();
   }
 
   clearIsuranceDependants(event) {
-    if (!event) this.percentageDependent = [];
+    this.benefitChecked.emit(event);
+    if (!event) this.BeneficiariesList = [];
   }
 
   get currentPercentage() {
     var percentage: number = 0;
-    this.percentageDependent.forEach((x) => {
+    this.BeneficiariesList.forEach((x) => {
       percentage += Number.parseFloat(x.get('percent').value);
     });
     return percentage;

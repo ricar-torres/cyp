@@ -20,14 +20,7 @@
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.NAME' | translate }}</mat-label>
             <input formControlName="name" matInput />
-            <mat-error
-              *ngIf="
-                reactiveForm.get('name').hasError('pattern') &&
-                reactiveForm.touched
-              "
-            >
-              {{ 'DEPENDANT.ONLY_PATTERN' | translate }}</mat-error
-            >
+
             <mat-error
               *ngIf="
                 reactiveForm.get('name').hasError('required') &&
@@ -40,14 +33,6 @@
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.INITIAL' | translate }}</mat-label>
             <input formControlName="initial" matInput mask="A" />
-            <mat-error
-              *ngIf="
-                reactiveForm.get('initial').hasError('pattern') &&
-                reactiveForm.touched
-              "
-            >
-              {{ 'ONLY_LETTERS' | translate }}</mat-error
-            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.LASTNAME1' | translate }}</mat-label>
@@ -60,14 +45,6 @@
             >
               {{ 'REQUIRED' | translate }}</mat-error
             >
-            <mat-error
-              *ngIf="
-                reactiveForm.get('lastName1').hasError('pattern') &&
-                reactiveForm.touched
-              "
-            >
-              {{ 'ONLY_LETTERS' | translate }}</mat-error
-            >
           </mat-form-field>
           <mat-form-field>
             <mat-label>{{ 'DEPENDANT.LASTNAME2' | translate }}</mat-label>
@@ -79,13 +56,6 @@
               "
             >
               {{ 'REQUIRED' | translate }}</mat-error
-            ><mat-error
-              *ngIf="
-                reactiveForm.get('lastName2').hasError('pattern') &&
-                reactiveForm.touched
-              "
-            >
-              {{ 'ONLY_LETTERS' | translate }}</mat-error
             >
           </mat-form-field>
         </div>

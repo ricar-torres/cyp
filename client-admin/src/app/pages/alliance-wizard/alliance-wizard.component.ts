@@ -1,12 +1,28 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+  AfterViewInit,
+} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { QualifyingEventService } from '@app/shared/qualifying-event.service';
 import { HealthPlanService } from '@app/shared/health-plan.service';
 import { CoverService } from '@app/shared/cover.service';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MatStepper, MatSnackBar } from '@angular/material';
+import {
+  MatStepper,
+  MatSnackBar,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatSelectChange,
+  MatSlideToggle,
+} from '@angular/material';
 import * as Swal from 'sweetalert2';
+import { AlliancesService } from '@app/shared/alliances.service';
+import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-alliance-wizard',
@@ -25,32 +41,64 @@ import * as Swal from 'sweetalert2';
     ]),
   ],
 })
-export class AllianceWizardComponent implements OnInit {
+export class AllianceWizardComponent implements OnInit, AfterViewInit {
   affiliationMethod: FormGroup;
   benefits: FormGroup;
   finalFormGroup: FormGroup;
-  percentageDependent: FormGroup[] = [];
+  BeneficiariesList: FormGroup[] = [];
   healthPlans: any = [];
   covers: any = [];
 
+  addonsList: any[] = new Array<any>();
+
   qualifyingEvents: [] = [];
   @ViewChild('stepper') stepper: MatStepper;
+  @ViewChild('beneficiaries')
+  beneficiaries: BeneficiariesBenefitDistributionComponent;
+  @ViewChild('mayorMadical') mayorMadical: MatSlideToggle;
 
   typesOfRelation: any;
+  availableAddons: any;
+
+  dependantsEnabled = false;
 
   constructor(
     private _formBuilder: FormBuilder,
     private qualifyingEventService: QualifyingEventService,
-    private healthPlansService: HealthPlanService,
+    private AlianceService: AlliancesService,
     private coverService: CoverService,
     private DependantsServices: DependantsAPIService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    public dialogRef: MatDialogRef<AllianceWizardComponent>,
+    private halthPanService: HealthPlanService,
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+  ngAfterViewInit(): void {
+    this.stepper.selectionChange.subscribe((ev) => {
+      var qlf = this.affiliationMethod.get('qualifyingEvent').value;
+      if (ev.selectedIndex == 1) {
+        this.AlianceService.AlianceRequest(this.data.clientid).subscribe(
+          (res) => {
+            this.healthPlans = res;
+          }
+        );
+      }
+    });
+    console.log('test');
+    if (this.data.alliance) {
+      var alliance = this.data.alliance;
+      console.log(alliance.qualifyingEvent.id);
+      if (alliance.qualifyingEvent.id == 1) {
+        this.affiliationMethod.get('affiliationMethod').setValue('2');
+      } else {
+        this.affiliationMethod.get('affiliationMethod').setValue('1');
+      }
+    } else {
+      this.affiliationMethod.get('affiliationMethod').setValue('2');
+    }
+  }
 
   ngOnInit(): void {
-    // this.DependantsServices.getRelationTypes().subscribe((res) => {
-    //   this.typesOfRelation = res;
-    // });
     this.qualifyingEventService.getAll().subscribe((res) => {
       this.qualifyingEvents = <any>res;
     });
@@ -69,11 +117,7 @@ export class AllianceWizardComponent implements OnInit {
 
     this.benefits = this._formBuilder.group({
       HealthPlan: [null],
-      Addititons: [null],
-    });
-
-    this.healthPlansService.GetAll().subscribe((res) => {
-      this.healthPlans = res;
+      cover: [null],
     });
 
     this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
@@ -85,15 +129,102 @@ export class AllianceWizardComponent implements OnInit {
 
   checkPercent() {
     var percentage: number = 0;
-    this.percentageDependent.forEach((x) => {
-      percentage += Number.parseFloat(x.get('percent').value);
-    });
-    console.log(percentage);
-    if (percentage == 100) this.stepper.next();
-    else
-      this.percentageDependent.forEach((x) => {
-        x.get('percent').markAsDirty();
-        x.get('percent').setErrors({ BadPercentage: true });
+    var AllBeneficieriesAreValid = true;
+    if (
+      this.beneficiaries &&
+      this.beneficiaries.dependantsEnabled &&
+      this.beneficiaries.dependantsEnabled.checked
+    ) {
+      //debugger;
+      this.BeneficiariesList.forEach((x) => {
+        percentage += Number.parseFloat(x.get('percent').value);
+        if (x.invalid) {
+          AllBeneficieriesAreValid = false;
+        }
       });
+      if (percentage == 100 && AllBeneficieriesAreValid) this.stepper.next();
+      else {
+        if (percentage != 100) {
+          this.BeneficiariesList.forEach((x) => {
+            x.get('percent').markAsDirty();
+            x.get('percent').setErrors({ BadPercentage: true });
+          });
+        }
+      }
+    } else {
+      this.stepper.next();
+    }
+  }
+
+  coverChanged(event: MatSelectChange) {
+    this.coverService.GetAllAddOns(event.value).subscribe((res) => {
+      this.availableAddons = res;
+    });
+  }
+
+  lifeInsuranceToggle(chekced, addon) {
+    this.toggleAddon(chekced, addon);
+  }
+
+  mayorMedical(chekced, addon) {
+    this.toggleAddon(chekced, addon);
+  }
+
+  private toggleAddon(chekced: any, addon: any) {
+    if (chekced) {
+      this.addonsList.push(addon.id);
+    } else {
+      var index = this.addonsList.findIndex((x) => x == addon.id);
+      if (index > -1) {
+        this.addonsList.splice(index, 1);
+      }
+    }
+  }
+
+  async submitAliance() {
+    var addonsSelected = [];
+    var beneficiarieslist = [];
+    this.BeneficiariesList.forEach((fg) => {
+      beneficiarieslist.push(fg.value);
+    });
+    await this.AlianceService.create({
+      //Id: null, //new item
+      //ClientProductId: null, //create item in table with this name to fill with the created id this field
+      QualifyingEventId: this.affiliationMethod.get('qualifyingEvent').value,
+      CoverId: this.benefits.get('cover').value,
+      ClientId: this.data.clientid,
+      StartDate: null,
+      ElegibleDate: null,
+      EndDate: null,
+      EndReason: null,
+      AffType: null,
+      AffStatus: null,
+      AffFlag: null,
+      Coordination: null,
+      //LifeInsurance: null, //will be moved to other table
+      //MajorMedical: null, //will be moved to other table
+      Prima: null,
+      CreatedAt: null,
+      UpdatedAt: null,
+      DeletedAt: null,
+      Joint: null,
+      CoverAmount: null,
+      LifeInsuranceAmount: null,
+      MajorMedicalAmount: null,
+      SubTotal: null,
+      AddonList: this.addonsList,
+      Beneficiaries: beneficiarieslist,
+    }).then(() => {
+      this.dialogRef.close();
+    });
+  }
+
+  close() {
+    this.dialogRef.close();
+  }
+
+  healthPlanSelected() {
+    this.benefits.get('cover').setValue(null);
+    this.availableAddons = [];
   }
 }

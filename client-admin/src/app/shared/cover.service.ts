@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class CoverService {
+  GetByCover(res: any) {
+    throw new Error('Method not implemented.');
+  }
   constructor(private http: HttpClient) {}
 
   GetAll() {
@@ -19,5 +22,9 @@ export class CoverService {
     return this.http
       .get<any>(`${environment.baseURL}/Covers/plan/${coverId}`)
       .toPromise();
+  }
+
+  GetAllAddOns(id: string) {
+    return this.http.get(`${environment.baseURL}/Covers/${id}/addons`);
   }
 }

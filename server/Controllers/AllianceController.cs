@@ -81,13 +81,12 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]
-    public IActionResult Create([FromBody] Alianzas payload)
+    public async Task<IActionResult> Create([FromBody] AllianceDto payload)
     {
 
       try
       {
-
-        _service.Create(payload);
+        await _service.Create(payload);
         return Ok(payload);
 
       }
@@ -122,12 +121,12 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
     [Authorize]
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
       try
       {
 
-        _service.Delete(id);
+        await _service.Delete(id);
         return Ok();
 
       }
@@ -137,5 +136,41 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("AlianceRequest/{clientId}")]
+    public async Task<IActionResult> AlianceRequest(int clientId)
+    {
+      try
+      {
+        var availableHP = await _service.AvailableHealthPlansForClient(clientId);
+        return Ok(availableHP);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("client/{clientid}/iselegible")]
+    public async Task<IActionResult> ValidateClient(int clientid)
+    {
+      try
+      {
+        var reasons = await _service.IsElegible(clientid);
+        return Ok(reasons);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+
   }
 }

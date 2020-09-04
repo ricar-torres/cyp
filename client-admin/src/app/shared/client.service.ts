@@ -37,6 +37,10 @@ export class ClientService {
     return this.http.put(`${environment.baseURL}/clients`, payload).toPromise();
   }
 
+  Decesed(clinetId) {
+    return this.http.get(`${environment.baseURL}/clients/${clinetId}/Deceased`);
+  }
+
   delete(id: string) {
     return this.http.delete(`${environment.baseURL}/clients/${id}`).toPromise();
   }

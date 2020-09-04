@@ -1,3 +1,4 @@
+import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 import { DocsCallsListComponent } from './pages/docs-calls-list/docs-calls-list.component';
 import { RetirementComponent } from './pages/retirement/retirement.component';
@@ -268,6 +269,14 @@ const routes: Routes = [
       {
         path: 'dependants-list',
         component: DependantsListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+        },
+      },
+      {
+        path: 'multi-assist',
+        component: MultiAssistComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,

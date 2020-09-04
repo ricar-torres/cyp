@@ -47,7 +47,10 @@
           [displayWith]="displayFnMedicalPlan"
           #healthPlanAutoComplete="matAutocomplete"
         >
-          <mat-option *ngFor="let plans of heathPlans" [value]="plans">
+          <mat-option
+            *ngFor="let plans of planFilteredOptions | async"
+            [value]="plans"
+          >
             {{ plans.name }}
           </mat-option>
         </mat-autocomplete>

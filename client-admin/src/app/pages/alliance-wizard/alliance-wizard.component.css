@@ -21,6 +21,11 @@ button {
   margin-top: 10px;
 }
 
+.top-bottom-margin {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 ::ng-deep .mat-horizontal-stepper-header {
   pointer-events: none !important;
 }
