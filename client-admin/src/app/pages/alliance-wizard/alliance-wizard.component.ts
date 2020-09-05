@@ -112,6 +112,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
           return { id: x };
         });
 
+        this.addonsList = alliance.addonList;
+
         this.availableAddons = <[]>(
           await this.coverService.GetAllAddOns(alliance.cover.id).toPromise()
         );
@@ -225,12 +227,10 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   }
 
   lifeInsuranceToggle(chekced, addon) {
-    console.log('insurance');
     this.toggleAddon(chekced, addon);
   }
 
   mayorMedical(chekced, addon) {
-    console.log('mayormedica');
     this.toggleAddon(chekced, addon);
   }
 

@@ -14,7 +14,7 @@ namespace WebApi.Services
   {
     List<Clients> GetAll();
     Clients GetById(int id);
-    ClientInformationDto Create(ClientInformationDto payload);
+    Clients Create(ClientInformationDto payload);
     Task<ClientInformationDto> Update(ClientInformationDto payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
@@ -71,7 +71,7 @@ namespace WebApi.Services
       return res;
     }
 
-    public ClientInformationDto Create(ClientInformationDto payload)
+    public Clients Create(ClientInformationDto payload)
     {
       try
       {
@@ -132,7 +132,13 @@ namespace WebApi.Services
 
           _context.SaveChanges();
         }
-        return payload;
+
+        foreach (var item in newClient.ChapterClient)
+        {
+          item.Client = null;
+        }
+
+        return newClient;
       }
       catch (Exception ex)
       {

@@ -101,8 +101,8 @@ namespace WebApi.Controllers
       try
       {
 
-        _service.Create(payload);
-        return Ok(payload);
+        var newClient = _service.Create(payload);
+        return Ok(newClient);
 
       }
       catch (AppException ex)

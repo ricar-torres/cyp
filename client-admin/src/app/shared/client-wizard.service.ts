@@ -159,8 +159,9 @@ export class ClientWizardService {
         Bonafides: this.BonafideList,
         Dependants: this.DependantsList,
       };
-      await this.clientService.create(ClientInforation);
+      var res = await this.clientService.create(ClientInforation);
       if (agency) this.adaptInfoForGUI(agency);
+      return res;
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
