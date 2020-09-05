@@ -8,8 +8,11 @@ using WebApi.Helpers;
 
 namespace server.Services {
 	public interface IMultiAssistService {
-		IQueryable<HealthPlans> GetAllMultiAssist();
+		IQueryable<HealthPlans> GetMultiAssistPlans();
 		int Create(MultiAssists payload);
+		void Update(MultiAssists paylaod);
+		MultiAssists GetById(int id);
+		IQueryable<MultiAssists> GetAll();
 	}
 	public class MultiAssistService : IMultiAssistService {
 		private readonly DataContext _context;
@@ -31,7 +34,7 @@ namespace server.Services {
 				});
 				payload.Beneficiaries = beneficiariesList;
 
-				this._context.MultiiAssists.Add(payload);
+				this._context.MultiAssists.Add(payload);
 				this._context.SaveChanges();
 				return payload.Id;
 			} catch (System.Exception ex) {
@@ -39,7 +42,22 @@ namespace server.Services {
 			}
 		}
 
-		public IQueryable<HealthPlans> GetAllMultiAssist() {
+		public void Update(MultiAssists paylaod) {
+			try {
+				paylaod.UpdatedAt = DateTime.Now;
+				if (_context.MultiAssists.FirstOrDefault(x => x.Id == paylaod.Id) is MultiAssists mas) {
+					_context.Entry(mas).CurrentValues.SetValues(paylaod);
+					_context.SaveChanges();
+				} else {
+					throw new AppException("MultiAssist not found");
+				}
+			} catch (Exception ex) {
+
+				throw ex;
+			}
+		}
+
+		public IQueryable<HealthPlans> GetMultiAssistPlans() {
 			try {
 				var res = this._context.Covers
 					.Include(hp => hp.HealthPlan)
@@ -49,11 +67,33 @@ namespace server.Services {
 					.Select(_ => _.HealthPlan)
 					.Distinct()
 					.AsNoTracking();
-				//  this._context.HealthPlans.Include(_ => _.Covers.Where(c => c.Type == "ASSIST" || c.Type == "ASSIST-VEH")).ThenInclude(_ => _.Type).AsNoTracking();
 				return res;
 			} catch (System.Exception ex) {
 
 				throw;
+			}
+		}
+
+		public IQueryable<MultiAssists> GetAll() {
+			try {
+				return this._context.MultiAssists.AsNoTracking();
+			} catch (System.Exception) {
+				throw;
+			}
+		}
+
+		public MultiAssists GetById(int id) {
+			MultiAssists res = null;
+			try {
+				if (_context.MultiAssists
+					.Include(m => m.Beneficiaries)
+					.Include(m => m.MultiAssistsVehicle)
+					.FirstOrDefault(ma => ma.Id == id) is MultiAssists ma) {
+					res = ma;
+				}
+				return res;
+			} catch (System.Exception ex) {
+				throw ex;
 			}
 		}
 	}
