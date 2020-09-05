@@ -251,10 +251,30 @@ namespace WebApi.Services
       aliance.ElegibleDate = payload.ElegibleDate.GetValueOrDefault();
       aliance.AffType = payload.AffType;
       aliance.AffStatus = payload.AffStatus.GetValueOrDefault();
+      aliance.CoverId = payload.CoverId.GetValueOrDefault();
+      //update beneficiaries
       UpdateBeneficiaries(payload);
       //update addons
-      //update plan
-      //update cover
+      var existingAddons = _context.AlianzaAddOns.Where(s => s.AlianzaId == payload.Id).Select(s => s).ToList();
+      existingAddons.ForEach(x =>
+      {
+        var exist = payload.AddonList.Contains(x.InsuranceAddOnId);
+        if (exist == false)
+        {
+          _context.AlianzaAddOns.Remove(x);
+        };
+      });
+
+      payload.AddonList.ForEach(x =>
+      {
+        var exist = existingAddons.FirstOrDefault(ad => ad.InsuranceAddOnId == x);
+        if (exist == null)
+        {
+          var newAddon = new AlianzaAddOns() { AlianzaId = payload.Id.GetValueOrDefault(), InsuranceAddOnId = x };
+          _context.AlianzaAddOns.Add(newAddon);
+        }
+      });
+
       await _context.SaveChangesAsync();
     }
 

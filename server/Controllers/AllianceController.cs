@@ -107,8 +107,8 @@ namespace WebApi.Controllers
     {
       try
       {
-        var res = _service.Update(payload);
-        return Ok(res);
+        await _service.Update(payload);
+        return Ok();
 
       }
       catch (AppException ex)
