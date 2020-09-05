@@ -80,6 +80,15 @@
           type="button"
           mat-button
           color="accent"
+          (click)="printAlianceInformation(element)"
+          *ngIf="editAccess && !deceased"
+        >
+          <mat-icon>print</mat-icon> {{ 'PRINT' | translate }}
+        </button>
+        <button
+          type="button"
+          mat-button
+          color="accent"
           (click)="editAlliance(element)"
           *ngIf="editAccess && !deceased"
         >

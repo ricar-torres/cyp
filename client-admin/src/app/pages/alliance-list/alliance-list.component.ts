@@ -173,4 +173,6 @@ export class AllianceListComponent implements OnInit {
       this.loading = false;
     }
   }
+
+  printAlianceInformation(alliance) {}
 }
