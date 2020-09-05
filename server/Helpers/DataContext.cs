@@ -79,7 +79,7 @@ namespace WebApi.Helpers {
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		public virtual DbSet<AffType> AffType { get; set; }
 		public virtual DbSet<AlianzaAddOns> AlianzaAddOns { get; set; }
-		public DbSet<MultiAssists> MultiiAssists { get; set; }
+		public DbSet<MultiAssists> MultiAssists { get; set; }
 		#endregion
 
 		#region FUNCTIONS
