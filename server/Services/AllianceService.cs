@@ -21,6 +21,7 @@ namespace WebApi.Services
     Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
     Task<List<AffType>> GetAllAffTypes();
+    Task<bool> CheckSsn(string ssn);
   }
 
   public class AllianceService : IAllianceService
@@ -190,7 +191,7 @@ namespace WebApi.Services
         x.Cover.Alianzas = null;
         x.QualifyingEvent.Alianzas = null;
         x.AddonList = _context.AlianzaAddOns.Where(s => s.AlianzaId == x.Id).Select(s => s.InsuranceAddOnId).ToList();
-        x.Beneficiaries = _context.Beneficiaries.Where(s => s.AlianzaId == x.Id).Select(s => new BeneficiariesDto(s)).ToList();
+        x.Beneficiaries = _context.Beneficiaries.Where(s => s.AlianzaId == x.Id && s.DeletedAt == null).Select(s => new BeneficiariesDto(s)).ToList();
         x.Beneficiaries.ForEach(x =>
         {
           x.Alianza = null;
@@ -252,9 +253,13 @@ namespace WebApi.Services
       aliance.AffType = payload.AffType;
       aliance.AffStatus = payload.AffStatus.GetValueOrDefault();
       aliance.CoverId = payload.CoverId.GetValueOrDefault();
-      //update beneficiaries
       UpdateBeneficiaries(payload);
-      //update addons
+      UpdateAddons(payload);
+      await _context.SaveChangesAsync();
+    }
+
+    private void UpdateAddons(AllianceDto payload)
+    {
       var existingAddons = _context.AlianzaAddOns.Where(s => s.AlianzaId == payload.Id).Select(s => s).ToList();
       existingAddons.ForEach(x =>
       {
@@ -274,8 +279,6 @@ namespace WebApi.Services
           _context.AlianzaAddOns.Add(newAddon);
         }
       });
-
-      await _context.SaveChangesAsync();
     }
 
     private void UpdateBeneficiaries(AllianceDto payload)
@@ -297,6 +300,7 @@ namespace WebApi.Services
         else
         {
           var beneficiary = new Beneficiaries();
+          beneficiary.AlianzaId = payload.Id;
           beneficiary.Name = x.Name;
           beneficiary.Ssn = x.Ssn;
           beneficiary.BirthDate = x.BirthDate;
@@ -307,6 +311,30 @@ namespace WebApi.Services
           _context.Beneficiaries.Add(beneficiary);
         }
       });
+      var existing = _context.Beneficiaries.Where(b => b.AlianzaId == payload.Id).ToList();
+      existing.ForEach(ex =>
+      {
+        var exist = payload.Beneficiaries.FirstOrDefault(b => b.Ssn == ex.Ssn);
+        if (exist == null)
+        {
+          ex.DeletedAt = DateTime.Now;
+          _context.Beneficiaries.Update(ex);
+        }
+      });
+    }
+
+    public async Task<bool> CheckSsn(string ssn)
+    {
+      if (!String.IsNullOrEmpty(ssn))
+      {
+        ssn = ssn.ToLower().Trim();
+        var payload = await _context.Beneficiaries.FirstOrDefaultAsync(bn => bn.Ssn.Replace("-", "") == ssn && bn.DeletedAt == null);
+        if (payload != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
   }
 }

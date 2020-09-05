@@ -213,7 +213,8 @@
     "PREREGISTER": "Pre Registro",
     "BONAFIDES_ASSOCIATION": "Bonafides",
     "GENERAL_INFORMATION": "General",
-    "ASSOCIATE_DEPENDATS": "Dependientes"
+    "ASSOCIATE_DEPENDATS": "Dependientes",
+    "FINISHCONTINUETOALLIANCE": "Finalizar y continuar con asociacion de alianza"
   },
   "ALLIANCELIST": {
     "QUALIFYINGEVENT": "Evento",

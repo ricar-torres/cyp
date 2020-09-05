@@ -79,5 +79,14 @@
     >
       {{ 'FINISH' | translate }}
     </button>
+    <button
+      class="button-space"
+      (click)="register(1)"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
+      {{ 'CLIENTWIZARD.FINISHCONTINUETOALLIANCE' | translate }}
+    </button>
   </mat-step>
 </mat-horizontal-stepper>

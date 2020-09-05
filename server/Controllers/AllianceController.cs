@@ -156,6 +156,23 @@ namespace WebApi.Controllers
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
     [Authorize]
+    [HttpGet("CheckSsn/{ssn}")]
+    public async Task<IActionResult> CheckSsn(string ssn)
+    {
+      try
+      {
+        var ssnAvailability = await _service.CheckSsn(ssn);
+        return Ok(ssnAvailability);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
     [HttpGet("client/{clientid}/iselegible")]
     public async Task<IActionResult> ValidateClient(int clientid)
     {
