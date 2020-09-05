@@ -21,6 +21,7 @@ namespace WebApi.Services
     Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
     Task<List<AffType>> GetAllAffTypes();
+    Task<bool> CheckSsn(string ssn);
   }
 
   public class AllianceService : IAllianceService
@@ -320,6 +321,20 @@ namespace WebApi.Services
           _context.Beneficiaries.Update(ex);
         }
       });
+    }
+
+    public async Task<bool> CheckSsn(string ssn)
+    {
+      if (!String.IsNullOrEmpty(ssn))
+      {
+        ssn = ssn.ToLower().Trim();
+        var payload = await _context.Beneficiaries.FirstOrDefaultAsync(bn => bn.Ssn.Replace("-", "") == ssn && bn.DeletedAt == null);
+        if (payload != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
   }
 }

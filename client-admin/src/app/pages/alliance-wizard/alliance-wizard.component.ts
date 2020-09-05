@@ -7,7 +7,12 @@ import {
   ViewChildren,
   QueryList,
 } from '@angular/core';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import {
+  FormGroup,
+  Validators,
+  FormBuilder,
+  AbstractControl,
+} from '@angular/forms';
 import { QualifyingEventService } from '@app/shared/qualifying-event.service';
 import { HealthPlanService } from '@app/shared/health-plan.service';
 import { CoverService } from '@app/shared/cover.service';
@@ -66,7 +71,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   constructor(
     private _formBuilder: FormBuilder,
     private qualifyingEventService: QualifyingEventService,
-    private AlianceService: AlliancesService,
+    private AllianceService: AlliancesService,
     private coverService: CoverService,
 
     public dialogRef: MatDialogRef<AllianceWizardComponent>,
@@ -76,7 +81,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     this.stepper.selectionChange.subscribe((ev) => {
       var qlf = this.affiliationMethod.get('qualifyingEvent').value;
       if (ev.selectedIndex == 1) {
-        this.AlianceService.AlianceRequest(this.data.clientid).subscribe(
+        this.AllianceService.AlianceRequest(this.data.clientid).subscribe(
           (res) => {
             this.healthPlans = res;
           }
@@ -131,7 +136,11 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
               name: [intm.name, [Validators.required]],
               gender: [intm.gender, [Validators.required]],
               birthDate: [intm.birthDate, [Validators.required]],
-              ssn: [intm.ssn, [Validators.required]],
+              ssn: [
+                intm.ssn,
+                [Validators.required],
+                this.checkSsn(intm.ssn).bind(this),
+              ],
               relationship: [intm.relationship, [Validators.required]],
               percent: [intm.percent, [Validators.required]],
             });
@@ -163,7 +172,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       this.qualifyingEvents = <any>res;
     });
 
-    this.AlianceService.getAllAffTypes().subscribe((res) => {
+    this.AllianceService.getAllAffTypes().subscribe((res) => {
       this.affTypes = <[]>res;
     });
 
@@ -252,7 +261,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       beneficiarieslist.push(fg.getRawValue());
     });
 
-    await this.AlianceService.create({
+    await this.AllianceService.create({
       Id: this.data.alliance ? this.data.alliance.id : null,
       ClientProductId: this.data.alliance
         ? this.data.alliance.clientProductId
@@ -298,5 +307,18 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   healthPlanSelected() {
     this.benefits.get('cover').setValue(null);
     this.availableAddons = [];
+  }
+
+  checkSsn(ssn: string) {
+    return async (control: AbstractControl) => {
+      //console.log(ssn, control.value);
+      if (control.value && ssn != control.value) {
+        const res: any = await this.AllianceService.checkSsn(
+          control.value
+        ).toPromise();
+        if (res) return { ssnTaken: true };
+      }
+      return null;
+    };
   }
 }

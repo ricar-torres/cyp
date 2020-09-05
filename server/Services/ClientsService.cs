@@ -396,7 +396,7 @@ namespace WebApi.Services
       if (!String.IsNullOrEmpty(criteria))
       {
         criteria = criteria.ToLower().Trim();
-        var payload = await _context.Clients.FirstOrDefaultAsync(ag => ag.Ssn.Replace("-", "") == criteria);
+        var payload = await _context.Clients.FirstOrDefaultAsync(ag => ag.Ssn.Replace("-", "") == criteria && ag.DeletedAt == null);
         if (payload != null)
         {
           return true;
