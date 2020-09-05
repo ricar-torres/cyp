@@ -37,7 +37,7 @@ export class BonaFideListComponent implements OnInit {
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
-
+  deceased: boolean = false;
   dataSource;
   displayedColumns: string[] = [
     'id',

@@ -28,7 +28,7 @@
               <mat-icon>list</mat-icon>{{ 'GOBACK' | translate }}
             </button>
             <button
-              (click)="deceased()"
+              (click)="deceaseConfirm()"
               type="button"
               mat-stroked-button
               type="button"
@@ -215,6 +215,7 @@
                 {{ 'CLIENTS.GENERALINFORMATION' | translate }}
               </ng-template>
               <app-general-information
+                #generalInformation
                 [client]="client"
               ></app-general-information>
             </mat-tab>
@@ -224,7 +225,10 @@
                 <mat-icon>home</mat-icon>
                 {{ 'CLIENTS.DIRECTIONS' | translate }}
               </ng-template>
-              <app-client-address [clientid]="clientid"></app-client-address>
+              <app-client-address
+                #clientAddressComponent
+                [clientid]="clientid"
+              ></app-client-address>
             </mat-tab>
 
             <mat-tab>
@@ -287,7 +291,7 @@
   </div>
 </md-content>
 <app-speed-dial-fab
-  *ngIf="fabMenuButtons.visible"
+  *ngIf="fabMenuButtons.visible && !deceased"
   (fabClick)="onSpeedDialFabClicked($event)"
   [buttons]="fabMenuButtons.buttons"
 ></app-speed-dial-fab>

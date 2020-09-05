@@ -78,7 +78,7 @@ namespace WebApi.Controllers {
 						CreatedAt = DateTime.Now
 				};
 
-				cpId = _clientProductService.Create(clientProduct);
+        cpId = _clientProductService.Create(clientProduct);
 
 				if (cpId > 0) {
 					payload.MultiAssist.ClientProductId = cpId;
@@ -87,12 +87,14 @@ namespace WebApi.Controllers {
 					return BadRequest();
 				}
 
-				return Ok(payload);
+        return Ok(payload);
 
-			} catch (System.Exception ex) {
-				return DefaultError(ex);
-			}
-		}
+      }
+      catch (System.Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
 
 		[AllowAnonymous]
 		[HttpPut]

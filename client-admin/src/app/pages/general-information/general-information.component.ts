@@ -17,7 +17,7 @@ export class GeneralInformationComponent implements OnInit {
   @Input() client;
   agencies = [];
   covers = [];
-
+  deceased: boolean = false;
   healthPlan: FormControl = new FormControl();
   hasTutor: FormControl = new FormControl();
 
@@ -53,8 +53,7 @@ export class GeneralInformationComponent implements OnInit {
     );
     if (this.client) {
       await this.fillForm();
-    }
-    if (!this.client) this.hasTutor.setValue(0);
+    } else this.hasTutor.setValue(0);
     this.loading = false;
   }
 

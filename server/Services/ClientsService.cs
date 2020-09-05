@@ -432,7 +432,8 @@ namespace WebApi.Services
       if (client == null)
         throw new Exception("No Client with provided id");
       client.Status = 3;
-      _context.Update(client);
+      _context.Clients.Update(client);
+      await _context.SaveChangesAsync();
     }
   }
 }
