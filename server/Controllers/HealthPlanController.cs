@@ -304,6 +304,28 @@ namespace WebApi.Controllers
             }
         }
 
+
+
+        [AllowAnonymous]
+        [HttpGet("InsuranceBenefitTypes")]
+        public IActionResult Get()
+        {
+            try
+            {
+                var data = _itemService.BenefitType_GetAll();
+                //var res = _itemService.GetAll();
+                // var InsuranceBenefitTypeDto = _mapper.Map<List<InsuranceBenefitTypeDto>>(res);
+                //var data = from item in InsuranceBenefitTypeDto select new { item.Id , item.Name, item.Comment};
+
+                return Ok(data);
+            }
+            catch (Exception ex)
+            {
+                return DefaultError(ex.Message);
+            }
+        }
+
+
         [AllowAnonymous]
         [HttpPost("{HealthPlansId}/Addons/{id}/Upload")]
 
@@ -397,6 +419,9 @@ namespace WebApi.Controllers
                 return DefaultError(ex.Message);
             }
         }
+
+
+
 
         private IActionResult DefaultError(string exceptionMessage)
         {

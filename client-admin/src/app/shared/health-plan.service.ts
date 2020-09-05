@@ -42,47 +42,47 @@ export class HealthPlanService {
 
 
   insurancePlanById(id:string){ 
-    return this.http.get(`${environment.baseURL}/InsurancePlans/${id}`).toPromise();
+    return this.http.get(`${environment.baseURL}/Covers/${id}`).toPromise();
   }
 
 
   insurancePlanDelete(id:string){ 
-    return this.http.delete(`${environment.baseURL}/InsurancePlans/${id}`).toPromise();
+    return this.http.delete(`${environment.baseURL}/Covers/${id}`).toPromise();
   }
   
-  insurancePlanSave(id:string, item: any){
+  InsurancePlansave(id:string, item: any){
 
-    return this.http.put(`${environment.baseURL}/InsurancePlans/${id}`,item).toPromise();
+    return this.http.put(`${environment.baseURL}/Covers/${id}`,item).toPromise();
   
   }
 
   insurancePlanCreate(item: any){
 
-    return this.http.post(`${environment.baseURL}/InsurancePlans`,item).toPromise();
+    return this.http.post(`${environment.baseURL}/Covers`,item).toPromise();
   
   }
 
   
   BenefitTypesList(){ 
-    return this.http.get(`${environment.baseURL}/InsuranceBenefitTypes/`).toPromise();
+    return this.http.get(`${environment.baseURL}/HealthPlan/InsuranceBenefitTypes/`).toPromise();
   }
 
   
   addBenefitTypes(InsurancePlanId:string, item: any){
 
-    return this.http.post(`${environment.baseURL}/InsurancePlans/${InsurancePlanId}/BenefitType/`,item).toPromise();
+    return this.http.post(`${environment.baseURL}/Covers/${InsurancePlanId}/BenefitType/`,item).toPromise();
   
   }
 
 
 
   insurancePlanRateById(id:string){ 
-    return this.http.get(`${environment.baseURL}/InsurancePlans/${id}/Rate`).toPromise();
+    return this.http.get(`${environment.baseURL}/Covers/${id}/Rate`).toPromise();
   }
 
 
-  addonAvailable(insuranceCompanyId:string){ 
-    return this.http.get(`${environment.baseURL}/HealthPlan/${insuranceCompanyId}/addons/`).toPromise();
+  addonAvailable(healthPlanId:string){ 
+    return this.http.get(`${environment.baseURL}/HealthPlan/${healthPlanId}/addons/`).toPromise();
   }
 
 
@@ -90,8 +90,8 @@ export class HealthPlanService {
     return this.http.put(`${environment.baseURL}/HealthPlan/Addons/${id}`,payload).toPromise();
   }
 
-  addonsCreate(InsuranceCompanyId:string, payload:any){ 
-    return this.http.post(`${environment.baseURL}/HealthPlan/${InsuranceCompanyId}/Addons`,payload).toPromise();
+  addonsCreate(healthPlanId:string, payload:any){ 
+    return this.http.post(`${environment.baseURL}/HealthPlan/${healthPlanId}/Addons`,payload).toPromise();
   }
 
   addonsDelete(id:string){
@@ -99,7 +99,7 @@ export class HealthPlanService {
   }
 
   planAddOnsDelete(InsurancePlanId:string, InsuranceAddOnsId:string){
-    return this.http.delete(`${environment.baseURL}/InsurancePlans/${InsurancePlanId}/AddOns/${InsuranceAddOnsId}`).toPromise();
+    return this.http.delete(`${environment.baseURL}/Covers/${InsurancePlanId}/AddOns/${InsuranceAddOnsId}`).toPromise();
   }
 
   insuranceEstimatesDownload(id:string){

@@ -292,9 +292,17 @@ namespace WebApi.Helpers {
 					.HasColumnName("rate_expiration_date")
 					.HasColumnType("date");
 
-				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate");
+				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate")
+					.HasDefaultValueSql("(0.00)");
 
-				entity.Property(e => e.IndividualTobaccoRate).HasColumnName("individual_tobacco_rate");
+				entity.Property(e => e.CoverageSingleRate).HasColumnName("coverage_single_rate")
+					.HasDefaultValueSql("(0.00)"); 
+
+				entity.Property(e => e.CoverageCoupleRate).HasColumnName("coverage_couple_rate")
+					.HasDefaultValueSql("(0.00)");
+
+				entity.Property(e => e.CoverageFamilyRate).HasColumnName("coverage_family_rate")
+					.HasDefaultValueSql("(0.00)"); 
 
 				entity.Property(e => e.PolicyYear).HasColumnName("policy_year");
 
@@ -1267,6 +1275,24 @@ namespace WebApi.Helpers {
 					.HasMaxLength(255);
 
 
+				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate")
+					.HasDefaultValueSql("(0.00)");
+
+				entity.Property(e => e.CoverageSingleRate).HasColumnName("coverage_single_rate")
+					.HasDefaultValueSql("(0.00)"); 
+
+				entity.Property(e => e.CoverageCoupleRate).HasColumnName("coverage_couple_rate")
+					.HasDefaultValueSql("(0.00)"); 
+
+				entity.Property(e => e.CoverageFamilyRate).HasColumnName("coverage_family_rate")
+					.HasDefaultValueSql("(0.00)"); 
+
+				entity.Property(e => e.MinimumEE).HasColumnName("minimum_EE")
+					.HasDefaultValueSql("(0)");
+
+				entity.Property(e => e.TypeCalculate).HasColumnName("type_calculate");
+
+
 				entity.Property(e => e.Beneficiary)
 					.IsRequired()
 					.HasColumnName("beneficiary")
@@ -2110,6 +2136,11 @@ namespace WebApi.Helpers {
 
 				entity.Property(e => e.AlianzaId).HasColumnName("alianza_id").IsRequired();
 				entity.Property(e => e.InsuranceAddOnId).HasColumnName("insurance_addon_id").IsRequired();
+
+				entity.Property(e => e.Cost).HasColumnName("cost")
+					.HasDefaultValueSql("(0.00)");
+
+
 				entity.HasKey(t => new {t.AlianzaId, t.InsuranceAddOnId});
 
 				//FK

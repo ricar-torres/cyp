@@ -566,7 +566,8 @@ export class AddOnsDialog {
     { id: 1, name: 'Solo por empleados' },
     { id: 2, name: 'Para todos los miembros' },
     { id: 3, name: 'Por tipo cubierta' },
-    { id: 4, name: 'Todos los miembros por edad' }
+    { id: 4, name: 'Todos los miembros por edad' },
+    { id: 5, name: 'Por tipo cubierta y edad' }
   ];
 
   constructor(

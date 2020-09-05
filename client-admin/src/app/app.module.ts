@@ -127,6 +127,7 @@ import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard
 import { BeneficiariesBenefitDistributionComponent } from './components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 import { InsuranceCompanyComponent } from './pages/insurance-company/insurance-company.component';
 import { InsuranceCompanyItemComponent, AddOnsDialog } from './pages/insurance-company-item/insurance-company-item.component';
+import { InsurancePlanItemComponent, BenefitTypeDialog } from './pages/insurance-plan-item/insurance-plan-item.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -189,6 +190,8 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     InsuranceCompanyComponent,
     InsuranceCompanyItemComponent,
     AddOnsDialog,
+    BenefitTypeDialog,
+    InsurancePlanItemComponent,
   ],
   imports: [
     BrowserModule,
@@ -270,6 +273,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BonafidesAssociatorComponent,
     AllianceWizardComponent,
     AddOnsDialog,
+    BenefitTypeDialog,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

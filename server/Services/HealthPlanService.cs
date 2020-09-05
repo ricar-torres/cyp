@@ -29,6 +29,8 @@ namespace WebApi.Services
         ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream);
         ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream);
         IActionResult GetAllAddOns(int HealthPlanId);
+
+        IQueryable<InsuranceBenefitType> BenefitType_GetAll();
     }
 
     public class HealthPlanService : Controller, IHealthPlanService
@@ -677,6 +679,28 @@ namespace WebApi.Services
 
         }
 
+
+        public IQueryable<InsuranceBenefitType> BenefitType_GetAll()
+        {
+            IQueryable<InsuranceBenefitType> item = null;
+
+            try
+            {
+
+
+                item = _context.InsuranceBenefitType.Where(r => r.DeletedAt == null).AsQueryable();
+
+         
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return item;
+
+        }
 
 
     }

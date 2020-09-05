@@ -240,6 +240,12 @@ namespace WebApi.Migrations
                         .HasColumnName("insurance_addon_id")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("Cost")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("cost")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
                     b.HasKey("AlianzaId", "InsuranceAddOnId");
 
                     b.HasIndex("InsuranceAddOnId");
@@ -1192,6 +1198,24 @@ namespace WebApi.Migrations
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
 
+                    b.Property<decimal>("CoverageCoupleRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("coverage_couple_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
+                    b.Property<decimal>("CoverageFamilyRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("coverage_family_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
+                    b.Property<decimal>("CoverageSingleRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("coverage_single_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnName("created_at")
                         .HasColumnType("datetime");
@@ -1203,6 +1227,18 @@ namespace WebApi.Migrations
                     b.Property<int>("HealthPlanId")
                         .HasColumnName("health_plan_id")
                         .HasColumnType("int");
+
+                    b.Property<decimal>("IndividualRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("individual_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
+                    b.Property<int>("MinimumEE")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("minimum_EE")
+                        .HasColumnType("int")
+                        .HasDefaultValueSql("(0)");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -1224,6 +1260,10 @@ namespace WebApi.Migrations
                         .HasColumnName("type")
                         .HasColumnType("nvarchar(255)")
                         .HasMaxLength(255);
+
+                    b.Property<int>("TypeCalculate")
+                        .HasColumnName("type_calculate")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnName("updated_at")
@@ -2150,6 +2190,24 @@ namespace WebApi.Migrations
                         .HasColumnName("cover_id")
                         .HasColumnType("int");
 
+                    b.Property<decimal>("CoverageCoupleRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("coverage_couple_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
+                    b.Property<decimal>("CoverageFamilyRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("coverage_family_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
+                    b.Property<decimal>("CoverageSingleRate")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnName("coverage_single_rate")
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
+
                     b.Property<DateTime?>("CreatedAt")
                         .HasColumnName("created_at")
                         .HasColumnType("datetime");
@@ -2159,12 +2217,10 @@ namespace WebApi.Migrations
                         .HasColumnType("datetime");
 
                     b.Property<decimal>("IndividualRate")
+                        .ValueGeneratedOnAdd()
                         .HasColumnName("individual_rate")
-                        .HasColumnType("decimal(12,2)");
-
-                    b.Property<decimal>("IndividualTobaccoRate")
-                        .HasColumnName("individual_tobacco_rate")
-                        .HasColumnType("decimal(12,2)");
+                        .HasColumnType("decimal(12,2)")
+                        .HasDefaultValueSql("(0.00)");
 
                     b.Property<int>("PolicyYear")
                         .HasColumnName("policy_year")

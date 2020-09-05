@@ -32,6 +32,8 @@ import { ClientListComponent } from './pages/client-list/client-list.component';
 import { ClientComponent } from './pages/client/client.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
 import { InsuranceCompanyComponent } from './pages/insurance-company/insurance-company.component';
+import { InsuranceCompanyItemComponent } from './pages/insurance-company-item/insurance-company-item.component';
+import { InsurancePlanItemComponent } from './pages/insurance-plan-item/insurance-plan-item.component';
 
 const routes: Routes = [
   {
@@ -281,6 +283,30 @@ const routes: Routes = [
         data: {
           //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
         },
+      },
+        {
+          path: 'insurance-company/:id',
+          component: InsuranceCompanyItemComponent,
+          //canActivate: [AuthGuardService],
+          data: {
+            //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
+          },
+      },
+      {
+          path: 'insurance-company/:insuranceCompanyId/plan/:id',
+          component: InsurancePlanItemComponent,
+          canActivate: [AuthGuardService],
+          data: {
+              //expectedRoles: MenuRoles.USERS
+          }
+      },
+      {
+          path: 'insurance-company/:insuranceCompanyId/plan',
+          component: InsurancePlanItemComponent,
+          canActivate: [AuthGuardService],
+          data: {
+             // expectedRoles: MenuRoles.USERS
+          }
       },
     ],
   },

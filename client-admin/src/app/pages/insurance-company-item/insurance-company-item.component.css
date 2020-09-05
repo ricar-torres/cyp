@@ -1,0 +1,59 @@
+
+  .full-width {
+    width: 100%;
+  }
+
+  .short-width {
+    width: 15% !important;
+  }
+  
+  .slide-margin {
+    margin: 10px;
+  }
+
+  .mat-stepper-horizontal {
+    margin-top: 8px;
+  }
+  
+  .mat-form-field {
+    margin-top: 16px;
+  }
+
+  .marging-letf {
+    margin-left: 8px;
+  }
+
+  mat-icon {
+    cursor: pointer;
+  }
+
+  mat-raised-button{
+    cursor: pointer;
+  }
+
+  .footer{
+    margin-top: 15px;
+  }
+
+table {
+    width: 100%;
+  }
+  
+  th.mat-sort-header-sorted {
+    color: black;
+  }
+  
+.mat-column-Name {
+  flex: 0 0 200px !important;
+}
+.mat-column-Actions {
+  flex: 0 0 400px !important;
+}
+
+.search-form {
+  width: 30%;
+}
+
+tr:nth-child(even) {
+  background-color: rgb(242, 242, 242);
+}

@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebApi.Entities
 {
@@ -27,7 +30,25 @@ namespace WebApi.Entities
         public DateTime? DeletedAt { get; set; }
         public string SobImg { get; set; }
         public string Type { get; set; } // Colocar si es alianza +65,-65, ect...
-        public bool? Beneficiary { get; set; } 
+        public bool? Beneficiary { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 6)]
+        public float IndividualRate { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 7)]
+        public float CoverageSingleRate { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 8)]
+        public float CoverageCoupleRate { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 9)]
+        public float CoverageFamilyRate { get; set; }
+
+        [Column(Order = 10)]
+        public int MinimumEE { get; set; }
+
+        [Column(Order = 11)]
+        public int TypeCalculate { get; set; }
 
         public virtual HealthPlans HealthPlan { get; set; }
         public virtual ICollection<Alianzas> Alianzas { get; set; }

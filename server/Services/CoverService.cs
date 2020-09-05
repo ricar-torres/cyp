@@ -19,7 +19,8 @@ namespace WebApi.Services
   {
     Task<List<Covers>> GetAll();
     Task<List<Covers>> GetByPlan(int planId);
-    Task<HealthPlans> GetPlanByCover(int coverId);
+        Task<Covers> GetById(int coverId);
+        Task<HealthPlans> GetPlanByCover(int coverId);
 
         Covers Create(Covers item);
         Covers Update(Covers item);
@@ -115,6 +116,7 @@ namespace WebApi.Services
             if (_context.Covers.Any(x => x.Name == item.Name && x.HealthPlanId == item.HealthPlanId))
                 throw new AppException("Cover Name " + item.Name + " is already exists");
 
+
             item.CreatedAt = DateTime.Now;
             _context.Covers.Add(item);
             _context.SaveChanges();
@@ -146,7 +148,7 @@ namespace WebApi.Services
                     throw new AppException("Cover Name " + item.Name + " is already exists");
             }
 
-            if (item.Code.ToLower() != _Covers.Code.ToLower())
+            if (string.IsNullOrWhiteSpace(_Covers.Code) || item.Code.ToLower() != _Covers.Code.ToLower())
             {
                 // Company Name has changed so check if the new Company Name is already exists
                 if (_context.Covers.Any(x => x.Code == item.Code))
@@ -161,6 +163,16 @@ namespace WebApi.Services
             _Covers.SobImg = item.SobImg;
             _Covers.Type = item.Type;
             _Covers.UpdatedAt = DateTime.Now;
+
+
+
+            _Covers.IndividualRate = item.IndividualRate;
+            _Covers.CoverageSingleRate = item.CoverageSingleRate;
+            _Covers.CoverageCoupleRate = item.CoverageCoupleRate;
+            _Covers.CoverageFamilyRate = item.CoverageFamilyRate;
+            _Covers.MinimumEE = item.MinimumEE;
+            _Covers.TypeCalculate = item.TypeCalculate;
+
 
             _context.Covers.Update(_Covers);
             _context.SaveChanges();
@@ -304,7 +316,7 @@ namespace WebApi.Services
                                             RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
                                             RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
                                             IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                                            IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
+                                            //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
                                             PolicyYear = PolicyYear,
                                             CreatedAt = DateTime.Now,
                                             UpdatedAt = DateTime.Now
@@ -324,7 +336,7 @@ namespace WebApi.Services
                                                 RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
                                                 RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
                                                 IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                                                IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
+                                                //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
                                                 PolicyYear = PolicyYear,
                                                 CreatedAt = DateTime.Now,
                                                 UpdatedAt = DateTime.Now
@@ -348,7 +360,7 @@ namespace WebApi.Services
                                             RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
                                             RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
                                             IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                                            IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
+                                           // IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
                                             PolicyYear = PolicyYear,
                                             CreatedAt = DateTime.Now,
                                             UpdatedAt = DateTime.Now
@@ -450,7 +462,7 @@ namespace WebApi.Services
                                     RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
                                     RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
                                     IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                    //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
                                     PolicyYear = PolicyYear,
                                     CreatedAt = DateTime.Now,
                                     UpdatedAt = DateTime.Now,
@@ -472,7 +484,7 @@ namespace WebApi.Services
                                         RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
                                         RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
                                         IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                                        IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                        //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
                                         PolicyYear = PolicyYear,
                                         CreatedAt = DateTime.Now,
                                         UpdatedAt = DateTime.Now,
@@ -497,7 +509,7 @@ namespace WebApi.Services
                                     RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
                                     RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
                                     IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                    //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
                                     PolicyYear = PolicyYear,
                                     CreatedAt = DateTime.Now,
                                     UpdatedAt = DateTime.Now,
@@ -634,12 +646,12 @@ namespace WebApi.Services
             }
 
             // validation
-            else if (string.IsNullOrWhiteSpace(item.Code))
-            {
-                exception = "Code is required";
-                return false;
-                //throw new AppException("LoginProviderId is required");
-            }
+            //else if (string.IsNullOrWhiteSpace(item.Code))
+            //{
+            //    exception = "Code is required";
+            //    return false;
+            //    //throw new AppException("LoginProviderId is required");
+            //}
 
             return true;
 

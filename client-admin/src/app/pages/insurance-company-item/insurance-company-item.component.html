@@ -1,5 +1,6 @@
 <md-content layout-margin layout-padding flex="50">
   
+  <mat-card>
     <mat-card-header>
       <mat-card-title>Aseguradora {{reactiveForm.controls.name.value}}</mat-card-title>
       <mat-card-subtitle># {{id}}</mat-card-subtitle>
@@ -72,7 +73,7 @@
           <!-- Name Column -->
           <ng-container matColumnDef="name">
             <th mat-header-cell *matHeaderCellDef> Nombre </th>
-            <td mat-cell *matCellDef="let element"> {{element.planName}} </td>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
           </ng-container>
         
           
@@ -215,6 +216,8 @@
       </mat-progress-spinner>
     </div>
     
+
+  </mat-card>
     </md-content> 
   
     
