@@ -126,6 +126,7 @@ import { AllianceListComponent } from './pages/alliance-list/alliance-list.compo
 import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard.component';
 import { BeneficiariesBenefitDistributionComponent } from './components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
+import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet/alliance-inscription-sheet.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -186,6 +187,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AllianceWizardComponent,
     BeneficiariesBenefitDistributionComponent,
     MultiAssistComponent,
+    AllianceInscriptionSheetComponent,
   ],
   imports: [
     BrowserModule,
@@ -266,6 +268,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     ClientWizardComponent,
     BonafidesAssociatorComponent,
     AllianceWizardComponent,
+    AllianceInscriptionSheetComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -17,6 +17,9 @@ import {
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 import { AlliancesService } from '@app/shared/alliances.service';
 import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
+import * as jspdf from 'jspdf';
+import html2canvas from 'html2canvas';
+import { AllianceInscriptionSheetComponent } from '../alliance-inscription-sheet/alliance-inscription-sheet.component';
 
 @Component({
   selector: 'app-alliance-list',
@@ -174,5 +177,15 @@ export class AllianceListComponent implements OnInit {
     }
   }
 
-  printAlianceInformation(alliance) {}
+  printAlianceInformation(alliance) {
+    const dialogRef = this.dialog.open(AllianceInscriptionSheetComponent, {
+      width: '90%',
+      height: '90%',
+      disableClose: true,
+      data: { clientid: this.clientId },
+    });
+    dialogRef.afterClosed().subscribe((result) => {
+      this.LoadAgencies();
+    });
+  }
 }
