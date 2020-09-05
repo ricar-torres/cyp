@@ -57,10 +57,10 @@ namespace WebApi.Controllers {
 				if (cpId > 0) {
 					payload.Payload.ClientProductId = cpId;
 					masId = _service.Create(payload.Payload);
-					if (masId > 0) {
-						if (payload.Payload.Beneficiaries.Count > 0)
-							this._beneficiaryService.Create(payload.Payload.Beneficiaries);
-					} else return BadRequest();
+					// if (masId > 0) {
+					// 	if (payload.Payload.Beneficiaries.Count > 0)
+					// 		this._beneficiaryService.Create(new List<Beneficiaries>(payload.Payload.Beneficiaries));
+					// } else return BadRequest();
 				} else {
 					return BadRequest();
 				}

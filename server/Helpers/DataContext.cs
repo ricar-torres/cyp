@@ -541,7 +541,7 @@ namespace WebApi.Helpers {
 			modelBuilder.Entity<Beneficiaries>(entity => {
 				entity.ToTable("beneficiaries");
 
-				entity.Property(e => e.Id).HasColumnName("id");
+				entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
 				entity.Property(e => e.AlianzaId).HasColumnName("alianza_id");
 

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -21,7 +22,15 @@ namespace server.Services {
 
 		public int Create(MultiAssists payload) {
 			try {
+				List<Beneficiaries> beneficiariesList;
+
 				payload.CreatedAt = DateTime.Now;
+				beneficiariesList = new List<Beneficiaries>(payload.Beneficiaries);
+				beneficiariesList.ForEach((item) => {
+					item.CreatedAt = DateTime.Now;
+				});
+				payload.Beneficiaries = beneficiariesList;
+
 				this._context.MultiiAssists.Add(payload);
 				this._context.SaveChanges();
 				return payload.Id;

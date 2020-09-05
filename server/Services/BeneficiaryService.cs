@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using WebApi.Entities;
@@ -5,7 +6,7 @@ using WebApi.Helpers;
 
 namespace server.Services {
 	public interface IBeneficiaryService {
-		void Create(IEnumerable<Beneficiaries> payload);
+		void Create(List<Beneficiaries> payload);
 	}
 	public class BeneficiaryService : IBeneficiaryService {
 		private readonly DataContext _context;
@@ -15,8 +16,11 @@ namespace server.Services {
 			_context = context;
 			_appSettings = appSettings.Value;
 		}
-		public void Create(IEnumerable<Beneficiaries> payload) {
+		public void Create(List<Beneficiaries> payload) {
 			try {
+				payload.ForEach((item) => {
+					item.CreatedAt = DateTime.Now;
+				});
 				this._context.Beneficiaries.AddRange(payload);
 				this._context.SaveChanges();
 			} catch (System.Exception ex) { }
