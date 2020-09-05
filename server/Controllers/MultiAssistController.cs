@@ -67,5 +67,16 @@ namespace WebApi.Controllers {
 				return DefaultError(ex);
 			}
 		}
+
+		[AllowAnonymous]
+		[HttpPost]
+		public IActionResult Update(MultiAssistDto payload) {
+			try {
+
+			} catch (System.Exception ex) {
+
+				throw;
+			}
+		}
 	}
 }
