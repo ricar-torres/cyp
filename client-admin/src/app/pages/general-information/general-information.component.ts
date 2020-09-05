@@ -17,7 +17,6 @@ export class GeneralInformationComponent implements OnInit {
   @Input() client;
   agencies = [];
   covers = [];
-  deceased: boolean = false;
   healthPlan: FormControl = new FormControl();
   hasTutor: FormControl = new FormControl();
 

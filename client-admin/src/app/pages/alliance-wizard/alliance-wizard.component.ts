@@ -204,7 +204,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     var percentage: number = 0;
     var AllBeneficieriesAreValid = true;
     if (
-      this.beneficiaries &&
+      this.beneficiaries.first &&
       this.beneficiaries.first.dependantsEnabled &&
       this.beneficiaries.first.dependantsEnabled.checked
     ) {

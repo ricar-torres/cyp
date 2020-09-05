@@ -248,10 +248,10 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.bonafideList.deceased = true;
         this.dependants.deceased = true;
         this.alliance.deceased = true;
-        this.clientAddressComponent.deceased = true;
+        this.clientAddressComponent.sameAsPhysical.disable();
         this.docsCalls.deceased = true;
-        this.generalInformation.deceased = true;
         this.generalInformation.healthPlan.disable();
+        this.generalInformation.hasTutor.disable();
         this.deceased = true;
       } else {
         this.reactiveForm.enable();
@@ -260,10 +260,10 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.bonafideList.deceased = false;
         this.dependants.deceased = false;
         this.alliance.deceased = false;
-        this.clientAddressComponent.deceased = false;
+        this.clientAddressComponent.sameAsPhysical.enable();
         this.docsCalls.deceased = false;
-        this.generalInformation.deceased = true;
         this.generalInformation.healthPlan.enable();
+        this.generalInformation.hasTutor.enable();
         this.deceased = true;
       }
     }
