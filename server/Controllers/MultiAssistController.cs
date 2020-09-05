@@ -57,10 +57,6 @@ namespace WebApi.Controllers {
 				if (cpId > 0) {
 					payload.Payload.ClientProductId = cpId;
 					masId = _service.Create(payload.Payload);
-					// if (masId > 0) {
-					// 	if (payload.Payload.Beneficiaries.Count > 0)
-					// 		this._beneficiaryService.Create(new List<Beneficiaries>(payload.Payload.Beneficiaries));
-					// } else return BadRequest();
 				} else {
 					return BadRequest();
 				}
@@ -69,6 +65,17 @@ namespace WebApi.Controllers {
 
 			} catch (System.Exception ex) {
 				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
+		[HttpPost]
+		public IActionResult Update(MultiAssistDto payload) {
+			try {
+
+			} catch (System.Exception ex) {
+
+				throw;
 			}
 		}
 	}
