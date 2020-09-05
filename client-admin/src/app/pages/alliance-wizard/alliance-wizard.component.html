@@ -171,13 +171,24 @@
         <mat-label>{{
           'ALLIANCEWIZARD.INSCRIPTIONTYPE' | translate
         }}</mat-label>
-        <mat-select formControlName="inscriptionType"> </mat-select>
+        <mat-select formControlName="inscriptionType">
+          <mat-option *ngFor="let afftype of affTypes" [value]="afftype.id">
+            {{ afftype.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field fxFlex>
         <mat-label>{{
           'ALLIANCEWIZARD.INSCRIPTIONSTATUS' | translate
         }}</mat-label>
-        <mat-select formControlName="inscriptionStatus"> </mat-select>
+        <mat-select formControlName="inscriptionStatus">
+          <mat-option [value]="1">
+            {{ 'COMPLETE' | translate }}
+          </mat-option>
+          <mat-option [value]="2">
+            {{ 'PENDING' | translate }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </form>
     <button

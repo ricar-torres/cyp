@@ -16,10 +16,11 @@ namespace WebApi.Services
     Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
     Task<Alianzas> Create(AllianceDto payload);
-    Alianzas Update(Alianzas payload);
+    Task Update(AllianceDto payload);
     Task Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
+    Task<List<AffType>> GetAllAffTypes();
   }
 
   public class AllianceService : IAllianceService
@@ -89,12 +90,16 @@ namespace WebApi.Services
         CoverId = payload.CoverId.GetValueOrDefault(),
         AffType = (byte?)afftype,
         AffStatus = 1,
+        ElegibleDate = DateTime.Now,
+        StartDate = DateTime.Now,
         CreatedAt = DateTime.Now,
         UpdatedAt = DateTime.Now,
         EndDate = DateTime.Now.AddYears(1)
       };
 
       //TODO: check if the status of the aliance is complete or pending
+      //for the moment is complete
+      alianza.AffStatus = 1;
       await _context.Alianzas.AddAsync(alianza);
       await _context.SaveChangesAsync();
 
@@ -233,9 +238,75 @@ namespace WebApi.Services
 
     }
 
-    public Alianzas Update(Alianzas payload)
+    public async Task<List<AffType>> GetAllAffTypes()
     {
-      throw new NotImplementedException();
+      var afftypes = await _context.AffType.ToListAsync();
+      return afftypes;
+    }
+
+    public async Task Update(AllianceDto payload)
+    {
+      var aliance = await _context.Alianzas.FirstOrDefaultAsync(a => a.Id == payload.Id);
+      aliance.StartDate = payload.StartDate;
+      aliance.ElegibleDate = payload.ElegibleDate.GetValueOrDefault();
+      aliance.AffType = payload.AffType;
+      aliance.AffStatus = payload.AffStatus.GetValueOrDefault();
+      aliance.CoverId = payload.CoverId.GetValueOrDefault();
+      //update beneficiaries
+      UpdateBeneficiaries(payload);
+      //update addons
+      var existingAddons = _context.AlianzaAddOns.Where(s => s.AlianzaId == payload.Id).Select(s => s).ToList();
+      existingAddons.ForEach(x =>
+      {
+        var exist = payload.AddonList.Contains(x.InsuranceAddOnId);
+        if (exist == false)
+        {
+          _context.AlianzaAddOns.Remove(x);
+        };
+      });
+
+      payload.AddonList.ForEach(x =>
+      {
+        var exist = existingAddons.FirstOrDefault(ad => ad.InsuranceAddOnId == x);
+        if (exist == null)
+        {
+          var newAddon = new AlianzaAddOns() { AlianzaId = payload.Id.GetValueOrDefault(), InsuranceAddOnId = x };
+          _context.AlianzaAddOns.Add(newAddon);
+        }
+      });
+
+      await _context.SaveChangesAsync();
+    }
+
+    private void UpdateBeneficiaries(AllianceDto payload)
+    {
+      payload.Beneficiaries.ForEach(x =>
+      {
+        if (x.Id != null)
+        {
+          var beneficiary = _context.Beneficiaries.FirstOrDefault(b => b.Id == x.Id);
+          beneficiary.Name = x.Name;
+          beneficiary.Ssn = x.Ssn;
+          beneficiary.BirthDate = x.BirthDate;
+          beneficiary.Gender = x.Gender;
+          beneficiary.Relationship = x.Relationship;
+          beneficiary.Percent = x.Percent;
+          beneficiary.UpdatedAt = DateTime.Now;
+          _context.Beneficiaries.Update(beneficiary);
+        }
+        else
+        {
+          var beneficiary = new Beneficiaries();
+          beneficiary.Name = x.Name;
+          beneficiary.Ssn = x.Ssn;
+          beneficiary.BirthDate = x.BirthDate;
+          beneficiary.Gender = x.Gender;
+          beneficiary.Relationship = x.Relationship;
+          beneficiary.Percent = x.Percent;
+          beneficiary.UpdatedAt = DateTime.Now;
+          _context.Beneficiaries.Add(beneficiary);
+        }
+      });
     }
   }
 }
