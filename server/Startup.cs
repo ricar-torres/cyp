@@ -85,6 +85,8 @@ namespace WebApi {
 			services.AddScoped<IDependantService, DependantService>();
 			services.AddScoped<IAllianceService, AllianceService>();
 			services.AddScoped<IMultiAssistService, MultiAssistService>();
+			services.AddScoped<IClientProductService, ClientProductService>();
+			services.AddScoped<IBeneficiaryService, BeneficiaryService>();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
