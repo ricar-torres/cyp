@@ -110,7 +110,7 @@
               mat-button
               color="accent"
               (click)="goToDetail(element)"
-              *ngIf="editAccess"
+              *ngIf="editAccess && !deceased"
             >
               <mat-icon>edit</mat-icon>
               {{ 'EDIT_BTN' | translate }}
@@ -121,7 +121,7 @@
               mat-button
               color="warn"
               (click)="deleteConfirm(element)"
-              *ngIf="editAccess"
+              *ngIf="editAccess && !deceased"
             >
               <mat-icon>delete</mat-icon>
               {{ 'DEL_BTN' | translate }}

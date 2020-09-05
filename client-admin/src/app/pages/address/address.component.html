@@ -65,6 +65,7 @@
           {{ 'CLIENTS.PHOSTALADDRESS' | translate }}
         </mat-card-title>
         <mat-slide-toggle
+          [disabled]="deceased"
           [formControl]="sameAsPhysical"
           (change)="usePhysical($event)"
           >{{ 'CLIENTS.SAMEADDRESS' | translate }}</mat-slide-toggle
