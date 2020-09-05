@@ -83,7 +83,7 @@
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="flex-start">
       <div fxLayout="column">
         <mat-label>{{ 'CLIENTS.AUTORIZEDPERSON' | translate }}</mat-label>
-        <mat-radio-group [disabled]="deceased" [formControl]="hasTutor">
+        <mat-radio-group [formControl]="hasTutor">
           <mat-radio-button [value]="0">{{
             'CLIENTS.PARTICIPANT' | translate
           }}</mat-radio-button>
