@@ -13,6 +13,7 @@ import * as Swal from 'sweetalert2';
 import { AllianceComponent } from '../alliance/alliance.component';
 import { AllianceListComponent } from '../alliance-list/alliance-list.component';
 import { AlliancesService } from '@app/shared/alliances.service';
+import { GeneralInformationComponent } from '../general-information/general-information.component';
 
 @Component({
   selector: 'app-client',
@@ -225,8 +226,12 @@ export class ClientComponent implements OnInit, OnDestroy {
     if (this.reactiveForm) {
       if (disable) {
         this.reactiveForm.disable();
+        this.clientWizard.generalInformationForm.disable();
+        this.clientWizard.clientAddressFormGroup.disable();
       } else {
         this.reactiveForm.enable();
+        this.clientWizard.generalInformationForm.enable();
+        this.clientWizard.clientAddressFormGroup.enable();
       }
     }
   }
