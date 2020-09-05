@@ -1,7 +1,9 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using server.Dtos;
 using server.Services;
 using WebApi.Controllers;
 using WebApi.Entities;
@@ -9,8 +11,12 @@ using WebApi.Entities;
 namespace WebApi.Controllers {
 	public class MultiAssistController : BaseController {
 		readonly IMultiAssistService _service;
-		public MultiAssistController(IMultiAssistService service) {
+		readonly IClientProductService _clientProductService;
+		readonly IBeneficiaryService _beneficiaryService;
+		public MultiAssistController(IMultiAssistService service, IClientProductService cpservice, IBeneficiaryService beneficiaryService) {
 			this._service = service;
+			this._clientProductService = cpservice;
+			this._beneficiaryService = beneficiaryService;
 		}
 
 		[AllowAnonymous]
@@ -34,8 +40,36 @@ namespace WebApi.Controllers {
 
 		[AllowAnonymous]
 		[HttpPost]
-		public IActionResult AttatchMultiAssist([FromBody] Covers payload) {
-			return Ok(payload);
+		public IActionResult Create([FromBody] MultiAssistDto payload) {
+
+			try {
+				ClientProduct clientProduct = new ClientProduct {
+					ClientId = payload.ClientId,
+						ProductId = 2, //MULTI-ASSIST ID
+						Status = 0,
+						CreatedAt = DateTime.Now
+				};
+				int cpId;
+				int masId;
+
+				cpId = _clientProductService.Create(clientProduct);
+
+				if (cpId > 0) {
+					payload.Payload.ClientProductId = cpId;
+					masId = _service.Create(payload.Payload);
+					if (masId > 0) {
+						if (payload.Payload.Beneficiaries.Count > 0)
+							this._beneficiaryService.Create(payload.Payload.Beneficiaries);
+					} else return BadRequest();
+				} else {
+					return BadRequest();
+				}
+
+				return Ok(payload);
+
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
 		}
 	}
 }

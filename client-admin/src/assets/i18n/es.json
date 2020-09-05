@@ -442,6 +442,12 @@
     "RECURRING_MONTH_TYPE": "Semanal",
     "RECURRING_WEEK_TYPE": "Mensual",
     "RECURRING_TYPE_LABEL": "Tipo de Recurrencia",
-    "RECURRING_TYPE_DAY_LABEL": "Día de Cobro"
+    "RECURRING_TYPE_DAY_LABEL": "Día de Cobro",
+    "CREATED_DATE": "Fecha de Creación",
+    "EFECTIVE_DATE": "Fecha de Efectividad",
+    "ELEGIBLE_DATE": "Fecha de Elegibilidad",
+    "END_DATE": "Fecha Final",
+    "COST": "Costo",
+    "STATUS": "Estatus"
   }
 }

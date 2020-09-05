@@ -33,7 +33,8 @@ export class MultiAssist {
     expDate: Date,
     debDay: number,
     debRecurringType: string,
-    beneficiaries: Array<Beneficiaries>
+    beneficiaries: Array<Beneficiaries>,
+    vehicle: MultiAssistsVehicle
   ) {
     this.id = id;
     this.coverId = coverId;

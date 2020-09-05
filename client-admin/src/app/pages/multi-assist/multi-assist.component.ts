@@ -10,6 +10,7 @@ import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
 import { MatStepper, MatSnackBar, MatSelectChange } from '@angular/material';
 import * as Swal from 'sweetalert2';
+import { MultiAssist } from '@app/models/MultiAssist';
 
 @Component({
   selector: 'app-multi-assist',
@@ -18,6 +19,7 @@ import * as Swal from 'sweetalert2';
 })
 export class MultiAssistComponent implements OnInit {
   multi_assist: FormGroup;
+  multi_assist_summary: FormGroup;
   healthPlans: any = [];
   filteredHPs: any;
   filteredCovers: any;
@@ -29,6 +31,9 @@ export class MultiAssistComponent implements OnInit {
   multi_assist_vehicule: FormGroup;
   multi_assist_bank: FormGroup;
   daysNums: Array<number>;
+  effectiveDate: Date;
+  createdDate: Date;
+  eligibleWaitingPeriodDate: Date;
   @ViewChild('beneficiaries') beneficiaries;
   constructor(
     private _formBuilder: FormBuilder,
@@ -55,6 +60,18 @@ export class MultiAssistComponent implements OnInit {
     this.multi_assist.get('HealthPlan').valueChanges.subscribe(async (res) => {
       this.covers = res.covers;
     });
+
+    this.createdDate = new Date();
+    this.effectiveDate = new Date(
+      this.createdDate.getFullYear(),
+      this.createdDate.getMonth() + 1,
+      this.createdDate.getDay()
+    );
+    this.eligibleWaitingPeriodDate = new Date(
+      this.effectiveDate.getFullYear(),
+      this.effectiveDate.getMonth() + 1,
+      this.effectiveDate.getDay()
+    );
   }
   public filter(value: string) {
     const filterValue = value.toLowerCase();
@@ -95,15 +112,63 @@ export class MultiAssistComponent implements OnInit {
       depdate: [null, [Validators.required]],
       depRecurringType: [null, [Validators.required]],
     });
+    this.multi_assist_summary = this._formBuilder.group({
+      endDate: [{ value: null, disabled: false }],
+    });
   }
 
   register() {
+    var beneficiarieslist = [];
     var multiAssist = this.multi_assist.getRawValue();
     var bank = this.multi_assist_bank.getRawValue();
     var vehicle = this.multi_assist_vehicule.getRawValue();
-    // var benefi = new Arra
-    var payload = Object.assign(multiAssist, bank, vehicle, benefi);
-    console.log(JSON.stringify(payload));
-    this.multiAssistApiService.AttatchMultiAssist(payload);
+    this.BeneficiariesList.forEach((fg) => {
+      beneficiarieslist.push(fg.getRawValue());
+    });
+    // console.log(JSON.stringify(multiAssist.HealthPlan.id));
+    // console.log(JSON.stringify(multiAssist.Addititons.id));
+    // console.log(JSON.stringify(bank));
+    // console.log(JSON.stringify(vehicle));
+    // console.log(JSON.stringify(beneficiarieslist));
+    var payload = new MultiAssist(
+      0,
+      multiAssist.Addititons.id,
+      this.effectiveDate,
+      this.eligibleWaitingPeriodDate,
+      this.multi_assist_summary.get('endDate').value,
+      100,
+      1,
+      bank.accType,
+      bank.bankName,
+      bank.holderName,
+      bank.routingNum,
+      bank.accountNum,
+      bank.expDate,
+      bank.depdate,
+      bank.depRecurringType,
+      beneficiarieslist,
+      vehicle
+    );
+    console.log(JSON.stringify({ multiassist: payload, clientId: 1 }));
+
+    // var mas = new MultiAssist({id: multiAssist.id,
+    // coverId: multiAssist.,
+    // effectiveDate: Date,
+    // eligibleWaitingPeriodDate: Date,
+    // endDate: Date,
+    // cost: number,
+    // statusId: number,
+    // accountType: string,
+    // bankName: string,
+    // accountHolderName: string,
+    // routingNum: string,
+    // accountNum: string,
+    // expDate: Date,
+    // debDay: number,
+    // debRecurringType: string,
+    // beneficiaries: Array<Beneficiaries>})
+    //var payload = Object.assign(multiAssist, bank, vehicle, beneficiarieslist);
+    //    console.log(JSON.stringify(payload));
+    this.multiAssistApiService.Create(payload, 1);
   }
 }

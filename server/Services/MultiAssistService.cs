@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -7,6 +8,7 @@ using WebApi.Helpers;
 namespace server.Services {
 	public interface IMultiAssistService {
 		IQueryable<HealthPlans> GetAllMultiAssist();
+		int Create(MultiAssists payload);
 	}
 	public class MultiAssistService : IMultiAssistService {
 		private readonly DataContext _context;
@@ -16,6 +18,18 @@ namespace server.Services {
 			_context = context;
 			_appSettings = appSettings.Value;
 		}
+
+		public int Create(MultiAssists payload) {
+			try {
+				payload.CreatedAt = DateTime.Now;
+				this._context.MultiiAssists.Add(payload);
+				this._context.SaveChanges();
+				return payload.Id;
+			} catch (System.Exception ex) {
+				return -1;
+			}
+		}
+
 		public IQueryable<HealthPlans> GetAllMultiAssist() {
 			try {
 				var res = this._context.Covers

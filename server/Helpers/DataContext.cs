@@ -79,7 +79,7 @@ namespace WebApi.Helpers {
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		public virtual DbSet<AffType> AffType { get; set; }
 		public virtual DbSet<AlianzaAddOns> AlianzaAddOns { get; set; }
-
+		public DbSet<MultiAssists> MultiiAssists { get; set; }
 		#endregion
 
 		#region FUNCTIONS
@@ -1961,52 +1961,52 @@ namespace WebApi.Helpers {
 
 				entity.Property(e => e.StatusId)
 					.HasColumnName("status_id")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(10)")
 					.HasMaxLength(10);
 
 				entity.Property(e => e.Ref1)
 					.HasColumnName("ref1")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(30)")
 					.HasMaxLength(30);
 
 				entity.Property(e => e.Ref2)
 					.HasColumnName("ref2")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(30)")
 					.HasMaxLength(30);
 
 				entity.Property(e => e.Ref3)
 					.HasColumnName("ref3")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(30)")
 					.HasMaxLength(30);
 
 				entity.Property(e => e.AccountType)
 					.HasColumnName("account_type")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(4)")
 					.HasMaxLength(4);
 
 				entity.Property(e => e.BankName)
 					.HasColumnName("bank_name")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(60)")
 					.HasMaxLength(60);
 
 				entity.Property(e => e.AccountHolderName)
 					.HasColumnName("account_holder_name")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(60)")
 					.HasMaxLength(60);
 
 				entity.Property(e => e.RoutingNum)
 					.HasColumnName("routing_num")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(9)")
 					.HasMaxLength(9);
 
 				entity.Property(e => e.AccountNum)
 					.HasColumnName("account_num")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(12)")
 					.HasMaxLength(12);
 
 				entity.Property(e => e.ExpDate)
 					.HasColumnName("exp_date")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(4)")
 					.HasMaxLength(4);
 
 				entity.Property(e => e.DebDay)
@@ -2014,7 +2014,7 @@ namespace WebApi.Helpers {
 
 				entity.Property(e => e.DebRecurringType)
 					.HasColumnName("deb_recurring_type")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(10)")
 					.HasMaxLength(10);
 
 				entity.Property(e => e.CreatedAt)
