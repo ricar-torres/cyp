@@ -18,11 +18,14 @@ namespace WebApi.Controllers {
 			this._clientProductService = cpservice;
 			this._beneficiaryService = beneficiaryService;
 		}
+		public IActionResult GetAll() {
+			return Ok(_service.GetAll());
+		}
 
 		[AllowAnonymous]
-		[HttpGet]
-		public IActionResult GetAll() {
-			var list = _service.GetAllMultiAssist().ToList();
+		[HttpGet("[action]")]
+		public IActionResult GetMultiAssistPlans() {
+			var list = _service.GetMultiAssistPlans().ToList();
 			list.ForEach((x) => {
 				var covers = new List<Covers>(x.Covers);
 				covers.ForEach((c) => {
@@ -39,24 +42,47 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
+		[HttpGet("{id}")]
+		public IActionResult GetById(int id) {
+			MultiAssists res;
+			List<Beneficiaries> beneficiaryList;
+			List<MultiAssistsVehicle> vehicleList;
+			try {
+				res = _service.GetById(id);
+				vehicleList = new List<MultiAssistsVehicle>(res.MultiAssistsVehicle);
+				beneficiaryList = new List<Beneficiaries>(res.Beneficiaries);
+				vehicleList.ForEach((v) => {
+					v.MultiAssists = null;
+				});
+				beneficiaryList.ForEach((b) => {
+					b.MultiAssists = null;
+				});
+				res.MultiAssistsVehicle = vehicleList;
+				res.Beneficiaries = beneficiaryList;
+				return Ok(res);
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
 		[HttpPost]
 		public IActionResult Create([FromBody] MultiAssistDto payload) {
 
 			try {
+				int cpId;
 				ClientProduct clientProduct = new ClientProduct {
 					ClientId = payload.ClientId,
 						ProductId = 2, //MULTI-ASSIST ID
 						Status = 0,
 						CreatedAt = DateTime.Now
 				};
-				int cpId;
-				int masId;
 
 				cpId = _clientProductService.Create(clientProduct);
 
 				if (cpId > 0) {
-					payload.Payload.ClientProductId = cpId;
-					masId = _service.Create(payload.Payload);
+					payload.MultiAssist.ClientProductId = cpId;
+					_service.Create(payload.MultiAssist);
 				} else {
 					return BadRequest();
 				}
@@ -69,13 +95,13 @@ namespace WebApi.Controllers {
 		}
 
 		[AllowAnonymous]
-		[HttpPost]
+		[HttpPut]
 		public IActionResult Update(MultiAssistDto payload) {
 			try {
-
+				this._service.Update(payload.MultiAssist);
+				return Ok();
 			} catch (System.Exception ex) {
-
-				throw;
+				return DefaultError(ex);
 			}
 		}
 	}

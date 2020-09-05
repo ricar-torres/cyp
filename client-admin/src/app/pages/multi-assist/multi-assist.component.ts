@@ -92,6 +92,7 @@ export class MultiAssistComponent implements OnInit {
   }
   initForms() {
     this.multi_assist = this._formBuilder.group({
+      id: [{ value: 0, hidden: true }],
       HealthPlan: [null, [Validators.required]],
       Addititons: [null, [Validators.required]],
     });
@@ -117,7 +118,7 @@ export class MultiAssistComponent implements OnInit {
     });
   }
 
-  register() {
+  register(id: string) {
     var beneficiarieslist = [];
     var multiAssist = this.multi_assist.getRawValue();
     var bank = this.multi_assist_bank.getRawValue();
@@ -125,11 +126,6 @@ export class MultiAssistComponent implements OnInit {
     this.BeneficiariesList.forEach((fg) => {
       beneficiarieslist.push(fg.getRawValue());
     });
-    // console.log(JSON.stringify(multiAssist.HealthPlan.id));
-    // console.log(JSON.stringify(multiAssist.Addititons.id));
-    // console.log(JSON.stringify(bank));
-    // console.log(JSON.stringify(vehicle));
-    // console.log(JSON.stringify(beneficiarieslist));
     var payload = new MultiAssist(
       0,
       multiAssist.Addititons.id,
@@ -149,26 +145,6 @@ export class MultiAssistComponent implements OnInit {
       beneficiarieslist,
       vehicle
     );
-    console.log(JSON.stringify({ multiassist: payload, clientId: 1 }));
-
-    // var mas = new MultiAssist({id: multiAssist.id,
-    // coverId: multiAssist.,
-    // effectiveDate: Date,
-    // eligibleWaitingPeriodDate: Date,
-    // endDate: Date,
-    // cost: number,
-    // statusId: number,
-    // accountType: string,
-    // bankName: string,
-    // accountHolderName: string,
-    // routingNum: string,
-    // accountNum: string,
-    // expDate: Date,
-    // debDay: number,
-    // debRecurringType: string,
-    // beneficiaries: Array<Beneficiaries>})
-    //var payload = Object.assign(multiAssist, bank, vehicle, beneficiarieslist);
-    //    console.log(JSON.stringify(payload));
     this.multiAssistApiService.Create(payload, 1);
   }
 }
