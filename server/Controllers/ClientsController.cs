@@ -1,10 +1,10 @@
+using System;
+using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using server.Dtos;
-using System;
-using System.Threading.Tasks;
 using WebApi.Entities;
 using WebApi.Helpers;
 using WebApi.Services;
@@ -51,12 +51,12 @@ namespace WebApi.Controllers
     }
 
     [AllowAnonymous]
-    [HttpGet("{id}")]
-    public IActionResult GetById(int id)
+    [HttpGet("criteria/{criteria}")]
+    public async Task<IActionResult> GetClientsByCriteria(string criteria)
     {
       try
       {
-        var res = _service.GetById(id);
+        var res = await _service.GetClientByCriteria(criteria);
         if (res == null)
         {
           return NotFound();
@@ -71,13 +71,47 @@ namespace WebApi.Controllers
       }
     }
 
-    [AllowAnonymous]
-    [HttpGet("criteria/{criteria}")]
-    public async Task<IActionResult> GetClientsByCriteria(string criteria)
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpDelete("{id}")]
+    public IActionResult Delete(int id)
     {
       try
       {
-        var res = await _service.GetClientByCriteria(criteria);
+
+        _service.Delete(id);
+        return Ok();
+
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    [Authorize]
+    [HttpGet("CheckName/{name}")]
+    public async Task<IActionResult> checkName(string name)
+    {
+      try
+      {
+        var check = await _service.ChekcName(name);
+        return Ok(check);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+    [AllowAnonymous]
+    [HttpGet("{id}")]
+    public IActionResult GetById(int id)
+    {
+      try
+      {
+        var res = _service.GetById(id);
         if (res == null)
         {
           return NotFound();
@@ -145,39 +179,6 @@ namespace WebApi.Controllers
       }
     }
 
-    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
-    [Authorize]
-    [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
-    {
-      try
-      {
-
-        _service.Delete(id);
-        return Ok();
-
-      }
-      catch (Exception ex)
-      {
-        // return error message if there was an exception
-        return DefaultError(ex);
-      }
-    }
-
-    [Authorize]
-    [HttpGet("CheckName/{name}")]
-    public async Task<IActionResult> checkName(string name)
-    {
-      try
-      {
-        var check = await _service.ChekcName(name);
-        return Ok(check);
-      }
-      catch (Exception ex)
-      {
-        return DefaultError(ex);
-      }
-    }
 
     [Authorize]
     [HttpPost("checkSsn")]
@@ -194,5 +195,4 @@ namespace WebApi.Controllers
       }
     }
   }
-
 }

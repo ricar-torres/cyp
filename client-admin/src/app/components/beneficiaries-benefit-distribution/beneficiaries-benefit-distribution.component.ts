@@ -7,9 +7,16 @@ import {
   EventEmitter,
 } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {
+  FormGroup,
+  FormBuilder,
+  Validators,
+  AbstractControl,
+} from '@angular/forms';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { MatSlideToggle } from '@angular/material';
+import { Beneficiaries } from '@app/models/MultiAssist';
+import { AlliancesService } from '@app/shared/alliances.service';
 
 @Component({
   selector: 'app-beneficiaries-benefit-distribution',
@@ -32,11 +39,13 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
   @Input() BeneficiariesList: FormGroup[] = [];
   @Output() benefitChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  @ViewChild('dependantsEnabled') dependantsEnabled: MatSlideToggle;
+  @ViewChild('dependantsEnabled', { static: true })
+  dependantsEnabled: MatSlideToggle;
   typesOfRelation: Object;
   constructor(
     private _formBuilder: FormBuilder,
-    private DependantsServices: DependantsAPIService
+    private DependantsServices: DependantsAPIService,
+    private allianceService: AlliancesService
   ) {}
 
   ngOnInit(): void {
@@ -50,7 +59,7 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
       name: [null, [Validators.required]],
       gender: [null, [Validators.required]],
       birthDate: [null, [Validators.required]],
-      ssn: [null, [Validators.required]],
+      ssn: [null, [Validators.required], this.checkSsn('').bind(this)],
       relationship: [null, [Validators.required]],
       percent: [null, [Validators.required]],
     });
@@ -83,5 +92,18 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
       percentage += Number.parseFloat(x.get('percent').value);
     });
     return percentage;
+  }
+
+  checkSsn(ssn: string) {
+    return async (control: AbstractControl) => {
+      //console.log(ssn, control.value);
+      if (control.value && ssn != control.value) {
+        const res: any = await this.allianceService
+          .checkSsn(control.value)
+          .toPromise();
+        if (res) return { ssnTaken: true };
+      }
+      return null;
+    };
   }
 }

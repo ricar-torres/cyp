@@ -38,7 +38,7 @@ export class ClientService {
   }
 
   Decesed(clinetId) {
-    return this.http.get(`${environment.baseURL}/clients/${clinetId}/Deceased`);
+    return this.http.get(`${environment.baseURL}/clients/${clinetId}/deceased`);
   }
 
   delete(id: string) {

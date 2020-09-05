@@ -1,7 +1,13 @@
 import { Component, OnInit, Inject, OnDestroy, ViewChild } from '@angular/core';
-import { MatDialogRef, MAT_DIALOG_DATA, MatStepper } from '@angular/material';
+import {
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+  MatStepper,
+  MatDialog,
+} from '@angular/material';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ClientWizardService } from '@app/shared/client-wizard.service';
+import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
 
 @Component({
   selector: 'app-client-wizard',
@@ -16,7 +22,8 @@ export class ClientWizardComponent implements OnInit, OnDestroy {
   constructor(
     public dialogRef: MatDialogRef<ClientWizardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,
-    public wizardForms: ClientWizardService
+    public wizardForms: ClientWizardService,
+    private dialog: MatDialog
   ) {}
   ngOnDestroy(): void {
     this.wizardForms.BonafideList = [];
@@ -28,8 +35,17 @@ export class ClientWizardComponent implements OnInit, OnDestroy {
     //this.dialogRef.close();
   }
 
-  async register() {
+  async register(option?: number) {
     await this.wizardForms.register().then((res) => {
+      console.log(res);
+      if (option == 1) {
+        const dialogRefs = this.dialog.open(AllianceWizardComponent, {
+          width: '70%',
+          height: '70%',
+          disableClose: true,
+          data: { clientid: (<any>res).id },
+        });
+      }
       this.dialogRef.close();
     });
   }

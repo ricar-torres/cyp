@@ -212,7 +212,8 @@
     "PREREGISTER": "Pre Register",
     "BONAFIDES_ASSOCIATION": "Bonafides",
     "GENERAL_INFORMATION": "General",
-    "ASSOCIATE_DEPENDATS": "Dependants"
+    "ASSOCIATE_DEPENDATS": "Dependants",
+    "FINISHCONTINUETOALLIANCE": "Fnish and continue to alliance association"
   },
   "ALLIANCELIST": {
     "QUALIFYINGEVENT": "Qualifying Event",
@@ -244,7 +245,8 @@
     "ADDITIONS": "Addititons",
     "BENEFITS": "Benefits",
     "COVER": "Cover",
-    "LIFEINSURANCE": "Life Insurance"
+    "LIFEINSURANCE": "Life Insurance",
+    "DATES": "Dates"
   },
   "BENEFICIERIES": {
     "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "

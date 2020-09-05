@@ -6,6 +6,9 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class AlliancesService {
+  checkSsn(ssn) {
+    return this.http.get(`${environment.baseURL}/Alliance/CheckSsn/${ssn}`);
+  }
   checkName(obj: { name: string }): any {
     return this.http
       .get(`${environment.baseURL}/Alliance/CheckName/${obj.name}`)
@@ -44,6 +47,10 @@ export class AlliancesService {
     return this.http.get(
       `${environment.baseURL}/Alliance/client/${clientid}/iselegible`
     );
+  }
+
+  getAllAffTypes() {
+    return this.http.get(`${environment.baseURL}/Alliance/AffiliationTypes`);
   }
 
   update(alliance: any) {

@@ -16,10 +16,12 @@ namespace WebApi.Services
     Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
     Task<Alianzas> Create(AllianceDto payload);
-    Alianzas Update(Alianzas payload);
+    Task Update(AllianceDto payload);
     Task Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
+    Task<List<AffType>> GetAllAffTypes();
+    Task<bool> CheckSsn(string ssn);
   }
 
   public class AllianceService : IAllianceService
@@ -89,12 +91,18 @@ namespace WebApi.Services
         CoverId = payload.CoverId.GetValueOrDefault(),
         AffType = (byte?)afftype,
         AffStatus = 1,
+        ElegibleDate = DateTime.Now,
+        StartDate = DateTime.Now,
         CreatedAt = DateTime.Now,
         UpdatedAt = DateTime.Now,
         EndDate = DateTime.Now.AddYears(1)
       };
 
       //TODO: check if the status of the aliance is complete or pending
+      //for the moment is complete
+      alianza.AffStatus = 1;
+      await _context.Alianzas.AddAsync(alianza);
+      await _context.SaveChangesAsync();
 
       foreach (var item in payload.Beneficiaries)
       {
@@ -107,16 +115,15 @@ namespace WebApi.Services
           Relationship = item.Relationship,
           CreatedAt = DateTime.Now,
           UpdatedAt = DateTime.Now,
+          AlianzaId = alianza.Id,
+          Ssn = item.Ssn
         };
         await _context.Beneficiaries.AddAsync(beneficiary);
       }
 
-      await _context.Alianzas.AddAsync(alianza);
-      await _context.SaveChangesAsync();
-
       foreach (var item in payload.AddonList)
       {
-        var addonId = int.Parse(item);
+        var addonId = item;
         await _context.AlianzaAddOns.AddAsync(new AlianzaAddOns() { AlianzaId = alianza.Id, InsuranceAddOnId = addonId });
       }
 
@@ -177,12 +184,18 @@ namespace WebApi.Services
              where pr.ClientId == clientId.GetValueOrDefault() && al.DeletedAt == null
              select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov })
              .Select(x => new AllianceDto(x.alliance) { Cover = x.cover, QualifyingEvent = x.quallifyingEvent, AffTypeDescription = x.AffType }).ToListAsync();
-
-      clientAlliances.ForEach(x =>
+      //removing loop reference and adding additional info
+      clientAlliances.ForEach((x) =>
       {
         x.Cover.Alianza = null;
         x.Cover.Alianzas = null;
         x.QualifyingEvent.Alianzas = null;
+        x.AddonList = _context.AlianzaAddOns.Where(s => s.AlianzaId == x.Id).Select(s => s.InsuranceAddOnId).ToList();
+        x.Beneficiaries = _context.Beneficiaries.Where(s => s.AlianzaId == x.Id && s.DeletedAt == null).Select(s => new BeneficiariesDto(s)).ToList();
+        x.Beneficiaries.ForEach(x =>
+        {
+          x.Alianza = null;
+        });
       });
       return clientAlliances;
     }
@@ -226,9 +239,102 @@ namespace WebApi.Services
 
     }
 
-    public Alianzas Update(Alianzas payload)
+    public async Task<List<AffType>> GetAllAffTypes()
     {
-      throw new NotImplementedException();
+      var afftypes = await _context.AffType.ToListAsync();
+      return afftypes;
+    }
+
+    public async Task Update(AllianceDto payload)
+    {
+      var aliance = await _context.Alianzas.FirstOrDefaultAsync(a => a.Id == payload.Id);
+      aliance.StartDate = payload.StartDate;
+      aliance.ElegibleDate = payload.ElegibleDate.GetValueOrDefault();
+      aliance.AffType = payload.AffType;
+      aliance.AffStatus = payload.AffStatus.GetValueOrDefault();
+      aliance.CoverId = payload.CoverId.GetValueOrDefault();
+      UpdateBeneficiaries(payload);
+      UpdateAddons(payload);
+      await _context.SaveChangesAsync();
+    }
+
+    private void UpdateAddons(AllianceDto payload)
+    {
+      var existingAddons = _context.AlianzaAddOns.Where(s => s.AlianzaId == payload.Id).Select(s => s).ToList();
+      existingAddons.ForEach(x =>
+      {
+        var exist = payload.AddonList.Contains(x.InsuranceAddOnId);
+        if (exist == false)
+        {
+          _context.AlianzaAddOns.Remove(x);
+        };
+      });
+
+      payload.AddonList.ForEach(x =>
+      {
+        var exist = existingAddons.FirstOrDefault(ad => ad.InsuranceAddOnId == x);
+        if (exist == null)
+        {
+          var newAddon = new AlianzaAddOns() { AlianzaId = payload.Id.GetValueOrDefault(), InsuranceAddOnId = x };
+          _context.AlianzaAddOns.Add(newAddon);
+        }
+      });
+    }
+
+    private void UpdateBeneficiaries(AllianceDto payload)
+    {
+      payload.Beneficiaries.ForEach(x =>
+      {
+        if (x.Id != null)
+        {
+          var beneficiary = _context.Beneficiaries.FirstOrDefault(b => b.Id == x.Id);
+          beneficiary.Name = x.Name;
+          beneficiary.Ssn = x.Ssn;
+          beneficiary.BirthDate = x.BirthDate;
+          beneficiary.Gender = x.Gender;
+          beneficiary.Relationship = x.Relationship;
+          beneficiary.Percent = x.Percent;
+          beneficiary.UpdatedAt = DateTime.Now;
+          _context.Beneficiaries.Update(beneficiary);
+        }
+        else
+        {
+          var beneficiary = new Beneficiaries();
+          beneficiary.AlianzaId = payload.Id;
+          beneficiary.Name = x.Name;
+          beneficiary.Ssn = x.Ssn;
+          beneficiary.BirthDate = x.BirthDate;
+          beneficiary.Gender = x.Gender;
+          beneficiary.Relationship = x.Relationship;
+          beneficiary.Percent = x.Percent;
+          beneficiary.UpdatedAt = DateTime.Now;
+          _context.Beneficiaries.Add(beneficiary);
+        }
+      });
+      var existing = _context.Beneficiaries.Where(b => b.AlianzaId == payload.Id).ToList();
+      existing.ForEach(ex =>
+      {
+        var exist = payload.Beneficiaries.FirstOrDefault(b => b.Ssn == ex.Ssn);
+        if (exist == null)
+        {
+          ex.DeletedAt = DateTime.Now;
+          _context.Beneficiaries.Update(ex);
+        }
+      });
+    }
+
+    public async Task<bool> CheckSsn(string ssn)
+    {
+      if (!String.IsNullOrEmpty(ssn))
+      {
+        ssn = ssn.ToLower().Trim();
+        var payload = await _context.Beneficiaries.FirstOrDefaultAsync(bn => bn.Ssn.Replace("-", "") == ssn && bn.DeletedAt == null);
+        if (payload != null)
+        {
+          return true;
+        }
+      }
+      return false;
     }
   }
 }
