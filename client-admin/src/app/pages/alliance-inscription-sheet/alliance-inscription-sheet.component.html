@@ -218,30 +218,36 @@
           <span class="bold-title">Fecha De Nacimiento </span>
         </td>
         <td colspan="10" style="text-align: left; padding: 2px">
-          <span><span class="bold-title">Celular:</span> >phone_2</span>
+          <span
+            ><span class="bold-title">Celular:</span>
+            {{ alliance.client.phone2 }}</span
+          >
         </td>
       </tr>
       <tr style="height: 20">
         <td colspan="4" style="text-align: center; border: 0">
           <span class="bold-title">Mes Dia Año</span>
         </td>
-        <td colspan="4" rowspan="2" style="text-align: center">>ssn</td>
+        <td colspan="4" rowspan="2" style="text-align: center">
+          {{ alliance.client.ssn }}
+        </td>
         <td colspan="5" style="text-align: center; border: 0">
           <span class="bold-title">Mes / Dia / Año</span>
         </td>
         <td colspan="10" style="text-align: left; padding: 2px">
-          <span class="bold-title">Tel:</span> >phone_1
+          <span class="bold-title">Tel:</span> {{ alliance.client.phone1 }}
         </td>
       </tr>
       <tr style="height: 20">
         <td colspan="4" style="text-align: center; border: 0">
-          <span>{{ alliance.client.effectiveDate }} </span>
+          <span>{{ alliance.effectiveDate | date: 'shortDate' }} </span>
         </td>
         <td colspan="5" style="text-align: center; border: 0">
-          <span>\Carbon\Carbon::parse>birth_date->format'm/d/Y' </span>
+          <span>{{ alliance.client.birthDate | date: 'shortDate' }} </span>
         </td>
         <td colspan="10" style="text-align: left; padding: 2px">
-          <span style="font-weight: bold">Email: </span>>email
+          <span style="font-weight: bold">Email: </span
+          >{{ alliance.client.email }}
         </td>
       </tr>
       <tr>
@@ -259,10 +265,12 @@
           >
         </td>
         <td colspan="17" style="border-left: 0px; padding-left: 10px">
-          >addresses->first->full_address['line_1']
+          {{ alliance?.clientAddressses[0]?.line1 }}
+          {{ alliance?.clientAddressses[0]?.line2 }}
+          <!-- >addresses->first->full_address['line_1']
           @if>addresses->first->full_address['line_2'] != ""
           >addresses->first->full_address['line_2'] @endif
-          >addresses->first->full_address['line_3']
+          >addresses->first->full_address['line_3'] -->
         </td>
       </tr>
       <tr style="height: 20">
@@ -270,20 +278,15 @@
           <span class="bold-title">Mes Dia Año</span>
         </td>
         <td colspan="19" style="border-left: 0px; padding-left: 10px">
-          >addresses->last->full_address['line_1']
-          @if>addresses->last->full_address['line_2'] != ""
-          >addresses->last->full_address['line_2'] @endif
-          >addresses->last->full_address['line_3']
+          {{ alliance?.clientAddressses[1]?.line1 }}
+          {{ alliance?.clientAddressses[1]?.line2 }}
         </td>
       </tr>
       <tr style="height: 20">
         <td colspan="4" style="text-align: center; border: 0">
-          <span
-            >@ifisset>end_date \Carbon\Carbon::parse>end_date->format'm/d/Y'
-            @else
-            &nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            @endif</span
-          >
+          <span>
+            {{ alliance.endDate | date: 'shortDate' }}
+          </span>
         </td>
         <td colspan="19" style="border-left: 0px"></td>
       </tr>
@@ -303,11 +306,11 @@
       </tr>
       <tr style="height: 20">
         <td colspan="5" style="text-align: center; height: 14">
-          <span>>agency->name</span>
+          <span>{{ alliance.client.agency.name }}</span>
         </td>
         <td colspan="4" style="text-align: center"><span>&nbsp;</span></td>
         <td colspan="7" style="text-align: center">
-          <span> >addresses->first->full_address['city']</span>
+          <span> {{ alliance?.clientAddressses[0]?.city }}</span>
         </td>
         <td colspan="7" style="text-align: center"><span>&nbsp;</span></td>
       </tr>
@@ -317,7 +320,7 @@
         </td>
         <td colspan="3" style="text-align: center; border: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" /><label
+            <input type="checkbox" id="checkbox" disabled /><label
               class="bold-title"
               for="checkbox"
               >Regular</label
@@ -326,7 +329,7 @@
         </td>
         <td colspan="3" style="text-align: center; border: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" /><label
+            <input type="checkbox" id="checkbox" disabled /><label
               class="bold-title"
               for="checkbox"
               >Probatorio</label
@@ -335,7 +338,7 @@
         </td>
         <td colspan="7" style="text-align: center; border: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" /><label
+            <input type="checkbox" id="checkbox" disabled /><label
               class="bold-title"
               for="checkbox"
               >Transitorio mas de 6 meses</label
@@ -344,7 +347,7 @@
         </td>
         <td colspan="8" style="text-align: center; border: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" /><label
+            <input type="checkbox" id="checkbox" disabled /><label
               class="bold-title"
               for="checkbox"
               >Transitorio menos de 6 meses</label

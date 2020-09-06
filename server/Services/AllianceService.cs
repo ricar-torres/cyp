@@ -194,14 +194,11 @@ namespace WebApi.Services
                Client = x.client
              }).ToListAsync();
 
-      //removing reference loop
+
       clientAlliances.ForEach(x =>
       {
         x.HealthPlan.Covers = null;
-      });
-      //removing loop reference and adding additional info
-      clientAlliances.ForEach((x) =>
-      {
+        x.ClientAddressses = _context.Addresses.Where(x => x.ClientId == clientId).ToList();
         x.Cover.Alianza = null;
         x.Cover.Alianzas = null;
         x.QualifyingEvent.Alianzas = null;
@@ -211,7 +208,11 @@ namespace WebApi.Services
         {
           x.Alianza = null;
         });
+        x.Client.Agency = _context.Agencies.FirstOrDefault(s => s.Id == x.Client.AgencyId);
+        x.Client.Agency.Clients = null;
+        x.Client.Agency.Dependents = null;
       });
+
       return clientAlliances;
     }
 

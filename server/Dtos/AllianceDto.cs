@@ -42,7 +42,6 @@ namespace server.Dtos
 
 
     }
-
     public int? ClientId { get; set; }
     public new int? Id { get; set; }
     public new int? ClientProductId { get; set; }
@@ -51,10 +50,10 @@ namespace server.Dtos
     public new byte? AffStatus { get; set; }
     public new DateTime? ElegibleDate { get; set; }
     public new List<BeneficiariesDto> Beneficiaries { get; set; }
-    public Clients Client { get; set; }
-    public HealthPlans HealthPlan { get; set; }
-
     public List<int> AddonList { get; set; }
     public AffType AffTypeDescription { get; set; }
+    public Clients Client { get; set; }
+    public HealthPlans HealthPlan { get; set; }
+    public List<Addresses> ClientAddressses { get; set; }
   }
 }
