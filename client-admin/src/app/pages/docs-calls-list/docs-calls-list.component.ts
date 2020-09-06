@@ -28,6 +28,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
   isloading: boolean;
   @Input()
   clientId: string;
+  deceased: boolean = true;
   constructor(
     private dialog: MatDialog,
     private apiDocCall: DocumentationCallAPIService,

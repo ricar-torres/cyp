@@ -1,0 +1,172 @@
+body {
+  font-family: DejaVu Sans;
+  font-size: 9px;
+}
+
+h5 {
+  padding: 0.5em;
+}
+
+#beneficiario {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.row {
+  width: 100%;
+}
+
+.col-2 {
+  display: inline-block;
+  width: 12.5%;
+  vertical-align: top;
+}
+
+.col-3 {
+  display: inline-block;
+  width: 25%;
+  vertical-align: top;
+}
+
+.col-4 {
+  display: inline-block;
+  width: 33.33%;
+  vertical-align: top;
+}
+
+.col-5 {
+  display: inline-block;
+  width: 49.33%;
+  vertical-align: top;
+}
+
+.col-6 {
+  display: inline-block;
+  width: 49.5%;
+  vertical-align: top;
+}
+
+.col-8 {
+  display: inline-block;
+  width: 73.5%;
+  vertical-align: top;
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.box {
+  border: 1px solid black;
+}
+
+.nobox {
+  border: 0;
+}
+
+.blue {
+  background: #1e549e;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+.header img {
+  width: 300px;
+}
+
+.white-blue {
+  background: #d9e5f1;
+}
+
+.bg-blue {
+  background: #0054a3;
+}
+.bg-green {
+  background: #006400;
+}
+
+.blue-instructions {
+  color: #0054a3;
+}
+
+.black-instructions {
+  color: #000000;
+}
+
+.mini-font {
+  font-family: DejaVu Sans;
+  font-size: 7.5px;
+}
+
+.fraude-font {
+  font-family: DejaVu Sans;
+  font-size: 9px;
+}
+
+.inline-field input,
+.inline-field label {
+  display: inline-block;
+  margin-bottom: 0; /* I added this after I posted my reply */
+  vertical-align: middle; /* Fixes any weird issues in Firefox and IE */
+}
+
+.alinear {
+  display: inline-block;
+  margin-bottom: 0;
+  vertical-align: middle;
+}
+
+.size-10 {
+  font-size: 10;
+}
+.sign {
+  border-top: 1px solid black;
+  text-align: center;
+}
+
+.sign-rigth {
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+ol li {
+  list-style-type: none;
+  counter-increment: lista;
+  position: relative;
+}
+
+ol li::before {
+  content: counter(lista) ')';
+  left: -32px;
+  position: absolute;
+  text-align: right;
+  width: 26px;
+}
+
+ul li {
+  list-style: none;
+  padding: 0;
+  margin-left: 10px;
+}
+
+ul li::before {
+  content: '\2022';
+  left: -32px;
+  position: absolute;
+  text-align: right;
+  width: 26px;
+}
+
+.bold-title {
+  font-weight: bold;
+}

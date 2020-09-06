@@ -19,7 +19,6 @@ export class AddressComponent implements OnInit {
   @Input() clientid: string;
 
   sameAsPhysical: FormControl = new FormControl();
-
   sameAddressSubscription: Observable<any>;
   countries: [];
   cities: [];
