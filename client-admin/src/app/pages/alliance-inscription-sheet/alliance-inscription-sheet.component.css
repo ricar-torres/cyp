@@ -175,3 +175,7 @@ ul li::before {
   text-align: center;
   margin-bottom: 10px;
 }
+
+.space-arround {
+  margin: 5px;
+}

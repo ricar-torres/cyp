@@ -17,13 +17,13 @@ namespace WebApi.Services
     Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
     Task<Alianzas> Create(AllianceDto payload);
-    Task Update(AllianceDto payload);
+    Task<Alianzas> Update(AllianceDto payload);
     Task Delete(int id);
     Task<List<HealthPlans>> AvailableHealthPlansForClient(int clientId);
     Task<List<string>> IsElegible(int clientid);
     Task<List<AffType>> GetAllAffTypes();
     Task<bool> CheckSsn(string ssn);
-        Task<Alianzas> UpdateCost(int Alianzaid);
+    Task<Alianzas> UpdateCost(int Alianzaid);
   }
 
   public class AllianceService : IAllianceService
@@ -106,6 +106,8 @@ namespace WebApi.Services
       await _context.Alianzas.AddAsync(alianza);
       await _context.SaveChangesAsync();
 
+      alianza = await this.UpdateCost(alianza.Id);
+
       foreach (var item in payload.Beneficiaries)
       {
         var beneficiary = new Beneficiaries()
@@ -128,8 +130,11 @@ namespace WebApi.Services
         var addonId = item;
         await _context.AlianzaAddOns.AddAsync(new AlianzaAddOns() { AlianzaId = alianza.Id, InsuranceAddOnId = addonId });
       }
-
       await _context.SaveChangesAsync();
+      alianza.ClientProduct = null;
+      alianza.Cover = null;
+      alianza.AlianzaAddOns = null;
+      alianza.Beneficiaries = null;
       return alianza;
     }
 
@@ -235,7 +240,6 @@ namespace WebApi.Services
         });
       });
 
-
       return clientAlliances;
     }
 
@@ -284,17 +288,23 @@ namespace WebApi.Services
       return afftypes;
     }
 
-    public async Task Update(AllianceDto payload)
+    public async Task<Alianzas> Update(AllianceDto payload)
     {
-      var aliance = await _context.Alianzas.FirstOrDefaultAsync(a => a.Id == payload.Id);
-      aliance.StartDate = payload.StartDate;
-      aliance.ElegibleDate = payload.ElegibleDate.GetValueOrDefault();
-      aliance.AffType = payload.AffType;
-      aliance.AffStatus = payload.AffStatus.GetValueOrDefault();
-      aliance.CoverId = payload.CoverId.GetValueOrDefault();
+      var alliance = await _context.Alianzas.FirstOrDefaultAsync(a => a.Id == payload.Id);
+      alliance.StartDate = payload.StartDate;
+      alliance.ElegibleDate = payload.ElegibleDate.GetValueOrDefault();
+      alliance.AffType = payload.AffType;
+      alliance.AffStatus = payload.AffStatus.GetValueOrDefault();
+      alliance.CoverId = payload.CoverId.GetValueOrDefault();
       UpdateBeneficiaries(payload);
       UpdateAddons(payload);
+      alliance = await this.UpdateCost(payload.Id.GetValueOrDefault());
       await _context.SaveChangesAsync();
+      alliance.ClientProduct = null;
+      alliance.Cover = null;
+      alliance.AlianzaAddOns = null;
+      alliance.Beneficiaries = null;
+      return alliance;
     }
 
     private void UpdateAddons(AllianceDto payload)
@@ -378,151 +388,151 @@ namespace WebApi.Services
 
 
 
-		public async Task<Alianzas> UpdateCost(int Alianzaid)
-		{
+    public async Task<Alianzas> UpdateCost(int Alianzaid)
+    {
 
-			//try
-			//{
-				Alianzas item = null;
+      //try
+      //{
+      Alianzas item = null;
 
-				item = await _context.Alianzas
-					.Include(u => u.ClientProduct).ThenInclude(u => u.Client)
-					.Include(u => u.Cover)
-					.Include(u => u.AlianzaAddOns)
-					.ThenInclude(u => u.InsuranceAddOn).Where(u => u.Id == Alianzaid).FirstOrDefaultAsync();
+      item = await _context.Alianzas
+        .Include(u => u.ClientProduct).ThenInclude(u => u.Client)
+        .Include(u => u.Cover)
+        .Include(u => u.AlianzaAddOns)
+        .ThenInclude(u => u.InsuranceAddOn).Where(u => u.Id == Alianzaid).FirstOrDefaultAsync();
 
-				Clients Member = item.ClientProduct.Client;
-				Covers Plans = item.Cover;
-				List<AlianzaAddOns> AddOns = item.AlianzaAddOns.ToList();
-				DateTime EffectiveDate = Convert.ToDateTime(item.StartDate);
+      Clients Member = item.ClientProduct.Client;
+      Covers Plans = item.Cover;
+      List<AlianzaAddOns> AddOns = item.AlianzaAddOns.ToList();
+      DateTime EffectiveDate = Convert.ToDateTime(item.StartDate);
 
-				float cost = 0;
-				float Totalcost = 0;
+      float cost = 0;
+      float Totalcost = 0;
 
-				int age = CalcularEdad(Convert.ToDateTime(Member.BirthDate), EffectiveDate);
+      int age = CalcularEdad(Convert.ToDateTime(Member.BirthDate), EffectiveDate);
 
-				//if (Member.Identifier >= 4)
-				//	return cost;
+      //if (Member.Identifier >= 4)
+      //	return cost;
 
-				if (age > 100)
-					age = 100;
-				else if (age < 1)
-					age = 1;
-				//else
-				//	age = Member.Age;
-
-
-				if (Plans.TypeCalculate == (int)TypeCalculate.AllMember)
-				{
-					cost = Plans.IndividualRate;
-				}
-				else if (Plans.TypeCalculate == (int)TypeCalculate.AllMemberAndAge)
-				{
-
-					var RateByAge = _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
-					cost = RateByAge.IndividualRate;
-
-				}
-				else if (Plans.TypeCalculate == (int)TypeCalculate.EEOnly)
-				{
-
-					cost = Plans.IndividualRate;
-
-				}
-				else if (Plans.TypeCalculate == (int)TypeCalculate.Tier)
-				{
-
-					if (Member.Dependents.ToList().Count <= 0)
-						cost = Plans.CoverageSingleRate;
-					else if (Member.Dependents.ToList().Count == 1)
-						cost = Plans.CoverageCoupleRate;
-					else if (Member.Dependents.ToList().Count > 1)
-						cost = Plans.CoverageFamilyRate;
-
-				}
-				else if (Plans.TypeCalculate == (int)TypeCalculate.TierAndAge)
-				{
-
-					var RateByAge =  _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
-
-					if (Member.Dependents.ToList().Count <= 0)
-						cost = RateByAge.CoverageSingleRate;
-					else if (Member.Dependents.ToList().Count == 1)
-						cost = RateByAge.CoverageCoupleRate;
-					else if (Member.Dependents.ToList().Count > 1)
-						cost = RateByAge.CoverageFamilyRate;
-
-				}
-
-				item.CoverAmount = cost;
-
-				Totalcost += cost;
-
-				//AddOns
-				for (int p = 0; p <= AddOns.Count - 1; p++)
-				{
-					var r = AddOns[p];
-					if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.AllMember)
-					{
-						cost = r.InsuranceAddOn.IndividualRate;
-
-					}
-					else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.AllMemberAndAge)
-					{
-						var RateByAge = _context.InsuranceAddOnsRateAge.Where(h => h.InsuranceAddOnsId == r.InsuranceAddOn.Id && h.Age == age).FirstOrDefault();
-						cost = RateByAge.Rate;
-					}
-					else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.EEOnly)
-					{
-						cost = r.InsuranceAddOn.IndividualRate;
-					}
-					else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.Tier)
-					{
-						if (Member.Dependents.ToList().Count <= 0)
-							cost = r.InsuranceAddOn.CoverageSingleRate;
-						else if (Member.Dependents.ToList().Count == 1)
-							cost = r.InsuranceAddOn.CoverageCoupleRate;
-						else if (Member.Dependents.ToList().Count > 1)
-							cost = r.InsuranceAddOn.CoverageFamilyRate;
-					}
+      if (age > 100)
+        age = 100;
+      else if (age < 1)
+        age = 1;
+      //else
+      //	age = Member.Age;
 
 
-					r.Cost = cost;
-					_context.AlianzaAddOns.Update(r);
-				    await	_context.SaveChangesAsync();
+      if (Plans.TypeCalculate == (int)TypeCalculate.AllMember)
+      {
+        cost = Plans.IndividualRate;
+      }
+      else if (Plans.TypeCalculate == (int)TypeCalculate.AllMemberAndAge)
+      {
 
-					Totalcost += cost;
+        var RateByAge = _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
+        cost = RateByAge.IndividualRate;
+
+      }
+      else if (Plans.TypeCalculate == (int)TypeCalculate.EEOnly)
+      {
+
+        cost = Plans.IndividualRate;
+
+      }
+      else if (Plans.TypeCalculate == (int)TypeCalculate.Tier)
+      {
+
+        if (Member.Dependents.ToList().Count <= 0)
+          cost = Plans.CoverageSingleRate;
+        else if (Member.Dependents.ToList().Count == 1)
+          cost = Plans.CoverageCoupleRate;
+        else if (Member.Dependents.ToList().Count > 1)
+          cost = Plans.CoverageFamilyRate;
+
+      }
+      else if (Plans.TypeCalculate == (int)TypeCalculate.TierAndAge)
+      {
+
+        var RateByAge = _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
+
+        if (Member.Dependents.ToList().Count <= 0)
+          cost = RateByAge.CoverageSingleRate;
+        else if (Member.Dependents.ToList().Count == 1)
+          cost = RateByAge.CoverageCoupleRate;
+        else if (Member.Dependents.ToList().Count > 1)
+          cost = RateByAge.CoverageFamilyRate;
+
+      }
+
+      item.CoverAmount = cost;
+
+      Totalcost += cost;
+
+      //AddOns
+      for (int p = 0; p <= AddOns.Count - 1; p++)
+      {
+        var r = AddOns[p];
+        if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.AllMember)
+        {
+          cost = r.InsuranceAddOn.IndividualRate;
+
+        }
+        else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.AllMemberAndAge)
+        {
+          var RateByAge = _context.InsuranceAddOnsRateAge.Where(h => h.InsuranceAddOnsId == r.InsuranceAddOn.Id && h.Age == age).FirstOrDefault();
+          cost = RateByAge.Rate;
+        }
+        else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.EEOnly)
+        {
+          cost = r.InsuranceAddOn.IndividualRate;
+        }
+        else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.Tier)
+        {
+          if (Member.Dependents.ToList().Count <= 0)
+            cost = r.InsuranceAddOn.CoverageSingleRate;
+          else if (Member.Dependents.ToList().Count == 1)
+            cost = r.InsuranceAddOn.CoverageCoupleRate;
+          else if (Member.Dependents.ToList().Count > 1)
+            cost = r.InsuranceAddOn.CoverageFamilyRate;
+        }
 
 
-				}
+        r.Cost = cost;
+        _context.AlianzaAddOns.Update(r);
+        await _context.SaveChangesAsync();
 
-				item.SubTotal = Totalcost;
-
-				_context.Alianzas.Update(item);
-                await _context.SaveChangesAsync();
-
-                return item;
-
-			//}
-
-			//catch (Exception ex)
-			//{
-			//	throw ex;
-			//}
-
-		}
+        Totalcost += cost;
 
 
+      }
 
-		private int CalcularEdad(DateTime birthDate, DateTime now)
-		{
-			int age = now.Year - birthDate.Year;
-			if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day))
-				age--;
-			return age;
-		}
+      item.SubTotal = Totalcost;
+
+      _context.Alianzas.Update(item);
+      await _context.SaveChangesAsync();
+
+      return item;
+
+      //}
+
+      //catch (Exception ex)
+      //{
+      //	throw ex;
+      //}
+
+    }
 
 
 
-	}
+    private int CalcularEdad(DateTime birthDate, DateTime now)
+    {
+      int age = now.Year - birthDate.Year;
+      if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day))
+        age--;
+      return age;
+    }
+
+
+
+  }
 }

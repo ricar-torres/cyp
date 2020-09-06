@@ -86,4 +86,8 @@ export class AllianceInscriptionSheetComponent implements OnInit {
     if (isInList > -1) return true;
     return false;
   }
+
+  close() {
+    this.dialogRef.close();
+  }
 }

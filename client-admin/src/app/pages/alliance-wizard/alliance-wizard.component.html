@@ -187,7 +187,12 @@
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button select mat-raised-button color="primary" (click)="checkPercent()">
+    <button
+      select
+      mat-raised-button
+      color="primary"
+      (click)="checkPercent(true)"
+    >
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
@@ -202,7 +207,7 @@
         </mat-card-header> -->
         <mat-card-content>
           <div fxLayout="Column">
-            <div>Costos de cubierta</div>
+            <!--<div>Costos de cubierta</div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Cubierta Básica:</div>
@@ -211,12 +216,17 @@
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Major Médical:</div>
-              <div>$0.00</div>
+              <div>${{ allianceWithCost?.majorMedicalAmount }}</div>
+            </div>
+            <div class="separator"></div> -->
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>Costo de cubierta:</div>
+              <div>${{ allianceWithCost?.coverAmount }}</div>
             </div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
-              <div>Seguro de Vida:</div>
-              <div>$3.00</div>
+              <div>Costo Total</div>
+              <div>${{ allianceWithCost?.subTotal }}</div>
             </div>
             <hr />
           </div>
@@ -231,11 +241,11 @@
     >
       {{ 'CLOSE' | translate }}
     </button>
-    <button mat-raised-button color="primary" matStepperPrevious>
+    <!-- <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="submitAliance()">
       {{ 'SAVE' | translate }}
-    </button>
+    </button> -->
   </mat-step>
 </mat-horizontal-stepper>

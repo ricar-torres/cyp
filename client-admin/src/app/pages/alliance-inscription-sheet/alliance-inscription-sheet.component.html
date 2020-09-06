@@ -1,7 +1,13 @@
 <div class="center-button">
-  <button color="primary" mat-stroked-button (click)="convertToPdf()">
+  <button
+    class="space-arround"
+    color="primary"
+    mat-stroked-button
+    (click)="convertToPdf()"
+  >
     Print
   </button>
+  <button color="warn" mat-stroked-button (click)="close()">Close</button>
 </div>
 <div class="header"></div>
 <div id="pdfContent" class="body">

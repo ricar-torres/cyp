@@ -65,6 +65,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   beneficiaries: QueryList<BeneficiariesBenefitDistributionComponent>;
   @ViewChildren('mayorMedicalToggle') mayorMadical: QueryList<MatSlideToggle>;
 
+  allianceWithCost: any;
   typesOfRelation: any[] = new Array();
   availableAddons: any[] = new Array();
 
@@ -200,7 +201,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     });
   }
 
-  checkPercent() {
+  async checkPercent(save?) {
     var percentage: number = 0;
     var AllBeneficieriesAreValid = true;
     if (
@@ -215,8 +216,11 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
           AllBeneficieriesAreValid = false;
         }
       });
-      if (percentage == 100 && AllBeneficieriesAreValid) this.stepper.next();
-      else {
+      if (percentage == 100 && AllBeneficieriesAreValid) {
+        if (!this.data.alliance || save)
+          this.allianceWithCost = await this.submitAliance();
+        this.stepper.next();
+      } else {
         if (percentage != 100) {
           this.BeneficiariesList.forEach((x) => {
             x.get('percent').markAsDirty();
@@ -225,6 +229,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
         }
       }
     } else {
+      if (!this.data.alliance || save)
+        this.allianceWithCost = await this.submitAliance();
       this.stepper.next();
     }
   }
@@ -261,7 +267,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       beneficiarieslist.push(fg.getRawValue());
     });
 
-    await this.AllianceService.create({
+    var res = await this.AllianceService.create({
       Id: this.data.alliance ? this.data.alliance.id : null,
       ClientProductId: this.data.alliance
         ? this.data.alliance.clientProductId
@@ -295,9 +301,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       // SubTotal: null,
       AddonList: this.addonsList,
       Beneficiaries: beneficiarieslist,
-    }).then(() => {
-      this.dialogRef.close();
     });
+    return res;
   }
 
   close() {
