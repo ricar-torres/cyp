@@ -19,7 +19,8 @@ namespace WebApi.Services
   {
     Task<List<Covers>> GetAll();
     Task<List<Covers>> GetByPlan(int planId);
-    Task<HealthPlans> GetPlanByCover(int coverId);
+        Task<Covers> GetById(int coverId);
+        Task<HealthPlans> GetPlanByCover(int coverId);
 
     Covers Create(Covers item);
     Covers Update(Covers item);
@@ -116,9 +117,10 @@ namespace WebApi.Services
       if (_context.Covers.Any(x => x.Name == item.Name && x.HealthPlanId == item.HealthPlanId))
         throw new AppException("Cover Name " + item.Name + " is already exists");
 
-      item.CreatedAt = DateTime.Now;
-      _context.Covers.Add(item);
-      _context.SaveChanges();
+
+            item.CreatedAt = DateTime.Now;
+            _context.Covers.Add(item);
+            _context.SaveChanges();
 
       return item;
 
@@ -147,12 +149,12 @@ namespace WebApi.Services
           throw new AppException("Cover Name " + item.Name + " is already exists");
       }
 
-      if (item.Code.ToLower() != _Covers.Code.ToLower())
-      {
-        // Company Name has changed so check if the new Company Name is already exists
-        if (_context.Covers.Any(x => x.Code == item.Code))
-          throw new AppException("Code " + item.Code + " is already exists");
-      }
+            if (string.IsNullOrWhiteSpace(_Covers.Code) || item.Code.ToLower() != _Covers.Code.ToLower())
+            {
+                // Company Name has changed so check if the new Company Name is already exists
+                if (_context.Covers.Any(x => x.Code == item.Code))
+                    throw new AppException("Code " + item.Code + " is already exists");
+            }
 
       _Covers.HealthPlanId = item.HealthPlanId;
       _Covers.Code = item.Code;
@@ -163,17 +165,70 @@ namespace WebApi.Services
       _Covers.Type = item.Type;
       _Covers.UpdatedAt = DateTime.Now;
 
-      _context.Covers.Update(_Covers);
-      _context.SaveChanges();
 
-      return item;
+
+            _Covers.IndividualRate = item.IndividualRate;
+            _Covers.CoverageSingleRate = item.CoverageSingleRate;
+            _Covers.CoverageCoupleRate = item.CoverageCoupleRate;
+            _Covers.CoverageFamilyRate = item.CoverageFamilyRate;
+            _Covers.MinimumEE = item.MinimumEE;
+            _Covers.TypeCalculate = item.TypeCalculate;
+
+
+            _context.Covers.Update(_Covers);
+            _context.SaveChanges();
+
+
+            syncAddOns(item);
+
+            return item;
 
     }
 
 
+        public void syncAddOns(Covers item)
+        {
+
+            if (item.AddOnsAlt != null)
+            {
+
+                item.AddOns.Clear();
+
+                foreach (var addon in item.AddOnsAlt)
+                {
+                    //if (role.UserId != userId && role.UserId > 0)
+                    //    throw new AppException("Roles.UserId " + role.UserId + " is invalid");
+                    //else
+                    //role.UserId = userId;
+
+                    item.AddOns.Add(new InsurancePlanAddOns { CoverId = item.Id, InsuranceAddOnsId = addon });
+
+                }
+
+                var AddOnsList = _context.InsurancePlanAddOns.Where(r => r.CoverId == item.Id).ToList();
+
+                var addList = item.AddOns.Where(r => !AddOnsList.Any(rl => rl.InsuranceAddOnsId == r.InsuranceAddOnsId) && _context.InsuranceAddOns.Any(ar => ar.Id == r.InsuranceAddOnsId)).GroupBy(p => (p.CoverId, p.InsuranceAddOnsId)).Select(g => g.First()).ToList();
+                //var addList = user.RolesAlt.Where(r => !roleList.Any(rl => rl.RoleId == r) && _context.AppRole.Any(ar => ar.Id == r)).GroupBy(p => (p.UserId, p.RoleId)).Select(g => g.First()).ToList();
+                var removeList = AddOnsList.Where(rl => !item.AddOns.Any(r => r.InsuranceAddOnsId == rl.InsuranceAddOnsId)).GroupBy(p => (p.CoverId, p.InsuranceAddOnsId)).Select(g => g.First()).ToList();
+
+                if (addList.Count() > 0)
+                    _context.InsurancePlanAddOns.AddRange(addList);
+
+                if (removeList.Count() > 0)
+                    _context.InsurancePlanAddOns.RemoveRange(removeList);
+
+                if (addList.Count() > 0 || removeList.Count() > 0)
+                    _context.SaveChanges();
 
 
-    public void Delete(Covers item)
+
+            }
+
+        }
+
+
+
+        public void Delete(Covers item)
     {
       var _Covers = _context.Covers.Find(item.Id);
 
@@ -249,130 +304,124 @@ namespace WebApi.Services
         // ICollection<InsuranceRate> list = null;
         var list = new List<InsuranceRate>();
 
-        using (var package = new ExcelPackage(stream))
-        {
-          ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-          var rowCount = worksheet.Dimension.Rows;
-
-          for (int row = 2; row <= rowCount; row++)
-          {
-
-            Covers _Covers = new Covers();
-
-            _Covers = _context.Covers.Where(u => u.Code == worksheet.Cells[row, 6].Value.ToString()).FirstOrDefault();
-
-            //if (_Covers == null)
-            //{
-            //    //_Covers = new Covers();
-            //    //_Covers.HealthPlanId = HealthPlanId;
-            //    //_Covers.Code = worksheet.Cells[row, 6].Value.ToString();
-            //    //_Covers.Name = worksheet.Cells[row, 7].Value.ToString();
-            //    //_Covers.Sob = worksheet.Cells[row, 1].Value == null ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
-            //    //_Covers.FederalTIN = worksheet.Cells[row, 2].Value == null ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
-            //    //_Covers.Type = worksheet.Cells[row, 5].Value == null ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
-            //    //// _Covers.Tobacco = item.Tobacco;
-            //    //_Covers.Comment = "";
-            //    //_Covers.DelFlag = false;
-            //    //// _Covers.FCreateUserId = GetNameClaim();
-            //    //_Covers.CreatedAt = DateTime.Now;
-
-            //    //_context.Covers.Add(_Covers);
-            //    //_context.SaveChanges();
-
-            //}
-
-            if (_Covers != null)
-            {
-              int Age = 0;
-
-
-              string s = worksheet.Cells[row, 9].Value.ToString().Trim();
-              int index = s.IndexOf('-');
-
-              if (index == -1)
-              {
-                index = s.IndexOf('+');
-
-                if (index == -1)
+                using (var package = new ExcelPackage(stream))
                 {
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    var rowCount = worksheet.Dimension.Rows;
 
-
-                  Age = int.Parse(worksheet.Cells[row, 9].Value.ToString().Trim());
-                  list.Add(new InsuranceRate
-                  {
-                    CoverId = _Covers.Id,
-                    Age = Age,
-                    RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
-                    RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
-                    IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
-                    PolicyYear = PolicyYear,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-
-                  });
-                }
-                else
-                {
-                  string InitialAge = s.Substring(0, index);
-
-                  for (int i = int.Parse(InitialAge); i < 100 + 1; i++)
-                  {
-                    list.Add(new InsuranceRate
+                    for (int row = 2; row <= rowCount; row++)
                     {
-                      CoverId = _Covers.Id,
-                      Age = i,
-                      RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
-                      RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
-                      IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                      IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
-                      PolicyYear = PolicyYear,
-                      CreatedAt = DateTime.Now,
-                      UpdatedAt = DateTime.Now
 
-                    });
-                  }
+                        Covers _Covers = new Covers();
 
+                        _Covers = _context.Covers.Where(u => u.Code == worksheet.Cells[row, 6].Value.ToString()).FirstOrDefault();
+
+                        //if (_Covers == null)
+                        //{
+                        //    //_Covers = new Covers();
+                        //    //_Covers.HealthPlanId = HealthPlanId;
+                        //    //_Covers.Code = worksheet.Cells[row, 6].Value.ToString();
+                        //    //_Covers.Name = worksheet.Cells[row, 7].Value.ToString();
+                        //    //_Covers.Sob = worksheet.Cells[row, 1].Value == null ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
+                        //    //_Covers.FederalTIN = worksheet.Cells[row, 2].Value == null ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
+                        //    //_Covers.Type = worksheet.Cells[row, 5].Value == null ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
+                        //    //// _Covers.Tobacco = item.Tobacco;
+                        //    //_Covers.Comment = "";
+                        //    //_Covers.DelFlag = false;
+                        //    //// _Covers.FCreateUserId = GetNameClaim();
+                        //    //_Covers.CreatedAt = DateTime.Now;
+
+                        //    //_context.Covers.Add(_Covers);
+                        //    //_context.SaveChanges();
+
+                        //}
+
+                        if (_Covers != null)
+                        {
+                            int Age = 0;
+
+
+                            string s = worksheet.Cells[row, 9].Value.ToString().Trim();
+                            int index = s.IndexOf('-');
+
+                            if (index == -1)
+                            {
+                                index = s.IndexOf('+');
+
+                                if (index == -1)
+                                {
+
+
+                                    Age = int.Parse(worksheet.Cells[row, 9].Value.ToString().Trim());
+                                    list.Add(new InsuranceRate
+                                    {
+                                        CoverId = _Covers.Id,
+                                        Age = Age,
+                                        RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
+                                        RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
+                                        IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
+                                        // IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
+                                        PolicyYear = PolicyYear,
+                                        CreatedAt = DateTime.Now,
+                                        UpdatedAt = DateTime.Now
+
+                                    });
+                                }
+                                else
+                                {
+                                    string InitialAge = s.Substring(0, index);
+
+                                    for (int i = int.Parse(InitialAge); i < 100 + 1; i++)
+                                    {
+                                        list.Add(new InsuranceRate
+                                        {
+                                            CoverId = _Covers.Id,
+                                            Age = i,
+                                            RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
+                                            RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
+                                            IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
+                                            // IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
+                                            PolicyYear = PolicyYear,
+                                            CreatedAt = DateTime.Now,
+                                            UpdatedAt = DateTime.Now
+
+                                        });
+                                    }
+
+                                    _Covers = new Covers();
+
+                                    _Covers = _context.Covers.Where(u => u.Code == worksheet.Cells[row, 6].Value.ToString()).FirstOrDefault();
+
+                                    //if (_Covers == null)
+                                    //{
+                                    //    //_Covers = new Covers();
+                                    //    //_Covers.HealthPlanId = HealthPlanId;
+                                    //    //_Covers.Code = worksheet.Cells[row, 6].Value.ToString();
+                                    //    //_Covers.Name = worksheet.Cells[row, 7].Value.ToString();
+                                    //    //_Covers.Sob = worksheet.Cells[row, 1].Value == null ? "" : worksheet.Cells[row, 1].Value.ToString().Trim();
+                                    //    //_Covers.FederalTIN = worksheet.Cells[row, 2].Value == null ? "" : worksheet.Cells[row, 2].Value.ToString().Trim();
+                                    //    //_Covers.Type = worksheet.Cells[row, 5].Value == null ? "" : worksheet.Cells[row, 5].Value.ToString().Trim();
+                                    //    //// _Covers.Tobacco = item.Tobacco;
+                                    //    //_Covers.Comment = "";
+                                    //    //_Covers.DelFlag = false;
+                                    //    //// _Covers.FCreateUserId = GetNameClaim();
+                                    //    //_Covers.CreatedAt = DateTime.Now;
+
+                                    //    //_context.Covers.Add(_Covers);
+                                    //    //_context.SaveChanges();
+
+                                    //}
+
+                                }
+
+                                _context.InsuranceRate.AddRange(list);
+                                _context.SaveChanges();
+
+
+                            }
+                        }
+                    }
                 }
-              }
-              else
-              {
-                string InitialAge = s.Substring(0, index);
-                string FinalAge = s.Substring(index + 1);
-
-                for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++)
-                {
-                  list.Add(new InsuranceRate
-                  {
-                    CoverId = _Covers.Id,
-                    Age = i,
-                    RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
-                    RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
-                    IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
-                    PolicyYear = PolicyYear,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now
-
-                  });
-                }
-
-              }
-
-              var ActualRate = _context.InsuranceRate.Where(r => r.CoverId == _Covers.Id && r.PolicyYear == PolicyYear).AsQueryable();
-
-              if (ActualRate != null)
-              {
-                _context.InsuranceRate.RemoveRange(ActualRate);
-              }
-
-            }
-          }
-
-          _context.InsuranceRate.AddRange(list);
-          _context.SaveChanges();
-
-        }
 
         return list;
       }
@@ -393,134 +442,132 @@ namespace WebApi.Services
         // ICollection<InsuranceRate> list = null;
         var list = new List<InsuranceRate>();
 
-        using (var package = new ExcelPackage(stream))
-        {
-          ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
-          var rowCount = worksheet.Dimension.Rows;
-
-          for (int row = 2; row <= rowCount; row++)
-          {
-
-
-            Covers _InsurancePlan = new Covers();
-
-            _InsurancePlan = _context.Covers.Find(id);
-
-            if (_InsurancePlan == null)
-            {
-              throw new AppException("Insurance Plan not found");
-
-            }
-            int Age = 0;
-
-
-            string s = worksheet.Cells[row, 1].Value.ToString().Trim();
-            int index = s.IndexOf('-');
-
-            if (index == -1)
-            {
-              index = s.IndexOf('+');
-
-              if (index == -1)
-              {
-                /*
-
+                using (var package = new ExcelPackage(stream))
                 {
-                    CoverId = _InsurancePlan.Id,
-                    Age = Age,
-                    RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
-                    RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
-                    IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
-                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
-                    PolicyYear = PolicyYear,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                    FCreateUserId = 0,
-                    FUpdUserId = 0,
-                    DelFlag = false
+                    ExcelWorksheet worksheet = package.Workbook.Worksheets[0];
+                    var rowCount = worksheet.Dimension.Rows;
 
+
+                    for (int row = 2; row <= rowCount; row++)
+                    {
+                        Covers _InsurancePlan = new Covers();
+
+                        _InsurancePlan = _context.Covers.Find(id);
+
+                        if (_InsurancePlan == null)
+                        {
+                            throw new AppException("Insurance Plan not found");
+
+                        }
+                        int Age = 0;
+
+
+                        string s = worksheet.Cells[row, 1].Value.ToString().Trim();
+                        int index = s.IndexOf('-');
+
+                        if (index == -1)
+                        {
+                            index = s.IndexOf('+');
+
+                            if (index == -1)
+                            {
+                                /*
+                                 
+                                {
+                                    CoverId = _InsurancePlan.Id,
+                                    Age = Age,
+                                    RateEffectiveDate = DateTime.Parse(worksheet.Cells[row, 3].Value == null ? "01/01/1900" : worksheet.Cells[row, 3].Value.ToString().Trim()),
+                                    RateExpirationDate = DateTime.Parse(worksheet.Cells[row, 4].Value == null ? "01/01/1900" : worksheet.Cells[row, 4].Value.ToString().Trim()),
+                                    IndividualRate = float.Parse(worksheet.Cells[row, 10].Value == null ? "0.00" : worksheet.Cells[row, 10].Value.ToString().Trim()),
+                                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 11].Value == null ? "0.00" : worksheet.Cells[row, 11].Value.ToString().Trim()),
+                                    PolicyYear = PolicyYear,
+                                    CreatedAt = DateTime.Now,
+                                    UpdatedAt = DateTime.Now,
+                                    FCreateUserId = 0,
+                                    FUpdUserId = 0,
+                                    DelFlag = false
+
+                                }
+                                 */
+
+
+                                Age = int.Parse(worksheet.Cells[row, 1].Value.ToString().Trim());
+                                list.Add(new InsuranceRate
+                                {
+                                    CoverId = _InsurancePlan.Id,
+                                    Age = Age,
+                                    RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
+                                    RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
+                                    IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                    //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                    PolicyYear = PolicyYear,
+                                    CreatedAt = DateTime.Now,
+                                    UpdatedAt = DateTime.Now,
+                                    DeletedAt = null
+                                    //Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
+
+                                });
+                            }
+                            else
+                            {
+                                string InitialAge = s.Substring(0, index);
+
+                                for (int i = int.Parse(InitialAge); i < 100 + 1; i++)
+                                {
+                                    list.Add(new InsuranceRate
+                                    {
+                                        CoverId = _InsurancePlan.Id,
+                                        Age = i,
+                                        RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
+                                        RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
+                                        IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                        //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                        PolicyYear = PolicyYear,
+                                        CreatedAt = DateTime.Now,
+                                        UpdatedAt = DateTime.Now,
+                                        DeletedAt = null
+
+                                    });
+                                }
+
+                            }
+                        }
+                        else
+                        {
+                            string InitialAge = s.Substring(0, index);
+                            string FinalAge = s.Substring(index + 1);
+
+                            for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++)
+                            {
+                                list.Add(new InsuranceRate
+                                {
+                                    CoverId = _InsurancePlan.Id,
+                                    Age = i,
+                                    RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
+                                    RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
+                                    IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                    //IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
+                                    PolicyYear = PolicyYear,
+                                    CreatedAt = DateTime.Now,
+                                    UpdatedAt = DateTime.Now,
+                                    DeletedAt = null
+
+                                });
+                            }
+
+                        }
+
+                        var ActualRate = _context.InsuranceRate.Where(r => r.CoverId == _InsurancePlan.Id).AsQueryable();
+
+                        if (ActualRate != null)
+                        {
+                            _context.InsuranceRate.RemoveRange(ActualRate);
+                        }
+                    }
                 }
-                 */
 
-
-                Age = int.Parse(worksheet.Cells[row, 1].Value.ToString().Trim());
-                list.Add(new InsuranceRate
-                {
-                  CoverId = _InsurancePlan.Id,
-                  Age = Age,
-                  RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
-                  RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
-                  IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                  IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                  PolicyYear = PolicyYear,
-                  CreatedAt = DateTime.Now,
-                  UpdatedAt = DateTime.Now,
-                  DeletedAt = null
-                  //Rate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim())
-
-                });
-              }
-              else
-              {
-                string InitialAge = s.Substring(0, index);
-
-                for (int i = int.Parse(InitialAge); i < 100 + 1; i++)
-                {
-                  list.Add(new InsuranceRate
-                  {
-                    CoverId = _InsurancePlan.Id,
-                    Age = i,
-                    RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
-                    RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
-                    IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                    IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                    PolicyYear = PolicyYear,
-                    CreatedAt = DateTime.Now,
-                    UpdatedAt = DateTime.Now,
-                    DeletedAt = null
-
-                  });
-                }
-
-              }
-            }
-            else
-            {
-              string InitialAge = s.Substring(0, index);
-              string FinalAge = s.Substring(index + 1);
-
-              for (int i = int.Parse(InitialAge); i < int.Parse(FinalAge) + 1; i++)
-              {
-                list.Add(new InsuranceRate
-                {
-                  CoverId = _InsurancePlan.Id,
-                  Age = i,
-                  RateEffectiveDate = DateTime.Parse($"01/01/{PolicyYear.ToString()}"),
-                  RateExpirationDate = DateTime.Parse($"01/01/{(PolicyYear + 1).ToString()}"),
-                  IndividualRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                  IndividualTobaccoRate = float.Parse(worksheet.Cells[row, 2].Value == null ? "0.00" : worksheet.Cells[row, 2].Value.ToString().Trim()),
-                  PolicyYear = PolicyYear,
-                  CreatedAt = DateTime.Now,
-                  UpdatedAt = DateTime.Now,
-                  DeletedAt = null
-
-                });
-              }
-
-            }
-
-            var ActualRate = _context.InsuranceRate.Where(r => r.CoverId == _InsurancePlan.Id).AsQueryable();
-
-            if (ActualRate != null)
-            {
-              _context.InsuranceRate.RemoveRange(ActualRate);
-            }
-          }
-
-          _context.InsuranceRate.AddRange(list.Distinct());
-          _context.SaveChanges();
-
-        }
+                    _context.InsuranceRate.AddRange(list.Distinct());
+                    _context.SaveChanges();
 
         return list;
       }
@@ -590,6 +637,13 @@ namespace WebApi.Services
 
       _context.SaveChanges();
 
+            // validation
+            //else if (string.IsNullOrWhiteSpace(item.Code))
+            //{
+            //    exception = "Code is required";
+            //    return false;
+            //    //throw new AppException("LoginProviderId is required");
+            //}
       return item;
 
     }

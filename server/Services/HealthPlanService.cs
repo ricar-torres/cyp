@@ -26,6 +26,7 @@ namespace WebApi.Services {
 		ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream);
 		ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream);
 		IActionResult GetAllAddOns(int HealthPlanId);
+		IQueryable<InsuranceBenefitType> BenefitType_GetAll();
 	}
 
 	public class HealthPlanService : Controller, IHealthPlanService {
@@ -538,20 +539,44 @@ namespace WebApi.Services {
 
 		}
 
-		private Boolean ValidateRequireField(HealthPlans item, out String exception) {
+		private Boolean ValidateRequireField(HealthPlans item, out String exception)
+		{
 
 			exception = string.Empty;
 
 			// validation
-			if (string.IsNullOrWhiteSpace(item.Name)) {
+			if (string.IsNullOrWhiteSpace(item.Name))
+			{
 				exception = "Company Name is required";
 				return false;
 				//throw new AppException("LoginProviderId is required");
 			}
 
 			return true;
-
 		}
+
+        public IQueryable<InsuranceBenefitType> BenefitType_GetAll()
+        {
+            IQueryable<InsuranceBenefitType> item = null;
+
+            try
+            {
+
+
+                item = _context.InsuranceBenefitType.Where(r => r.DeletedAt == null).AsQueryable();
+
+         
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return item;
+
+        }
+
 
 	}
 }

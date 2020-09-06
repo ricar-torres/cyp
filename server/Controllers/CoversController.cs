@@ -68,7 +68,7 @@ namespace WebApi.Controllers
     }
 
     [Authorize]
-    [HttpGet("{planId}")]
+    [HttpGet("Healthplan/{planId}")]
     public async Task<IActionResult> GetByPlan(int planId)
     {
       try
@@ -103,23 +103,21 @@ namespace WebApi.Controllers
       }
     }
 
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get(int id)
+        {
+            try
+            {
 
-    // GET: api/Covers/5
-
-    //[AllowAnonymous]
-    //[HttpGet("{id}")]
-    //public IActionResult Get(int id)
-    //{
-    //    try
-    //    {
-    //        var item = _itemService.GetById(id);
-    //        return Ok(item);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        return DefaultError(ex.Message);
-    //    }
-    //}
+                var item = await _itemService.GetById(id);
+                return Ok(item);
+            }
+            catch (Exception ex)
+            {
+                return DefaultError(ex.Message);
+            }
+        }
 
     [AllowAnonymous]
     [HttpPut("{id}")]

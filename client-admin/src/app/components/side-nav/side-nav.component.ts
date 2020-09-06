@@ -70,6 +70,14 @@ export class SideNavComponent implements OnInit {
             },
             {
               displayName: await this.languageService.translate
+                .get('SIDE_NAV.INSURANCE_COMPANY')
+                .toPromise(),
+              iconName: 'business',
+              route: '/home/insurance-company',
+              visible: true,//this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
+            {
+              displayName: await this.languageService.translate
                 .get('SIDE_NAV.AGENCIES')
                 .toPromise(),
               iconName: 'account_balance',

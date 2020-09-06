@@ -9,6 +9,12 @@ export const MenuRoles = {
   AGENCIES_UPDATE: ['Agency.Update'],
   AGENCIES_DELETE: ['Agency.Delete'],
 
+
+  INSURANCE_COMPANY: ['HealthPlans.Read', 'HealthPlans.Create', 'HealthPlans.Update', 'HealthPlans.Delete'],
+  INSURANCE_COMPANY_CREATE: ['HealthPlans.Create'],
+  INSURANCE_COMPANY_UPDATE: ['HealthPlans.Update'],
+  INSURANCE_COMPANY_DELETE: ['HealthPlans.Delete'],
+
   BONAFIDE_UPDATE: ['Bonafide.Update'],
   BONAFIDE_CREATE: ['Bonafide.Create'],
   BONAFIDE_DELETE: ['Bonafide.Delete'],
