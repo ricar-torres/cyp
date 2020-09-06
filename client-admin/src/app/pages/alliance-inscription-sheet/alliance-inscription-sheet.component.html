@@ -7,20 +7,19 @@
         <td colspan="6" style="border: 0"></td>
         <td colspan="14" style="border: 0">
           <div class="inline-field">
-            <input type="checkbox" />aff_type == 1 ? 'checked' : ''><label
-              style="font-weight: bold; font-size: 10"
-              for="checkbox"
+            <input
+              disabled
+              type="checkbox"
+              [checked]="alliance.affType == 1"
+            /><label style="font-weight: bold; font-size: 10" for="checkbox"
               >Ingreso Nuevo</label
             >
-            <input type="checkbox" />aff_type == 2 ? 'checked' : '' ><label
-              style="font-weight: bold; font-size: 10"
-              for="checkbox"
+            <input disabled type="checkbox" [checked]="alliance.affType == 2" />
+            <label style="font-weight: bold; font-size: 10" for="checkbox"
               >Renovación</label
             >
-            <input type="checkbox" />aff_type == 3 ? 'checked' : '' ><label
-              style="font-weight: bold; font-size: 10"
-              for="checkbox"
-            >
+            <input disabled type="checkbox" [checked]="alliance.affType == 3" />
+            <label style="font-weight: bold; font-size: 10" for="checkbox">
               Mancomunado</label
             >
           </div>
@@ -28,6 +27,7 @@
         <td colspan="3" style="border: 0"></td>
       </tr>
       <tr>
+        <!-- TODO: HERE GOSE THE LOGO -->
         <td colspan="7" style="border: 0">
           <img
             style="max-width: 100; max-height: 100"
@@ -42,7 +42,7 @@
           ><br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
             style="font-weight: bold; font-size: 14"
-            >Solicitud de Ingreso >id
+            >Solicitud de Ingreso {{ alliance.id }}
           </span>
         </td>
       </tr>
@@ -52,23 +52,33 @@
         </td>
         <td colspan="4" style="border-bottom: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />joint == 0 ? 'checked' : '' >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.joint == 0"
+            />
             <label class="bold-title" for="checkbox">Individual</label>
           </div>
         </td>
         <td colspan="10" style="padding-left: 4px">
           <span class="bold-title">Producto: </span>&nbsp;
-          >cover->healthPlan->name
+          {{ alliance.healthPlan.name }}
         </td>
         <td colspan="6" style="padding-left: 4px">
-          <span class="bold-title">PSM:</span> >cover->name
+          <span class="bold-title">PSM:</span> {{ alliance.cover.name }}
         </td>
       </tr>
       <tr>
         <td colspan="3" style="border: 0">&nbsp;</td>
         <td colspan="4" style="border-bottom: 0; border-top: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />joint > 0 ? 'checked' : '' >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.joint > 0"
+            />
             <label class="bold-title" for="checkbox">Pareja</label>
           </div>
         </td>
@@ -77,15 +87,15 @@
         </td>
         <td colspan="12" style="border: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" disabled id="checkbox" />
             <label class="bold-title" for="checkbox">Ley 95</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" disabled id="checkbox" />
             <label class="bold-title" for="checkbox">Ley 63</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" disabled id="checkbox" />
             <label class="bold-title" for="checkbox">Ley 43</label>
-            <input type="checkbox" id="checkbox" checked="1" />
+            <input type="checkbox" disabled id="checkbox" [checked]="true" />
             <label class="bold-title" for="checkbox">Ley 117</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" disabled id="checkbox" />
             <label class="bold-title" for="checkbox">Complementario</label>
           </div>
         </td>
@@ -100,21 +110,26 @@
         <td colspan="3" style="border: 0">&nbsp;</td>
         <td colspan="4" style="border-top: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />joint == 1 ? 'checked' : '' >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.joint == 1"
+            />
             <label class="bold-title" for="checkbox">Familiar</label>
           </div>
         </td>
         <td colspan="12" style="border: 0">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" id="checkbox" disabled />
             <label class="bold-title" for="checkbox">Vision</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" id="checkbox" disabled />
             <label class="bold-title" for="checkbox">MM</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" id="checkbox" disabled />
             <label class="bold-title" for="checkbox">S Vida</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" id="checkbox" disabled />
             <label class="bold-title" for="checkbox">Farmacia</label>
-            <input type="checkbox" id="checkbox" />
+            <input type="checkbox" id="checkbox" disabled />
             <label class="bold-title" for="checkbox">Dental</label>
           </div>
         </td>
@@ -122,7 +137,7 @@
           colspan="4"
           style="text-align: center; border-top: 0; padding-left: 10px"
         >
-          \Carbon\Carbon::parse>birth_date->age
+          {{ getAge(alliance.client.birthDate) }}
         </td>
       </tr>
       <tr>
@@ -145,28 +160,49 @@
       <tr>
         <td colspan="4" style="height: 30px"></td>
         <td colspan="12" style="padding-left: 10px">
-          >last_name_1 >last_name_2 >name >initial
+          {{ alliance.client.lastName1 }} {{ alliance.client.lastName2 }}
+          {{ alliance.client.name }} {{ alliance.client.initial }}
         </td>
         <td colspan="4" style="padding-left: 25px">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />marital_status == 1 ?
-            'checked' : '' >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.client.maritalStatus == 1"
+            />
             <label class="bold-title" for="checkbox">C</label>
-            <input type="checkbox" id="checkbox" />marital_status == 2 ?
-            'checked' : '' >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.client.maritalStatus == 2"
+            />
             <label class="bold-title" for="checkbox">S</label>
-            <input type="checkbox" id="checkbox" />marital_status == 3 ?
-            'checked' : '' >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.client.maritalStatus == 3"
+            />
             <label class="bold-title" for="checkbox">Coh</label>
           </div>
         </td>
         <td colspan="3">
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />gender == 1 ? 'checked' : ''
-            >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.client.gender == 1"
+            />
             <label class="bold-title" for="checkbox">M</label>
-            <input type="checkbox" id="checkbox" />gender == 2 ? 'checked' : ''
-            >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.client.gender == 2"
+            />
             <label class="bold-title" for="checkbox">F</label>
           </div>
         </td>
@@ -199,7 +235,7 @@
       </tr>
       <tr style="height: 20">
         <td colspan="4" style="text-align: center; border: 0">
-          <span>\Carbon\Carbon::parse>effective_date->format'm/d/Y' </span>
+          <span>{{ alliance.client.effectiveDate }} </span>
         </td>
         <td colspan="5" style="text-align: center; border: 0">
           <span>\Carbon\Carbon::parse>birth_date->format'm/d/Y' </span>

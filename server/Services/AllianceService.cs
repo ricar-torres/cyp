@@ -181,9 +181,24 @@ namespace WebApi.Services
              join aff in _context.AffType on al.AffType.ToString() equals aff.Id.ToString()
              join cov in _context.Covers on al.CoverId equals cov.Id
              join qu in _context.QualifyingEvents on al.QualifyingEventId equals qu.Id
+             join hp in _context.HealthPlans on cov.HealthPlanId equals hp.Id
+             join cl in _context.Clients on pr.ClientId equals cl.Id
              where pr.ClientId == clientId.GetValueOrDefault() && al.DeletedAt == null
-             select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov })
-             .Select(x => new AllianceDto(x.alliance) { Cover = x.cover, QualifyingEvent = x.quallifyingEvent, AffTypeDescription = x.AffType }).ToListAsync();
+             select new { alliance = al, AffType = aff, quallifyingEvent = qu, cover = cov, healthPlan = hp, client = cl })
+             .Select(x => new AllianceDto(x.alliance)
+             {
+               Cover = x.cover,
+               QualifyingEvent = x.quallifyingEvent,
+               AffTypeDescription = x.AffType,
+               HealthPlan = x.healthPlan,
+               Client = x.client
+             }).ToListAsync();
+
+      //removing reference loop
+      clientAlliances.ForEach(x =>
+      {
+        x.HealthPlan.Covers = null;
+      });
       //removing loop reference and adding additional info
       clientAlliances.ForEach((x) =>
       {
