@@ -99,15 +99,16 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
-    [Authorize]
-    [HttpPut("{id}")]
-    public IActionResult Update(int id, [FromBody] Alianzas payload)
+    [AllowAnonymous]
+    [HttpGet("Cost/{id}")]
+    public IActionResult Cost(int id)
     {
       try
       {
 
-        payload.Id = id;
-        var res = _service.Update(payload);
+        var res = _service.UpdateCost(id);
+
+
 
         return Ok(res);
 
@@ -119,8 +120,29 @@ namespace WebApi.Controllers
       }
     }
 
-    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
-    [Authorize]
+
+        [Authorize]
+        [HttpPut("{id}")]
+        public IActionResult Update(int id, [FromBody] Alianzas payload)
+        {
+            try
+            {
+
+                payload.Id = id;
+                var res = _service.Update(payload);
+
+                return Ok(res);
+
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return DefaultError(ex);
+            }
+        }
+
+        //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+        [Authorize]
     [HttpDelete("{id}")]
     public IActionResult Delete(int id)
     {

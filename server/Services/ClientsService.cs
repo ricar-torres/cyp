@@ -467,6 +467,8 @@ namespace WebApi.Services {
 
 				}
 
+
+
 				Totalcost += cost;
 
 

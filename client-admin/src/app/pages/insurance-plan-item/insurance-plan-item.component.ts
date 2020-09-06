@@ -5,7 +5,7 @@ import { FormGroup, FormControl, NgForm, Validators, FormBuilder } from '@angula
 import { Router } from "@angular/router";
 import { HttpClient } from '@angular/common/http';
 import { HealthPlanService } from '../../shared/health-plan.service';
-import {UploadfilesService} from '../../shared/upload-files.service';
+// import {UploadfilesService} from '../../shared/upload-files.service';
 import { AppService } from '../../shared/app.service';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
@@ -26,7 +26,6 @@ export interface benefit {
   value: string;
 }
 
-
 export interface TypeCalculate {
   id: number;
   name: string;
@@ -37,7 +36,7 @@ export interface TypeCalculate {
   templateUrl: './insurance-plan-item.component.html',
   styleUrls: ['./insurance-plan-item.component.css']
 })
-
+ 
 export class InsurancePlanItemComponent implements OnInit {
   planInfoFormGroup: FormGroup;
 
@@ -54,12 +53,12 @@ export class InsurancePlanItemComponent implements OnInit {
   file: Blob;
   isValidFile: boolean = false;
 
-  TypeCalculate: TypeCalculate[] = [
+  TypeCalculate: TypeCalculate[] = [ 
     { id: 1, name: 'Solo por empleados' },
     { id: 2, name: 'Para todos los miembros' },
     { id: 3, name: 'Por tipo cubierta' },
     { id: 4, name: 'Todos los miembros por edad' },
-    { id: 5, name: 'Por tipo cubierta y edad' }
+    { id: 5, name: 'Por tipo cubierta y edad' },
   ];
   benefitType: benefit[] = [];
   policyYear: number;
@@ -84,7 +83,7 @@ export class InsurancePlanItemComponent implements OnInit {
     private router: Router,
     public http: HttpClient,
     private api: HealthPlanService,
-    private uploadFileApp:UploadfilesService,
+    // private uploadFileApp:UploadfilesService,
     private app: AppService,
     private languageService: LanguageService,
     public dialog: MatDialog
@@ -210,6 +209,26 @@ export class InsurancePlanItemComponent implements OnInit {
           type: new FormControl(object.type, [
             Validators.required
           ]),
+
+          typeCalculate: new FormControl(object.typeCalculate, [
+            Validators.required
+          ]),
+
+          minimumEE: new FormControl(object.minimumEE, [
+          ]),
+          
+          individualRate: new FormControl(object.individualRate, [
+          ]),
+          
+          coverageSingleRate: new FormControl(object.coverageSingleRate, [
+          ]),
+
+          coverageCoupleRate: new FormControl(object.coverageCoupleRate, [
+          ]),
+
+          coverageFamilyRate: new FormControl(object.coverageFamilyRate, [
+          ]),
+
           beneficiary: new FormControl(object.beneficiary, []),
 
           addOnsAlt: new FormControl(this.addons.map((r) => {
@@ -220,7 +239,7 @@ export class InsurancePlanItemComponent implements OnInit {
         });
 
       } else {
-
+ 
         this.planInfoFormGroup = new FormGroup({
 
           // id: new FormControl(object.id, [
@@ -237,7 +256,29 @@ export class InsurancePlanItemComponent implements OnInit {
           alianza: new FormControl(false, []),
           type: new FormControl('', [
             Validators.required
+          ]), 
+
+
+
+          typeCalculate: new FormControl(1, [
+            Validators.required
           ]),
+
+          minimumEE: new FormControl(0, [
+          ]),
+          
+          individualRate: new FormControl(0, [
+          ]),
+          
+          coverageSingleRate: new FormControl(0, [
+          ]),
+
+          coverageCoupleRate: new FormControl(0, [
+          ]),
+
+          coverageFamilyRate: new FormControl(0, [
+          ]),
+
           beneficiary: new FormControl(false, []),
 
           addOnsAlt: new FormControl([]),
@@ -618,28 +659,28 @@ submitRateFile() {
     
     console.log(formData);
 
-     this.uploadFileApp.AddPlanRateUpload(this.id, this.policyYear , formData).subscribe((res) => {
+    //  this.uploadFileApp.AddPlanRateUpload(this.id, this.policyYear , formData).subscribe((res) => {
 
-      if (res.length != 0) {
+    //   if (res.length != 0) {
 
 
-        this.dataSourceRate = new MatTableDataSource();
+    //     this.dataSourceRate = new MatTableDataSource();
 
-        this.dataSourceRate.data = res;
-        this.loading = false;
-        // data.ratesByAge = res;
-         console.log(res);
+    //     this.dataSourceRate.data = res;
+    //     this.loading = false;
+    //     // data.ratesByAge = res;
+    //      console.log(res);
 
-      } else {
-        this.loading = false;
-      }
+    //   } else {
+    //     this.loading = false;
+    //   }
 
-    },
-      (err) => {
-        this.loading = false;
-        err.error ? this.app.showMessage("Error en Archivo", err.error.error, "warning") : this.app.showMessage("Error en Archivo", "Error", "warning");
-      }
-    ); 
+    // },
+    //   (err) => {
+    //     this.loading = false;
+    //     err.error ? this.app.showMessage("Error en Archivo", err.error.error, "warning") : this.app.showMessage("Error en Archivo", "Error", "warning");
+    //   }
+    // ); 
 
   }
 
