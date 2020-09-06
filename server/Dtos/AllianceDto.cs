@@ -55,5 +55,7 @@ namespace server.Dtos
     public Clients Client { get; set; }
     public HealthPlans HealthPlan { get; set; }
     public List<Addresses> ClientAddressses { get; set; }
+
+    public List<Dependents> CLientDependents { get; set; }
   }
 }

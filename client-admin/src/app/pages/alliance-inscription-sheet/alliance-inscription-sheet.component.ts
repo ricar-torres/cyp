@@ -49,4 +49,12 @@ export class AllianceInscriptionSheetComponent implements OnInit {
     var age_dt = new Date(diff_ms);
     return Math.abs(age_dt.getUTCFullYear() - 1970);
   }
+
+  getDependantTypeOne(dependant: []) {
+    if (dependant) {
+      var res = dependant.find((x) => (<any>x).relationship == 1);
+      if (res) return res;
+    }
+    return undefined;
+  }
 }

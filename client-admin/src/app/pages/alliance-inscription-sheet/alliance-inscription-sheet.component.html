@@ -369,8 +369,12 @@
           "
         >
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />cover_id != 50 ? 'checked' :
-            '' ><label class="bold-title" for="checkbox">Si</label>
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.coverId != 50"
+            /><label class="bold-title" for="checkbox">Si</label>
           </div>
         </td>
         <td
@@ -378,8 +382,12 @@
           style="text-align: center; border-right: 0; border-left: 0"
         >
           <div class="inline-field">
-            <input type="checkbox" id="checkbox" />cover_id == 50 ? 'checked' :
-            '' ><label class="bold-title" for="checkbox">No</label>
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="alliance.coverId == 50"
+            /><label class="bold-title" for="checkbox">No</label>
           </div>
         </td>
         <td
@@ -392,7 +400,7 @@
           colspan="8"
           style="text-align: left; border-right: 0; border-left: 0"
         >
-          >cover->healthPlan->name, >cover->name
+          {{ alliance.cover.name }}
         </td>
       </tr>
       <tr>
@@ -425,21 +433,20 @@
       </tr>
       <tr>
         <td colspan="11" style="text-align: center; border-top: 0">
-          @if>joint>0 @ifisset>dependents->where'relationship', 1->first->name
-          >dependents->where'relationship', 1->first->name
-          >dependents->where'relationship', 1->first->last_name_1
-          >dependents->where'relationship', 1->first->last_name_2 @endif @endif
+          {{ getDependantTypeOne(alliance.cLientDependents)?.name }}
+          {{ getDependantTypeOne(alliance.cLientDependents)?.lastName1 }}
+          {{ getDependantTypeOne(alliance.cLientDependents)?.lastName2 }}
         </td>
         <td colspan="7" style="text-align: center; border-top: 0">
-          @if>joint>0 @ifisset>dependents->where'relationship',
-          1->first->birth_date
-          \Carbon\Carbon::parse>dependents->where'relationship',
-          1->first->birth_date->format'm/d/Y' @endif @endif
+          {{
+            getDependantTypeOne(alliance.cLientDependents)?.birthDate
+              | date: 'shortDate'
+          }}
         </td>
         <td colspan="5" style="text-align: center; border-top: 0">
-          @if>joint>0 @ifisset>dependents->where'relationship', 1->first->ssn
-          ***-**-substr>dependents->where'relationship', 1->first->ssn, -4
-          @endif @endif
+          ***-**-{{
+            getDependantTypeOne(alliance.cLientDependents)?.ssn.substr(5, 9)
+          }}
         </td>
       </tr>
       <tr>
@@ -452,21 +459,22 @@
         >
           <div class="inline-field">
             <label class="bold-title">Ley&nbsp;</label>
-            <input type="checkbox" id="checkbox" /><label
+            <input type="checkbox" id="checkbox" disabled /><label
               class="bold-title"
               for="checkbox"
               >95</label
             >
-            <input type="checkbox" id="checkbox" /><label
+            <input type="checkbox" id="checkbox" disabled /><label
               class="bold-title"
               for="checkbox"
               >63</label
             >
-            <input type="checkbox" id="checkbox" checked="1" /><label
-              class="bold-title"
-              for="checkbox"
-              >117</label
-            >
+            <input
+              type="checkbox"
+              id="checkbox"
+              disabled
+              [checked]="true"
+            /><label class="bold-title" for="checkbox">117</label>
           </div>
         </td>
         <td colspan="3" style="text-align: center; border-bottom: 0">
@@ -481,9 +489,11 @@
       </tr>
       <tr>
         <td colspan="5" style="text-align: center; border-top: 0">
-          @if>joint>0 @ifisset>dependents->where'relationship',
-          1->first->agency_id >dependents->where'relationship',
-          1->first->agency->name @endif @endif
+          {{
+            getDependantTypeOne(alliance.cLientDependents)?.agencyId
+          }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
+            getDependantTypeOne(alliance.cLientDependents)?.agency.name
+          }}
         </td>
         <td
           colspan="4"
@@ -496,9 +506,7 @@
           $ number_format>contribution,2
         </td>
         <td colspan="8" style="text-align: center; border-top: 0">
-          @if>joint>0 @ifisset>dependents->where'relationship',
-          1->first->city_id >dependents->where'relationship',
-          1->first->city->name @endif @endif
+          {{ getDependantTypeOne(alliance.cLientDependents)?.city.name }}
         </td>
       </tr>
       <tr>

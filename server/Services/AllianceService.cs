@@ -194,7 +194,7 @@ namespace WebApi.Services
                Client = x.client
              }).ToListAsync();
 
-
+      // adding and cleaning the model to send
       clientAlliances.ForEach(x =>
       {
         x.HealthPlan.Covers = null;
@@ -208,9 +208,22 @@ namespace WebApi.Services
         {
           x.Alianza = null;
         });
-        x.Client.Agency = _context.Agencies.FirstOrDefault(s => s.Id == x.Client.AgencyId);
+        x.Client.Agency = _context.Agencies.FirstOrDefault(s => s.Id == x.Client.AgencyId && s.DeletedAt == null);
         x.Client.Agency.Clients = null;
         x.Client.Agency.Dependents = null;
+        x.CLientDependents = _context.Dependents.Where(s => s.DeletedAt == null && s.ClientId == clientId).ToList();
+        x.CLientDependents.ForEach(c =>
+        {
+          c.Client = null;
+          c.Agency = _context.Agencies.FirstOrDefault(a => a.Id == c.AgencyId);
+          c.Agency.Dependents = null;
+          if (c.CityId != null)
+          {
+            c.City = _context.Cities.FirstOrDefault(ci => ci.Id == c.CityId);
+            c.City.Dependents = null;
+          }
+        });
+
       });
 
       return clientAlliances;
