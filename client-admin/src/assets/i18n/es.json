@@ -76,6 +76,18 @@
     "TAG": "Etiqueta",
     "ALL_TASKS": "Todos los usuarios"
   },
+  "INSURANCE_COMPANY": {
+    "TITLE": "Compañía de seguros",
+    "BTN_ADD": "Nueva Aseguradora",
+    "NAME": "Nombre",
+    "ACTIONS": "Acciones",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Grabar",
+    "CREATE": "Grabar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar esta Compañía de seguro?",
+    "SAVE_REGISTER_BEFORE": "Favor grabar el registro antes de agregar las tarifas."
+  },
   "AGENCY": {
     "TITLE": "Agencias",
     "BTN_ADD": "Nueva Agencia",
@@ -303,7 +315,8 @@
     "BONAFIDES": "Asociaciones Bonafides",
     "RETIREMENTS": "Retiros",
     "QUALIFYIN_EVENTS": "Eventos Calificativos",
-    "CLIENTS": "Clientes"
+    "CLIENTS": "Clientes",
+    "INSURANCE_COMPANY": "Compañía de seguros"
   },
 
   "PAGINATOR": {

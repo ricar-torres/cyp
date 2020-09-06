@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using WebApi.Helpers;
 
 namespace WebApi.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20200905204003_CostColumns")]
+    partial class CostColumns
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -415,7 +417,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("Ssn")
                         .HasColumnName("ssn")
-                        .HasColumnType("nvarchar(255)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(255);
 
                     b.Property<DateTime?>("UpdatedAt")
@@ -2255,22 +2257,22 @@ namespace WebApi.Migrations
 
                     b.Property<string>("AccountHolderName")
                         .HasColumnName("account_holder_name")
-                        .HasColumnType("VARCHAR(60)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(60);
 
                     b.Property<string>("AccountNum")
                         .HasColumnName("account_num")
-                        .HasColumnType("VARCHAR(12)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(12);
 
                     b.Property<string>("AccountType")
                         .HasColumnName("account_type")
-                        .HasColumnType("VARCHAR(4)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(4);
 
                     b.Property<string>("BankName")
                         .HasColumnName("bank_name")
-                        .HasColumnType("VARCHAR(60)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(60);
 
                     b.Property<int>("ClientProductId")
@@ -2295,7 +2297,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("DebRecurringType")
                         .HasColumnName("deb_recurring_type")
-                        .HasColumnType("VARCHAR(10)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(10);
 
                     b.Property<DateTime?>("DeletedAt")
@@ -2316,27 +2318,27 @@ namespace WebApi.Migrations
 
                     b.Property<string>("ExpDate")
                         .HasColumnName("exp_date")
-                        .HasColumnType("VARCHAR(4)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(4);
 
                     b.Property<string>("Ref1")
                         .HasColumnName("ref1")
-                        .HasColumnType("VARCHAR(30)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(30);
 
                     b.Property<string>("Ref2")
                         .HasColumnName("ref2")
-                        .HasColumnType("VARCHAR(30)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(30);
 
                     b.Property<string>("Ref3")
                         .HasColumnName("ref3")
-                        .HasColumnType("VARCHAR(30)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(30);
 
                     b.Property<string>("RoutingNum")
                         .HasColumnName("routing_num")
-                        .HasColumnType("VARCHAR(9)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(9);
 
                     b.Property<DateTime?>("SentDate")
@@ -2345,7 +2347,7 @@ namespace WebApi.Migrations
 
                     b.Property<string>("StatusId")
                         .HasColumnName("status_id")
-                        .HasColumnType("VARCHAR(10)")
+                        .HasColumnType("VARCHAR")
                         .HasMaxLength(10);
 
                     b.Property<DateTime?>("UpdatedAt")

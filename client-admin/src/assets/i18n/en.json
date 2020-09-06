@@ -88,6 +88,17 @@
     "FINISH": "Finish",
     "ARE_YOU_SURE_DELETE": "Are you sure you want to delete this Agency?"
   },
+  "INSURANCE_COMPANY": {
+    "TITLE": "Insurance Company",
+    "BTN_ADD": "New Insurance Company",
+    "NAME": "Name",
+    "ACTIONS": "Actions",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SAVE": "Save",
+    "CREATE": "Save",
+    "ARE_YOU_SURE_DELETE": "¿Are you sure you want to delete this Insurance Company?"
+  },
   "CLIENTS": {
     "TITLE": "Client",
     "BTN_ADD": "New Client",
@@ -302,7 +313,8 @@
     "BONAFIDES": "Bonafides Associations",
     "RETIREMENTS": "Retirements",
     "QUALIFYIN_EVENTS": "Qualifying Events",
-    "CLIENTS": "Clients"
+    "CLIENTS": "Clients",
+    "INSURANCE_COMPANY": "Insurance Company"
   },
   "PAGINATOR": {
     "ITEMS_PER_PAGE_LABEL": "Items per page:",

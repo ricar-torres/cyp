@@ -26,10 +26,16 @@ namespace WebApi.Entities
         public float IndividualRate { get; set; }
 
         [Column(TypeName = "decimal(12,2)", Order = 7)]
-        public float IndividualTobaccoRate { get; set; }
+        public float CoverageSingleRate { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 8)]
+        public float CoverageCoupleRate { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 9)]
+        public float CoverageFamilyRate { get; set; }
 
 
-        [Column(Order = 8)]
+        [Column(Order = 10)]
         public int PolicyYear { get; set; }
 
         public DateTime? CreatedAt { get; set; }

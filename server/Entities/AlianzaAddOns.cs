@@ -10,6 +10,9 @@ namespace WebApi.Entities
     {
         public int AlianzaId { get; set; }
         public int InsuranceAddOnId { get; set; }
+
+        [Column(TypeName = "decimal(12,2)", Order = 3)]
+        public float Cost { get; set; }
         public virtual Alianzas Alianza { get; set; }
         public virtual InsuranceAddOns InsuranceAddOn { get; set; }
     }
