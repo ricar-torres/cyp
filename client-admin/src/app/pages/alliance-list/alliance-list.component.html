@@ -80,8 +80,17 @@
           type="button"
           mat-button
           color="accent"
-          (click)="editAgency(element.id)"
-          *ngIf="editAccess"
+          (click)="printAlianceInformation(element)"
+          *ngIf="editAccess && !deceased"
+        >
+          <mat-icon>print</mat-icon> {{ 'PRINT' | translate }}
+        </button>
+        <button
+          type="button"
+          mat-button
+          color="accent"
+          (click)="editAlliance(element)"
+          *ngIf="editAccess && !deceased"
         >
           <mat-icon>edit</mat-icon> {{ 'EDIT' | translate }}
         </button>
@@ -90,7 +99,7 @@
           mat-button
           color="warn"
           (click)="deleteConfirm(element.id)"
-          *ngIf="deleteAccess"
+          *ngIf="deleteAccess && !deceased"
         >
           <mat-icon>delete</mat-icon> {{ 'DELETE' | translate }}
         </button>

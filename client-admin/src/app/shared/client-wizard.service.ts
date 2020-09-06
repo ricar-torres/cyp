@@ -12,6 +12,7 @@ import { AppService } from './app.service';
 import { bonaFideservice } from './bonafide.service';
 import { ClientService } from './client.service';
 import { debug } from 'console';
+import { validateBasis } from '@angular/flex-layout';
 
 @Injectable({
   providedIn: 'root',
@@ -30,38 +31,15 @@ export class ClientWizardService {
 
   clientDemographic = this.formBuilder.group({
     Id: [null],
-    Name: [
-      null,
-      [
-        Validators.required,
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
-    LastName1: [
-      null,
-      [
-        Validators.required,
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
-    LastName2: [
-      null,
-      [
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
-    ],
+    Name: [null, [Validators.required, Validators.maxLength(250)]],
+    LastName1: [null, [Validators.required, Validators.maxLength(250)]],
+    LastName2: [null, [Validators.maxLength(250)]],
     Email: [null, [Validators.email, Validators.maxLength(250)]],
-    Initial: [
+    Initial: [null, [Validators.maxLength(1)]],
+    Ssn: [
       null,
-      [
-        Validators.maxLength(1),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ],
+      [Validators.required, Validators.minLength(4), Validators.maxLength(9)],
     ],
-    Ssn: [null, [Validators.required]],
     Gender: [null, [Validators.required]],
     BirthDate: [{ value: null, disabled: true }, [Validators.required]],
     MaritalStatus: [null],
@@ -72,20 +50,8 @@ export class ClientWizardService {
   tutorInformation = this.formBuilder.group({
     Id: [''],
     ClientId: [''],
-    Name: [
-      '',
-      [
-        Validators.pattern('^[A-Za-z\u00C0-\u00FF]*$'),
-        Validators.maxLength(250),
-      ],
-    ],
-    LastName: [
-      '',
-      [
-        Validators.pattern('^[A-Za-z\u00C0-\u00FF]*$'),
-        Validators.maxLength(250),
-      ],
-    ],
+    Name: ['', [Validators.maxLength(250)]],
+    LastName: ['', [Validators.maxLength(250)]],
     Phone: [''],
   });
 
@@ -93,24 +59,48 @@ export class ClientWizardService {
     PhysicalAddress: this.formBuilder.group({
       Id: [null],
       ClientId: [null],
-      Line1: [null, Validators.maxLength(250)],
+      Line1: [null, [Validators.maxLength(250), Validators.required]],
       Type: [null],
       Line2: [null, Validators.maxLength(250)],
-      State: [null],
-      City: [null],
-      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
-      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
+      State: [null, [Validators.required]],
+      City: [null, [Validators.required]],
+      Zipcode: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?')),
+          Validators.required,
+        ],
+      ],
+      Zip4: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?')),
+          Validators.required,
+        ],
+      ],
     }),
     PostalAddress: this.formBuilder.group({
       Id: [null],
       ClientId: [null],
-      Line1: [null, Validators.maxLength(250)],
+      Line1: [null, [Validators.maxLength(250), Validators.required]],
       Type: [null],
-      Line2: [null, Validators.maxLength(250)],
-      State: [null],
-      City: [null],
-      Zipcode: [null, [Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?'))]],
-      Zip4: [null, [Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?'))]],
+      Line2: [null, [Validators.maxLength(250), Validators.required]],
+      State: [null, [Validators.required]],
+      City: [null, [Validators.required]],
+      Zipcode: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{5}(-[0-9]{5})?')),
+          Validators.required,
+        ],
+      ],
+      Zip4: [
+        null,
+        [
+          Validators.pattern(new RegExp('[0-9]{4}(-[0-9]{4})?')),
+          Validators.required,
+        ],
+      ],
     }),
   });
 
@@ -169,8 +159,9 @@ export class ClientWizardService {
         Bonafides: this.BonafideList,
         Dependants: this.DependantsList,
       };
-      await this.clientService.create(ClientInforation);
+      var res = await this.clientService.create(ClientInforation);
       if (agency) this.adaptInfoForGUI(agency);
+      return res;
     } catch (error) {
       if (error.status != 401) {
         console.error('error', error);
@@ -234,7 +225,7 @@ export class ClientWizardService {
   checkSsn(ssn: string) {
     return async (control: AbstractControl) => {
       //console.log(ssn, control.value);
-      if (control.value && ssn != control.value) {
+      if (control.value && ssn != control.value && control.value.length > 4) {
         const res: any = await this.clientService.checkSsn({
           ssn: control.value,
         });

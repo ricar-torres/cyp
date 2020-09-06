@@ -79,7 +79,11 @@ namespace WebApi.Helpers {
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		public virtual DbSet<AffType> AffType { get; set; }
 		public virtual DbSet<AlianzaAddOns> AlianzaAddOns { get; set; }
+<<<<<<< HEAD
 
+=======
+		public DbSet<MultiAssists> MultiAssists { get; set; }
+>>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 		#endregion
 
 		#region FUNCTIONS
@@ -114,14 +118,11 @@ namespace WebApi.Helpers {
 			new TypeOfRelationshipMap(modelBuilder.Entity<TypeOfRelationship>());
 			new AffTypeMap(modelBuilder.Entity<AffType>());
 
-
 			new InsurancePlanAddOnsMap(modelBuilder.Entity<InsurancePlanAddOns>());
-
 
 			#endregion
 
 			#region Cyprus Tables
-
 
 			modelBuilder.Entity<InsuranceBenefitType>(entity => {
 				entity.ToTable("insurance_benefit_type");
@@ -146,11 +147,9 @@ namespace WebApi.Helpers {
 					.HasColumnName("deleted_at")
 					.HasColumnType("datetime");
 
-
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
-
 
 			});
 
@@ -187,11 +186,9 @@ namespace WebApi.Helpers {
 					.HasColumnName("deleted_at")
 					.HasColumnType("datetime");
 
-
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
-
 
 				entity.HasOne(d => d.HealthPlans)
 					.WithMany(p => p.InsuranceAddOns)
@@ -221,11 +218,9 @@ namespace WebApi.Helpers {
 					.HasColumnName("deleted_at")
 					.HasColumnType("datetime");
 
-
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
-
 
 				entity.HasOne(d => d.InsuranceAddOns)
 					.WithMany(p => p.RatesByAge)
@@ -237,7 +232,6 @@ namespace WebApi.Helpers {
 
 			modelBuilder.Entity<InsurancePlanBenefit>(entity => {
 				entity.ToTable("insurance_plan_benefit");
-
 
 				entity.Property(e => e.Id).HasColumnName("id");
 				entity.HasKey(t => t.Id);
@@ -260,7 +254,6 @@ namespace WebApi.Helpers {
 				entity.Property(e => e.DeletedAt)
 					.HasColumnName("deleted_at")
 					.HasColumnType("datetime");
-
 
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
@@ -315,11 +308,9 @@ namespace WebApi.Helpers {
 					.HasColumnName("deleted_at")
 					.HasColumnType("datetime");
 
-
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
-
 
 				entity.HasOne(d => d.Covers)
 					.WithMany(p => p.Rate)
@@ -562,7 +553,7 @@ namespace WebApi.Helpers {
 			modelBuilder.Entity<Beneficiaries>(entity => {
 				entity.ToTable("beneficiaries");
 
-				entity.Property(e => e.Id).HasColumnName("id");
+				entity.Property(e => e.Id).HasColumnName("id").ValueGeneratedOnAdd();
 
 				entity.Property(e => e.AlianzaId).HasColumnName("alianza_id");
 
@@ -603,9 +594,8 @@ namespace WebApi.Helpers {
 					.HasColumnType("datetime");
 
 				entity.Property(e => e.Ssn)
-					.HasColumnName("ssn")
-					.HasColumnType("VARCHAR").
-					HasMaxLength(255);
+					.HasColumnName("ssn").
+				HasMaxLength(255);
 
 				entity.HasOne(d => d.Alianza)
 					.WithMany(p => p.Beneficiaries)
@@ -1275,6 +1265,7 @@ namespace WebApi.Helpers {
 					.HasColumnName("type")
 					.HasMaxLength(255);
 
+<<<<<<< HEAD
 
 				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate")
 					.HasDefaultValueSql("(0.00)");
@@ -1294,6 +1285,8 @@ namespace WebApi.Helpers {
 				entity.Property(e => e.TypeCalculate).HasColumnName("type_calculate");
 
 
+=======
+>>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 				entity.Property(e => e.Beneficiary)
 					.IsRequired()
 					.HasColumnName("beneficiary")
@@ -1304,7 +1297,6 @@ namespace WebApi.Helpers {
 					.HasForeignKey(d => d.HealthPlanId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("covers_health_plan_id_foreign");
-
 
 				entity.Ignore(t => t.AddOnsAlt);
 
@@ -1968,20 +1960,20 @@ namespace WebApi.Helpers {
 					.HasConstraintName("zipcodes_city_id_foreign");
 			});
 
-            modelBuilder.Entity<MultiAssists>(entity => {
+			modelBuilder.Entity<MultiAssists>(entity => {
 				entity.ToTable("multi_assists");
 
 				entity.HasKey(t => t.Id);
 				entity.Property(e => e.Id)
-				.HasColumnName("id")
-				.ValueGeneratedOnAdd();
-				
+					.HasColumnName("id")
+					.ValueGeneratedOnAdd();
+
 				entity.Property(e => e.ClientProductId)
-				.HasColumnName("client_product_id")
-				.IsRequired();
+					.HasColumnName("client_product_id")
+					.IsRequired();
 
 				entity.Property(e => e.CoverId).HasColumnName("cover_id")
-				.IsRequired();
+					.IsRequired();
 
 				entity.Property(e => e.EffectiveDate)
 					.HasColumnName("efective_date")
@@ -2002,67 +1994,67 @@ namespace WebApi.Helpers {
 				entity.Property(e => e.Cost).HasColumnName("cost");
 
 				entity.Property(e => e.StatusId)
-				.HasColumnName("status_id")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(10);
+					.HasColumnName("status_id")
+					.HasColumnType("VARCHAR(10)")
+					.HasMaxLength(10);
 
 				entity.Property(e => e.Ref1)
 					.HasColumnName("ref1")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(30)")
 					.HasMaxLength(30);
-				
+
 				entity.Property(e => e.Ref2)
 					.HasColumnName("ref2")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(30)")
 					.HasMaxLength(30);
 
 				entity.Property(e => e.Ref3)
 					.HasColumnName("ref3")
-					.HasColumnType("VARCHAR")
+					.HasColumnType("VARCHAR(30)")
 					.HasMaxLength(30);
 
 				entity.Property(e => e.AccountType)
-				.HasColumnName("account_type")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(4);
+					.HasColumnName("account_type")
+					.HasColumnType("VARCHAR(4)")
+					.HasMaxLength(4);
 
 				entity.Property(e => e.BankName)
-				.HasColumnName("bank_name")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(60);
+					.HasColumnName("bank_name")
+					.HasColumnType("VARCHAR(60)")
+					.HasMaxLength(60);
 
 				entity.Property(e => e.AccountHolderName)
-				.HasColumnName("account_holder_name")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(60);
+					.HasColumnName("account_holder_name")
+					.HasColumnType("VARCHAR(60)")
+					.HasMaxLength(60);
 
 				entity.Property(e => e.RoutingNum)
-				.HasColumnName("routing_num")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(9);
+					.HasColumnName("routing_num")
+					.HasColumnType("VARCHAR(9)")
+					.HasMaxLength(9);
 
 				entity.Property(e => e.AccountNum)
-				.HasColumnName("account_num")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(12);
+					.HasColumnName("account_num")
+					.HasColumnType("VARCHAR(12)")
+					.HasMaxLength(12);
 
 				entity.Property(e => e.ExpDate)
-				.HasColumnName("exp_date")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(4);
+					.HasColumnName("exp_date")
+					.HasColumnType("VARCHAR(4)")
+					.HasMaxLength(4);
 
 				entity.Property(e => e.DebDay)
-				.HasColumnName("deb_day");
+					.HasColumnName("deb_day");
 
 				entity.Property(e => e.DebRecurringType)
-				.HasColumnName("deb_recurring_type")
-				.HasColumnType("VARCHAR")
-				.HasMaxLength(10);
+					.HasColumnName("deb_recurring_type")
+					.HasColumnType("VARCHAR(10)")
+					.HasMaxLength(10);
 
 				entity.Property(e => e.CreatedAt)
 					.HasColumnName("created_at")
 					.HasColumnType("datetime");
-				
+
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
@@ -2070,7 +2062,7 @@ namespace WebApi.Helpers {
 				entity.Property(e => e.DeletedAt)
 					.HasColumnName("deleted_at")
 					.HasColumnType("datetime");
-					
+
 				entity.HasOne(d => d.ClientProduct)
 					.WithMany(p => p.MultiAssists)
 					.HasForeignKey(d => d.ClientProductId)
@@ -2088,11 +2080,11 @@ namespace WebApi.Helpers {
 				entity.ToTable("multi_assists_vehicle");
 
 				entity.Property(e => e.Id).HasColumnName("id")
-				.ValueGeneratedOnAdd();
+					.ValueGeneratedOnAdd();
 				entity.HasKey(t => t.Id);
 
 				entity.Property(e => e.MultiAssistId).HasColumnName("multi_assist_id")
-				.IsRequired();
+					.IsRequired();
 
 				entity.Property(e => e.Make)
 					.IsRequired()
@@ -2116,7 +2108,7 @@ namespace WebApi.Helpers {
 				entity.Property(e => e.CreatedAt)
 					.HasColumnName("created_at")
 					.HasColumnType("datetime");
-				
+
 				entity.Property(e => e.UpdatedAt)
 					.HasColumnName("updated_at")
 					.HasColumnType("datetime");
@@ -2137,22 +2129,26 @@ namespace WebApi.Helpers {
 
 				entity.Property(e => e.AlianzaId).HasColumnName("alianza_id").IsRequired();
 				entity.Property(e => e.InsuranceAddOnId).HasColumnName("insurance_addon_id").IsRequired();
+<<<<<<< HEAD
 
 				entity.Property(e => e.Cost).HasColumnName("cost")
 					.HasDefaultValueSql("(0.00)");
 
 
 				entity.HasKey(t => new {t.AlianzaId, t.InsuranceAddOnId});
+=======
+				entity.HasKey(t => new { t.AlianzaId, t.InsuranceAddOnId });
+>>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 
 				//FK
-            	entity.HasOne(d => d.Alianza)
+				entity.HasOne(d => d.Alianza)
 					.WithMany(p => p.AlianzaAddOns)
 					.HasForeignKey(d => d.AlianzaId)
 					.OnDelete(DeleteBehavior.ClientSetNull)
 					.HasConstraintName("alianza_addons_alianza_id_foreign");
-				
+
 				//FK
-            	entity.HasOne(d => d.InsuranceAddOn)
+				entity.HasOne(d => d.InsuranceAddOn)
 					.WithMany(p => p.AlianzaAddOns)
 					.HasForeignKey(d => d.InsuranceAddOnId)
 					.OnDelete(DeleteBehavior.ClientSetNull)

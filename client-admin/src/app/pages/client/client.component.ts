@@ -12,6 +12,14 @@ import { BonaFideListComponent } from '../bona-fide-list/bona-fide-list.componen
 import * as Swal from 'sweetalert2';
 import { AllianceComponent } from '../alliance/alliance.component';
 import { AllianceListComponent } from '../alliance-list/alliance-list.component';
+import { AlliancesService } from '@app/shared/alliances.service';
+import { GeneralInformationComponent } from '../general-information/general-information.component';
+import { AddressComponent } from '../address/address.component';
+import {
+  ConfirmDialogModel,
+  ConfirmDialogComponent,
+} from '@app/components/confirm-dialog/confirm-dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-client',
@@ -32,8 +40,12 @@ export class ClientComponent implements OnInit, OnDestroy {
   docsCalls: DocsCallsListComponent;
   @ViewChild('BonafideList')
   bonafideList: BonaFideListComponent;
+  @ViewChild('clientAddressComponent')
+  clientAddressComponent: AddressComponent;
 
   @ViewChild('alliance') alliance: AllianceListComponent;
+  @ViewChild('generalInformation')
+  generalInformation: GeneralInformationComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -43,6 +55,9 @@ export class ClientComponent implements OnInit, OnDestroy {
   };
 
   reactiveForm: FormGroup;
+  deceased: boolean = false;
+
+  maxDate = new Date(new Date().setFullYear(new Date().getFullYear() - 1));
 
   fabMenuButtons = {
     visible: false,
@@ -54,7 +69,9 @@ export class ClientComponent implements OnInit, OnDestroy {
     private router: Router,
     private app: AppService,
     private languageService: LanguageService,
-    private clientWizard: ClientWizardService
+    private clientWizard: ClientWizardService,
+    private alianceService: AlliancesService,
+    private dialog: MatDialog
   ) {}
   ngOnDestroy(): void {
     this.clientWizard.resetFormGroups();
@@ -62,6 +79,9 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   async ngOnInit() {
     this.loading = true;
+    this.clientsService.toggleEditControl.subscribe((val) => {
+      this.toggleControls(val);
+    });
     this.reactiveForm = this.clientWizard.clientDemographic;
     if (!this.fromWizard) {
       this.setupFabButton();
@@ -86,14 +106,16 @@ export class ClientComponent implements OnInit, OnDestroy {
         .setValue(this.client.maritalStatus);
       this.reactiveForm.get('Phone1').setValue(this.client.phone1);
       this.reactiveForm.get('Phone2').setValue(this.client.phone2);
+      if (this.client.status == 3) {
+        console.log('disable all');
+        this.toggleControls(true);
+      }
     } else {
       this.reactiveForm
         .get('Ssn')
         .setAsyncValidators(this.clientWizard.checkSsn('').bind(this));
     }
-    this.clientsService.toggleEditControl.subscribe((val) => {
-      this.toggleControls(val);
-    });
+
     this.loading = false;
   }
 
@@ -144,7 +166,40 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.dependants.goToNew();
         break;
       case 'Alliance':
-        this.alliance.goToNew();
+        this.alianceService.iselegible(this.clientid).subscribe(
+          (res: string[]) => {
+            var validationNotMeetText = '';
+            var promiseArray: Promise<string>[] = new Array();
+            if (res)
+              res.forEach((s) =>
+                promiseArray.push(
+                  this.languageService.translate
+                    .get(`CLIENTS.${s}`)
+                    .toPromise()
+                    .then(
+                      (txt) =>
+                        (validationNotMeetText += `<div style="margin:20px;" >${txt}</div>`)
+                    )
+                )
+              );
+
+            Promise.all(promiseArray).then(() => {
+              if (!res) {
+                this.alliance.goToNew();
+              } else {
+                Swal.default.fire({
+                  position: 'center',
+                  icon: 'error',
+                  title: 'Error',
+                  html: validationNotMeetText,
+                  showConfirmButton: false,
+                  heightAuto: false,
+                });
+              }
+            });
+          },
+          (err) => {}
+        );
         break;
       default:
         break;
@@ -188,8 +243,28 @@ export class ClientComponent implements OnInit, OnDestroy {
     if (this.reactiveForm) {
       if (disable) {
         this.reactiveForm.disable();
+        this.clientWizard.generalInformationForm.disable();
+        this.clientWizard.clientAddressFormGroup.disable();
+        this.bonafideList.deceased = true;
+        this.dependants.deceased = true;
+        this.alliance.deceased = true;
+        this.clientAddressComponent.sameAsPhysical.disable();
+        this.docsCalls.deceased = true;
+        this.generalInformation.healthPlan.disable();
+        this.generalInformation.hasTutor.disable();
+        this.deceased = true;
       } else {
         this.reactiveForm.enable();
+        this.clientWizard.generalInformationForm.enable();
+        this.clientWizard.clientAddressFormGroup.enable();
+        this.bonafideList.deceased = false;
+        this.dependants.deceased = false;
+        this.alliance.deceased = false;
+        this.clientAddressComponent.sameAsPhysical.enable();
+        this.docsCalls.deceased = false;
+        this.generalInformation.healthPlan.enable();
+        this.generalInformation.hasTutor.enable();
+        this.deceased = true;
       }
     }
   }
@@ -212,5 +287,47 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   disableControls() {
     this.clientsService.toggleEditControl.emit(true);
+  }
+
+  async markAsDeceased() {
+    try {
+      await this.clientsService
+        .Decesed(this.client.id)
+        .toPromise()
+        .then(() => {
+          this.toggleControls(true);
+        });
+    } catch (ex) {
+      this.app.showErrorMessage(ex);
+    }
+  }
+
+  async deceaseConfirm() {
+    const message = await this.languageService.translate
+      .get('DEPENDANTS_LIST.ARE_YOU_SURE_DELETE')
+      .toPromise();
+
+    const title = await this.languageService.translate
+      .get('COMFIRMATION')
+      .toPromise();
+
+    const dialogData = new ConfirmDialogModel(
+      title,
+      message,
+      true,
+      true,
+      false
+    );
+
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      maxWidth: '400px',
+      data: dialogData,
+    });
+
+    dialogRef.afterClosed().subscribe(async (dialogResult) => {
+      if (dialogResult) {
+        await this.markAsDeceased();
+      }
+    });
   }
 }

@@ -81,13 +81,15 @@ namespace WebApi.Controllers
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Create)]
     [Authorize]
     [HttpPost]
-    public IActionResult Create([FromBody] Alianzas payload)
+    public async Task<IActionResult> Create([FromBody] AllianceDto payload)
     {
 
       try
       {
-
-        _service.Create(payload);
+        if (payload.Id == null)
+          await _service.Create(payload);
+        else
+          await this.Update(payload);
         return Ok(payload);
 
       }
@@ -99,6 +101,7 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
+<<<<<<< HEAD
     [AllowAnonymous]
     [HttpGet("Cost/{id}")]
     public IActionResult Cost(int id)
@@ -111,6 +114,16 @@ namespace WebApi.Controllers
 
 
         return Ok(res);
+=======
+    [Authorize]
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update([FromBody] AllianceDto payload)
+    {
+      try
+      {
+        await _service.Update(payload);
+        return Ok();
+>>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 
       }
       catch (AppException ex)
@@ -144,12 +157,12 @@ namespace WebApi.Controllers
         //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
         [Authorize]
     [HttpDelete("{id}")]
-    public IActionResult Delete(int id)
+    public async Task<IActionResult> Delete(int id)
     {
       try
       {
 
-        _service.Delete(id);
+        await _service.Delete(id);
         return Ok();
 
       }
@@ -159,5 +172,75 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("AlianceRequest/{clientId}")]
+    public async Task<IActionResult> AlianceRequest(int clientId)
+    {
+      try
+      {
+        var availableHP = await _service.AvailableHealthPlansForClient(clientId);
+        return Ok(availableHP);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("CheckSsn/{ssn}")]
+    public async Task<IActionResult> CheckSsn(string ssn)
+    {
+      try
+      {
+        var ssnAvailability = await _service.CheckSsn(ssn);
+        return Ok(ssnAvailability);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("client/{clientid}/iselegible")]
+    public async Task<IActionResult> ValidateClient(int clientid)
+    {
+      try
+      {
+        var reasons = await _service.IsElegible(clientid);
+        return Ok(reasons);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
+    [HttpGet("AffiliationTypes")]
+    public async Task<IActionResult> GetAllAffTypes()
+    {
+      try
+      {
+        var reasons = await _service.GetAllAffTypes();
+        return Ok(reasons);
+      }
+      catch (Exception ex)
+      {
+        // return error message if there was an exception
+        return DefaultError(ex);
+      }
+    }
+
+
   }
 }

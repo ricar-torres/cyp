@@ -125,6 +125,12 @@ export class SideNavComponent implements OnInit {
               route: '/home/retirement-list',
               visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
             },
+            {
+              displayName: 'Multi Assist',
+              iconName: 'rowing',
+              route: '/home/multi-assist',
+              visible: true, //TODO: this.app.checkMenuRoleAccess(MenuRoles.USERS),
+            },
           ],
         },
       ];

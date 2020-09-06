@@ -97,7 +97,7 @@
               color="accent"
               mat-button
               (click)="editBonafide(element.id)"
-              *ngIf="editAccess"
+              *ngIf="editAccess && !deceased"
             >
               <mat-icon>edit</mat-icon> {{ 'BONAFIDE.EDIT' | translate }}
             </button>
@@ -106,7 +106,7 @@
               color="warn"
               mat-button
               (click)="deleteConfirm(element.id)"
-              *ngIf="deleteAccess"
+              *ngIf="deleteAccess && !deceased"
             >
               <mat-icon>delete</mat-icon> {{ 'BONAFIDE.DELETE' | translate }}
             </button>

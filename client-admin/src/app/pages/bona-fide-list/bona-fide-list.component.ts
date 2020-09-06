@@ -37,7 +37,7 @@ export class BonaFideListComponent implements OnInit {
   editAccess: boolean = false;
   createAccess: boolean = false;
   deleteAccess: boolean = false;
-
+  deceased: boolean = false;
   dataSource;
   displayedColumns: string[] = [
     'id',
@@ -197,6 +197,7 @@ export class BonaFideListComponent implements OnInit {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
         height: '45%',
+        disableClose: true,
         data: { clientId: this.clientId, bonafide: bonafides },
       });
 
@@ -207,6 +208,7 @@ export class BonaFideListComponent implements OnInit {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
         height: '45%',
+        disableClose: true,
         data: { clientId: this.clientId, listItem: id, fromWizard: true },
       });
 
@@ -223,6 +225,7 @@ export class BonaFideListComponent implements OnInit {
       const dialogRef = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
         height: '45%',
+        disableClose: true,
         data: { clientId: this.clientId, bonafideId: null },
       });
       dialogRef.afterClosed().subscribe((result) => {
@@ -232,6 +235,7 @@ export class BonaFideListComponent implements OnInit {
       const pepe = this.dialog.open(BonafidesAssociatorComponent, {
         width: '70%',
         height: '45%',
+        disableClose: true,
         data: { clientId: null, bonafideId: null, fromWizard: true },
       });
       pepe.afterClosed().subscribe((result) => {

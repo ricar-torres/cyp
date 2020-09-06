@@ -24,7 +24,9 @@
             'ALLIANCEWIZARD.RENOVATIONAFILIATION' | translate
           }}</mat-radio-button>
         </mat-radio-group>
-        <mat-form-field>
+        <mat-form-field
+          *ngIf="affiliationMethod.get('affiliationMethod').value == 1"
+        >
           <mat-label>{{
             'ALLIANCEWIZARD.QUALIFYINGEVENT' | translate
           }}</mat-label>
@@ -35,7 +37,14 @@
           </mat-select>
         </mat-form-field>
       </div>
-
+      <button
+        class="button-space"
+        mat-raised-button
+        color="warn"
+        (click)="close()"
+      >
+        {{ 'CLOSE' | translate }}
+      </button>
       <button
         class="button-space"
         mat-raised-button
@@ -59,7 +68,10 @@
       >
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.HEALTHPLAN' | translate }}</mat-label>
-          <mat-select [formControl]="benefits.get('HealthPlan')">
+          <mat-select
+            (selectionChange)="healthPlanSelected()"
+            [formControl]="benefits.get('HealthPlan')"
+          >
             <mat-option [value]="item.id" *ngFor="let item of healthPlans">{{
               item.name
             }}</mat-option>
@@ -68,8 +80,9 @@
         <mat-form-field fxFlex>
           <mat-label>{{ 'ALLIANCEWIZARD.COVER' | translate }}</mat-label>
           <mat-select
+            (selectionChange)="coverChanged($event)"
             #coverSelection
-            [formControl]="benefits.get('Addititons')"
+            [formControl]="benefits.get('cover')"
           >
             <mat-option [value]="item.id" *ngFor="let item of covers">{{
               item.name
@@ -78,11 +91,15 @@
         </mat-form-field>
       </div>
     </form>
-    <app-beneficiaries-benefit-distribution
-      [percentageDependent]="percentageDependent"
-      [coverSelection]="coverSelection"
-    ></app-beneficiaries-benefit-distribution>
-    <div class="">
+    <div class="top-bottom-margin">
+      <button
+        class="button-space"
+        mat-raised-button
+        color="warn"
+        (click)="close()"
+      >
+        {{ 'CLOSE' | translate }}
+      </button>
       <button mat-raised-button color="primary" matStepperPrevious>
         {{ 'GOBACK' | translate }}
       </button>
@@ -95,8 +112,29 @@
         {{ 'NEXT' | translate }}
       </button>
     </div>
+    <div *ngFor="let addon of availableAddons">
+      <app-beneficiaries-benefit-distribution
+        *ngIf="addon.id == 1 || addon.id == 3"
+        [BeneficiariesList]="BeneficiariesList"
+        (benefitChecked)="lifeInsuranceToggle($event, addon)"
+        #beneficiaries
+      ></app-beneficiaries-benefit-distribution>
+      <mat-card
+        *ngIf="addon.id == 2 || addon.id == 4"
+        class="top-bottom-margin"
+      >
+        <mat-slide-toggle
+          #mayorMedicalToggle
+          (change)="mayorMedical($event.checked, addon)"
+          >Mayor Medical</mat-slide-toggle
+        >
+      </mat-card>
+    </div>
   </mat-step>
-  <!-- <mat-step [stepControl]="finalFormGroup">
+  <mat-step *ngIf="data.alliance" [stepControl]="finalFormGroup">
+    <ng-template matStepLabel>{{
+      'ALLIANCEWIZARD.DATES' | translate
+    }}</ng-template>
     <form
       [formGroup]="finalFormGroup"
       fxLayoutAlign="center"
@@ -133,15 +171,34 @@
         <mat-label>{{
           'ALLIANCEWIZARD.INSCRIPTIONTYPE' | translate
         }}</mat-label>
-        <mat-select formControlName="inscriptionType"> </mat-select>
+        <mat-select formControlName="inscriptionType">
+          <mat-option *ngFor="let afftype of affTypes" [value]="afftype.id">
+            {{ afftype.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
       <mat-form-field fxFlex>
         <mat-label>{{
           'ALLIANCEWIZARD.INSCRIPTIONSTATUS' | translate
         }}</mat-label>
-        <mat-select formControlName="inscriptionStatus"> </mat-select>
+        <mat-select formControlName="inscriptionStatus">
+          <mat-option [value]="1">
+            {{ 'COMPLETE' | translate }}
+          </mat-option>
+          <mat-option [value]="2">
+            {{ 'PENDING' | translate }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </form>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="warn"
+      (click)="close()"
+    >
+      {{ 'CLOSE' | translate }}
+    </button>
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
@@ -153,15 +210,16 @@
     >
       {{ 'NEXT' | translate }}
     </button>
-  </mat-step> -->
+  </mat-step>
+
   <mat-step>
     <div fxLayout fxLayoutAlign="center">
       <mat-card style="width: 70%">
-        <mat-card-header>
-          <!-- <mat-card-title>
+        <!-- <mat-card-header>
+          <mat-card-title>
           {{ 'CLIENTS.TITLE' | translate }}
-        </mat-card-title> -->
-        </mat-card-header>
+        </mat-card-title> 
+        </mat-card-header> -->
         <mat-card-content>
           <div fxLayout="Column">
             <div>Costos de cubierta</div>
@@ -185,5 +243,19 @@
         </mat-card-content>
       </mat-card>
     </div>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="warn"
+      (click)="close()"
+    >
+      {{ 'CLOSE' | translate }}
+    </button>
+    <button mat-raised-button color="primary" matStepperPrevious>
+      {{ 'GOBACK' | translate }}
+    </button>
+    <button mat-raised-button color="primary" (click)="submitAliance()">
+      {{ 'SAVE' | translate }}
+    </button>
   </mat-step>
 </mat-horizontal-stepper>

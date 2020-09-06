@@ -32,6 +32,7 @@
       fxLayoutGap="10px"
       fxLayoutAlign="center"
     >
+      <!-- disable control for this input is in the fill form -->
       <mat-form-field fxFlex="75%" class="example-full-width">
         <mat-label>{{ 'CLIENTS.AMEDICALPLAN' | translate }}</mat-label>
         <input
@@ -47,7 +48,10 @@
           [displayWith]="displayFnMedicalPlan"
           #healthPlanAutoComplete="matAutocomplete"
         >
-          <mat-option *ngFor="let plans of heathPlans" [value]="plans">
+          <mat-option
+            *ngFor="let plans of planFilteredOptions | async"
+            [value]="plans"
+          >
             {{ plans.name }}
           </mat-option>
         </mat-autocomplete>

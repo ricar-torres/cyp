@@ -120,6 +120,7 @@ export class ClientListComponent implements OnInit, OnDestroy {
       width: '95%',
       height: '95%',
       data: {},
+      disableClose: true,
     });
     dialogRef.afterClosed().subscribe((result) => {
       this.LoadClients();

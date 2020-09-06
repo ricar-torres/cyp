@@ -28,6 +28,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
   isloading: boolean;
   @Input()
   clientId: string;
+  deceased: boolean = true;
   constructor(
     private dialog: MatDialog,
     private apiDocCall: DocumentationCallAPIService,
@@ -46,13 +47,14 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
     const dialogRef = this.dialog.open(DocumentationCallComponent, {
       data: {
         confirmationNumber: masterThreadId,
-        clientId: 1,
+        clientId: this.clientId,
       },
     });
     dialogRef.afterClosed().subscribe(async (dialogResult) => {
       await this.loadData();
       if (dialogResult) {
         this.dialog.open(DialogSuccessComponent, {
+          disableClose: true,
           width: '300px',
           height: '200px',
           data: new GenericSucessModel(
@@ -96,6 +98,7 @@ export class DocsCallsListComponent implements OnInit, AfterViewInit {
 
   callSuccessDialog() {
     this.dialog.open(DialogSuccessComponent, {
+      disableClose: true,
       width: '350px',
       height: '200px',
       data: new GenericSucessModel('SUCCESS', '0000000000'),

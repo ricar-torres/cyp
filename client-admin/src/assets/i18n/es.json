@@ -49,6 +49,8 @@
   "GENDER": "Género",
   "BIRTHDATE": "Fecha de Nacimiento",
   "RELATION": "Relacion",
+  "CLOSE": "Cerrar",
+  "DEAD": "Fallecido",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -150,7 +152,12 @@
     "SSNTAKEN": "El 'SSN' provisto no esta disponible",
     "SSNREQUIRED": "SSN es requerido",
     "SAMEADDRESS": "Usar dirección fisica",
-    "MULTI_ASISTANCE": "Multiasistencia"
+    "MULTI_ASISTANCE": "Multiasistencia",
+    "SSNMIN": "Un minimo de 4 caracteres son requeridos para el 'ssn'",
+    "SSNMAX": "El maximo de caracteres para el 'ssn' es de 9",
+    "SSNNOTCOMPLETE": "El SSN del cliente debe ser complatado para continuar",
+    "MISSINGDOB": "La fecha de nacimiento del cliente debe ser completada para continuar",
+    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
@@ -218,7 +225,8 @@
     "PREREGISTER": "Pre Registro",
     "BONAFIDES_ASSOCIATION": "Bonafides",
     "GENERAL_INFORMATION": "General",
-    "ASSOCIATE_DEPENDATS": "Dependientes"
+    "ASSOCIATE_DEPENDATS": "Dependientes",
+    "FINISHCONTINUETOALLIANCE": "Finalizar y continuar con asociacion de alianza"
   },
   "ALLIANCELIST": {
     "QUALIFYINGEVENT": "Evento",
@@ -250,7 +258,8 @@
     "ADDITIONS": "Adiciones",
     "BENEFITS": "Beneficios",
     "COVER": "Cubierta",
-    "LIFEINSURANCE": "Seguro de Vida"
+    "LIFEINSURANCE": "Seguro de Vida",
+    "DATES": "Fechas"
   },
   "BENEFICIERIES": {
     "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
@@ -422,5 +431,37 @@
     "THREAD": "Hilo",
     "ONLY_PATTERN": "Letras solamente",
     "SAVE": "Guardar"
+  },
+  "MULTI_ASSIST": {
+    "PAGE_TITLE": "Multi Asistencia",
+    "ACCOUNT_PAGE_TITLE": "Información de Cuenta",
+    "VEHICLE_PAGE_TITLE": "Información de Vehiculo",
+    "BENEFICIARY_PAGE_TITLE": "Beneficiarios",
+    "SUMMARY_PAGE_TITLE": "Resumen",
+    "HEALTH_PLAN_LABEL": "Plan",
+    "COVER_LABEL": "Cobertura",
+    "VEHICLE_BRAND": "Marca de Vehiculo",
+    "VEHICLE_MODEL": "Modelo de Vehiculo",
+    "VEHICLE_PLATE": "Tablilla",
+    "VEHICLE_INFO_LABEL": "Información de Vehiculo",
+    "VEHICLE_YEAR": "Año",
+    "ACCOUNT_TYPE_LABEL": "Tipo de Cuenta",
+    "ACCOUNT_TYPE_BANK": "Cuenta de Banco",
+    "ACCOUNT_TYPE_CARD": "Tarjeta",
+    "ACCOUNT_BANKNAME": "Nombre de Banco",
+    "ROUTING_NUMBER": "Número de Ruta",
+    "HOLDERNAME": "Nombre en la tarjeta",
+    "EXPDATE": "Fecha de Expiración",
+    "ACCOUNT_NUM": "Número de Cuenta",
+    "RECURRING_MONTH_TYPE": "Semanal",
+    "RECURRING_WEEK_TYPE": "Mensual",
+    "RECURRING_TYPE_LABEL": "Tipo de Recurrencia",
+    "RECURRING_TYPE_DAY_LABEL": "Día de Cobro",
+    "CREATED_DATE": "Fecha de Creación",
+    "EFECTIVE_DATE": "Fecha de Efectividad",
+    "ELEGIBLE_DATE": "Fecha de Elegibilidad",
+    "END_DATE": "Fecha Final",
+    "COST": "Costo",
+    "STATUS": "Estatus"
   }
 }

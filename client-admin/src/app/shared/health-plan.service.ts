@@ -6,12 +6,14 @@ import { environment } from '@environments/environment';
   providedIn: 'root',
 })
 export class HealthPlanService {
+  readonly controllerName = 'HealthPlan';
   constructor(private http: HttpClient) {}
 
   GetAll() {
     return this.http.get(`${environment.baseURL}/HealthPlan`);
   }
 
+<<<<<<< HEAD
 
 
   insuranceCompaniesList(){
@@ -118,4 +120,9 @@ export class HealthPlanService {
 
 
 
+=======
+  GetAllAddOns(id: string) {
+    return this.http.get(`${environment.baseURL}/HealthPlan/${id}/addons`);
+  }
+>>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 }

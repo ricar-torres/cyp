@@ -4,14 +4,46 @@
       'CLIENTWIZARD.GENERAL_INFORMATION' | translate
     }}</ng-template>
     <app-client [fromWizard]="true"></app-client>
-    <app-general-information></app-general-information>
+    <app-general-information [fromwizard]="true"></app-general-information>
     <app-client-address [fromWizard]="true"></app-client-address>
     <button
-      [disabled]="wizardForms.clientDemographic.invalid"
+      class="button-space"
       mat-raised-button
-      (click)="preRegister()"
+      color="warn"
+      (click)="close()"
     >
+      {{ 'CLOSE' | translate }}
+    </button>
+    <button class="button-space" mat-raised-button (click)="preRegister()">
       {{ 'CLIENTWIZARD.PREREGISTER' | translate }}
+    </button>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="primary"
+      (click)="canContinue()"
+    >
+      {{ 'NEXT' | translate }}
+    </button>
+  </mat-step>
+  <mat-step>
+    <ng-template matStepLabel>{{
+      'CLIENTWIZARD.BONAFIDES_ASSOCIATION' | translate
+    }}</ng-template>
+    <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="warn"
+      (click)="close()"
+    >
+      {{ 'CLOSE' | translate }}
+    </button>
+    <button class="button-space" mat-raised-button (click)="preRegister()">
+      {{ 'CLIENTWIZARD.PREREGISTER' | translate }}
+    </button>
+    <button class="button-space" mat-raised-button matStepperPrevious>
+      {{ 'GOBACK' | translate }}
     </button>
     <button
       class="button-space"
@@ -24,23 +56,18 @@
   </mat-step>
   <mat-step>
     <ng-template matStepLabel>{{
-      'CLIENTWIZARD.BONAFIDES_ASSOCIATION' | translate
-    }}</ng-template>
-    <app-bona-fide-list [fromWizard]="true"></app-bona-fide-list>
-    <button mat-raised-button matStepperPrevious>
-      {{ 'GOBACK' | translate }}
-    </button>
-    <button (click)="register()" mat-button matStepperNext>
-      <mat-icon>save</mat-icon>
-      {{ 'DEPENDANTS_LIST.SAVE' | translate }}
-    </button>
-  </mat-step>
-  <mat-step>
-    <ng-template matStepLabel>{{
       'CLIENTWIZARD.ASSOCIATE_DEPENDATS' | translate
     }}</ng-template>
     <app-dependants-list [fromWizard]="true"></app-dependants-list>
-    <button mat-raised-button matStepperPrevious>
+    <button
+      class="button-space"
+      mat-raised-button
+      color="warn"
+      (click)="close()"
+    >
+      {{ 'CLOSE' | translate }}
+    </button>
+    <button class="button-space" mat-raised-button matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button
@@ -51,6 +78,15 @@
       matStepperNext
     >
       {{ 'FINISH' | translate }}
+    </button>
+    <button
+      class="button-space"
+      (click)="register(1)"
+      mat-raised-button
+      color="primary"
+      matStepperNext
+    >
+      {{ 'CLIENTWIZARD.FINISHCONTINUETOALLIANCE' | translate }}
     </button>
   </mat-step>
 </mat-horizontal-stepper>

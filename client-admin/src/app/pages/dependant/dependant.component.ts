@@ -124,24 +124,15 @@ export class DependantComponent implements OnInit, AfterViewInit {
       name: this.formBuilder.control('', [
         Validators.required,
         Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
-      initial: this.formBuilder.control('', [
-        Validators.maxLength(1),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ]),
+      initial: this.formBuilder.control('', [Validators.maxLength(1)]),
       lastName1: this.formBuilder.control('', [
         Validators.required,
         Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
       ]),
-      lastName2: this.formBuilder.control('', [
-        Validators.maxLength(250),
-        Validators.pattern(new RegExp(`^[A-Za-z\u00C0-\u00FF]*$`)),
-      ]),
+      lastName2: this.formBuilder.control('', [Validators.maxLength(250)]),
       birthDate: this.formBuilder.control({ value: '', disabled: true }, [
         Validators.required,
-        // Validators.pattern(new RegExp(`^[0-9]{2}[0-9]{2}[0-9]{4}*$`)),
       ]),
       ssn: this.formBuilder.control('', [Validators.required]),
       email: this.formBuilder.control('', [Validators.maxLength(250)]),
