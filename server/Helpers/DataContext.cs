@@ -79,11 +79,8 @@ namespace WebApi.Helpers {
 		public virtual DbSet<TypeOfRelationship> TypeOfRelationship { get; set; }
 		public virtual DbSet<AffType> AffType { get; set; }
 		public virtual DbSet<AlianzaAddOns> AlianzaAddOns { get; set; }
-<<<<<<< HEAD
 
-=======
 		public DbSet<MultiAssists> MultiAssists { get; set; }
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 		#endregion
 
 		#region FUNCTIONS
@@ -1265,7 +1262,6 @@ namespace WebApi.Helpers {
 					.HasColumnName("type")
 					.HasMaxLength(255);
 
-<<<<<<< HEAD
 
 				entity.Property(e => e.IndividualRate).HasColumnName("individual_rate")
 					.HasDefaultValueSql("(0.00)");
@@ -1285,8 +1281,6 @@ namespace WebApi.Helpers {
 				entity.Property(e => e.TypeCalculate).HasColumnName("type_calculate");
 
 
-=======
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 				entity.Property(e => e.Beneficiary)
 					.IsRequired()
 					.HasColumnName("beneficiary")
@@ -2129,16 +2123,12 @@ namespace WebApi.Helpers {
 
 				entity.Property(e => e.AlianzaId).HasColumnName("alianza_id").IsRequired();
 				entity.Property(e => e.InsuranceAddOnId).HasColumnName("insurance_addon_id").IsRequired();
-<<<<<<< HEAD
 
 				entity.Property(e => e.Cost).HasColumnName("cost")
 					.HasDefaultValueSql("(0.00)");
 
 
 				entity.HasKey(t => new {t.AlianzaId, t.InsuranceAddOnId});
-=======
-				entity.HasKey(t => new { t.AlianzaId, t.InsuranceAddOnId });
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 
 				//FK
 				entity.HasOne(d => d.Alianza)

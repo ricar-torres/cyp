@@ -9,242 +9,6 @@ using Microsoft.Extensions.Options;
 using OfficeOpenXml;
 using WebApi.Entities;
 using WebApi.Helpers;
-<<<<<<< HEAD
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
-using OfficeOpenXml;
-
-namespace WebApi.Services
-{
-  public interface IHealthPlanService
-  {
-    Task<List<HealthPlans>> GetAll();
-        IActionResult GetById(int id);
-        HealthPlans Create(HealthPlans item);
-        HealthPlans Update(HealthPlans item);
-        void Delete(HealthPlans item);
-
-       
-        //addons
-        InsuranceAddOns GetAddOnsById(int id);
-        InsuranceAddOns CreateAddOns(InsuranceAddOns item);
-        InsuranceAddOns UpdateAddOns(InsuranceAddOns item);
-        void DeleteAddOns(InsuranceAddOns item);
-        ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream);
-        ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream);
-        IActionResult GetAllAddOns(int HealthPlanId);
-
-        IQueryable<InsuranceBenefitType> BenefitType_GetAll();
-    }
-
-    public class HealthPlanService : Controller, IHealthPlanService
-  {
-    private readonly DataContext _context;
-    private readonly AppSettings _appSettings;
-
-    public HealthPlanService(DataContext context, IOptions<AppSettings> appSettings)
-    {
-      _context = context;
-      _appSettings = appSettings.Value;
-    }
-    public async Task<List<HealthPlans>> GetAll()
-    {
-      var healthPlans = await _context.HealthPlans.Where(hp => hp.DeletedAt == null).ToListAsync();
-      return healthPlans;
-    }
-
-
-
-        public IActionResult GetById(int id)
-        {
-
-            HealthPlans l = null;
-
-            try
-            {
-
-                l = _context.HealthPlans.Include(u => u.Covers).ThenInclude(r => r.AddOns)
-                                                .Include(u => u.InsuranceAddOns).ThenInclude(r => r.RatesByAge).Where(u => u.Id == id).FirstOrDefault();
-
-                if (l == null)
-                {
-                    throw new AppException("Insurance Company not found");
-
-
-
-                }
-                var company = new
-                {
-                    id = l.Id,
-                    name = l.Name,
-                    url = l.Url,
-                    InsurancePlans = from r in l.Covers
-                                     select new
-                                     {
-                                         r.Id,
-                                         r.Name,
-                                         AddOns = from h in r.AddOns
-                                                  select new
-                                                  {
-                                                      id = h.InsuranceAddOnsId,
-                                                      h.CoverId,
-                                                      h.InsuranceAddOns.Name,
-                                                      h.InsuranceAddOns.IndividualRate,
-                                                      h.InsuranceAddOns.CoverageSingleRate,
-                                                      h.InsuranceAddOns.CoverageCoupleRate,
-                                                      h.InsuranceAddOns.CoverageFamilyRate,
-                                                      h.InsuranceAddOns.MinimumEE,
-                                                      h.InsuranceAddOns.TypeCalculate
-                                                  }
-                                     }
-                           //l.InsurancePlans.Select(r => r.AddOns).ToList()
-                           ,
-                    InsuranceAddOns = from r in l.InsuranceAddOns
-                                      where r.DeletedAt == null
-                                      select new
-                                      {
-                                          r.Id,
-                                          r.HealthPlanId,
-                                          r.Name,
-                                          r.IndividualRate,
-                                          r.CoverageSingleRate,
-                                          r.CoverageCoupleRate,
-                                          r.CoverageFamilyRate,
-                                          r.MinimumEE,
-                                          r.TypeCalculate,
-                                          RatesByAge = (from h in r.RatesByAge
-                                                        select new { h.Age, h.Rate }).OrderBy(h => h.Age)
-                                      }
-                };
-
-                /* from r in l.InsurancePlans
-                                             select new { 
-                                                 r.Id, r.PlanName, 
-                                                 AddOns = String.Join(", ", (from h in r.AddOns 
-                                             select new { h.InsuranceAddOns.Name}).Select(h => h.Name).ToArray()) }*/
-
-                return Ok(company);
-
-                //if (item != null)
-                //{
-                //    if (item.OptionalCovers != null)
-                //    { 
-                //        item.OptionalCoverAlt  = item.OptionalCovers.Select(r => r.OptionalCoverId).ToArray();
-                //    }
-
-                //}
-
-
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-
-        }
-
-
-        public HealthPlans Create(HealthPlans item)
-        {
-
-            String exception = string.Empty;
-
-            // validation
-            //if (item.LoginProviderId == 0)
-            //    throw new AppException("LoginProviderId is required");
-
-            //if (!_context.LoginProvider.Any(lp => lp.Id == item.LoginProviderId && lp.DelFlag == false))
-            //    throw new AppException("LoginProviderId is invalid");
-
-            //if (string.IsNullOrWhiteSpace(password) && item.LoginProviderId == (int)LoginProviderEnum.Local)
-            //    throw new AppException("Password is required");
-
-            //if (string.IsNullOrWhiteSpace(item.UserName))
-            //    throw new AppException("UserName is required");
-
-            if (!ValidateRequireField(item, out exception))
-                throw new AppException(exception);
-
-            if (_context.HealthPlans.Any(x => x.Name == item.Name))
-                throw new AppException("Company Name " + item.Name + " is already exists");
-
-            item.CreatedAt = DateTime.Now;
-            _context.HealthPlans.Add(item);
-            _context.SaveChanges();
-
-            return item;
-
-        }
-
-
-        public HealthPlans Update(HealthPlans item)
-        {
-
-            String exception = string.Empty;
-
-            var _HealthPlans = _context.HealthPlans.Find(item.Id);
-
-
-            if (_HealthPlans == null)
-                throw new AppException("Insurance Company not found");
-
-            // validation
-            if (!ValidateRequireField(item, out exception))
-                throw new AppException(exception);
-
-            if (item.Name.ToLower() != _HealthPlans.Name.ToLower())
-            {
-                // Company Name has changed so check if the new Company Name is already exists
-                if (_context.HealthPlans.Any(x => x.Name == item.Name))
-                    throw new AppException("Company Name " + item.Name + " is already exists");
-            }
-
-            _HealthPlans.Name = item.Name;
-            _HealthPlans.Url = item.Url;
-            _HealthPlans.DeletedAt = item.DeletedAt;
-            _HealthPlans.UpdatedAt = DateTime.Now;
-
-            _context.HealthPlans.Update(_HealthPlans);
-            _context.SaveChanges();
-
-            return item;
-
-        }
-
-
-        public void Delete(HealthPlans item)
-        {
-            var _HealthPlans = _context.HealthPlans.Find(item.Id);
-
-            if (_HealthPlans != null)
-            {
-                _HealthPlans.UpdatedAt = DateTime.Now;
-                _HealthPlans.DeletedAt = DateTime.Now;
-
-                _context.HealthPlans.Update(_HealthPlans);
-                _context.SaveChanges();
-            }
-            else
-                throw new AppException("Insurance Company not found");
-
-        }
-
-
-
-
-        public IActionResult GetAllAddOns(int HealthPlanId)
-        {
-
-            // InsuranceAddOns item = null;
-            IQueryable<InsuranceAddOns> item = null;
-
-            try
-            {
-
-                item = _context.InsuranceAddOns.Include(u => u.RatesByAge).Where(u => u.HealthPlanId == HealthPlanId && u.DeletedAt == null);
-=======
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 
 namespace WebApi.Services {
 	public interface IHealthPlanService {
@@ -262,6 +26,7 @@ namespace WebApi.Services {
 		ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, MemoryStream stream);
 		ICollection<InsuranceAddOnsRateAge> UploadAddOnsRatesByAge(int InsuranceCompanyId, int id, MemoryStream stream);
 		IActionResult GetAllAddOns(int HealthPlanId);
+		IQueryable<InsuranceBenefitType> BenefitType_GetAll();
 	}
 
 	public class HealthPlanService : Controller, IHealthPlanService {
@@ -774,20 +539,22 @@ namespace WebApi.Services {
 
 		}
 
-		private Boolean ValidateRequireField(HealthPlans item, out String exception) {
+		private Boolean ValidateRequireField(HealthPlans item, out String exception)
+		{
 
 			exception = string.Empty;
 
 			// validation
-			if (string.IsNullOrWhiteSpace(item.Name)) {
+			if (string.IsNullOrWhiteSpace(item.Name))
+			{
 				exception = "Company Name is required";
 				return false;
 				//throw new AppException("LoginProviderId is required");
 			}
 
 			return true;
+		}
 
-<<<<<<< HEAD
         public IQueryable<InsuranceBenefitType> BenefitType_GetAll()
         {
             IQueryable<InsuranceBenefitType> item = null;
@@ -810,9 +577,6 @@ namespace WebApi.Services {
 
         }
 
-=======
-		}
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 
 	}
 }

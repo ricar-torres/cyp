@@ -278,7 +278,6 @@ const routes: Routes = [
         },
       },
       {
-<<<<<<< HEAD
         path: 'insurance-company',
         component: InsuranceCompanyComponent,
         //canActivate: [AuthGuardService],
@@ -310,7 +309,7 @@ const routes: Routes = [
              // expectedRoles: MenuRoles.USERS
           }
       },
-=======
+      {
         path: 'multi-assist',
         component: MultiAssistComponent,
         canActivate: [AuthGuardService],
@@ -318,7 +317,6 @@ const routes: Routes = [
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
     ],
   },
 ];

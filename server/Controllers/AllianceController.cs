@@ -101,21 +101,27 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
-<<<<<<< HEAD
+
     [AllowAnonymous]
-    [HttpGet("Cost/{id}")]
-    public IActionResult Cost(int id)
+    [HttpPost("Cost/{id}")]
+    public async Task<IActionResult> Cost(int id)
     {
       try
       {
 
-        var res = _service.UpdateCost(id);
+        var res = await _service.UpdateCost(id);
 
+                return Ok();
+                //return Ok(res);
+            }
+            catch (AppException ex)
+            {
+                // return error message if there was an exception
+                return DefaultError(ex);
+            }
+        }
 
-
-        return Ok(res);
-=======
-    [Authorize]
+        [Authorize]
     [HttpPut("{id}")]
     public async Task<IActionResult> Update([FromBody] AllianceDto payload)
     {
@@ -123,7 +129,6 @@ namespace WebApi.Controllers
       {
         await _service.Update(payload);
         return Ok();
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
 
       }
       catch (AppException ex)
@@ -134,25 +139,25 @@ namespace WebApi.Controllers
     }
 
 
-        [Authorize]
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Alianzas payload)
-        {
-            try
-            {
+        //[Authorize]
+        //[HttpPut("{id}")]
+        //public IActionResult Update(int id, [FromBody] Alianzas payload)
+        //{
+        //    try
+        //    {
 
-                payload.Id = id;
-                var res = _service.Update(payload);
+        //        payload.Id = id;
+        //        var res = _service.Update(payload);
 
-                return Ok(res);
+        //        return Ok(res);
 
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return DefaultError(ex);
-            }
-        }
+        //    }
+        //    catch (AppException ex)
+        //    {
+        //        // return error message if there was an exception
+        //        return DefaultError(ex);
+        //    }
+        //}
 
         //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
         [Authorize]

@@ -103,7 +103,6 @@ namespace WebApi.Controllers
       }
     }
 
-<<<<<<< HEAD
         [Authorize]
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(int id)
@@ -119,32 +118,6 @@ namespace WebApi.Controllers
                 return DefaultError(ex.Message);
             }
         }
-
-        [AllowAnonymous]
-        [HttpPut("{id}")]
-        public IActionResult Update(int id, [FromBody] Covers item)
-        {
-            // map dto to entity and set id
-            item.Id = id;
-=======
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
-
-    // GET: api/Covers/5
-
-    //[AllowAnonymous]
-    //[HttpGet("{id}")]
-    //public IActionResult Get(int id)
-    //{
-    //    try
-    //    {
-    //        var item = _itemService.GetById(id);
-    //        return Ok(item);
-    //    }
-    //    catch (Exception ex)
-    //    {
-    //        return DefaultError(ex.Message);
-    //    }
-    //}
 
     [AllowAnonymous]
     [HttpPut("{id}")]

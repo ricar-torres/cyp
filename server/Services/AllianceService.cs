@@ -16,13 +16,6 @@ namespace WebApi.Services
   {
     Task<List<AllianceDto>> GetAll(int? clientId);
     Alianzas GetById(int id);
-<<<<<<< HEAD
-    Alianzas Create(Alianzas payload);
-    Alianzas Update(Alianzas payload);
-		Alianzas UpdateCost(int id);
-
-	void Delete(int id);
-=======
     Task<Alianzas> Create(AllianceDto payload);
     Task Update(AllianceDto payload);
     Task Delete(int id);
@@ -30,7 +23,7 @@ namespace WebApi.Services
     Task<List<string>> IsElegible(int clientid);
     Task<List<AffType>> GetAllAffTypes();
     Task<bool> CheckSsn(string ssn);
->>>>>>> ca88cee6fecd415628af5a50c4d5db8b71400807
+        Task<Alianzas> UpdateCost(int Alianzaid);
   }
 
   public class AllianceService : IAllianceService
@@ -348,18 +341,18 @@ namespace WebApi.Services
 
 
 
-		public Alianzas UpdateCost(int Alianzaid)
+		public async Task<Alianzas> UpdateCost(int Alianzaid)
 		{
 
-			try
-			{
+			//try
+			//{
 				Alianzas item = null;
 
-				item = _context.Alianzas
+				item = await _context.Alianzas
 					.Include(u => u.ClientProduct).ThenInclude(u => u.Client)
 					.Include(u => u.Cover)
 					.Include(u => u.AlianzaAddOns)
-					.ThenInclude(u => u.InsuranceAddOn).Where(u => u.Id == Alianzaid).FirstOrDefault();
+					.ThenInclude(u => u.InsuranceAddOn).Where(u => u.Id == Alianzaid).FirstOrDefaultAsync();
 
 				Clients Member = item.ClientProduct.Client;
 				Covers Plans = item.Cover;
@@ -413,7 +406,7 @@ namespace WebApi.Services
 				else if (Plans.TypeCalculate == (int)TypeCalculate.TierAndAge)
 				{
 
-					var RateByAge = _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
+					var RateByAge =  _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
 
 					if (Member.Dependents.ToList().Count <= 0)
 						cost = RateByAge.CoverageSingleRate;
@@ -459,7 +452,7 @@ namespace WebApi.Services
 
 					r.Cost = cost;
 					_context.AlianzaAddOns.Update(r);
-					_context.SaveChanges();
+				    await	_context.SaveChangesAsync();
 
 					Totalcost += cost;
 
@@ -469,16 +462,16 @@ namespace WebApi.Services
 				item.SubTotal = Totalcost;
 
 				_context.Alianzas.Update(item);
-				_context.SaveChanges();
+                await _context.SaveChangesAsync();
 
-				return item;
+                return item;
 
-			}
+			//}
 
-			catch (Exception ex)
-			{
-				throw ex;
-			}
+			//catch (Exception ex)
+			//{
+			//	throw ex;
+			//}
 
 		}
 
