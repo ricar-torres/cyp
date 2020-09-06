@@ -92,23 +92,13 @@
       </div>
     </form>
     <div class="top-bottom-margin">
-      <button
-        class="button-space"
-        mat-raised-button
-        color="warn"
-        (click)="close()"
-      >
+      <button select mat-raised-button color="warn" (click)="close()">
         {{ 'CLOSE' | translate }}
       </button>
       <button mat-raised-button color="primary" matStepperPrevious>
         {{ 'GOBACK' | translate }}
       </button>
-      <button
-        class="button-space"
-        mat-raised-button
-        color="primary"
-        (click)="checkPercent()"
-      >
+      <button select mat-raised-button color="primary" (click)="checkPercent()">
         {{ 'NEXT' | translate }}
       </button>
     </div>
@@ -191,23 +181,13 @@
         </mat-select>
       </mat-form-field>
     </form>
-    <button
-      class="button-space"
-      mat-raised-button
-      color="warn"
-      (click)="close()"
-    >
+    <button select mat-raised-button color="warn" (click)="close()">
       {{ 'CLOSE' | translate }}
     </button>
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button
-      class="button-space"
-      mat-raised-button
-      color="primary"
-      (click)="checkPercent()"
-    >
+    <button select mat-raised-button color="primary" (click)="checkPercent()">
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
@@ -218,7 +198,7 @@
         <!-- <mat-card-header>
           <mat-card-title>
           {{ 'CLIENTS.TITLE' | translate }}
-        </mat-card-title> 
+        </mat-card-title>
         </mat-card-header> -->
         <mat-card-content>
           <div fxLayout="Column">

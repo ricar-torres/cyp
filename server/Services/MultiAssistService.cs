@@ -76,7 +76,7 @@ namespace server.Services {
 
 		public IQueryable<MultiAssists> GetAll() {
 			try {
-				return this._context.MultiAssists.AsNoTracking();
+				return this._context.MultiAssists.Include(m => m.Cover).AsNoTracking();
 			} catch (System.Exception) {
 				throw;
 			}
@@ -86,6 +86,8 @@ namespace server.Services {
 			MultiAssists res = null;
 			try {
 				if (_context.MultiAssists
+					.Include(c => c.Cover)
+					.ThenInclude(h => h.HealthPlan)
 					.Include(m => m.Beneficiaries)
 					.Include(m => m.MultiAssistsVehicle)
 					.FirstOrDefault(ma => ma.Id == id) is MultiAssists ma) {

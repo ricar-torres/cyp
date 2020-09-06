@@ -12,10 +12,10 @@
             fxLayout.lt-md="column"
             fxLayoutGap="10px"
           >
-            <mat-form-field>
+            <!-- <mat-form-field>
               <mat-label #id [formControl]="multi_assist.get('id')">
               </mat-label>
-            </mat-form-field>
+            </mat-form-field> -->
             <mat-form-field fxFlex>
               <mat-label>{{
                 'MULTI_ASSIST.HEALTH_PLAN_LABEL' | translate
@@ -321,7 +321,7 @@
             mat-raised-button
             color="primary"
             matStepperNext
-            (click)="register(id.value)"
+            (click)="register('')"
           >
             {{ 'FINISH' | translate }}
           </button>

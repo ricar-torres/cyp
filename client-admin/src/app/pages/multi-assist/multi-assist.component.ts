@@ -1,23 +1,39 @@
+import { AppService } from '@app/shared/app.service';
 import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 import { MultiAssistAPIService } from '@app/shared/MultiAssist.api.service';
 import { startWith, map } from 'rxjs/operators';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  Inject,
+  AfterViewInit,
+} from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { QualifyingEventService } from '@app/shared/qualifying-event.service';
 import { HealthPlanService } from '@app/shared/health-plan.service';
 import { CoverService } from '@app/shared/cover.service';
 import { DependantsAPIService } from '@app/shared/dependants.api.service';
 import { trigger, transition, style, animate } from '@angular/animations';
-import { MatStepper, MatSnackBar, MatSelectChange } from '@angular/material';
+import {
+  MatStepper,
+  MatSnackBar,
+  MatSelectChange,
+  MatDialogRef,
+  MAT_DIALOG_DATA,
+} from '@angular/material';
 import * as Swal from 'sweetalert2';
 import { MultiAssist } from '@app/models/MultiAssist';
+import { DocumentationCallComponent } from '@app/components/documentation-call/documentation-call.component';
 
 @Component({
   selector: 'app-multi-assist',
   templateUrl: './multi-assist.component.html',
   styleUrls: ['./multi-assist.component.css'],
 })
-export class MultiAssistComponent implements OnInit {
+export class MultiAssistComponent implements OnInit, AfterViewInit {
+  id: string;
+  clientId: string;
   multi_assist: FormGroup;
   multi_assist_summary: FormGroup;
   healthPlans: any = [];
@@ -36,20 +52,43 @@ export class MultiAssistComponent implements OnInit {
   eligibleWaitingPeriodDate: Date;
   @ViewChild('beneficiaries') beneficiaries;
   constructor(
-    private _formBuilder: FormBuilder,
-    private qualifyingEventService: QualifyingEventService,
-    private healthPlansService: HealthPlanService,
     private coverService: CoverService,
-    private DependantsServices: DependantsAPIService,
+    private app: AppService,
+    private _formBuilder: FormBuilder,
     private multiAssistApiService: MultiAssistAPIService,
-    private _snackBar: MatSnackBar
-  ) {}
+    public dialogRef: MatDialogRef<DocumentationCallComponent>,
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
+    this.id = data.id;
+    this.clientId = data.clientId;
+  }
+  async ngAfterViewInit() {
+    if (this.id) {
+      let ma;
+      // this.multiAssistApiService.Get(this.id).subscribe(
+      //   (data: any) => {
+      //     ma = data;
+      //   },
+      //   (error: any) => {
+      //     if (error.status != 401) {
+      //       this.app.showErrorMessage('Error interno');
+      //     }
+      //   }
+      // );
+      ma = await this.multiAssistApiService.Get(this.id);
+      console.log(JSON.stringify(ma));
+
+      this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
+
+      //this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover);
+    }
+  }
 
   async ngOnInit() {
     this.initForms();
     this.daysNums = Array.from(Array(30), (x, i) => i + 1);
     this.healthPlans = await this.multiAssistApiService
-      .GetAllMultiAssist()
+      .GetMultiAssistPlans()
       .toPromise();
 
     this.filteredHPs = this.multi_assist.get('HealthPlan').valueChanges.pipe(
@@ -57,8 +96,13 @@ export class MultiAssistComponent implements OnInit {
       map((value) => (typeof value === 'string' ? value : value.name)),
       map((name) => (name ? this.filter(name) : this.healthPlans.slice()))
     );
-    this.multi_assist.get('HealthPlan').valueChanges.subscribe(async (res) => {
-      this.covers = res.covers;
+    // this.multi_assist.get('HealthPlan').valueChanges.subscribe(async (res) => {
+    //   this.covers = res.covers;
+    // });
+    this.multi_assist.get('HealthPlan').valueChanges.subscribe((res) => {
+      this.coverService.GetByPlan(res.id).subscribe((res) => {
+        this.covers = res;
+      });
     });
 
     this.createdDate = new Date();
@@ -90,13 +134,11 @@ export class MultiAssistComponent implements OnInit {
       this.hasVehicule = this.selectedCover.type == 'ASSIST-VEH';
     }
   }
-  initForms() {
+  async initForms() {
     this.multi_assist = this._formBuilder.group({
-      id: [{ value: 0, hidden: true }],
       HealthPlan: [null, [Validators.required]],
       Addititons: [null, [Validators.required]],
     });
-    this.multi_assist_vehicule;
     this.multi_assist_vehicule = this._formBuilder.group({
       model: [null],
       plateNum: [null],
