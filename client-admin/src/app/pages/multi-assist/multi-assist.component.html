@@ -46,7 +46,7 @@
                 [formControl]="multi_assist.get('Addititons')"
                 (selectionChange)="coverChange($event)"
               >
-                <mat-option *ngFor="let cov of covers" [value]="cov">{{
+                <mat-option *ngFor="let cov of covers" [value]="cov.id">{{
                   cov.name
                 }}</mat-option>
               </mat-select>
@@ -162,15 +162,15 @@
                 [formControl]="multi_assist_bank.get('accType')"
                 #accountType
               >
-                <mat-option [value]="1">{{
+                <mat-option [value]="'1'">{{
                   'MULTI_ASSIST.ACCOUNT_TYPE_BANK' | translate
                 }}</mat-option>
-                <mat-option [value]="2">{{
+                <mat-option [value]="'2'">{{
                   'MULTI_ASSIST.ACCOUNT_TYPE_CARD' | translate
                 }}</mat-option>
               </mat-select>
             </mat-form-field>
-            <div *ngIf="accountType.value == 1">
+            <div *ngIf="accountType.value == '1'">
               <mat-form-field fxFlex="50%">
                 <mat-label>{{
                   'MULTI_ASSIST.ACCOUNT_BANKNAME' | translate
@@ -190,7 +190,7 @@
                 />
               </mat-form-field>
             </div>
-            <div *ngIf="accountType.value == 2" fxLayoutc fxFlex>
+            <div *ngIf="accountType.value == '2'" fxLayoutc fxFlex>
               <mat-form-field fxFlex>
                 <mat-label>{{
                   'MULTI_ASSIST.HOLDERNAME' | translate
@@ -234,10 +234,10 @@
               <mat-select
                 [formControl]="multi_assist_bank.get('depRecurringType')"
               >
-                <mat-option [value]="1">{{
+                <mat-option [value]="'1'">{{
                   'MULTI_ASSIST.RECURRING_WEEK_TYPE' | translate
                 }}</mat-option>
-                <mat-option [value]="2">{{
+                <mat-option [value]="'2'">{{
                   'MULTI_ASSIST.RECURRING_MONTH_TYPE' | translate
                 }}</mat-option>
               </mat-select>

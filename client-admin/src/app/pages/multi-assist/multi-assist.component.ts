@@ -79,8 +79,25 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
       console.log(JSON.stringify(ma));
 
       this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
-
-      //this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover);
+      this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover.id);
+      this.multi_assist_bank
+        .get('accType')
+        .setValue(ma.multiAssist.accountType);
+      this.multi_assist_bank.get('bankName').setValue(ma.multiAssist.bankName);
+      this.multi_assist_bank
+        .get('holderName')
+        .setValue(ma.multiAssist.accountHolderName);
+      this.multi_assist_bank
+        .get('routingNum')
+        .setValue(ma.multiAssist.routingNum);
+      this.multi_assist_bank
+        .get('accountNum')
+        .setValue(ma.multiAssist.accountNum);
+      this.multi_assist_bank.get('expDate').setValue(ma.multiAssist.expDate);
+      this.multi_assist_bank.get('depDate').setValue(ma.multiAssist.depDate);
+      this.multi_assist_bank
+        .get('debRecurringType')
+        .setValue(ma.multiAssist.depRecurringType);
     }
   }
 
