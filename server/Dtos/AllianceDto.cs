@@ -39,8 +39,6 @@ namespace server.Dtos
       this.Cover = Alianza.Cover;
       this.QualifyingEvent = Alianza.QualifyingEvent;
       this.ClientUser = Alianza.ClientUser;
-
-
     }
     public int? ClientId { get; set; }
     public new int? Id { get; set; }
@@ -51,6 +49,7 @@ namespace server.Dtos
     public new DateTime? ElegibleDate { get; set; }
     public new List<BeneficiariesDto> Beneficiaries { get; set; }
     public List<int> AddonList { get; set; }
+    public List<InsuranceAddOns> AvailableAddons { get; set; }
     public AffType AffTypeDescription { get; set; }
     public Clients Client { get; set; }
     public HealthPlans HealthPlan { get; set; }

@@ -57,4 +57,33 @@ export class AllianceInscriptionSheetComponent implements OnInit {
     }
     return undefined;
   }
+
+  getRelation(dependent) {
+    var relation = '';
+    switch (dependent.relationship) {
+      case 1:
+        relation = 'Cónyuge';
+        break;
+      case 2:
+        relation = 'Hijo/a';
+        break;
+      case 3:
+        relation = 'Hijastro/a';
+        break;
+      case 4:
+        relation = 'Adoptivo/a';
+        break;
+      default:
+        break;
+    }
+    return relation;
+  }
+
+  addonInclueded(addon) {
+    var isInList = (<[]>this.alliance.addonList).findIndex(
+      (x) => x == addon.id
+    );
+    if (isInList > -1) return true;
+    return false;
+  }
 }

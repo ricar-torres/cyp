@@ -223,8 +223,16 @@ namespace WebApi.Services
             c.City.Dependents = null;
           }
         });
-
+        x.ClientUser = _context.ClientUser.Where(cu => cu.ClientId == x.Client.Id).OrderByDescending(u => u.CreatedAt).ToList();
+        x.Client.ClientUser = null;
+        x.AvailableAddons = _context.InsuranceAddOns.Where(ia => ia.HealthPlanId == x.HealthPlan.Id).ToList();
+        x.AvailableAddons.ForEach(ad =>
+        {
+          ad.HealthPlans = null;
+          ad.AlianzaAddOns = null;
+        });
       });
+
 
       return clientAlliances;
     }
