@@ -1,3 +1,4 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '@environments/environment';
@@ -8,8 +9,20 @@ import { environment } from '@environments/environment';
 export class MultiAssistAPIService {
   controllerName = 'MultiAssist';
   constructor(private http: HttpClient) {}
-  GetAllMultiAssist() {
+  GetMultiAssistPlans() {
+    return this.http.get(
+      `${environment.baseURL}/${this.controllerName}/GetMultiAssistPlans`
+    );
+  }
+  GetAll() {
     return this.http.get(`${environment.baseURL}/${this.controllerName}/`);
+  }
+  Get(id: string | number): Promise<any> {
+    try {
+      return this.http
+        .get<any>(`${environment.baseURL}/${this.controllerName}/${id}`)
+        .toPromise();
+    } catch (error) {}
   }
   Create(payload, clientId: number | string) {
     return this.http
@@ -19,4 +32,13 @@ export class MultiAssistAPIService {
       })
       .toPromise();
   }
+  Update(payload, clientId: number | string) {
+    return this.http
+      .put(`${environment.baseURL}/${this.controllerName}`, {
+        multiAssist: payload,
+        clientId: clientId,
+      })
+      .toPromise();
+  }
+  async Delete(id: string) {}
 }

@@ -450,5 +450,10 @@
     "END_DATE": "Fecha Final",
     "COST": "Costo",
     "STATUS": "Estatus"
+  },
+  "MULTI_ASSIST_LIST": {
+    "NAME": "Nombre",
+    "EFFECTIVE_DATE": "Fecha de Efectividad",
+    "FILTER": "Filtro"
   }
 }
