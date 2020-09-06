@@ -21,6 +21,7 @@ import {
   MatSelectChange,
   MatDialogRef,
   MAT_DIALOG_DATA,
+  MatSelect,
 } from '@angular/material';
 import * as Swal from 'sweetalert2';
 import { MultiAssist } from '@app/models/MultiAssist';
@@ -64,20 +65,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
   }
   async ngAfterViewInit() {
     if (this.id) {
-      let ma;
-      // this.multiAssistApiService.Get(this.id).subscribe(
-      //   (data: any) => {
-      //     ma = data;
-      //   },
-      //   (error: any) => {
-      //     if (error.status != 401) {
-      //       this.app.showErrorMessage('Error interno');
-      //     }
-      //   }
-      // );
-      ma = await this.multiAssistApiService.Get(this.id);
-      console.log(JSON.stringify(ma));
-
+      let ma = await this.multiAssistApiService.Get(this.id);
       this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
       this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover.id);
       this.multi_assist_bank
@@ -98,6 +86,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
       this.multi_assist_bank
         .get('debRecurringType')
         .setValue(ma.multiAssist.depRecurringType);
+      this.coverChange(new MatSelectChange(null, ma.multiAssist.accountType));
     }
   }
 
@@ -187,7 +176,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
     });
     var payload = new MultiAssist(
       0,
-      multiAssist.Addititons.id,
+      multiAssist.Addititons,
       this.effectiveDate,
       this.eligibleWaitingPeriodDate,
       this.multi_assist_summary.get('endDate').value,
