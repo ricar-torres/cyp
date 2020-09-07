@@ -49,6 +49,7 @@
   "RELATION": "Relation",
   "CLOSE": "Close",
   "DEAD": "deceased",
+  "PRINT": "Print",
 
   "LOGIN-FORM": {
     "USER": "User",

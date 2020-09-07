@@ -51,6 +51,7 @@
   "RELATION": "Relacion",
   "CLOSE": "Cerrar",
   "DEAD": "Fallecido",
+  "PRINT": "Imprimir",
 
   "LOGIN-FORM": {
     "USER": "Usuario",

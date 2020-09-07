@@ -102,7 +102,7 @@ namespace WebApi.Services
 
       //TODO: check if the status of the aliance is complete or pending
       //for the moment is complete
-      alianza.AffStatus = 1;
+
       await _context.Alianzas.AddAsync(alianza);
       await _context.SaveChangesAsync();
 
@@ -141,7 +141,11 @@ namespace WebApi.Services
     private async Task<int> defineAfftype(AllianceDto payload, int afftype)
     {
       var lastAliance = await _context.ClientProduct
-      .Join(_context.Alianzas.Include(x => x.Cover).ThenInclude(s => s.HealthPlan)
+      .Join(_context.Alianzas
+      .Include(x => x.ClientUser)
+      .ThenInclude(x => x.Client)
+      .Include(x => x.Cover)
+      .ThenInclude(s => s.HealthPlan)
       , c => c.Id,
       a => a.ClientProductId,
       (c, a) => a).FirstOrDefaultAsync(s => s.ClientProduct.ClientId == payload.ClientId);
