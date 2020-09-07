@@ -27,15 +27,23 @@
             <input
               disabled
               type="checkbox"
-              [checked]="alliance.affType == 1"
+              [checked]="alliance?.affType == 1"
             /><label style="font-weight: bold; font-size: 10" for="checkbox"
               >Ingreso Nuevo</label
             >
-            <input disabled type="checkbox" [checked]="alliance.affType == 2" />
+            <input
+              disabled
+              type="checkbox"
+              [checked]="alliance?.affType == 2"
+            />
             <label style="font-weight: bold; font-size: 10" for="checkbox"
               >Renovación</label
             >
-            <input disabled type="checkbox" [checked]="alliance.affType == 3" />
+            <input
+              disabled
+              type="checkbox"
+              [checked]="alliance?.affType == 3"
+            />
             <label style="font-weight: bold; font-size: 10" for="checkbox">
               Mancomunado</label
             >
@@ -59,7 +67,7 @@
           ><br />
           &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span
             style="font-weight: bold; font-size: 14"
-            >Solicitud de Ingreso {{ alliance.id }}
+            >Solicitud de Ingreso {{ alliance?.id }}
           </span>
         </td>
       </tr>
@@ -73,17 +81,17 @@
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.joint == 0"
+              [checked]="alliance?.joint == 0"
             />
             <label class="bold-title" for="checkbox">Individual</label>
           </div>
         </td>
         <td colspan="10" style="padding-left: 4px">
           <span class="bold-title">Producto: </span>&nbsp;
-          {{ alliance.healthPlan.name }}
+          {{ alliance?.healthPlan?.name }}
         </td>
         <td colspan="6" style="padding-left: 4px">
-          <span class="bold-title">PSM:</span> {{ alliance.cover.name }}
+          <span class="bold-title">PSM:</span> {{ alliance?.cover?.name }}
         </td>
       </tr>
       <tr>
@@ -94,7 +102,7 @@
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.joint > 0"
+              [checked]="alliance?.joint > 0"
             />
             <label class="bold-title" for="checkbox">Pareja</label>
           </div>
@@ -131,7 +139,7 @@
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.joint == 1"
+              [checked]="alliance?.joint == 1"
             />
             <label class="bold-title" for="checkbox">Familiar</label>
           </div>
@@ -154,7 +162,7 @@
           colspan="4"
           style="text-align: center; border-top: 0; padding-left: 10px"
         >
-          {{ getAge(alliance.client.birthDate) }}
+          {{ getAge(alliance?.client?.birthDate) }}
         </td>
       </tr>
       <tr>
@@ -177,8 +185,8 @@
       <tr>
         <td colspan="4" style="height: 30px"></td>
         <td colspan="12" style="padding-left: 10px">
-          {{ alliance.client.lastName1 }} {{ alliance.client.lastName2 }}
-          {{ alliance.client.name }} {{ alliance.client.initial }}
+          {{ alliance?.client?.lastName1 }} {{ alliance?.client?.lastName2 }}
+          {{ alliance?.client?.name }} {{ alliance?.client?.initial }}
         </td>
         <td colspan="4" style="padding-left: 25px">
           <div class="inline-field">
@@ -186,21 +194,21 @@
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.client.maritalStatus == 1"
+              [checked]="alliance?.client?.maritalStatus == 1"
             />
             <label class="bold-title" for="checkbox">C</label>
             <input
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.client.maritalStatus == 2"
+              [checked]="alliance?.client?.maritalStatus == 2"
             />
             <label class="bold-title" for="checkbox">S</label>
             <input
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.client.maritalStatus == 3"
+              [checked]="alliance?.client?.maritalStatus == 3"
             />
             <label class="bold-title" for="checkbox">Coh</label>
           </div>
@@ -211,14 +219,14 @@
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.client.gender == 1"
+              [checked]="alliance?.client?.gender == 1"
             />
             <label class="bold-title" for="checkbox">M</label>
             <input
               type="checkbox"
               id="checkbox"
               disabled
-              [checked]="alliance.client.gender == 2"
+              [checked]="alliance?.client?.gender == 2"
             />
             <label class="bold-title" for="checkbox">F</label>
           </div>
@@ -237,7 +245,7 @@
         <td colspan="10" style="text-align: left; padding: 2px">
           <span
             ><span class="bold-title">Celular:</span>
-            {{ alliance.client.phone2 }}</span
+            {{ alliance?.client?.phone2 }}</span
           >
         </td>
       </tr>
@@ -246,25 +254,25 @@
           <span class="bold-title">Mes Dia Año</span>
         </td>
         <td colspan="4" rowspan="2" style="text-align: center">
-          {{ alliance.client.ssn }}
+          {{ alliance?.client?.ssn }}
         </td>
         <td colspan="5" style="text-align: center; border: 0">
           <span class="bold-title">Mes / Dia / Año</span>
         </td>
         <td colspan="10" style="text-align: left; padding: 2px">
-          <span class="bold-title">Tel:</span> {{ alliance.client.phone1 }}
+          <span class="bold-title">Tel:</span> {{ alliance?.client?.phone1 }}
         </td>
       </tr>
       <tr style="height: 20">
         <td colspan="4" style="text-align: center; border: 0">
-          <span>{{ alliance.effectiveDate | date: 'shortDate' }} </span>
+          <span>{{ alliance?.effectiveDate | date: 'shortDate' }} </span>
         </td>
         <td colspan="5" style="text-align: center; border: 0">
-          <span>{{ alliance.client.birthDate | date: 'shortDate' }} </span>
+          <span>{{ alliance?.client?.birthDate | date: 'shortDate' }} </span>
         </td>
         <td colspan="10" style="text-align: left; padding: 2px">
           <span style="font-weight: bold">Email: </span
-          >{{ alliance.client.email }}
+          >{{ alliance?.client.email }}
         </td>
       </tr>
       <tr>
@@ -709,7 +717,7 @@
         <td colspan="3" style="padding-right: 4px; text-align: right">
           <span>
             <!-- $ number_format>cover_amount,2 -->
-            {{ alliance.coverAmount }}
+            {{ alliance?.coverAmount }}
           </span>
         </td>
         <td colspan="15" rowspan="2" style="padding-left: 4px; border: 0">
@@ -724,7 +732,7 @@
         <td colspan="3" style="padding-right: 4px; text-align: right">
           <span>
             <!-- $ number_format>major_medical_amount,2  -->
-            {{ alliance.majorMedicalAmount }}
+            {{ alliance?.majorMedicalAmount }}
           </span>
         </td>
       </tr>
@@ -779,7 +787,7 @@
                 disabled
                 [checked]="addonInclueded(addon)"
               /><label class="bold-title" for="checkbox">{{
-                addon.name
+                addon?.name
               }}</label>
               <br />
             </div>
@@ -801,7 +809,7 @@
         <td colspan="3" style="padding-right: 4px; text-align: right">
           <span>
             <!-- $ number_format>life_insurance_amount,2  -->
-            {{ alliance.lifeInsuranceAmount }}
+            {{ alliance?.lifeInsuranceAmount }}
           </span>
         </td>
       </tr>
@@ -812,7 +820,7 @@
         <td colspan="3" style="padding-right: 4px; text-align: right">
           <span>
             <!-- $ number_format>sub_total,2 -->
-            {{ alliance.subTotoal }}
+            {{ alliance?.subTotoal }}
           </span>
         </td>
       </tr>
@@ -821,7 +829,7 @@
           <span class="bold-title">Menos Aportacion Patronal</span>
         </td>
         <td colspan="3" style="padding-right: 4px; text-align: right">
-          <span>$ {{ alliance.contribution }} </span>
+          <span>$ {{ alliance?.contribution }} </span>
         </td>
       </tr>
       <tr>
@@ -829,7 +837,7 @@
           <span class="bold-title">Menos Aportacion Mancomunado</span>
         </td>
         <td colspan="3" style="padding-right: 4px; text-align: right">
-          <span>$ {{ alliance.joint }} </span>
+          <span>$ {{ alliance?.joint }} </span>
         </td>
         <td colspan="12" style="border: 0"></td>
       </tr>
@@ -838,7 +846,7 @@
           <span class="bold-title">Aportacion del empleado</span>
         </td>
         <td colspan="3" style="padding-right: 4px; text-align: right">
-          <span>$ {{ alliance.prima }} </span>
+          <span>$ {{ alliance?.prima }} </span>
         </td>
         <td colspan="12" style="border: 0"></td>
       </tr>
@@ -887,7 +895,7 @@
         </td>
         <td colspan="3" style="height: 16; border: 0"></td>
         <td colspan="6" style="height: 16; border: 0; text-align: center">
-          {{ alliance.createdAt | date: 'shortDate' }}
+          {{ alliance?.createdAt | date: 'shortDate' }}
         </td>
         <td colspan="3" style="height: 16; border: 0"></td>
       </tr>
