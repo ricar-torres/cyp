@@ -5,9 +5,11 @@
     mat-stroked-button
     (click)="convertToPdf()"
   >
-    Print
+    {{ 'DOWNLOAD' | translate }}
   </button>
-  <button color="warn" mat-stroked-button (click)="close()">Close</button>
+  <button color="warn" mat-stroked-button (click)="close()">
+    {{ 'CLOSE' | translate }}
+  </button>
 </div>
 <div class="header"></div>
 <div id="pdfContent" class="body">
@@ -46,7 +48,7 @@
         <td colspan="7" style="border: 0">
           <img
             style="max-width: 100; max-height: 100"
-            src="/src/assets/images/Picture1.png"
+            src="assets/images/Picture1.png"
             alt=""
           />
         </td>

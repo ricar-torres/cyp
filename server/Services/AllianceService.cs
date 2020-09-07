@@ -149,21 +149,21 @@ namespace WebApi.Services
       , c => c.Id,
       a => a.ClientProductId,
       (c, a) => a).FirstOrDefaultAsync(s => s.ClientProduct.ClientId == payload.ClientId);
-      var newPlan = await _context.Covers.Include(x => x.HealthPlan).FirstOrDefaultAsync(x => x.Id == payload.CoverId);
+      var newCover = await _context.Covers.Include(x => x.HealthPlan).FirstOrDefaultAsync(x => x.Id == payload.CoverId);
 
 
-      if (lastAliance?.Cover?.HealthPlan?.Id == null)
+      if (lastAliance?.Cover == null)
       {
         afftype = 1;
       }
-      else if (lastAliance?.Cover?.HealthPlan?.Name == newPlan.Name)
+      else if (lastAliance?.Cover?.Name.ToLower().Trim() == newCover.Name.ToLower().Trim())
       {
         if (lastAliance?.Cover?.Id == payload.CoverId)
           afftype = 3;
         else
           afftype = 2;
       }
-      else if (lastAliance?.Cover?.HealthPlan?.Id != newPlan.Id)
+      else if (lastAliance?.Cover?.HealthPlan?.Id != newCover.HealthPlan.Id)
       {
         afftype = 6;
       }

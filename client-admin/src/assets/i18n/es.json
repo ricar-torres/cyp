@@ -52,6 +52,7 @@
   "CLOSE": "Cerrar",
   "DEAD": "Fallecido",
   "PRINT": "Imprimir",
+  "DOWNLOAD": "Descargar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",

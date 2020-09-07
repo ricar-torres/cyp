@@ -50,6 +50,7 @@
   "CLOSE": "Close",
   "DEAD": "deceased",
   "PRINT": "Print",
+  "DOWNLOAD": "Download",
 
   "LOGIN-FORM": {
     "USER": "User",
