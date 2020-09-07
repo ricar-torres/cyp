@@ -223,6 +223,14 @@
               <div>Costo de cubierta:</div>
               <div>${{ allianceWithCost?.coverAmount }}</div>
             </div>
+            <div
+              *ngFor="let item of allianceWithCost?.alianzaAddOns"
+              fxLayout
+              fxLayoutAlign="space-between center"
+            >
+              <div>{{ item.insuranceAddOn.name }}:</div>
+              <div>${{ item?.cost }}</div>
+            </div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Costo Total</div>

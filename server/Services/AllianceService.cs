@@ -133,9 +133,20 @@ namespace WebApi.Services
       await _context.SaveChangesAsync();
       alianza.ClientProduct = null;
       alianza.Cover = null;
-      alianza.AlianzaAddOns = null;
+      RemoveCircularDependency(ref alianza);
       alianza.Beneficiaries = null;
       return alianza;
+    }
+
+    private static void RemoveCircularDependency(ref Alianzas alianza)
+    {
+      foreach (var item in alianza.AlianzaAddOns)
+      {
+        item.Alianza = null;
+        item.InsuranceAddOn.AlianzaAddOns = null;
+        item.InsuranceAddOn.Beneficiary = null;
+        item.InsuranceAddOn.HealthPlans = null;
+      }
     }
 
     private async Task<int> defineAfftype(AllianceDto payload, int afftype)
@@ -227,7 +238,8 @@ namespace WebApi.Services
         {
           c.Client = null;
           c.Agency = _context.Agencies.FirstOrDefault(a => a.Id == c.AgencyId);
-          c.Agency.Dependents = null;
+          if (c.Agency != null)
+            c.Agency.Dependents = null;
           if (c.CityId != null)
           {
             c.City = _context.Cities.FirstOrDefault(ci => ci.Id == c.CityId);
@@ -302,23 +314,31 @@ namespace WebApi.Services
       alliance.CoverId = payload.CoverId.GetValueOrDefault();
       UpdateBeneficiaries(payload);
       UpdateAddons(payload);
-      alliance = await this.UpdateCost(payload.Id.GetValueOrDefault());
       await _context.SaveChangesAsync();
+      alliance = await this.UpdateCost(payload.Id.GetValueOrDefault());
+      RemoveCircularDependency(ref alliance);
       alliance.ClientProduct = null;
       alliance.Cover = null;
-      alliance.AlianzaAddOns = null;
       alliance.Beneficiaries = null;
       return alliance;
     }
 
     private void UpdateAddons(AllianceDto payload)
     {
-      var existingAddons = _context.AlianzaAddOns.Where(s => s.AlianzaId == payload.Id).Select(s => s).ToList();
+      var existingAddons = _context.AlianzaAddOns.Include(x => x.InsuranceAddOn).Where(s => s.AlianzaId == payload.Id).Select(s => s).ToList();
       existingAddons.ForEach(x =>
       {
         var exist = payload.AddonList.Contains(x.InsuranceAddOnId);
         if (exist == false)
         {
+          if (x.InsuranceAddOn.Id == 1 || x.InsuranceAddOn.Id == 3)
+          {
+            var existingBeneficieries = _context.Beneficiaries.Where(b => b.AlianzaId == x.AlianzaId);
+            foreach (var item in existingBeneficieries)
+            {
+              item.DeletedAt = DateTime.Now;
+            }
+          }
           _context.AlianzaAddOns.Remove(x);
         };
       });
@@ -535,8 +555,6 @@ namespace WebApi.Services
         age--;
       return age;
     }
-
-
 
   }
 }

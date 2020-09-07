@@ -302,6 +302,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       AddonList: this.addonsList,
       Beneficiaries: beneficiarieslist,
     });
+    console.log(res);
     return res;
   }
 
