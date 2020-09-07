@@ -19,7 +19,8 @@ import { AlliancesService } from '@app/shared/alliances.service';
 import { AllianceWizardComponent } from '../alliance-wizard/alliance-wizard.component';
 import * as jspdf from 'jspdf';
 import html2canvas from 'html2canvas';
-import { AllianceInscriptionSheetComponent } from '../alliance-inscription-sheet/alliance-inscription-sheet.component';
+import { AllianceInscriptionSheetComponent } from '../alliance-inscription-sheet-psm/alliance-inscription-sheet.component';
+import { AllianceInscriptionSheetFirtsMedicalComponent } from '../alliance-inscription-sheet-firts-medical/alliance-inscription-sheet-firts-medical.component';
 
 @Component({
   selector: 'app-alliance-list',
@@ -178,14 +179,30 @@ export class AllianceListComponent implements OnInit {
   }
 
   printAlianceInformation(alliance) {
-    const dialogRef = this.dialog.open(AllianceInscriptionSheetComponent, {
-      width: '90%',
-      height: '90%',
-      disableClose: true,
-      data: { alliance: alliance },
-    });
-    dialogRef.afterClosed().subscribe((result) => {
-      this.LoadAgencies();
-    });
+    console.log(alliance);
+    if (alliance.healthPlan.id == 7) {
+      const dialogRef = this.dialog.open(
+        AllianceInscriptionSheetFirtsMedicalComponent,
+        {
+          width: '90%',
+          height: '90%',
+          disableClose: true,
+          data: { alliance: alliance },
+        }
+      );
+      dialogRef.afterClosed().subscribe((result) => {
+        this.LoadAgencies();
+      });
+    } else if (alliance.healthPlan.id == 16) {
+      const dialogRef = this.dialog.open(AllianceInscriptionSheetComponent, {
+        width: '90%',
+        height: '90%',
+        disableClose: true,
+        data: { alliance: alliance },
+      });
+      dialogRef.afterClosed().subscribe((result) => {
+        this.LoadAgencies();
+      });
+    }
   }
 }

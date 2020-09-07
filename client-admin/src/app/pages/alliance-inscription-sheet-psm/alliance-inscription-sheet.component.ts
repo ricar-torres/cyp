@@ -15,7 +15,6 @@ export class AllianceInscriptionSheetComponent implements OnInit {
     public dialogRef: MatDialogRef<AllianceInscriptionSheetComponent>
   ) {
     this.alliance = data.alliance;
-    console.log(this.alliance);
   }
 
   ngOnInit(): void {}

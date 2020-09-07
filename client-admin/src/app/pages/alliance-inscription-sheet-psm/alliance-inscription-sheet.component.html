@@ -331,7 +331,7 @@
       </tr>
       <tr style="height: 20">
         <td colspan="5" style="text-align: center; height: 14">
-          <span>{{ alliance.client.agency.name }}</span>
+          <span>{{ alliance?.client?.agency?.name }}</span>
         </td>
         <td colspan="4" style="text-align: center"><span>&nbsp;</span></td>
         <td colspan="7" style="text-align: center">
@@ -425,7 +425,7 @@
           colspan="8"
           style="text-align: left; border-right: 0; border-left: 0"
         >
-          {{ alliance.cover.name }}
+          {{ alliance?.cover?.name }}
         </td>
       </tr>
       <tr>
@@ -517,7 +517,7 @@
           {{
             getDependantTypeOne(alliance.cLientDependents)?.agencyId
           }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{
-            getDependantTypeOne(alliance.cLientDependents)?.agency.name
+            getDependantTypeOne(alliance.cLientDependents)?.agency?.name
           }}
         </td>
         <td
@@ -531,7 +531,7 @@
           {{ alliance.client.contribution }}
         </td>
         <td colspan="8" style="text-align: center; border-top: 0">
-          {{ getDependantTypeOne(alliance.cLientDependents)?.city.name }}
+          {{ getDependantTypeOne(alliance.cLientDependents)?.city?.name }}
         </td>
       </tr>
       <tr>
@@ -574,13 +574,13 @@
           Adoptivo/a @endif -->
         </td>
         <td colspan="11" style="text-align: center">
-          {{ dependent.name }}
+          {{ dependent?.name }}
         </td>
         <td colspan="3" style="text-align: center">
-          ***-**-{{ dependent.ssn.substr(5, 9) }}
+          ***-**-{{ dependent?.ssn.substr(5, 9) }}
         </td>
         <td colspan="2" style="text-align: center">
-          {{ dependent.birthDate | date: 'shortDate' }}
+          {{ dependent?.birthDate | date: 'shortDate' }}
         </td>
         <td colspan="4" style="padding-left: 10px">
           <div class="inline-field">

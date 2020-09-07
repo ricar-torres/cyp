@@ -1,0 +1,753 @@
+<div class="center-button">
+  <button
+    class="space-arround"
+    color="primary"
+    mat-stroked-button
+    (click)="convertToPdf()"
+  >
+    {{ 'DOWNLOAD' | translate }}
+  </button>
+  <button color="warn" mat-stroked-button (click)="close()">
+    {{ 'CLOSE' | translate }}
+  </button>
+</div>
+<div id="pdfContent">
+  <div class="header">
+    <div class="row">
+      <div class="col-6">
+        <img src="{{ asset('dist/img/logo_fm.png') " alt="" />
+        <p>
+          PO Box 192179 San Juan PR, 00919-2179 <br />
+          Red de Proveedores INTERNATIONAL MEDICAL CARD
+        </p>
+      </div>
+      <div class="col-6 box">
+        <h2 class="text-center">
+          Alianza de Pensionado <br />
+          (Ley 117)
+        </h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 blue text-white">
+        <h5 class="text-center">SOLICITUD PLAN MEDICO • 2018</h5>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <label><strong>Tipo de afiliación</strong></label
+      ><br />
+      <div class="col-12">
+        <div class="col-4">
+          <input type="radio" class="form-check-input" />aff_type == 1 ?
+          'checked' : '' > Ingreso Nuevo
+        </div>
+        <div class="col-4">
+          <input type="radio" class="form-check-input" />aff_type == 2 ?
+          'checked' : '' > Renovación
+        </div>
+        <div class="col-4">
+          <input type="radio" class="form-check-input" />aff_type == 3 ?
+          'checked' : '' > Conversión
+        </div>
+        --
+        <div class="form-check-inline"></div>
+        --
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <table class="text-center">
+          <thead>
+            <tr>
+              <th>Seguro social</th>
+              <th>Código</th>
+              <th>Edad</th>
+              <th>Fecha de nacimiento</th>
+              <th>Estado civil</th>
+              <th>Sexo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>{{$client->ssn</td>
+              <td></td>
+              <td>{{ \Carbon\Carbon::parse($client->birth_date)->age</td>
+              <td>
+                {{\Carbon\Carbon::parse($client->birth_date)->format('m-d-Y')
+              </td>
+              <td>
+                @if($client->marital_status == 1) soltero
+                @elseif($client->marital_status == 2) casado
+                @elseif($client->marital_status == 3) viudo @endif
+              </td>
+              <td>
+                @if($client->gender == 1) Masculino @elseif($client->gender ==
+                2) Femenino @elseif($client->gender == 3) Otro @endif
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 blue text-white">
+        <h5 class="text-center">NOMBRE DEL SUSCRIPTOR PRINCIPAL</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="col-4">
+          <strong>Nombre completo</strong> <br />
+          $client->name $client->initial$client->last_name_1
+          $client->last_name_2
+        </div>
+        <div class="col-4">
+          <strong>Teléfono del Hogar</strong> <br />
+          $client->phone_1
+        </div>
+        <div class="col-4">
+          <strong>Teléfono celular</strong> <br />
+          $client->phone_2
+        </div>
+      </div>
+      <div class="col-12">
+        <div class="col-4">
+          <strong>Dirección residencial</strong> <br />
+          $client->addresses->first()->full_address['line_1']<br />
+          @if($client->addresses->first()->full_address['line_2'] != "")
+          $client->addresses->first()->full_address['line_2'] @endif
+          $client->addresses->first()->full_address['line_3']
+        </div>
+        <div class="col-4">
+          <strong>Dirección postal</strong> <br />
+          $client->addresses->last()->full_address['line_1']<br />
+          @if($client->addresses->last()->full_address['line_2'] != "")
+          $client->addresses->last()->full_address['line_2'] @endif
+          $client->addresses->last()->full_address['line_3']
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 blue text-white">
+        <h5 class="text-center">ASOCIACIONES BONA FIDE</h5>
+      </div>
+      <div class="col-6 blue text-white">
+        <h5 class="text-center">SISTEMA DE RETIRO</h5>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <ul>
+          <li>
+            @foreach($client->chapters as $chapter) $chapter->bonaFide->name
+            @endforeach
+          </li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul>
+          <li>$client->retirement->name</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 blue text-white">
+        <h5 class="text-center">
+          PLAN (Si tiene Medicare es requisito incluir copia de la tarjeta)
+        </h5>
+      </div>
+      <div class="col-12">
+        <strong>¿Tiene usted otro seguro médico?</strong>
+        @if($client->cover_id == 50) No @else Si /
+        <strong>Indique cual:</strong
+        >$client->cover->healthPlan->name,$client->cover->name @endif
+        <br /><br />
+        -- @foreach($client->dependents as $dependent)
+        @if($dependent->relationship == 3)
+        <div class="col-4">
+          <strong>Nombre del cónyuge:</strong> <br />
+          $dependent->name $dependent->last_name_1 $dependent->last_name_2
+        </div>
+        <div class="col-4">
+          <strong>Fecha de nacimiento:</strong> <br />
+          \Carbon\Carbon::parse($dependent->birth_date)->format('m-d-Y')
+        </div>
+        <div class="col-4">
+          <strong>Seguro social:</strong> <br />
+          $dependent->ssn
+        </div>
+        @endif @endforeach-- -- @if($client->dependents->where('relationship',
+        1)->count() == 1)
+        <div class="col-4">
+          <strong>Nombre del cónyuge:</strong> <br />
+          $client->dependents->where('relationship',
+          1)->first()->name$client->dependents->where('relationship',
+          1)->first()->last_name_1$client->dependents->where('relationship',
+          1)->first()->last_name_2
+        </div>
+        <div class="col-4">
+          <strong>Fecha de nacimiento:</strong> <br />
+          \Carbon\Carbon::parse($client->dependents->where('relationship',
+          1)->first()->birth_date)->format('m-d-Y')
+        </div>
+        <div class="col-4">
+          <strong>Seguro social:</strong> <br />
+          $client->dependents->where('relationship', 1)->first()->ssn
+        </div>
+        @endif --
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <table>
+          <tr>
+            <td class="blue text-white">PLAN MANCOMUNADO</td>
+            <td colspan="2">
+              Si aplica favor de completar informacion sobre el cónyuge: incluir
+              forma SC-1335
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Agencia del Cónyuge:</strong>
+              @if(joint>0) @if(isset($client->dependents->where('relationship',
+              1)->first()->agency_id))
+              $client->dependents->where('relationship',
+              1)->first()->agency->name @endif @endif
+            </td>
+            <td>
+              <strong>División</strong>: @foreach($client->dependents as
+              $dependent) @if($dependent->relationship == 1) @endif @endforeach
+            </td>
+            <td>
+              <strong>Seg. Soc. del Cónyuge:</strong>
+              @if(joint>0) @if(isset($client->dependents->where('relationship',
+              1)->first()->ssn))
+              ***-**-{{substr($client->dependents->where('relationship',
+              1)->first()->ssn, -4) @endif @endif
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <strong>Nombre del Cónyuge</strong>: @if(joint>0)
+              @if(isset($client->dependents->where('relationship',
+              1)->first()->name)) $client->dependents->where('relationship',
+              1)->first()->name $client->dependents->where('relationship',
+              1)->first()->last_name_1
+              $client->dependents->where('relationship',
+              1)->first()->last_name_2 @endif @endif
+            </td>
+            <td>
+              <strong>Fecha de Nac. (M/D/A)</strong>
+              @if(joint>0) @if(isset($client->dependents->where('relationship',
+              1)->first()->birth_date))
+              \Carbon\Carbon::parse($client->dependents->where('relationship',
+              1)->first()->birth_date)->format('m-d-Y') @endif @endif
+            </td>
+            <td>
+              <strong>Pueblo de Trabajo</strong>
+              @if(joint>0) @if(isset($client->dependents->where('relationship',
+              1)->first()->city_id)) $client->dependents->where('relationship',
+              1)->first()->city->name @endif @endif
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <br />
+    <div class="row">
+      <div class="col-6 blue text-white">
+        <h5 class="text-center">Cubierta básica</h5>
+      </div>
+      <div class="col-6 blue text-white">
+        <h5 class="text-center">Cubierta opcional</h5>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6">
+        <ul>
+          <li>
+            @if(isset(cover->healthPlan->name))
+
+            <strong>{{ cover->healthPlan->name - cover->name </strong>
+            <br />
+            Cubierta Classic
+            <div class="inline-field">
+              <input type="checkbox" id="checkbox" checked />
+              <label for="checkbox"
+                >(Básica, Farmacia, Dental y Vision II)</label
+              >
+            </div>
+
+            @endif
+          </li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <ul>
+          <div class="inline-field">
+            <input type="checkbox" id="checkbox" />major_medical == 1 ?
+            'checked' : '' >
+            <label for="checkbox">Gastos médicos mayores</label>
+          </div>
+          <div class="inline-field">
+            <input type="checkbox" id="checkbox" />life_insurance == 1 ?
+            'checked' : '' >
+            <label for="checkbox"
+              >Seguro de vida (Universal Life $13,200)</label
+            >
+          </div>
+        </ul>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 blue text-white">
+        <h5 class="text-center">
+          DEPENDIENTES DIRECTOS (Refierase a la sección de instrucciones al
+          dorso de esta hoja para la definición de dependientes directos)
+        </h5>
+      </div>
+      <div class="col-12">
+        <table class="text-center">
+          <thead>
+            <tr>
+              <th>Parentesco</th>
+              <th>Nombre completo</th>
+              <th>Edad</th>
+              <th>Fecha de nacimiento</th>
+              <th>Sexo</th>
+              <th>
+                Indique si tien otro plan, Estudiante Universitario o
+                Incapacitado. Incluya evidencia.
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach($client->dependents as $dependent)
+            <tr>
+              <td>
+                @if($dependent->relationship == 1) Cónyuge
+                @elseif($dependent->relationship == 2) Hijo/a
+                @elseif($dependent->relationship == 3) Hijastro/a
+                @elseif($dependent->relationship == 4) Adoptivo/a @endif
+              </td>
+              <td>
+                {{$dependent->name $dependent->last_name_1
+                $dependent->last_name_2
+              </td>
+              <td>{{ \Carbon\Carbon::parse($dependent->birth_date)->age</td>
+              <td>
+                {{\Carbon\Carbon::parse($dependent->birth_date)->format('m-d-Y')
+              </td>
+              <td>
+                @if($dependent->gender == 1) Masculino
+                @elseif($dependent->gender == 2) Femenino
+                @elseif($dependent->gender == 3) Otro @endif
+              </td>
+              <td>
+                $dependent->cover->healthPlan->name . ", " .
+                $dependent->cover->name
+              </td>
+            </tr>
+            @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 blue text-white">
+        <h5 class="text-center">
+          SEGURO DE VIDA: BENEFICIARIOS (total de porcientos tiene que sumar
+          100)
+        </h5>
+      </div>
+      <div class="col-12">
+        <table class="text-center">
+          <thead>
+            <tr>
+              <th>Nombre completo</th>
+              <th>Sexo</th>
+              <th>Fecha de nacimiento</th>
+              <th>Parentesco</th>
+              <th>Porciento</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach(beneficiaries as $beneficiary)
+            @if(!isset($beneficiary->deleted_at))
+            <tr>
+              <td>{{$beneficiary->name</td>
+              <td>
+                @if($beneficiary->gender == 1) Masculino
+                @elseif($beneficiary->gender == 2) Femenino
+                @elseif($beneficiary->gender == 3) Otro @endif
+              </td>
+              <td>
+                {{\Carbon\Carbon::parse($beneficiary->birth_date)->format('m-d-Y')
+              </td>
+              <td>
+                @if($beneficiary->relationship == 1) Cónyuge
+                @elseif($beneficiary->relationship == 2) Hijo/a
+                @elseif($beneficiary->relationship == 3) Hijastro/a
+                @elseif($beneficiary->relationship == 4) Adoptivo/a @endif
+              </td>
+              <td>{{$beneficiary->percent</td>
+            </tr>
+            @endif @endforeach
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 blue text-white">
+        <h5 class="text-center">CÓMPUTO DE PRIMA</h5>
+      </div>
+
+      <div class="col-12">
+        <table>
+          <tbody>
+            <tr>
+              <td>Cubierta básica (Básica+Farmacia+Dental+Visión):</td>
+              <td align="right">${{ number_format(cover_amount,2)</td>
+            </tr>
+            <tr>
+              <td>Major Médical:</td>
+              <td align="right">${{ number_format(major_medical_amount,2)</td>
+            </tr>
+            <tr>
+              <td>Seguro de Vida:</td>
+              <td align="right">${{ number_format(life_insurance_amount,2)</td>
+            </tr>
+            <tr>
+              <td align="right"><strong>Sub Total:</strong></td>
+              <td align="right">${{ number_format(sub_total,2)</td>
+            </tr>
+            <tr>
+              <td>Aportación Patronal</td>
+              <td align="right">${{ number_format($client->contribution,2)</td>
+            </tr>
+            <tr>
+              <td>Mancomunado</td>
+              <td align="right">${{ number_format(joint,2)</td>
+            </tr>
+            <tr>
+              <td align="right"><strong>Aportación del pensionado:</strong></td>
+              <td align="right">${{ number_format(prima,2)</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <hr />
+      </div>
+    </div>
+    <div class="row">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th>
+              <strong
+                >Nombre Representante Autorizado (letra de molde) y firma: </strong
+              ><u></u>
+            </th>
+            <th align="right"><strong>Número: </strong><u></u></th>
+            <th align="right" class="sign-rigth">
+              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            </th>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="row text-center">
+    <div class="col-6">
+      $client->tutor ? 'X': $client->users->last()->pivot->confirmation_number
+      <br />
+      <strong class="sign">Firma del suscriptor</strong>
+    </div>
+    <div class="col-6">
+      <u>{{ created_at->format('m-d-Y') </u>
+      <br />
+      <strong class="sign">Fecha</strong>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12 mini-font">
+      Nota: Si el suscriptor firma con una X, deberá estar presente un Testigo
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-6">
+      Nombre del Testigo y/o representante Legal X
+      <u>
+        $client->tutor ? $client->tutor->name . ' ' . $client->tutor->last_name
+        : '_______________________'
+      </u>
+      <br />
+      Firma del Testigo y/o representante Legal X
+      <u>
+        $client->tutor ? $client->users->first()->pivot->confirmation_number :
+        '_______________________'
+      </u>
+    </div>
+    <div class="col-6">
+      Núm. deTeléfono:
+      <u
+        >{{ $client->tutor ? $client->tutor->phone :
+        '_______________________'</u
+      >
+      <br />
+      Relación con el Suscriptor
+      <u> _______________________ </u>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <hr />
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12">
+      <strong>FMHP - LEY117 - 2016 (Revisado 02/2019)</strong>
+    </div>
+  </div>
+
+  {{--
+  <div class="row">
+    <div class="col-8">
+      <strong>Nombre Representante Autorizado (letra de molde) y firma:</strong
+      ><u
+        >{{ $client->users->first()->name . ' ' .
+        $client->users->first()->last_name
+      </u>
+    </div>
+    <div class="col-4">
+      <strong>Número:</strong><u>{{ $client->users->first()->code </u>
+    </div>
+  </div>
+  --
+  <div class="page-break"></div>
+  <div class="header">
+    <div class="row">
+      <div class="col-12">
+        <img
+          src="{{ asset('dist/img/inst_header.png') "
+          style="width: 100%"
+          alt=""
+        />
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="row">
+      <div class="col-12 blue-instructions white-blue">
+        <h3>INSTRUCCIONES Solicitud para la Alianza de Pensionado (Ley 117)</h3>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12 blue-instructions">
+        <!-- <p>1. Lea el folleto que aplica a la cubierta. Todas las selecciones sombreadas en gris son para el uso
+              exclusive del Plan.
+          </p>
+          <p>2. Escriba en maqbuinilla o en bolígrafo en letras de molde (no use lápiz). Complete todos los
+              encasillados que apliquen. No haga tachaduras ni borrones. <strong>Conserve copia con fecha de
+                  entrega.</strong></p>
+          <p>3. <strong class="bg-blue text-white">SOLICITUD DE INGRESO:</strong> Marque con una <u>X</u> si es un
+              <strong><u>ingreso nuevo</u></strong> o una <strong><u>renovación</u></strong></p>
+          <p>4. <strong class="bg-blue text-white">NOMBNRE DEL SUSCRIPTOR PRINCIPL Y NÚMEROP DE SEGURO
+                  SOCIAL:</strong> El suscriptor principal debe escribir su <u>nombre y numero de seguros tal y
+                  como aparece en su cheque de nomina</u>. Escriba toda la información personal solicitada. </p>
+          <p>5. <strong class="bg-blue text-white">PATRONO:</strong> Escriba la información sobre la agencia donde
+              usted trabaja, fecha de empleo e indique
+              con una <u>X</u> los encasillados que apliquen.
+          </p>
+          <p>
+          <ul>
+              <li>
+                  Transitorio con contratos de menos de seis meses no tienen derecho a la Aportación Patronal,
+                  pero si a suscribirse en el Plan. (Debe aparecer en un área visible en la solicitud)
+              </li>
+              <li>
+                  Empleado en Licencia Sin Sueldo deberán notificar la fecha que comenzaron dicha licencia.
+
+              </li>
+          </ul>
+          </p>
+          <p>6. <strong class="text-white bg-blue">PLAN:</strong> Marque con una X el tipo de plan.
+          <ul>
+              <li>
+                  Favor de incluir la forma SC-1335 si su plan en <strong>MANCOMUNABO</strong> y complete la
+                  información solicitada sobre su cónyuge.
+              </li>
+          </ul>
+          </p>
+          <p>7. <strong class="bg-blue text-white">Cubiertas:</strong> Seleccione con una
+              <strong><u>X</u></strong> la cubierta deseada:
+          <ul>
+              <li>Cubierta Regular - Cubierta Classic, Libre Selecció</li>
+              <li>Cubierta Opcional - Gastos Médicos Mayores y/o Seguro de Vida (Universal Life $13,200)</li>
+          </ul>
+          </p>
+          <p>8. <strong class="bg-blue text-white">DEPENDIENTES DIRECTOS:</strong> Incluya la información de sus
+              dependientes directos.
+          <ul>
+              <li>Las primeras dos líneas, están reservadas para la información de su cónyuge.</li>
+              <li>Si no tienes cónyuge y tienes otros dependientes directos (Ej. hijos) escriba la información a
+                  partir de la línea de cónyuge.
+              </li>
+              <li>Los hijos son elegibles como dependientes directos hasta cumplir los 26 años.</li>
+          </ul>
+          </p>
+          <p>9. <strong class="text-white bg-blue">SGUROS DE VIDA:</strong> Complete la información sobre la
+              designación de beneficiarios para la cubierta de Seguro de Vida. Solo el suscriptor principal tiene
+              derecho de esta cubierta. De necesitar mas espacio para laos beneficiarios deberá indicar en la
+              solicitud que incluirá los beneficiarios en un anejo, debidamente firmado.
+          </p>
+          <p>10. <strong class="bg-blue text-white">CÓMPUTO DE PRIMA: </strong> Favor de verificar que en el
+              cómputo de Prima se hayan incluido todas cubiertas solicitadas y dependientes opcionales. Verificar
+              que esté correcto antes de formar la. solicitud. </p>
+          <p>11. Verificar que esté por el orientador o vendedor.</p>
+          <p>12. <b><u>Firme</u></b> la solicitud y escribe la <b><u>fecha en entregó la solicitud</u></b>.</p>
+          <p>13. Asegúrese que la información suministrada esté correcta y completa. La falta de información
+              solicitada puede ocasionar que la solicitud no sea procesa hasta que provea la información
+              requerida.</p>
+          <p>14. Retenga la segunda hoja de la solicitud con el acuse de recibo del Plan. El origen deberá ser
+              entrada al Plan y la copia a la Agencia. </p>  -->
+      </div>
+      <div class="row">
+        <div class="col-12 blue-instructions white-blue">
+          <h3 class="text-center">AVISO DE ANTIFRAUDE</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 blue-instructions fraude-font">
+          <p>
+            Cualquier persona que a sabiendas presente información falsa en una
+            solicitud de seguro o, que presentare, ayudare o hiciere presentar
+            una reclamación fraudulenta para el pago de una pérdida u otro
+            beneficio, o presentare mas de una reclamación por el mismo daño o
+            perdida, incurriera en delito grave y convicto que fuere, será
+            sancionado con perna de multa no menor de cinco mil ($5,000)
+            dólares, ni mayor de diez mil ($10,000), o pena de reclusión por un
+            termino fijo de tres (3) años, o ambas penas.
+          </p>
+          <p>
+            Una vez usted como beneficiario este cubierto bajo el o incluido en
+            la cubierta su plan no puede ser revocado o enmendado, a menos que
+            no realice el pago de la prima y cumpla con los periodos de gracia
+            que concede el Código de Seguros; que haya realizado un acto
+            constitutivo de fraude, o haya realizado, intencionalmente una falsa
+            representación que esté prohibida por el plan, o cualquier otro acto
+            que represente un delito, sobre un asunto importante y material para
+            la aceptación del riesgo, o para el riesgo asumido, por el
+            asegurador.
+          </p>
+          <p>
+            La no inclusión de este aviso en los formularios indicados no
+            constituirá defensa para el asegurado o tercero reclamante que no
+            cumpla con la disposición de este Articulo. (Artículo 27.320 del
+            Código de Seguros de Puerto Rico, 26 L.P.R.A. Secc. 2732, según
+            enmendado el 8 de enero de 2004)
+          </p>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-6 blue-instructions fraude-font">
+          <strong>
+            Reconozco que este formulario de Inscripción. Cambio contiene
+            información confidencial y privilegiada, la cual ha sido
+            suministrada de forma libre y voluntaria. La información aquí
+            contendida es para uso exclusivo de la persona o entidad a la cual
+            va dirigida. Autorizo Al Plan a que remita infamación confidencial y
+            privilegiada al correo electrónico provisto. La distribución o
+            divulgación de dicha información a terceros sin previa autorización
+            esta totalmente prohibido.
+          </strong>
+        </div>
+        <div class="col-6 blue-instructions fraude-font">
+          <strong>
+            Autorizo al Plan a recopilar, usar o divulgar información protegida
+            para propósitos de mercadeo de bienes o servicios p para cualquier
+            beneficio comercial de otro tipo. Además, autorizo a recibir en mi
+            correo electrónico a mi celular mensajes promocionado servicio
+            existentes o nuevos del Plan. Esta autorización estará vigente por
+            un término de 24 meses y podrá revocarse por escrito en cualquier
+            momento. El no firmar esta autorización no afectará los beneficios
+            de mi cubierta.
+          </strong>
+        </div>
+        <div class="row">
+          <div class="col-6 blue-instructions">
+            <p>
+              Firma
+              <u>
+                @if (isset($client->users->first()->pivot->confirmation_number))
+                $client->users->first()->pivot->confirmation_number @endif
+              </u>
+            </p>
+          </div>
+          <div class="col-3 blue-instructions">
+            <p>
+              Firma
+              <u
+                >@if
+                (isset($client->users->first()->pivot->confirmation_number))
+                $client->users->first()->pivot->confirmation_number @endif</u
+              >
+            </p>
+          </div>
+          <div class="col-3 blue-instructions">
+            <p>
+              Fecha
+              <u>
+                @if(isset(crated_at))\Carbon\Carbon::parse(crated_at)->format('m-d-Y')
+                @endif</u
+              >
+            </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 blue-instructions">
+            <strong>Declaración</strong>
+            ________________________________________________________________________________________________________________________________
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-12 blue-instructions mini-font">
+            Por la presente solicito del Plan cubierta de beneficios para mi y
+            mis dependientes su alguno. Entiendo que esta solicitud esta sujeta
+            a la aceptación del Plan y que los servicios provistos están sujetos
+            a los beneficios y exclusiones conforme a las descritas en el
+            Contrato Uniforme. Certifico que he recibido copia de la Ley o
+            resumen de los derechos y responsabilidades del paciente, según lo
+            establece la Ley 194 “Carta de Derecho del Paciente”. Certifico que
+            la información en esta solicitud es correcta y autorizo al Plan a
+            verifica la misma. Autorizo al Plan a ofrecer información sobre la
+            elegibilidad y Cubiertas a la Administración de Seguros de Salud a
+            obtener de proveedores de servicio la información médica relacionada
+            conmigo y con mis dependientes que sea necesaria para la
+            administración del plan. Autorizo a mi patrono a deducir de mis
+            sueldo y enviar al Plan la cantidad necesaria para el pago de mi
+            plan médico.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

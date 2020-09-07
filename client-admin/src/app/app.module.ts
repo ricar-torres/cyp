@@ -136,7 +136,8 @@ import {
 } from './pages/insurance-plan-item/insurance-plan-item.component';
 import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
 import { MultiAssistListComponent } from './pages/multi-assist-list/multi-assist-list.component';
-import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet/alliance-inscription-sheet.component';
+import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet-psm/alliance-inscription-sheet.component';
+import { AllianceInscriptionSheetFirtsMedicalComponent } from './pages/alliance-inscription-sheet-firts-medical/alliance-inscription-sheet-firts-medical.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -204,6 +205,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MultiAssistComponent,
     MultiAssistListComponent,
     AllianceInscriptionSheetComponent,
+    AllianceInscriptionSheetFirtsMedicalComponent,
   ],
   imports: [
     BrowserModule,
@@ -287,6 +289,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AllianceInscriptionSheetComponent,
     AddOnsDialog,
     BenefitTypeDialog,
+    AllianceInscriptionSheetFirtsMedicalComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

@@ -98,7 +98,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       //get the alliance
       var alliance = this.data.alliance;
       //fill the forms in the wizard
-      console.log(alliance);
       if (alliance.qualifyingEvent.id == 1) {
         this.affiliationMethod.get('affiliationMethod').setValue('2');
       } else {
@@ -302,7 +301,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       AddonList: this.addonsList,
       Beneficiaries: beneficiarieslist,
     });
-    console.log(res);
     return res;
   }
 
@@ -317,7 +315,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
 
   checkSsn(ssn: string) {
     return async (control: AbstractControl) => {
-      //console.log(ssn, control.value);
       if (control.value && ssn != control.value) {
         const res: any = await this.AllianceService.checkSsn(
           control.value

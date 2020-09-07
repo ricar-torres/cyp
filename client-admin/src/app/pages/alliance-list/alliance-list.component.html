@@ -81,7 +81,11 @@
           mat-button
           color="accent"
           (click)="printAlianceInformation(element)"
-          *ngIf="editAccess && !deceased"
+          *ngIf="
+            editAccess &&
+            !deceased &&
+            (element.healthPlan.id == 7 || element.healthPlan.id == 16)
+          "
         >
           <mat-icon>print</mat-icon> {{ 'PRINT' | translate }}
         </button>
