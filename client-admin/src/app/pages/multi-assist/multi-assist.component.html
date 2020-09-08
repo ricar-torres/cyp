@@ -72,6 +72,7 @@
     }}</ng-template>
     <div class="mt-1 mb-1">
       <app-beneficiaries-benefit-distribution
+        [hasBeneficiary]="BeneficiariesList.length > 0"
         [BeneficiariesList]="BeneficiariesList"
         #beneficiaries
       ></app-beneficiaries-benefit-distribution>

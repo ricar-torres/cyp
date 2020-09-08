@@ -131,88 +131,100 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
   }
 
   async ngOnInit() {
-    this.initForms();
-    this.daysNums = Array.from(Array(30), (x, i) => i + 1);
-    this.healthPlans = await this.multiAssistApiService
-      .GetMultiAssistPlans()
-      .toPromise();
+    try {
+      this.initForms();
+      this.daysNums = Array.from(Array(30), (x, i) => i + 1);
+      this.healthPlans = await this.multiAssistApiService
+        .GetMultiAssistPlans()
+        .toPromise();
 
-    this.filteredHPs = this.multi_assist.get('HealthPlan').valueChanges.pipe(
-      startWith(''),
-      map((value) => (typeof value === 'string' ? value : value.name)),
-      map((name) => (name ? this.filter(name) : this.healthPlans.slice()))
-    );
-    this.multi_assist.get('HealthPlan').valueChanges.subscribe((res) => {
-      console.log(res.id);
-      if (res.id > 0) {
-        this.coverService.GetByPlan(res.id).subscribe((res) => {
-          this.covers = res;
-        });
-      }
-    });
-
-    this.createdDate = new Date();
-    this.effectiveDate = new Date(
-      this.createdDate.getFullYear(),
-      this.createdDate.getMonth() + 1,
-      this.createdDate.getDay()
-    );
-    this.eligibleWaitingPeriodDate = new Date(
-      this.effectiveDate.getFullYear(),
-      this.effectiveDate.getMonth() + 1,
-      this.effectiveDate.getDay()
-    );
-
-    if (this.id > 0) {
-      let ma = await this.multiAssistApiService.Get(this.id);
-      this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
-      this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover.id);
-      this.multi_assist_bank
-        .get('accType')
-        .setValue(ma.multiAssist.accountType);
-      if (ma.multiAssist.accountType == '') {
-      }
-      this.multi_assist_bank.get('bankName').setValue(ma.multiAssist.bankName);
-      this.multi_assist_bank
-        .get('holderName')
-        .setValue(ma.multiAssist.accountHolderName);
-      this.multi_assist_bank
-        .get('routingNum')
-        .setValue(ma.multiAssist.routingNum);
-      this.multi_assist_bank
-        .get('accountNum')
-        .setValue(ma.multiAssist.accountNum);
-      this.multi_assist_bank.get('expDate').setValue(ma.multiAssist.expDate);
-      this.multi_assist_bank.get('depdate').setValue(ma.multiAssist.debDay);
-      this.multi_assist_bank
-        .get('depRecurringType')
-        .setValue(ma.multiAssist.debRecurringType);
-
-      this.multi_assist_summary.get('endDate').setValue(ma.multiAssist.endDate);
-
-      this.hasVehicle = ma.multiAssist.cover.type == 'ASSIST-VEH';
-      this.hasBeneficiary = ma.multiAssist.cover.beneficiary;
-      ma.multiAssist.multiAssistsVehicle.forEach((intm) => {
-        var Veh = this._formBuilder.group({
-          model: [intm.model, [Validators.required]],
-          vin: [intm.vin, [Validators.required]],
-          make: [intm.make, [Validators.required]],
-          year: [intm.year, [Validators.required]],
-        });
-        this.VehicleList.push(Veh);
+      this.filteredHPs = this.multi_assist.get('HealthPlan').valueChanges.pipe(
+        startWith(''),
+        map((value) => (typeof value === 'string' ? value : value.name)),
+        map((name) => (name ? this.filter(name) : this.healthPlans.slice()))
+      );
+      this.multi_assist.get('HealthPlan').valueChanges.subscribe((res) => {
+        console.log(res.id);
+        if (res.id > 0) {
+          this.coverService.GetByPlan(res.id).subscribe((res) => {
+            this.covers = res;
+          });
+        }
       });
-      ma.multiAssist.beneficiaries.forEach((intm) => {
-        var ben = this._formBuilder.group({
-          name: [intm.name, [Validators.required]],
-          gender: [intm.gender, [Validators.required]],
-          birthDate: [intm.birthDate, [Validators.required]],
-          ssn: [intm.ssn, [Validators.required], this.checkSsn('').bind(this)],
-          relationship: [intm.relationship, [Validators.required]],
-          percent: [intm.percent, [Validators.required]],
+
+      this.createdDate = new Date();
+      this.effectiveDate = new Date(
+        this.createdDate.getFullYear(),
+        this.createdDate.getMonth() + 1,
+        this.createdDate.getDay()
+      );
+      this.eligibleWaitingPeriodDate = new Date(
+        this.effectiveDate.getFullYear(),
+        this.effectiveDate.getMonth() + 1,
+        this.effectiveDate.getDay()
+      );
+
+      if (this.id > 0) {
+        let ma = await this.multiAssistApiService.Get(this.id);
+        this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
+        this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover.id);
+        this.multi_assist_bank
+          .get('accType')
+          .setValue(ma.multiAssist.accountType);
+        if (ma.multiAssist.accountType == '') {
+        }
+        this.multi_assist_bank
+          .get('bankName')
+          .setValue(ma.multiAssist.bankName);
+        this.multi_assist_bank
+          .get('holderName')
+          .setValue(ma.multiAssist.accountHolderName);
+        this.multi_assist_bank
+          .get('routingNum')
+          .setValue(ma.multiAssist.routingNum);
+        this.multi_assist_bank
+          .get('accountNum')
+          .setValue(ma.multiAssist.accountNum);
+        this.multi_assist_bank.get('expDate').setValue(ma.multiAssist.expDate);
+        this.multi_assist_bank.get('depdate').setValue(ma.multiAssist.debDay);
+        this.multi_assist_bank
+          .get('depRecurringType')
+          .setValue(ma.multiAssist.debRecurringType);
+
+        this.multi_assist_summary
+          .get('endDate')
+          .setValue(ma.multiAssist.endDate);
+
+        this.hasVehicle = ma.multiAssist.cover.type == 'ASSIST-VEH';
+        this.hasBeneficiary = ma.multiAssist.cover.beneficiary;
+        ma.multiAssist.multiAssistsVehicle.forEach((intm) => {
+          var Veh = this._formBuilder.group({
+            model: [intm.model, [Validators.required]],
+            vin: [intm.vin, [Validators.required]],
+            make: [intm.make, [Validators.required]],
+            year: [intm.year, [Validators.required]],
+          });
+          this.VehicleList.push(Veh);
         });
-        this.BeneficiariesList.push(ben);
-      });
-      this.client_product_id = ma.multiAssist.clientProductId;
+        ma.multiAssist.beneficiaries.forEach((intm) => {
+          var ben = this._formBuilder.group({
+            name: [intm.name, [Validators.required]],
+            gender: [intm.gender, [Validators.required]],
+            birthDate: [intm.birthDate, [Validators.required]],
+            ssn: [
+              intm.ssn,
+              [Validators.required],
+              this.checkSsn('').bind(this),
+            ],
+            relationship: [intm.relationship, [Validators.required]],
+            percent: [intm.percent, [Validators.required]],
+          });
+          this.BeneficiariesList.push(ben);
+        });
+        this.client_product_id = ma.multiAssist.clientProductId;
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
   public filter(value: string) {
@@ -264,66 +276,70 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
   }
 
   register(id: number) {
-    var beneficiarieslist = [];
-    var vehicleList = [];
-    var multiAssist = this.multi_assist.getRawValue();
-    var bank = this.multi_assist_bank.getRawValue();
-    this.BeneficiariesList.forEach((fg) => {
-      beneficiarieslist.push(fg.getRawValue());
-    });
-    this.VehicleList.forEach((fg) => {
-      vehicleList.push(fg.getRawValue());
-    });
+    try {
+      var beneficiarieslist = [];
+      var vehicleList = [];
+      var multiAssist = this.multi_assist.getRawValue();
+      var bank = this.multi_assist_bank.getRawValue();
+      this.BeneficiariesList.forEach((fg) => {
+        beneficiarieslist.push(fg.getRawValue());
+      });
+      this.VehicleList.forEach((fg) => {
+        vehicleList.push(fg.getRawValue());
+      });
 
-    if (id == 0) {
-      var payload = new MultiAssist(
-        id,
-        multiAssist.Addititons,
-        this.effectiveDate,
-        this.eligibleWaitingPeriodDate,
-        this.multi_assist_summary.get('endDate').value,
-        100,
-        1,
-        bank.accType,
-        bank.bankName,
-        bank.holderName,
-        bank.routingNum,
-        bank.accountNum,
-        bank.expDate,
-        bank.depdate,
-        bank.depRecurringType,
-        beneficiarieslist,
-        vehicleList,
-        this.client_product_id
-      );
-      console.log('create');
-      this.multiAssistApiService.Create(payload, 1);
-      this.dialogRef.close();
-    } else {
-      var payload = new MultiAssist(
-        id,
-        multiAssist.Addititons,
-        this.effectiveDate,
-        this.eligibleWaitingPeriodDate,
-        this.multi_assist_summary.get('endDate').value,
-        100,
-        1,
-        bank.accType,
-        bank.bankName,
-        bank.holderName,
-        bank.routingNum,
-        bank.accountNum,
-        bank.expDate,
-        bank.depdate,
-        bank.depRecurringType,
-        beneficiarieslist,
-        vehicleList,
-        this.client_product_id
-      );
+      if (id == 0) {
+        var payload = new MultiAssist(
+          id,
+          multiAssist.Addititons,
+          this.effectiveDate,
+          this.eligibleWaitingPeriodDate,
+          this.multi_assist_summary.get('endDate').value,
+          100,
+          1,
+          bank.accType,
+          bank.bankName,
+          bank.holderName,
+          bank.routingNum,
+          bank.accountNum,
+          bank.expDate,
+          bank.depdate,
+          bank.depRecurringType,
+          beneficiarieslist,
+          vehicleList,
+          this.client_product_id
+        );
+        console.log('create');
+        this.multiAssistApiService.Create(payload, 1);
+        this.dialogRef.close();
+      } else {
+        var payload = new MultiAssist(
+          id,
+          multiAssist.Addititons,
+          this.effectiveDate,
+          this.eligibleWaitingPeriodDate,
+          this.multi_assist_summary.get('endDate').value,
+          100,
+          1,
+          bank.accType,
+          bank.bankName,
+          bank.holderName,
+          bank.routingNum,
+          bank.accountNum,
+          bank.expDate,
+          bank.depdate,
+          bank.depRecurringType,
+          beneficiarieslist,
+          vehicleList,
+          this.client_product_id
+        );
 
-      console.log('update');
-      this.multiAssistApiService.Update(payload, 1);
-      this.dialogRef.close();
+        console.log('update');
+        this.multiAssistApiService.Update(payload, 1);
+        this.dialogRef.close();
+      }
+    } catch (error) {
+      console.log(error);
     }
   }
   checkSsn(ssn: string) {
