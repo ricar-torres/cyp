@@ -14,7 +14,7 @@ import {
   ConfirmDialogModel,
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
-import { MultiAssistAPIService } from '@app/shared/MultiAssist.api.service';
+import { MultiAssistService } from '@app/shared/multiAssist.service';
 import { DocumentationCallComponent } from '@app/components/documentation-call/documentation-call.component';
 import { DialogSuccessComponent } from '@app/components/dialog-success/dialog-success.component';
 import { GenericSucessModel } from '@app/models/GenericSuccessModel';
@@ -47,7 +47,7 @@ export class MultiAssistListComponent implements OnInit {
   constructor(
     public languageService: LanguageService,
     private router: Router,
-    private apiMultiAssistService: MultiAssistAPIService,
+    private apiMultiAssistService: MultiAssistService,
     private app: AppService,
     private dialog: MatDialog
   ) {}
@@ -81,7 +81,7 @@ export class MultiAssistListComponent implements OnInit {
   async loadData() {
     try {
       this.loading = true;
-      this.apiMultiAssistService.GetAll().subscribe(
+      this.apiMultiAssistService.getAll().subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -164,7 +164,7 @@ export class MultiAssistListComponent implements OnInit {
 
   async delete(id: string) {
     try {
-      await this.apiMultiAssistService.Delete(id);
+      await this.apiMultiAssistService.delete(id);
     } catch (error) {}
   }
 
