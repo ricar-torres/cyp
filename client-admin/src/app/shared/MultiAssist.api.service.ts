@@ -47,5 +47,10 @@ export class MultiAssistAPIService {
       })
       .toPromise();
   }
-  async Delete(id: string) {}
+  Delete(id: string) {
+    console.log(id);
+    return this.http
+      .delete(`${environment.baseURL}/${this.controllerName}/${id}`)
+      .toPromise();
+  }
 }

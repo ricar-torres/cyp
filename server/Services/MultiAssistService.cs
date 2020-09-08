@@ -111,7 +111,7 @@ namespace server.Services {
 
 		public IQueryable<MultiAssists> GetAll() {
 			try {
-				return this._context.MultiAssists.Include(m => m.Cover).AsNoTracking();
+				return this._context.MultiAssists.Include(m => m.Cover).Where(x => x.DeletedAt == null).AsNoTracking();
 			} catch (System.Exception) {
 				throw;
 			}

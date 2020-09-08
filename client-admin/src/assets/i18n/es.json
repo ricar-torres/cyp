@@ -475,7 +475,8 @@
   "MULTI_ASSIST_LIST": {
     "NAME": "Nombre",
     "EFFECTIVE_DATE": "Fecha de Efectividad",
-    "FILTER": "Filtro"
+    "FILTER": "Filtro",
+    "ARE_YOU_SURE_DELETE": "Seguro que desea remover esta Multi Assistencia?"
   },
   "VEHICLE_LIST": {
     "MODEL": "Modelo",

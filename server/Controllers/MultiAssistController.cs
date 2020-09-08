@@ -128,5 +128,18 @@ namespace WebApi.Controllers {
 				return DefaultError(ex);
 			}
 		}
+
+		[AllowAnonymous]
+		[HttpDelete("{id}")]
+		public IActionResult Remove(int id) {
+			try {
+				var mas = _service.GetById(id);
+				mas.DeletedAt = DateTime.Now;
+				this._service.Update(mas);
+				return Ok();
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
+		}
 	}
 }
