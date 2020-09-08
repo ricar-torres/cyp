@@ -32,7 +32,7 @@ namespace server.Services {
 				beneficiariesList = new List<Beneficiaries>(payload.Beneficiaries);
 				beneficiariesList.ForEach((item) => {
 					item.CreatedAt = DateTime.Now;
-					item.Ssn = item.Ssn.TakeLast(4).ToString();
+					item.Ssn = item.Ssn.Substring(5);
 				});
 				payload.Beneficiaries = beneficiariesList;
 

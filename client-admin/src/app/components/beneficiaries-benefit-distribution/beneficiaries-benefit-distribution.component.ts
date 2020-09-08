@@ -39,6 +39,8 @@ export class BeneficiariesBenefitDistributionComponent implements OnInit {
   @Input() BeneficiariesList: FormGroup[] = [];
   @Output() benefitChecked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  @Input() hasBeneficiary: boolean;
+
   @ViewChild('dependantsEnabled', { static: true })
   dependantsEnabled: MatSlideToggle;
   typesOfRelation: Object;

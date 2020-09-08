@@ -1,6 +1,7 @@
 <mat-card>
   <div>
     <mat-slide-toggle
+      [checked]="hasBeneficiary"
       (change)="clearIsuranceDependants($event.checked)"
       #dependantsEnabled
       >{{ 'ALLIANCEWIZARD.LIFEINSURANCE' | translate }}</mat-slide-toggle
