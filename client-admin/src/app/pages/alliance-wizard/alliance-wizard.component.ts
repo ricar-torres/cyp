@@ -222,6 +222,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       if (percentage == 100 && AllBeneficieriesAreValid) {
         if (!this.data.alliance || save)
           this.allianceWithCost = await this.submitAliance();
+        console.log(this.allianceWithCost);
         this.stepper.next();
       } else {
         if (percentage != 100) {
@@ -234,6 +235,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     } else {
       if (!this.data.alliance || save)
         this.allianceWithCost = await this.submitAliance();
+      console.log(this.allianceWithCost);
       this.stepper.next();
     }
   }

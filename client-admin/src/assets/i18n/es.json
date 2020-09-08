@@ -159,7 +159,8 @@
     "SSNMAX": "El maximo de caracteres para el 'ssn' es de 9",
     "SSNNOTCOMPLETE": "El SSN del cliente debe ser complatado para continuar",
     "MISSINGDOB": "La fecha de nacimiento del cliente debe ser completada para continuar",
-    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar"
+    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar",
+    "EMPLOYERBENEFIT": "Contribución del Patrono"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
@@ -263,8 +264,8 @@
     "LIFEINSURANCE": "Seguro de Vida",
     "DATES": "Fechas",
     "COVERCOST": "Costo de Cubierta",
-    "PRIMA": "Aportación Patronal",
-    "TOTALCOST": "Consto Total",
+    "PRIMA": "Aportación del pencionado",
+    "TOTALCOST": "Costo Total",
     "JOINT": "Mancomunado",
     "TOTALCLIENTPROVIDED": "Total"
   },

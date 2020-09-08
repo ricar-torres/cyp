@@ -66,6 +66,7 @@ export class GeneralInformationComponent implements OnInit {
     this.reactiveForm.get('EffectiveDate').setValue(this.client.effectiveDate);
     this.reactiveForm.get('MedicareA').setValue(this.client.medicareA);
     this.reactiveForm.get('MedicareB').setValue(this.client.medicareB);
+    this.reactiveForm.get('Contribution').setValue(this.client.contribution);
     if (this.client.tutors.length < 1) this.hasTutor.setValue(0);
     else {
       this.hasTutor.setValue(1);

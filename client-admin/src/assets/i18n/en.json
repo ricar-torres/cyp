@@ -157,7 +157,8 @@
     "SSNMAX": "The maximun number of characters is 9 in ssn",
     "SSNNOTCOMPLETE": "The SSN must be complete to proceed",
     "MISSINGDOB": "The DOB must be provided to proceed",
-    "MISSINGBONAFIDES": "The client must be part of a bona fide association to proceed"
+    "MISSINGBONAFIDES": "The client must be part of a bona fide association to proceed",
+    "EMPLOYERBENEFIT": "Contribución del Patrono"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
@@ -261,7 +262,7 @@
     "LIFEINSURANCE": "Life Insurance",
     "DATES": "Dates",
     "COVERCOST": "Cover Cost",
-    "PRIMA": "Employer Contribution",
+    "PRIMA": "Contribution of the client",
     "TOTALCOST": "Total Cost",
     "JOINT": "Joint",
     "TOTALCLIENTPROVIDED": "Total"

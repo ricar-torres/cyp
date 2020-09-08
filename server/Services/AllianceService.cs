@@ -133,7 +133,14 @@ namespace WebApi.Services
         await _context.AlianzaAddOns.AddAsync(new AlianzaAddOns() { AlianzaId = alianza.Id, InsuranceAddOnId = addonId });
       }
       await _context.SaveChangesAsync();
-      alianza.ClientProduct = null;
+      if (alianza.ClientProduct != null)
+      {
+        alianza.ClientProduct.Client.ClientProduct = null;
+        alianza.ClientProduct.Client.ClientUser = null;
+        alianza.ClientProduct.Client.Dependents = null;
+        alianza.ClientProduct.Client.Cover = null;
+        alianza.ClientProduct.Alianzas = null;
+      }
       alianza.Cover = null;
       RemoveCircularDependency(ref alianza);
       alianza.Beneficiaries = null;
@@ -329,7 +336,14 @@ namespace WebApi.Services
       await _context.SaveChangesAsync();
       alliance = await this.UpdateCost(payload.Id.GetValueOrDefault());
       RemoveCircularDependency(ref alliance);
-      alliance.ClientProduct = null;
+      if (alliance.ClientProduct != null)
+      {
+        alliance.ClientProduct.Client.ClientProduct = null;
+        alliance.ClientProduct.Client.ClientUser = null;
+        alliance.ClientProduct.Client.Dependents = null;
+        alliance.ClientProduct.Client.Cover = null;
+        alliance.ClientProduct.Alianzas = null;
+      }
       alliance.Cover = null;
       alliance.Beneficiaries = null;
       return alliance;

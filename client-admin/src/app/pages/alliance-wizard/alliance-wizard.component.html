@@ -271,12 +271,21 @@
                 ${{ allianceWithCost?.joint ? allianceWithCost?.joint : 0 }}
               </div>
             </div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'CLIENTS.EMPLOYERBENEFIT' | translate }}</div>
+              <div>
+                ${{ allianceWithCost?.clientProduct?.client?.contribution }}
+              </div>
+            </div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
-              <div>{{ 'ALLIANCEWIZARD.TOTALCLIENTPROVIDED' | translate }}</div>
+              <div>Total:</div>
               <div>
                 ${{
-                  (allianceWithCost?.joint ? allianceWithCost?.joint : 0) +
+                  (allianceWithCost?.clientProduct?.client?.contribution
+                    ? allianceWithCost?.clientProduct?.client?.contribution
+                    : 0) +
+                    (allianceWithCost?.joint ? allianceWithCost?.joint : 0) +
                     (allianceWithCost?.prima ? allianceWithCost?.prima : 0)
                 }}
               </div>
