@@ -330,4 +330,26 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       return null;
     };
   }
+
+  checkEvent() {
+    debugger;
+    if (this.affiliationMethod.get('affiliationMethod').value == 1) {
+      if (this.affiliationMethod.get('qualifyingEvent').value) {
+        this.affiliationMethod.get('qualifyingEvent').setErrors(null);
+        this.stepper.next();
+        return;
+      } else {
+        this.affiliationMethod
+          .get('qualifyingEvent')
+          .setErrors({ fieldRequired: true });
+        return;
+      }
+    } else if (this.affiliationMethod.get('affiliationMethod').value == 2) {
+      this.stepper.next();
+      return;
+    }
+    this.affiliationMethod
+      .get('affiliationMethod')
+      .setErrors({ atLeasOne: true });
+  }
 }

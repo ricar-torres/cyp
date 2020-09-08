@@ -46,6 +46,7 @@ export class GeneralInformationComponent implements OnInit {
       .get('AgencyId')
       .valueChanges.pipe(
         startWith(''),
+        map((value) => (value ? value : '')),
         map((value) => (typeof value === 'string' ? value : value.name)),
         map((name) => (name ? this._filter(name) : this.agencies.slice()))
       );

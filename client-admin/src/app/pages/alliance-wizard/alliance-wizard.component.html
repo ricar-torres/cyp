@@ -24,6 +24,13 @@
             'ALLIANCEWIZARD.RENOVATIONAFILIATION' | translate
           }}</mat-radio-button>
         </mat-radio-group>
+        <mat-error
+          *ngIf="
+            affiliationMethod.get('affiliationMethod').hasError('atLeasOne')
+          "
+        >
+          {{ 'REQUIRED' | translate }}
+        </mat-error>
         <mat-form-field
           *ngIf="affiliationMethod.get('affiliationMethod').value == 1"
         >
@@ -34,6 +41,15 @@
             <mat-option *ngFor="let qfe of qualifyingEvents" [value]="qfe.id">
               {{ qfe.name }}
             </mat-option>
+            <mat-error
+              *ngIf="
+                affiliationMethod
+                  .get('qualifyingEvent')
+                  .hasError('fieldRequired')
+              "
+            >
+              {{ 'REQUIRED' | translate }}
+            </mat-error>
           </mat-select>
         </mat-form-field>
       </div>
@@ -49,7 +65,7 @@
         class="button-space"
         mat-raised-button
         color="primary"
-        matStepperNext
+        (click)="checkEvent()"
       >
         {{ 'NEXT' | translate }}
       </button>
