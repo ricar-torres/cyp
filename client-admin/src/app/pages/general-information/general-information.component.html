@@ -33,7 +33,7 @@
       fxLayoutAlign="center"
     >
       <!-- disable control for this input is in the fill form -->
-      <mat-form-field fxFlex="75%" class="example-full-width">
+      <mat-form-field fxFlex="20%" class="example-full-width">
         <mat-label>{{ 'CLIENTS.AMEDICALPLAN' | translate }}</mat-label>
         <input
           type="text"
@@ -57,7 +57,7 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <mat-form-field fxFlex="25%">
+      <mat-form-field fxFlex="20%">
         <mat-label>{{ 'CLIENTS.ACOVER' | translate }}</mat-label>
         <mat-select formControlName="CoverId">
           <mat-option *ngFor="let cover of covers" [value]="cover.id">
@@ -66,7 +66,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="25%">
+      <mat-form-field fxFlex="20%">
         <mat-label>{{ 'CLIENTS.EFFECTIVEDATE' | translate }}</mat-label>
         <input
           [matDatepicker]="effectiveDatePiker"
@@ -80,7 +80,7 @@
         <mat-datepicker #effectiveDatePiker disabled="false"></mat-datepicker>
       </mat-form-field>
 
-      <mat-form-field fxFlex="25%">
+      <mat-form-field fxFlex="20%">
         <mat-label>{{ 'CLIENTS.EMPLOYERBENEFIT' | translate }}</mat-label>
         <input
           matInput
@@ -90,6 +90,18 @@
           mask="separator.2"
           thousandSeparator=","
         />
+      </mat-form-field>
+
+      <mat-form-field fxFlex="20%">
+        <mat-label>{{ 'CLIENTS.RETIREMENTSYSTEM' | translate }}</mat-label>
+        <mat-select formControlName="RetirementId">
+          <mat-option
+            *ngFor="let item of availableRetirements"
+            [value]="item.id"
+          >
+            {{ item.name }}
+          </mat-option>
+        </mat-select>
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="flex-start">

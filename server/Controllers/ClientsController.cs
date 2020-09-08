@@ -181,6 +181,22 @@ namespace WebApi.Controllers
 
 
     [Authorize]
+    [HttpGet("retirements")]
+    public async Task<IActionResult> GetAllRetirements()
+    {
+      try
+      {
+        var retirements = await _service.GetAllRetirements();
+        return Ok(retirements);
+      }
+      catch (Exception ex)
+      {
+        return DefaultError(ex);
+      }
+    }
+
+
+    [Authorize]
     [HttpPost("checkSsn")]
     public async Task<IActionResult> checkSsn([FromBody] SsnDto ssn)
     {

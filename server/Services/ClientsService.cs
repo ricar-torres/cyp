@@ -23,6 +23,7 @@ namespace WebApi.Services
     Task<Boolean> ChekcSsn(string criteria);
     Task<List<Clients>> GetClientByCriteria(string criteria);
     Task Deceased(int clientId);
+    Task<List<Retirements>> GetAllRetirements();
   }
   public class Rate
   {
@@ -317,6 +318,7 @@ namespace WebApi.Services
       client.MedicareA = payload.Demographic.MedicareA;
       client.MedicareB = payload.Demographic.MedicareB;
       client.Contribution = payload.Demographic.Contribution;
+      client.RetirementId = payload.Demographic.RetirementId.GetValueOrDefault();
 
       var AgencyId = payload.Demographic.AgencyId;
       if (AgencyId != null)
@@ -613,6 +615,12 @@ namespace WebApi.Services
       client.Status = 3;
       _context.Clients.Update(client);
       await _context.SaveChangesAsync();
+    }
+
+    public async Task<List<Retirements>> GetAllRetirements()
+    {
+      var retirements = await _context.Retirements.ToListAsync();
+      return retirements;
     }
   }
 }

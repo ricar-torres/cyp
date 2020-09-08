@@ -112,6 +112,7 @@ export class ClientWizardService {
     MedicareA: [null],
     MedicareB: [null],
     Contribution: [null],
+    RetirementId: [null],
   });
 
   secondFormGroup = this.formBuilder.group({

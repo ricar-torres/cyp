@@ -19,6 +19,10 @@ export class ClientService {
     return this.http.get(`${environment.baseURL}/clients/criteria/${value}`);
   }
 
+  getAllRetirements() {
+    return this.http.get(`${environment.baseURL}/clients/retirements`);
+  }
+
   constructor(private http: HttpClient) {}
 
   getAll() {

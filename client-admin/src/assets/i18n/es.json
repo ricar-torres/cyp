@@ -160,7 +160,8 @@
     "SSNNOTCOMPLETE": "El SSN del cliente debe ser complatado para continuar",
     "MISSINGDOB": "La fecha de nacimiento del cliente debe ser completada para continuar",
     "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar",
-    "EMPLOYERBENEFIT": "Contribución del Patrono"
+    "EMPLOYERBENEFIT": "Aportación del Patrono",
+    "RETIREMENTSYSTEM": "Sistema de Retiro"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",

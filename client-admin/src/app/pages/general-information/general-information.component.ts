@@ -15,8 +15,9 @@ import { startWith, map } from 'rxjs/operators';
 export class GeneralInformationComponent implements OnInit {
   heathPlans;
   @Input() client;
-  agencies = [];
-  covers = [];
+  agencies: any = [];
+  covers: any = [];
+  availableRetirements: any = [];
   healthPlan: FormControl = new FormControl();
   hasTutor: FormControl = new FormControl();
 
@@ -38,6 +39,9 @@ export class GeneralInformationComponent implements OnInit {
     this.tutorInformation = this.wizadFormGroups.tutorInformation;
     this.heathPlans = await this.hps.GetAll().toPromise();
     this.agencies = await this.ag.getAll().toPromise();
+    this.availableRetirements = await this.clientService
+      .getAllRetirements()
+      .toPromise();
     this.filteredOptions = this.wizadFormGroups.generalInformationForm
       .get('AgencyId')
       .valueChanges.pipe(
@@ -67,6 +71,7 @@ export class GeneralInformationComponent implements OnInit {
     this.reactiveForm.get('MedicareA').setValue(this.client.medicareA);
     this.reactiveForm.get('MedicareB').setValue(this.client.medicareB);
     this.reactiveForm.get('Contribution').setValue(this.client.contribution);
+    this.reactiveForm.get('RetirementId').setValue(this.client.retirementId);
     if (this.client.tutors.length < 1) this.hasTutor.setValue(0);
     else {
       this.hasTutor.setValue(1);
