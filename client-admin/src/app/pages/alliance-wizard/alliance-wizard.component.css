@@ -35,3 +35,15 @@ button {
   height: 1px;
   width: 100%;
 }
+
+.strong-word {
+  font-weight: 800;
+}
+
+.full-with {
+  width: 100%;
+}
+
+.bigger-font {
+  font-size: 1.5em;
+}
