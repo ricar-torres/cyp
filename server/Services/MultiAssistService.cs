@@ -26,13 +26,21 @@ namespace server.Services {
 		public int Create(MultiAssists payload) {
 			try {
 				List<Beneficiaries> beneficiariesList;
+				List<MultiAssistsVehicle> vehicles;
 
 				payload.CreatedAt = DateTime.Now;
 				beneficiariesList = new List<Beneficiaries>(payload.Beneficiaries);
 				beneficiariesList.ForEach((item) => {
 					item.CreatedAt = DateTime.Now;
+					item.Ssn = item.Ssn.Substring(5);
 				});
 				payload.Beneficiaries = beneficiariesList;
+
+				vehicles = new List<MultiAssistsVehicle>(payload.MultiAssistsVehicle);
+				vehicles.ForEach((item) => {
+					item.CreatedAt = DateTime.Now;
+				});
+				payload.MultiAssistsVehicle = vehicles;
 
 				this._context.MultiAssists.Add(payload);
 				this._context.SaveChanges();
@@ -45,8 +53,35 @@ namespace server.Services {
 		public void Update(MultiAssists paylaod) {
 			try {
 				paylaod.UpdatedAt = DateTime.Now;
-				if (_context.MultiAssists.FirstOrDefault(x => x.Id == paylaod.Id) is MultiAssists mas) {
+				if (_context.MultiAssists.Include(x => x.Beneficiaries).Include(x => x.MultiAssistsVehicle).FirstOrDefault(x => x.Id == paylaod.Id) is MultiAssists mas) {
 					_context.Entry(mas).CurrentValues.SetValues(paylaod);
+
+					foreach (var item in mas.Beneficiaries) {
+						var beneficiary = paylaod.Beneficiaries.SingleOrDefault(i => i.Id == item.Id);
+						if (beneficiary != null)
+							_context.Entry(item).CurrentValues.SetValues(beneficiary);
+						else
+							_context.Remove(item);
+					}
+					foreach (var item in paylaod.Beneficiaries) {
+						if (mas.Beneficiaries.All(i => i.Id != item.Id)) {
+							mas.Beneficiaries.Add(item);
+						}
+					}
+
+					foreach (var item in mas.MultiAssistsVehicle) {
+						var veh = paylaod.MultiAssistsVehicle.SingleOrDefault(i => i.Id == item.Id);
+						if (veh != null)
+							_context.Entry(item).CurrentValues.SetValues(veh);
+						else
+							_context.Remove(item);
+					}
+					foreach (var item in paylaod.MultiAssistsVehicle) {
+						if (mas.MultiAssistsVehicle.All(i => i.Id != item.Id)) {
+							mas.MultiAssistsVehicle.Add(item);
+						}
+					}
+
 					_context.SaveChanges();
 				} else {
 					throw new AppException("MultiAssist not found");
@@ -76,7 +111,7 @@ namespace server.Services {
 
 		public IQueryable<MultiAssists> GetAll() {
 			try {
-				return this._context.MultiAssists.AsNoTracking();
+				return this._context.MultiAssists.Include(m => m.Cover).Where(x => x.DeletedAt == null).AsNoTracking();
 			} catch (System.Exception) {
 				throw;
 			}
@@ -86,6 +121,8 @@ namespace server.Services {
 			MultiAssists res = null;
 			try {
 				if (_context.MultiAssists
+					.Include(c => c.Cover)
+					.ThenInclude(h => h.HealthPlan)
 					.Include(m => m.Beneficiaries)
 					.Include(m => m.MultiAssistsVehicle)
 					.FirstOrDefault(ma => ma.Id == id) is MultiAssists ma) {

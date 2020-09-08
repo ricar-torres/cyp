@@ -65,6 +65,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
   beneficiaries: QueryList<BeneficiariesBenefitDistributionComponent>;
   @ViewChildren('mayorMedicalToggle') mayorMadical: QueryList<MatSlideToggle>;
 
+  allianceWithCost: any;
   typesOfRelation: any[] = new Array();
   availableAddons: any[] = new Array();
 
@@ -77,6 +78,41 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     public dialogRef: MatDialogRef<AllianceWizardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  ngOnInit(): void {
+    this.qualifyingEventService.getAll().subscribe((res) => {
+      this.qualifyingEvents = <any>res;
+    });
+
+    this.AllianceService.getAllAffTypes().subscribe((res) => {
+      this.affTypes = <[]>res;
+    });
+
+    this.affiliationMethod = this._formBuilder.group({
+      affiliationMethod: [null],
+      qualifyingEvent: [null],
+    });
+
+    this.finalFormGroup = this._formBuilder.group({
+      effectiveDate: [{ value: null, disabled: true }, [Validators.required]],
+      eligibiliyDate: [{ value: null, disabled: true }, [Validators.required]],
+      inscriptionType: [null, Validators.required],
+      inscriptionStatus: [null, Validators.required],
+    });
+
+    this.benefits = this._formBuilder.group({
+      HealthPlan: [null],
+      cover: [null],
+      joint: [null, Validators.maxLength(255)],
+      prima: [null, Validators.maxLength(255)],
+    });
+
+    this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
+      this.coverService.GetByPlan(res).subscribe((res) => {
+        this.covers = res;
+      });
+    });
+  }
   async ngAfterViewInit() {
     this.stepper.selectionChange.subscribe((ev) => {
       var qlf = this.affiliationMethod.get('qualifyingEvent').value;
@@ -97,7 +133,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       //get the alliance
       var alliance = this.data.alliance;
       //fill the forms in the wizard
-      console.log(alliance);
       if (alliance.qualifyingEvent.id == 1) {
         this.affiliationMethod.get('affiliationMethod').setValue('2');
       } else {
@@ -110,6 +145,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       if (alliance.cover.healthPlanId) {
         this.benefits.get('HealthPlan').setValue(alliance.cover.healthPlanId);
         this.benefits.get('cover').setValue(alliance.cover.id);
+        this.benefits.get('joint').setValue(alliance.joint);
+        this.benefits.get('prima').setValue(alliance.prima);
       }
 
       if (alliance.addonList) {
@@ -167,40 +204,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngOnInit(): void {
-    this.qualifyingEventService.getAll().subscribe((res) => {
-      this.qualifyingEvents = <any>res;
-    });
-
-    this.AllianceService.getAllAffTypes().subscribe((res) => {
-      this.affTypes = <[]>res;
-    });
-
-    this.affiliationMethod = this._formBuilder.group({
-      affiliationMethod: [null],
-      qualifyingEvent: [null],
-    });
-
-    this.finalFormGroup = this._formBuilder.group({
-      effectiveDate: [{ value: null, disabled: true }, [Validators.required]],
-      eligibiliyDate: [{ value: null, disabled: true }, [Validators.required]],
-      inscriptionType: [null, Validators.required],
-      inscriptionStatus: [null, Validators.required],
-    });
-
-    this.benefits = this._formBuilder.group({
-      HealthPlan: [null],
-      cover: [null],
-    });
-
-    this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
-      this.coverService.GetByPlan(res).subscribe((res) => {
-        this.covers = res;
-      });
-    });
-  }
-
-  checkPercent() {
+  async checkPercent(save?) {
     var percentage: number = 0;
     var AllBeneficieriesAreValid = true;
     if (
@@ -215,8 +219,12 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
           AllBeneficieriesAreValid = false;
         }
       });
-      if (percentage == 100 && AllBeneficieriesAreValid) this.stepper.next();
-      else {
+      if (percentage == 100 && AllBeneficieriesAreValid) {
+        if (!this.data.alliance || save)
+          this.allianceWithCost = await this.submitAliance();
+        console.log(this.allianceWithCost);
+        this.stepper.next();
+      } else {
         if (percentage != 100) {
           this.BeneficiariesList.forEach((x) => {
             x.get('percent').markAsDirty();
@@ -225,6 +233,9 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
         }
       }
     } else {
+      if (!this.data.alliance || save)
+        this.allianceWithCost = await this.submitAliance();
+      console.log(this.allianceWithCost);
       this.stepper.next();
     }
   }
@@ -261,7 +272,7 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       beneficiarieslist.push(fg.getRawValue());
     });
 
-    await this.AllianceService.create({
+    var res = await this.AllianceService.create({
       Id: this.data.alliance ? this.data.alliance.id : null,
       ClientProductId: this.data.alliance
         ? this.data.alliance.clientProductId
@@ -287,17 +298,16 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       // Coordination: null,
       // LifeInsurance: null, //will be moved to other table
       // MajorMedical: null, //will be moved to other table
-      // Prima: null,
-      // Joint: null,
+      Prima: this.benefits.get('prima').value,
+      Joint: this.benefits.get('joint').value,
       // CoverAmount: null,
       // LifeInsuranceAmount: null,
       // MajorMedicalAmount: null,
       // SubTotal: null,
       AddonList: this.addonsList,
       Beneficiaries: beneficiarieslist,
-    }).then(() => {
-      this.dialogRef.close();
     });
+    return res;
   }
 
   close() {
@@ -311,7 +321,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
 
   checkSsn(ssn: string) {
     return async (control: AbstractControl) => {
-      //console.log(ssn, control.value);
       if (control.value && ssn != control.value) {
         const res: any = await this.AllianceService.checkSsn(
           control.value

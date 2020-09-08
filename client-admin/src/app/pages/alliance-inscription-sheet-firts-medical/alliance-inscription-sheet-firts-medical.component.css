@@ -1,0 +1,119 @@
+body {
+  font-family: DejaVu Sans;
+  font-size: 9px;
+}
+
+h5 {
+  padding: 0.5em;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td {
+  border: 1px solid black;
+}
+
+.row {
+  width: 100%;
+}
+
+.col-3 {
+  display: inline-block;
+  width: 24.5%;
+  vertical-align: top;
+}
+
+.col-4 {
+  display: inline-block;
+  width: 33.33%;
+  vertical-align: top;
+}
+
+.col-6 {
+  display: inline-block;
+  width: 49.5%;
+  vertical-align: top;
+}
+
+.col-12 {
+  width: 100%;
+}
+
+.box {
+  border: 1px solid black;
+}
+
+.nobox {
+  border: 0;
+}
+
+.blue {
+  background: #1e549e;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.text-white {
+  color: #fff;
+}
+
+.page-break {
+  page-break-after: always;
+}
+
+.header img {
+  width: 300px;
+}
+
+.white-blue {
+  background: #d9e5f1;
+}
+
+.bg-blue {
+  background: #0054a3;
+}
+
+.blue-instructions {
+  color: #0054a3;
+}
+
+.mini-font {
+  font-family: DejaVu Sans;
+  font-size: 7.5px;
+}
+
+.fraude-font {
+  font-family: DejaVu Sans;
+  font-size: 9px;
+}
+
+.inline-field input,
+.inline-field label {
+  display: inline-block;
+  margin-bottom: 0; /* I added this after I posted my reply */
+  vertical-align: middle; /* Fixes any weird issues in Firefox and IE */
+}
+
+.sign {
+  border-top: 1px solid black;
+  text-align: center;
+}
+
+.sign-rigth {
+  border-bottom: 1px solid black;
+  text-align: center;
+}
+
+.center-button {
+  text-align: center;
+  margin-bottom: 10px;
+}
+
+.space-arround {
+  margin: 5px;
+}

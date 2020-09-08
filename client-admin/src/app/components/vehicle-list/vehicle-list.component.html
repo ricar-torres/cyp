@@ -1,0 +1,76 @@
+<mat-card>
+  <!-- <div>
+    <mat-slide-toggle
+      (change)="clearIsuranceDependants($event.checked)"
+      #dependantsEnabled
+      >{{ 'VEHICLE_LIST.CAR_INSURANCE' | translate }}</mat-slide-toggle
+    >
+  </div> -->
+  <!-- *ngIf="dependantsEnabled.checked" -->
+  <mat-card-content>
+    <div>
+      <div @fadeAnimation *ngFor="let item of VehicleList; let i = index">
+        <mat-card class="margin-top-bottom-5">
+          <mat-card-content>
+            <form [formGroup]="item">
+              <div
+                fxLayout
+                fxLayoutAlign="space-between "
+                fxLayout.lt-md="column"
+              >
+                <mat-form-field fxFlex="20%">
+                  <mat-label>{{ 'VEHICLE_LIST.MODEL' | translate }}</mat-label>
+                  <input matInput [formControl]="item.get('model')" />
+                  <mat-error *ngIf="item.get('model').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <mat-label>{{
+                    'VEHICLE_LIST.PLATE_NUM' | translate
+                  }}</mat-label>
+                  <input matInput [formControl]="item.get('vin')" />
+                  <mat-error *ngIf="item.get('vin').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <mat-label>{{ 'VEHICLE_LIST.BRAND' | translate }}</mat-label>
+                  <input matInput [formControl]="item.get('make')" />
+                  <mat-error *ngIf="item.get('make').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
+                  <mat-label>{{ 'VEHICLE_LIST.YEAR' | translate }}</mat-label>
+                  <input
+                    matInput
+                    [formControl]="item.get('year')"
+                    mask="9999"
+                  />
+                  <mat-error *ngIf="item.get('year').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+
+                <button
+                  fxFlex="15%"
+                  type="button"
+                  color="warn"
+                  mat-button
+                  (click)="delete(i)"
+                >
+                  <mat-icon>delete</mat-icon>
+                  {{ 'VEHICLE_LIST.DELETE' | translate }}
+                </button>
+              </div>
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+      <button mat-raised-button color="primary" (click)="addVehicle()">
+        {{ 'VEHICLE_LIST.ADD' | translate }}
+      </button>
+    </div>
+  </mat-card-content>
+</mat-card>

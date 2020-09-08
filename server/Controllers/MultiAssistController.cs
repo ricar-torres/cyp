@@ -18,8 +18,27 @@ namespace WebApi.Controllers {
 			this._clientProductService = cpservice;
 			this._beneficiaryService = beneficiaryService;
 		}
+
+		[AllowAnonymous]
+		[HttpGet]
 		public IActionResult GetAll() {
-			return Ok(_service.GetAll());
+			List<MultiAssistDto> multiAssistDtoList = new List<MultiAssistDto>();
+			try {
+				var multiAssist = _service.GetAll().ToList();
+				multiAssist.ForEach((m) => {
+					if (m.Cover is Covers c) {
+						var mdto = new MultiAssistDto {
+							MultiAssist = m,
+								Name = c.Name
+						};
+						mdto.MultiAssist.Cover = null;
+						multiAssistDtoList.Add(mdto);
+					}
+				});
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
+			return Ok(multiAssistDtoList);
 		}
 
 		[AllowAnonymous]
@@ -44,21 +63,25 @@ namespace WebApi.Controllers {
 		[AllowAnonymous]
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id) {
-			MultiAssists res;
+			MultiAssistDto res = new MultiAssistDto();
 			List<Beneficiaries> beneficiaryList;
 			List<MultiAssistsVehicle> vehicleList;
 			try {
-				res = _service.GetById(id);
-				vehicleList = new List<MultiAssistsVehicle>(res.MultiAssistsVehicle);
-				beneficiaryList = new List<Beneficiaries>(res.Beneficiaries);
+				res.MultiAssist = _service.GetById(id);
+				vehicleList = new List<MultiAssistsVehicle>(res.MultiAssist.MultiAssistsVehicle);
+				beneficiaryList = new List<Beneficiaries>(res.MultiAssist.Beneficiaries);
 				vehicleList.ForEach((v) => {
 					v.MultiAssists = null;
 				});
 				beneficiaryList.ForEach((b) => {
 					b.MultiAssists = null;
 				});
-				res.MultiAssistsVehicle = vehicleList;
-				res.Beneficiaries = beneficiaryList;
+				res.MultiAssist.MultiAssistsVehicle = vehicleList;
+				res.MultiAssist.Beneficiaries = beneficiaryList;
+				res.HealthPlan = res.MultiAssist.Cover.HealthPlan;
+				res.MultiAssist.Cover.MultiAssists = null;
+				res.HealthPlan.Covers = null;
+				res.MultiAssist.Cover.HealthPlan = null;
 				return Ok(res);
 			} catch (System.Exception ex) {
 				return DefaultError(ex);
@@ -78,29 +101,41 @@ namespace WebApi.Controllers {
 						CreatedAt = DateTime.Now
 				};
 
-        cpId = _clientProductService.Create(clientProduct);
+				cpId = _clientProductService.Create(clientProduct);
 
 				if (cpId > 0) {
 					payload.MultiAssist.ClientProductId = cpId;
 					_service.Create(payload.MultiAssist);
+					payload.MultiAssist.ClientProduct = null;
 				} else {
 					return BadRequest();
 				}
 
-        return Ok(payload);
+				return Ok(payload);
 
-      }
-      catch (System.Exception ex)
-      {
-        return DefaultError(ex);
-      }
-    }
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
+		}
 
 		[AllowAnonymous]
 		[HttpPut]
-		public IActionResult Update(MultiAssistDto payload) {
+		public IActionResult Update([FromBody] MultiAssistDto payload) {
 			try {
 				this._service.Update(payload.MultiAssist);
+				return Ok();
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
+		}
+
+		[AllowAnonymous]
+		[HttpDelete("{id}")]
+		public IActionResult Remove(int id) {
+			try {
+				var mas = _service.GetById(id);
+				mas.DeletedAt = DateTime.Now;
+				this._service.Update(mas);
 				return Ok();
 			} catch (System.Exception ex) {
 				return DefaultError(ex);

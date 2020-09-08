@@ -86,11 +86,12 @@ namespace WebApi.Controllers
 
       try
       {
+        var res = new Alianzas();
         if (payload.Id == null)
-          await _service.Create(payload);
+          res = await _service.Create(payload);
         else
-          await this.Update(payload);
-        return Ok(payload);
+          res = await _service.Update(payload);
+        return Ok(res);
 
       }
       catch (AppException ex)
@@ -111,25 +112,8 @@ namespace WebApi.Controllers
 
         var res = await _service.UpdateCost(id);
 
-                return Ok();
-                //return Ok(res);
-            }
-            catch (AppException ex)
-            {
-                // return error message if there was an exception
-                return DefaultError(ex);
-            }
-        }
-
-        [Authorize]
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromBody] AllianceDto payload)
-    {
-      try
-      {
-        await _service.Update(payload);
         return Ok();
-
+        //return Ok(res);
       }
       catch (AppException ex)
       {
@@ -138,29 +122,44 @@ namespace WebApi.Controllers
       }
     }
 
+    // public async Task<Alianzas> Update([FromBody] AllianceDto payload)
+    // {
+    //   try
+    //   {
+    //     var res = await _service.Update(payload);
+    //     return res;
 
-        //[Authorize]
-        //[HttpPut("{id}")]
-        //public IActionResult Update(int id, [FromBody] Alianzas payload)
-        //{
-        //    try
-        //    {
+    //   }
+    //   catch (AppException ex)
+    //   {
+    //     // return error message if there was an exception
+    //     return null;
+    //   }
+    // }
 
-        //        payload.Id = id;
-        //        var res = _service.Update(payload);
 
-        //        return Ok(res);
+    //[Authorize]
+    //[HttpPut("{id}")]
+    //public IActionResult Update(int id, [FromBody] Alianzas payload)
+    //{
+    //    try
+    //    {
 
-        //    }
-        //    catch (AppException ex)
-        //    {
-        //        // return error message if there was an exception
-        //        return DefaultError(ex);
-        //    }
-        //}
+    //        payload.Id = id;
+    //        var res = _service.Update(payload);
 
-        //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
-        [Authorize]
+    //        return Ok(res);
+
+    //    }
+    //    catch (AppException ex)
+    //    {
+    //        // return error message if there was an exception
+    //        return DefaultError(ex);
+    //    }
+    //}
+
+    //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
+    [Authorize]
     [HttpDelete("{id}")]
     public async Task<IActionResult> Delete(int id)
     {

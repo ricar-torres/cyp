@@ -1,3 +1,4 @@
+import { MultiAssistListComponent } from './pages/multi-assist-list/multi-assist-list.component';
 import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
 import { DependantsListComponent } from './pages/dependants-list/dependants-list.component';
 import { DocsCallsListComponent } from './pages/docs-calls-list/docs-calls-list.component';
@@ -285,33 +286,33 @@ const routes: Routes = [
           //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
         },
       },
-        {
-          path: 'insurance-company/:id',
-          component: InsuranceCompanyItemComponent,
-          //canActivate: [AuthGuardService],
-          data: {
-            //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
-          },
+      {
+        path: 'insurance-company/:id',
+        component: InsuranceCompanyItemComponent,
+        //canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
+        },
       },
       {
-          path: 'insurance-company/:insuranceCompanyId/plan/:id',
-          component: InsurancePlanItemComponent,
-          canActivate: [AuthGuardService],
-          data: {
-              //expectedRoles: MenuRoles.USERS
-          }
+        path: 'insurance-company/:insuranceCompanyId/plan/:id',
+        component: InsurancePlanItemComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.USERS
+        },
       },
       {
-          path: 'insurance-company/:insuranceCompanyId/plan',
-          component: InsurancePlanItemComponent,
-          canActivate: [AuthGuardService],
-          data: {
-             // expectedRoles: MenuRoles.USERS
-          }
+        path: 'insurance-company/:insuranceCompanyId/plan',
+        component: InsurancePlanItemComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          // expectedRoles: MenuRoles.USERS
+        },
       },
       {
         path: 'multi-assist',
-        component: MultiAssistComponent,
+        component: MultiAssistListComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,

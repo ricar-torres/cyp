@@ -51,6 +51,8 @@
   "RELATION": "Relacion",
   "CLOSE": "Cerrar",
   "DEAD": "Fallecido",
+  "PRINT": "Imprimir",
+  "DOWNLOAD": "Descargar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -157,7 +159,8 @@
     "SSNMAX": "El maximo de caracteres para el 'ssn' es de 9",
     "SSNNOTCOMPLETE": "El SSN del cliente debe ser complatado para continuar",
     "MISSINGDOB": "La fecha de nacimiento del cliente debe ser completada para continuar",
-    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar"
+    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar",
+    "EMPLOYERBENEFIT": "Contribución del Patrono"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
@@ -259,7 +262,14 @@
     "BENEFITS": "Beneficios",
     "COVER": "Cubierta",
     "LIFEINSURANCE": "Seguro de Vida",
-    "DATES": "Fechas"
+    "DATES": "Fechas",
+    "BASICCOVER": "Cubierta Basica",
+    "PRIMA": "Aportación del pencionado",
+    "TOTALCOST": "Sub Total",
+    "JOINT": "Mancomunado",
+    "TOTALCLIENTPROVIDED": "Total",
+    "COVERCOST": "Costo de Cubierta",
+    "DETAILS": "Detalles de Costo"
   },
   "BENEFICIERIES": {
     "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
@@ -463,5 +473,20 @@
     "END_DATE": "Fecha Final",
     "COST": "Costo",
     "STATUS": "Estatus"
+  },
+  "MULTI_ASSIST_LIST": {
+    "NAME": "Nombre",
+    "EFFECTIVE_DATE": "Fecha de Efectividad",
+    "FILTER": "Filtro",
+    "ARE_YOU_SURE_DELETE": "Seguro que desea remover esta Multi Assistencia?"
+  },
+  "VEHICLE_LIST": {
+    "MODEL": "Modelo",
+    "PLATE_NUM": "Número de Tablilla",
+    "BRAND": "Marca",
+    "YEAR": "Año",
+    "DELETE": "Borrar",
+    "ADD": "Añadir",
+    "CAR_INSURANCE": "Seguro de Vehiculo"
   }
 }

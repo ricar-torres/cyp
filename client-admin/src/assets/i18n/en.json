@@ -49,6 +49,8 @@
   "RELATION": "Relation",
   "CLOSE": "Close",
   "DEAD": "deceased",
+  "PRINT": "Print",
+  "DOWNLOAD": "Download",
 
   "LOGIN-FORM": {
     "USER": "User",
@@ -155,7 +157,8 @@
     "SSNMAX": "The maximun number of characters is 9 in ssn",
     "SSNNOTCOMPLETE": "The SSN must be complete to proceed",
     "MISSINGDOB": "The DOB must be provided to proceed",
-    "MISSINGBONAFIDES": "The client must be part of a bona fide association to proceed"
+    "MISSINGBONAFIDES": "The client must be part of a bona fide association to proceed",
+    "EMPLOYERBENEFIT": "Contribución del Patrono"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
@@ -257,7 +260,13 @@
     "BENEFITS": "Benefits",
     "COVER": "Cover",
     "LIFEINSURANCE": "Life Insurance",
-    "DATES": "Dates"
+    "DATES": "Dates",
+    "BASICCOVER": "Basic Cover",
+    "PRIMA": "Contribution of the client",
+    "TOTALCOST": "Sub Total",
+    "JOINT": "Joint",
+    "TOTALCLIENTPROVIDED": "Total",
+    "COVERCOST": "Cover Cost"
   },
   "BENEFICIERIES": {
     "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "
@@ -453,5 +462,20 @@
     "RECURRING_WEEK_TYPE": "Monthly",
     "RECURRING_TYPE_LABEL": "Recurring Type",
     "RECURRING_TYPE_DAY_LABEL": "Day of Charge"
+  },
+  "MULTI_ASSIST_LIST": {
+    "NAME": "Name",
+    "EFFECTIVE_DATE": "Effective Date",
+    "FILTER": "Filter",
+    "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Multi Assist?"
+  },
+  "VEHICLE_LIST": {
+    "MODEL": "Model",
+    "PLATE_NUM": "Plate Num",
+    "BRAND": "Brand",
+    "YEAR": "Year",
+    "DELETE": "Delete",
+    "ADD": "Add",
+    "CAR_INSURANCE": "Car Insurance"
   }
 }

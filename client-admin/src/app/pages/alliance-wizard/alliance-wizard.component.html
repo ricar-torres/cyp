@@ -89,26 +89,38 @@
             }}</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'ALLIANCEWIZARD.JOINT' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="joint"
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+          />
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'ALLIANCEWIZARD.PRIMA' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="prima"
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+          />
+        </mat-form-field>
       </div>
     </form>
     <div class="top-bottom-margin">
-      <button
-        class="button-space"
-        mat-raised-button
-        color="warn"
-        (click)="close()"
-      >
+      <button select mat-raised-button color="warn" (click)="close()">
         {{ 'CLOSE' | translate }}
       </button>
       <button mat-raised-button color="primary" matStepperPrevious>
         {{ 'GOBACK' | translate }}
       </button>
-      <button
-        class="button-space"
-        mat-raised-button
-        color="primary"
-        (click)="checkPercent()"
-      >
+      <button select mat-raised-button color="primary" (click)="checkPercent()">
         {{ 'NEXT' | translate }}
       </button>
     </div>
@@ -191,22 +203,17 @@
         </mat-select>
       </mat-form-field>
     </form>
-    <button
-      class="button-space"
-      mat-raised-button
-      color="warn"
-      (click)="close()"
-    >
+    <button select mat-raised-button color="warn" (click)="close()">
       {{ 'CLOSE' | translate }}
     </button>
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button
-      class="button-space"
+      select
       mat-raised-button
       color="primary"
-      (click)="checkPercent()"
+      (click)="checkPercent(true)"
     >
       {{ 'NEXT' | translate }}
     </button>
@@ -214,15 +221,18 @@
 
   <mat-step>
     <div fxLayout fxLayoutAlign="center">
+      <ng-template matStepLabel>{{
+        'ALLIANCEWIZARD.DETAILS' | translate
+      }}</ng-template>
       <mat-card style="width: 70%">
         <!-- <mat-card-header>
           <mat-card-title>
           {{ 'CLIENTS.TITLE' | translate }}
-        </mat-card-title> 
+        </mat-card-title>
         </mat-card-header> -->
         <mat-card-content>
           <div fxLayout="Column">
-            <div>Costos de cubierta</div>
+            <!--<div>Costos de cubierta</div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Cubierta Básica:</div>
@@ -231,14 +241,68 @@
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Major Médical:</div>
-              <div>$0.00</div>
+              <div>${{ allianceWithCost?.majorMedicalAmount }}</div>
+            </div>
+            <div class="separator"></div> -->
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div class="bigger-font">
+                {{ 'ALLIANCEWIZARD.COVERCOST' | translate }}:
+              </div>
+              <div></div>
             </div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
-              <div>Seguro de Vida:</div>
-              <div>$3.00</div>
+              <div>{{ 'ALLIANCEWIZARD.BASICCOVER' | translate }}:</div>
+              <div>${{ allianceWithCost?.coverAmount }}</div>
+            </div>
+            <div class="separator"></div>
+            <div
+              *ngFor="let item of allianceWithCost?.alianzaAddOns"
+              fxLayout="column"
+              fxLayoutAlign="space-between center"
+            >
+              <div
+                class="full-with"
+                fxLayout
+                fxLayoutAlign="space-between center"
+              >
+                <div>{{ item.insuranceAddOn.name }}:</div>
+                <div>${{ item?.cost }}</div>
+              </div>
+              <div class="separator"></div>
+            </div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div></div>
+              <div class="strong-word">
+                {{ 'ALLIANCEWIZARD.TOTALCOST' | translate }}:
+              </div>
+              <div>${{ allianceWithCost?.subTotal }}</div>
             </div>
             <hr />
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'CLIENTS.EMPLOYERBENEFIT' | translate }}:</div>
+              <div>
+                ${{ allianceWithCost?.clientProduct?.client?.contribution }}
+              </div>
+            </div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.JOINT' | translate }}:</div>
+              <div>
+                ${{ allianceWithCost?.joint ? allianceWithCost?.joint : 0 }}
+              </div>
+            </div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div></div>
+              <div class="strong-word">
+                {{ 'ALLIANCEWIZARD.PRIMA' | translate }}:
+              </div>
+              <div>
+                ${{ allianceWithCost?.prima ? allianceWithCost?.prima : 0 }}
+              </div>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -251,11 +315,11 @@
     >
       {{ 'CLOSE' | translate }}
     </button>
-    <button mat-raised-button color="primary" matStepperPrevious>
+    <!-- <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="submitAliance()">
       {{ 'SAVE' | translate }}
-    </button>
+    </button> -->
   </mat-step>
 </mat-horizontal-stepper>

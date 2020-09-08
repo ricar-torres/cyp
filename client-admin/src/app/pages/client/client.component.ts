@@ -20,6 +20,8 @@ import {
   ConfirmDialogComponent,
 } from '@app/components/confirm-dialog/confirm-dialog.component';
 import { MatDialog } from '@angular/material';
+import { MultiAssistComponent } from '../multi-assist/multi-assist.component';
+import { MultiAssistListComponent } from '../multi-assist-list/multi-assist-list.component';
 
 @Component({
   selector: 'app-client',
@@ -46,6 +48,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   @ViewChild('alliance') alliance: AllianceListComponent;
   @ViewChild('generalInformation')
   generalInformation: GeneralInformationComponent;
+  @ViewChild('multi') multi_assist: MultiAssistListComponent;
   taskPermissions: PERMISSION = {
     read: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
     create: true, //this.app.checkMenuRoleAccess(MenuRoles.CLIENT_CREATE),
@@ -155,6 +158,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   }
 
   async onSpeedDialFabClicked(ev) {
+    console.log(ev.tooltip);
     switch (ev.tooltip) {
       case 'Bonafide':
         this.bonafideList.goToNew();
@@ -164,6 +168,9 @@ export class ClientComponent implements OnInit, OnDestroy {
         break;
       case 'Dependents':
         this.dependants.goToNew();
+        break;
+      case 'Multi':
+        this.multi_assist.create();
         break;
       case 'Alliance':
         this.alianceService.iselegible(this.clientid).subscribe(
@@ -248,8 +255,8 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.bonafideList.deceased = true;
         this.dependants.deceased = true;
         this.alliance.deceased = true;
-        this.clientAddressComponent.sameAsPhysical.disable();
         this.docsCalls.deceased = true;
+        this.clientAddressComponent.sameAsPhysical.disable();
         this.generalInformation.healthPlan.disable();
         this.generalInformation.hasTutor.disable();
         this.deceased = true;
@@ -260,8 +267,8 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.bonafideList.deceased = false;
         this.dependants.deceased = false;
         this.alliance.deceased = false;
-        this.clientAddressComponent.sameAsPhysical.enable();
         this.docsCalls.deceased = false;
+        this.clientAddressComponent.sameAsPhysical.enable();
         this.generalInformation.healthPlan.enable();
         this.generalInformation.hasTutor.enable();
         this.deceased = true;
