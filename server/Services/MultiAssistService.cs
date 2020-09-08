@@ -26,13 +26,21 @@ namespace server.Services {
 		public int Create(MultiAssists payload) {
 			try {
 				List<Beneficiaries> beneficiariesList;
+				List<MultiAssistsVehicle> vehicles;
 
 				payload.CreatedAt = DateTime.Now;
 				beneficiariesList = new List<Beneficiaries>(payload.Beneficiaries);
 				beneficiariesList.ForEach((item) => {
 					item.CreatedAt = DateTime.Now;
+					item.Ssn = item.Ssn.TakeLast(4).ToString();
 				});
 				payload.Beneficiaries = beneficiariesList;
+
+				vehicles = new List<MultiAssistsVehicle>(payload.MultiAssistsVehicle);
+				vehicles.ForEach((item) => {
+					item.CreatedAt = DateTime.Now;
+				});
+				payload.MultiAssistsVehicle = vehicles;
 
 				this._context.MultiAssists.Add(payload);
 				this._context.SaveChanges();

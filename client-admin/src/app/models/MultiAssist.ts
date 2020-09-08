@@ -17,6 +17,8 @@ export class MultiAssist {
   debDay: number;
   debRecurringType: string;
   beneficiaries: Array<Beneficiaries>;
+  multiAssistsVehicle: Array<MultiAssistsVehicle>;
+  clientProductId: string;
   constructor(
     id: number,
     coverId: number,
@@ -34,7 +36,8 @@ export class MultiAssist {
     debDay: number,
     debRecurringType: string,
     beneficiaries: Array<Beneficiaries>,
-    vehicle: MultiAssistsVehicle
+    multiAssistsVehicle: Array<MultiAssistsVehicle>,
+    clientProductId: string
   ) {
     this.id = id;
     this.coverId = coverId;
@@ -52,6 +55,8 @@ export class MultiAssist {
     this.debDay = debDay;
     this.debRecurringType = debRecurringType;
     this.beneficiaries = beneficiaries;
+    this.multiAssistsVehicle = multiAssistsVehicle;
+    this.clientProductId = clientProductId;
   }
 }
 
@@ -86,12 +91,12 @@ export class Beneficiaries {
 }
 
 export class MultiAssistsVehicle {
-  id: number;
-  multiAssistId: number;
-  make: string;
-  model: string;
-  year: number;
-  vin: string;
+  id?: number;
+  multiAssistId?: number;
+  make?: string;
+  model?: string;
+  year?: number;
+  vin?: string;
   /**
    *
    */

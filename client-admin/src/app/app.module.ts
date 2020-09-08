@@ -128,6 +128,7 @@ import { BeneficiariesBenefitDistributionComponent } from './components/benefici
 import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
 import { MultiAssistListComponent } from './pages/multi-assist-list/multi-assist-list.component';
 import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet/alliance-inscription-sheet.component';
+import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -190,6 +191,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     MultiAssistComponent,
     MultiAssistListComponent,
     AllianceInscriptionSheetComponent,
+    VehicleListComponent,
   ],
   imports: [
     BrowserModule,

@@ -447,5 +447,14 @@
     "EFFECTIVE_DATE": "Effective Date",
     "FILTER": "Filter",
     "ARE_YOU_SURE_DELETE": "Are you sure that you want to delete this Multi Assist?"
+  },
+  "VEHICLE_LIST": {
+    "MODEL": "Model",
+    "PLATE_NUM": "Plate Num",
+    "BRAND": "Brand",
+    "YEAR": "Year",
+    "DELETE": "Delete",
+    "ADD": "Add",
+    "CAR_INSURANCE": "Car Insurance"
   }
 }

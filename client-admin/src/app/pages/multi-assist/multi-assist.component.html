@@ -87,51 +87,14 @@
       </mat-card-footer>
     </div>
   </mat-step>
-  <mat-step [stepControl]="this.multi_assist_vehicule" *ngIf="hasVehicule">
+  <mat-step [stepControl]="this.multi_assist_vehicule" *ngIf="hasVehicle">
     <ng-template matStepLabel>{{
       'MULTI_ASSIST.VEHICLE_PAGE_TITLE' | translate
     }}</ng-template>
     <div fxLayout="column" fxLayoutGap="10px">
       <mat-card class="full-width mat-elevation-z0">
         <mat-card-content>
-          <form [formGroup]="multi_assist_vehicule" fxLayoutGap="5px">
-            <mat-form-field fxFlex="25">
-              <mat-label>{{
-                'MULTI_ASSIST.VEHICLE_BRAND' | translate
-              }}</mat-label>
-              <input
-                matInput
-                [formControl]="multi_assist_vehicule.get('brand')"
-              />
-            </mat-form-field>
-            <mat-form-field fxFlex="25">
-              <mat-label>{{
-                'MULTI_ASSIST.VEHICLE_MODEL' | translate
-              }}</mat-label>
-              <input
-                matInput
-                [formControl]="multi_assist_vehicule.get('model')"
-              />
-            </mat-form-field>
-            <mat-form-field fxFlex="25">
-              <mat-label>{{
-                'MULTI_ASSIST.VEHICLE_YEAR' | translate
-              }}</mat-label>
-              <input
-                matInput
-                [formControl]="multi_assist_vehicule.get('year')"
-              />
-            </mat-form-field>
-            <mat-form-field fxFlex="25">
-              <mat-label>{{
-                'MULTI_ASSIST.VEHICLE_PLATE' | translate
-              }}</mat-label>
-              <input
-                matInput
-                [formControl]="multi_assist_vehicule.get('plateNum')"
-              />
-            </mat-form-field>
-          </form>
+          <app-vehicle-list [VehicleList]="VehicleList"></app-vehicle-list>
         </mat-card-content>
         <mat-card-footer>
           <button
@@ -170,7 +133,7 @@
                 }}</mat-option>
               </mat-select>
             </mat-form-field>
-            <div *ngIf="accountType.value == '1'">
+            <div *ngIf="multi_assist_bank.get('accType').value == '1'">
               <mat-form-field fxFlex="50%">
                 <mat-label>{{
                   'MULTI_ASSIST.ACCOUNT_BANKNAME' | translate
@@ -190,7 +153,11 @@
                 />
               </mat-form-field>
             </div>
-            <div *ngIf="accountType.value == '2'" fxLayoutc fxFlex>
+            <div
+              *ngIf="multi_assist_bank.get('accType').value == '2'"
+              fxLayoutc
+              fxFlex
+            >
               <mat-form-field fxFlex>
                 <mat-label>{{
                   'MULTI_ASSIST.HOLDERNAME' | translate
@@ -309,7 +276,6 @@
               <mat-datepicker-toggle
                 matSuffix
                 [for]="pickerEndDate"
-                disabled="false"
               ></mat-datepicker-toggle>
               <mat-datepicker #pickerEndDate></mat-datepicker>
             </mat-form-field>
@@ -321,7 +287,7 @@
             mat-raised-button
             color="primary"
             matStepperNext
-            (click)="register('')"
+            (click)="register(id)"
           >
             {{ 'FINISH' | translate }}
           </button>

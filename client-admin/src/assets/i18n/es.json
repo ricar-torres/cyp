@@ -455,5 +455,14 @@
     "NAME": "Nombre",
     "EFFECTIVE_DATE": "Fecha de Efectividad",
     "FILTER": "Filtro"
+  },
+  "VEHICLE_LIST": {
+    "MODEL": "Modelo",
+    "PLATE_NUM": "Numero de Tablilla",
+    "BRAND": "Marca",
+    "YEAR": "Ano",
+    "DELETE": "Borrar",
+    "ADD": "Anadir",
+    "CAR_INSURANCE": "Seguro de Vehiculo"
   }
 }

@@ -275,14 +275,6 @@ const routes: Routes = [
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
         },
       },
-      {
-        path: 'multi-assist',
-        component: MultiAssistListComponent,
-        canActivate: [AuthGuardService],
-        data: {
-          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
-        },
-      },
     ],
   },
 ];

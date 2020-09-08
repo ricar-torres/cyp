@@ -25,6 +25,7 @@ export class MultiAssistAPIService {
     } catch (error) {}
   }
   Create(payload, clientId: number | string) {
+    console.log(JSON.stringify(payload));
     return this.http
       .post(`${environment.baseURL}/${this.controllerName}`, {
         multiAssist: payload,
@@ -32,7 +33,9 @@ export class MultiAssistAPIService {
       })
       .toPromise();
   }
+
   Update(payload, clientId: number | string) {
+    console.log(JSON.stringify(payload));
     return this.http
       .put(`${environment.baseURL}/${this.controllerName}`, {
         multiAssist: payload,

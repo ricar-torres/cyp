@@ -51,7 +51,7 @@ export class MultiAssistListComponent implements OnInit {
     private app: AppService,
     private dialog: MatDialog
   ) {}
-  ngOnInit(): void {
+  async ngOnInit() {
     //TODO: Get access priviliges
     this.createAccess = true;
     this.editAccess = true;
@@ -62,8 +62,6 @@ export class MultiAssistListComponent implements OnInit {
     // this.editAccess = this.app.checkMenuRoleAccess(
     //   MenuRoles.DOCUMENT_TYPES_UPDATE
     // );
-  }
-  async ngAfterViewInit() {
     try {
       await this.loadData();
     } catch (error) {
@@ -71,11 +69,19 @@ export class MultiAssistListComponent implements OnInit {
     } finally {
     }
   }
+  async ngAfterViewInit() {
+    // try {
+    //   await this.loadData();
+    // } catch (error) {
+    //   this.loading = false;
+    // } finally {
+    // }
+  }
 
   async loadData() {
     try {
       this.loading = true;
-      await this.apiMultiAssistService.GetAll().subscribe(
+      this.apiMultiAssistService.GetAll().subscribe(
         (data: any) => {
           this.dataSource = new MatTableDataSource();
           this.dataSource.data = data;
@@ -97,14 +103,13 @@ export class MultiAssistListComponent implements OnInit {
       this.loading = false;
     }
   }
-  goToNew() {
-    this.router.navigate(['/home/communication-method', 0]);
-  }
-  async create(id?: string | number) {
+  async create(id?: string) {
     if (id == null) {
       id = '0';
     }
     const dialogRef = this.dialog.open(MultiAssistComponent, {
+      width: '80%',
+      height: '50%',
       data: {
         id: id,
         clientId: this.clientId,
@@ -117,16 +122,10 @@ export class MultiAssistListComponent implements OnInit {
           disableClose: true,
           width: '300px',
           height: '200px',
-          data: new GenericSucessModel(
-            'DOCUMENTATION_CALL.SUCCESS',
-            dialogResult
-          ),
+          data: new GenericSucessModel('DOCUMENTATION_CALL.SUCCESS', ''),
         });
       }
     });
-  }
-  goToDetail(id) {
-    this.router.navigate(['/home/communication-method', id]);
   }
 
   doFilter(value: any) {

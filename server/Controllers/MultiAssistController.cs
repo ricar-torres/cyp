@@ -101,27 +101,26 @@ namespace WebApi.Controllers {
 						CreatedAt = DateTime.Now
 				};
 
-        cpId = _clientProductService.Create(clientProduct);
+				cpId = _clientProductService.Create(clientProduct);
 
 				if (cpId > 0) {
 					payload.MultiAssist.ClientProductId = cpId;
 					_service.Create(payload.MultiAssist);
+					payload.MultiAssist.ClientProduct = null;
 				} else {
 					return BadRequest();
 				}
 
-        return Ok(payload);
+				return Ok(payload);
 
-      }
-      catch (System.Exception ex)
-      {
-        return DefaultError(ex);
-      }
-    }
+			} catch (System.Exception ex) {
+				return DefaultError(ex);
+			}
+		}
 
 		[AllowAnonymous]
 		[HttpPut]
-		public IActionResult Update(MultiAssistDto payload) {
+		public IActionResult Update([FromBody] MultiAssistDto payload) {
 			try {
 				this._service.Update(payload.MultiAssist);
 				return Ok();
