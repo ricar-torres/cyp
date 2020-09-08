@@ -2,7 +2,7 @@ import { AlliancesService } from './../../shared/alliances.service';
 import { faGlobeAmericas } from '@fortawesome/free-solid-svg-icons';
 import { AppService } from '@app/shared/app.service';
 import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
-import { MultiAssistAPIService } from '@app/shared/MultiAssist.api.service';
+import { MultiAssistService } from '@app/shared/multiAssist.service';
 import { startWith, map } from 'rxjs/operators';
 import {
   Component,
@@ -69,7 +69,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
     private coverService: CoverService,
     private app: AppService,
     private _formBuilder: FormBuilder,
-    private multiAssistApiService: MultiAssistAPIService,
+    private multiAssistApiService: MultiAssistService,
     public dialogRef: MatDialogRef<MultiAssistComponent>,
     public dialog: MatDialog,
 
@@ -78,64 +78,14 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
     this.id = data.id;
     this.clientId = data.clientId;
   }
-  async ngAfterViewInit() {
-    // if (this.id > 0) {
-    //   let ma = await this.multiAssistApiService.Get(this.id);
-    //   this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
-    //   this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover.id);
-    //   this.multi_assist_bank
-    //     .get('accType')
-    //     .setValue(ma.multiAssist.accountType);
-    //   if (ma.multiAssist.accountType == '') {
-    //   }
-    //   this.multi_assist_bank.get('bankName').setValue(ma.multiAssist.bankName);
-    //   this.multi_assist_bank
-    //     .get('holderName')
-    //     .setValue(ma.multiAssist.accountHolderName);
-    //   this.multi_assist_bank
-    //     .get('routingNum')
-    //     .setValue(ma.multiAssist.routingNum);
-    //   this.multi_assist_bank
-    //     .get('accountNum')
-    //     .setValue(ma.multiAssist.accountNum);
-    //   this.multi_assist_bank.get('expDate').setValue(ma.multiAssist.expDate);
-    //   this.multi_assist_bank.get('depdate').setValue(ma.multiAssist.debDay);
-    //   this.multi_assist_bank
-    //     .get('depRecurringType')
-    //     .setValue(ma.multiAssist.debRecurringType);
-    //   this.multi_assist_summary.get('endDate').setValue(ma.multiAssist.endDate);
-    //   this.hasVehicle = ma.multiAssist.cover.type == 'ASSIST-VEH';
-    //   this.hasBeneficiary = ma.multiAssist.cover.beneficiary;
-    //   ma.multiAssist.multiAssistsVehicle.forEach((intm) => {
-    //     var Veh = this._formBuilder.group({
-    //       model: [intm.model, [Validators.required]],
-    //       vin: [intm.vin, [Validators.required]],
-    //       make: [intm.make, [Validators.required]],
-    //       year: [intm.year, [Validators.required]],
-    //     });
-    //     this.VehicleList.push(Veh);
-    //   });
-    //   ma.multiAssist.beneficiaries.forEach((intm) => {
-    //     var ben = this._formBuilder.group({
-    //       name: [intm.name, [Validators.required]],
-    //       gender: [intm.gender, [Validators.required]],
-    //       birthDate: [intm.birthDate, [Validators.required]],
-    //       ssn: [intm.ssn, [Validators.required], this.checkSsn('').bind(this)],
-    //       relationship: [intm.relationship, [Validators.required]],
-    //       percent: [intm.percent, [Validators.required]],
-    //     });
-    //     this.BeneficiariesList.push(ben);
-    //   });
-    //   this.client_product_id = ma.multiAssist.clientProductId;
-    // }
-  }
+  async ngAfterViewInit() {}
 
   async ngOnInit() {
     try {
       this.initForms();
       this.daysNums = Array.from(Array(30), (x, i) => i + 1);
       this.healthPlans = await this.multiAssistApiService
-        .GetMultiAssistPlans()
+        .getMultiAssistPlans()
         .toPromise();
 
       this.filteredHPs = this.multi_assist.get('HealthPlan').valueChanges.pipe(
@@ -144,7 +94,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
         map((name) => (name ? this.filter(name) : this.healthPlans.slice()))
       );
       this.multi_assist.get('HealthPlan').valueChanges.subscribe((res) => {
-        console.log(res.id);
+        // console.log(res.id);
         if (res.id > 0) {
           this.coverService.GetByPlan(res.id).subscribe((res) => {
             this.covers = res;
@@ -165,7 +115,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
       );
 
       if (this.id > 0) {
-        let ma = await this.multiAssistApiService.Get(this.id);
+        let ma = await this.multiAssistApiService.get(this.id);
         this.multi_assist.get('HealthPlan').setValue(ma.healthPlan);
         this.multi_assist.get('Addititons').setValue(ma.multiAssist.cover.id);
         this.multi_assist_bank
@@ -224,7 +174,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
         this.client_product_id = ma.multiAssist.clientProductId;
       }
     } catch (error) {
-      console.log(error);
+      // console.log(error);
     }
   }
   public filter(value: string) {
@@ -275,7 +225,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
     });
   }
 
-  register(id: number) {
+  async register(id: number) {
     try {
       var beneficiarieslist = [];
       var vehicleList = [];
@@ -310,7 +260,9 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
           this.client_product_id
         );
         console.log('create');
-        this.multiAssistApiService.Create(payload, 1);
+        try {
+          const res: any = await this.multiAssistApiService.create(payload, 1);
+        } catch (error) {}
         this.dialogRef.close();
       } else {
         var payload = new MultiAssist(
@@ -335,7 +287,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
         );
 
         console.log('update');
-        this.multiAssistApiService.Update(payload, 1);
+        await this.multiAssistApiService.update(payload, 1);
         this.dialogRef.close();
       }
     } catch (error) {
