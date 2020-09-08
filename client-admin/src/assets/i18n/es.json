@@ -51,6 +51,8 @@
   "RELATION": "Relacion",
   "CLOSE": "Cerrar",
   "DEAD": "Fallecido",
+  "PRINT": "Imprimir",
+  "DOWNLOAD": "Descargar",
 
   "LOGIN-FORM": {
     "USER": "Usuario",
@@ -75,6 +77,18 @@
     "SEARCH": "Buscar",
     "TAG": "Etiqueta",
     "ALL_TASKS": "Todos los usuarios"
+  },
+  "INSURANCE_COMPANY": {
+    "TITLE": "Compañía de seguros",
+    "BTN_ADD": "Nueva Aseguradora",
+    "NAME": "Nombre",
+    "ACTIONS": "Acciones",
+    "DELETE": "Borrar",
+    "EDIT": "Editar",
+    "SAVE": "Grabar",
+    "CREATE": "Grabar",
+    "ARE_YOU_SURE_DELETE": "¿Está seguro que desea eliminar esta Compañía de seguro?",
+    "SAVE_REGISTER_BEFORE": "Favor grabar el registro antes de agregar las tarifas."
   },
   "AGENCY": {
     "TITLE": "Agencias",
@@ -145,7 +159,8 @@
     "SSNMAX": "El maximo de caracteres para el 'ssn' es de 9",
     "SSNNOTCOMPLETE": "El SSN del cliente debe ser complatado para continuar",
     "MISSINGDOB": "La fecha de nacimiento del cliente debe ser completada para continuar",
-    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar"
+    "MISSINGBONAFIDES": "El cliente debe pertenecer a alguna asociacion bonafides para continuar",
+    "EMPLOYERBENEFIT": "Contribución del Patrono"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Eventos Calificativos",
@@ -247,7 +262,12 @@
     "BENEFITS": "Beneficios",
     "COVER": "Cubierta",
     "LIFEINSURANCE": "Seguro de Vida",
-    "DATES": "Fechas"
+    "DATES": "Fechas",
+    "COVERCOST": "Costo de Cubierta",
+    "PRIMA": "Aportación del pencionado",
+    "TOTALCOST": "Costo Total",
+    "JOINT": "Mancomunado",
+    "TOTALCLIENTPROVIDED": "Total"
   },
   "BENEFICIERIES": {
     "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
@@ -303,7 +323,8 @@
     "BONAFIDES": "Asociaciones Bonafides",
     "RETIREMENTS": "Retiros",
     "QUALIFYIN_EVENTS": "Eventos Calificativos",
-    "CLIENTS": "Clientes"
+    "CLIENTS": "Clientes",
+    "INSURANCE_COMPANY": "Compañía de seguros"
   },
 
   "PAGINATOR": {

@@ -1,0 +1,224 @@
+<md-content layout-margin layout-padding flex="50">
+  
+  <mat-card>
+    <mat-card-header>
+      <mat-card-title>Aseguradora {{reactiveForm.controls.name.value}}</mat-card-title>
+      <mat-card-subtitle># {{id}}</mat-card-subtitle>
+    </mat-card-header>
+    <div fxLayout fxLayoutAlign="end start">
+      <button type="button" mat-button  (click)="onBack()">
+          <mat-icon>list</mat-icon> Regresar
+      </button>
+    </div>
+    <mat-tab-group>
+      <mat-tab label="Aseguradora">
+        
+      <mat-card>
+        
+        <mat-card-content>
+    
+          <form class="form" [formGroup]="reactiveForm" (ngSubmit)="onSubmit()">
+  
+              <mat-form-field class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput formControlName="name">
+              </mat-form-field>
+  
+              <mat-form-field class="full-width">
+                  <mat-label>Comentario</mat-label>
+                  <textarea matInput formControlName="comment"></textarea>
+              </mat-form-field>
+  
+  
+          </form> 
+  
+        </mat-card-content>
+        <mat-card-actions>
+    
+          <button mat-raised-button color="primary" (click)="onSubmit()">
+              <mat-icon>save</mat-icon> GRABAR
+          </button>
+          <!-- <button mat-button (click)="onBack()">REGRESAR</button> -->
+    
+      </mat-card-actions> 
+      </mat-card>
+      </mat-tab>
+      <mat-tab label="Planes Médicos">
+  
+        
+        <div fxLayout fxLayoutAlign="end start">
+          <button type="button" mat-raised-button color="primary" (click)="goToPlanNew()" >
+              <mat-icon>add</mat-icon> Agregar
+          </button>
+      </div>
+        
+      <div fxLayout>
+        <mat-form-field class="search-form">
+          <input matInput placeholder="Búsqueda General" type="text" (keyup)="applyFilter($event.target.value)">
+        </mat-form-field>
+      </div>
+  
+        <!-- <mat-form-field>
+          <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+        </mat-form-field> -->
+        
+        <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+        
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+          </ng-container>
+        
+          
+          <!-- <div *ngFor="let number of ELEMENT_DATA.addOns;let i=index;">
+            <ng-container matColumnDef="{{i}}">
+            <th mat-header-cell *matHeaderCellDef> Symbol </th>
+            <td mat-cell *matCellDef="let element"> {{element[i]}} </td>
+            </ng-container>
+            </div> -->
+  
+  <!-- 
+            <ng-container *ngFor="let column of columnsBenefits" matColumnDef="{{column.name}}" >
+  
+              <th mat-header-cell *matHeaderCellDef mat-sort-header><div><small>{{column.topLabel}}</small><br/>{{column.label}}</div></th>
+              
+              <td mat-cell *matCellDef="let element"> {{ element[column.name] }} </td>
+  
+            </ng-container> -->
+  
+          <ng-container matColumnDef="addOns">
+            <th mat-header-cell *matHeaderCellDef > Adicionales </th>
+            <td mat-cell *matCellDef="let element"> 
+              <mat-chip-list>
+                <mat-chip *ngFor="let addOn of element.addOns" color="primary" selected>
+                  {{addOn.name}}</mat-chip>
+              </mat-chip-list>
+              <!-- <ul>
+                <li *ngFor="let hero of element">
+                  {{ hero.name }}
+                </li>
+              </ul> -->
+  <!--             
+              <mat-chip-list >
+                <mat-chip> {{element.name}}</mat-chip>
+                
+              </mat-chip-list> -->
+              
+  
+            </td>
+          </ng-container>
+          <!-- Weight Column -->
+          <!-- <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef> Weight </th>
+            <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+          </ng-container> -->
+        
+          <!-- Symbol Column --> 
+           <!-- <ng-container matColumnDef="cost">
+            <th mat-header-cell *matHeaderCellDef> Costo </th>
+            <td mat-cell *matCellDef="let element"> {{element.cost | currency}}  </td>
+          </ng-container> goToPlanEdit(id) -->
+          
+            <!-- Action Column -->
+            <ng-container matColumnDef="action">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button (click)="goToPlanEdit(element.id)">
+                  <mat-icon>edit</mat-icon> Editar
+                </button>
+              </td>
+            </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumns;  sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+        
+  
+      </mat-tab> 
+      <mat-tab label="Cubiertas Opcionales">
+        
+  
+  
+        <div fxLayout fxLayoutAlign="end start">
+          <button type="button" mat-raised-button color="primary" (click)="goToAddonsNew()" >
+              <mat-icon>add</mat-icon> Agregar
+          </button>
+      </div>
+        
+      <div fxLayout>
+        <mat-form-field class="search-form">
+          <input matInput placeholder="Búsqueda General" type="text" (keyup)="applyFilterAddOns($event.target.value)">
+        </mat-form-field>
+      </div>
+  
+        <!-- <mat-form-field>
+          <input matInput (keyup)="applyFilterAddOns($event.target.value)" placeholder="Filter">
+        </mat-form-field> -->
+        
+        <table mat-table [dataSource]="dataSourceAddOns" class="mat-elevation-z8">
+        
+          <!-- Position Column -->
+          <ng-container matColumnDef="id">
+            <th mat-header-cell *matHeaderCellDef> No. </th>
+            <td mat-cell *matCellDef="let element"> {{element.id}} </td>
+          </ng-container>
+         
+          <!-- Name Column -->
+          <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef> Nombre </th>
+            <td mat-cell *matCellDef="let element"> 
+  
+              <mat-chip-list >
+                <mat-chip color="primary" selected> {{element.name}}</mat-chip>
+                
+              </mat-chip-list>
+  
+            </td>
+          </ng-container>
+            <!-- Action Column -->
+            <ng-container matColumnDef="actionEdit">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button (click)="openDialog(element)" >
+                  <mat-icon>edit</mat-icon> Editar
+                </button>
+              </td>
+            </ng-container>
+            
+            <ng-container matColumnDef="actionDelete">
+              <th mat-header-cell *matHeaderCellDef> </th>
+              <td mat-cell *matCellDef="let element">
+                <button mat-button (click)="confirmDialog(element.id, element.name)">
+                  <mat-icon>delete</mat-icon> Borrar
+                </button>
+              </td>
+            </ng-container>
+        
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsAddOns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumnsAddOns;"></tr>
+        </table>
+        
+  
+      </mat-tab> 
+      
+  <!-- loader.component.html -->
+    
+    </mat-tab-group>
+    <div class="loading-indicator" [hidden]="!loading">
+      <mat-progress-spinner [mode]="'indeterminate'">
+      </mat-progress-spinner>
+    </div>
+    
+
+  </mat-card>
+    </md-content> 
+  
+    
+  

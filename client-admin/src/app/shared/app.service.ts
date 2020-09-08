@@ -107,6 +107,9 @@ export class AppService {
       // footer: '<a href>Why do I have this issue?</a>'
     });
 
+
+  
+
     // this.dialog.open(DialogGenericErrorComponent, {
     //   data: {
     //     header: 'Error',
@@ -114,6 +117,20 @@ export class AppService {
     //     icon: '',
     //   },
     // });
+  }
+
+
+
+  
+  showMessage( header: string, msg: string, icon: string) {
+    
+    this.dialog.open(DialogGenericErrorComponent, {
+      data: {
+        header: header,
+        detail: msg ,
+        icon: icon
+      }
+    });
   }
 
   changeUserProperty(key: string, val) {

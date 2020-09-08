@@ -319,6 +319,23 @@ namespace WebApi.Controllers {
 			}
 		}
 
+
+		[AllowAnonymous]
+		[HttpGet("InsuranceBenefitTypes")]
+		public IActionResult InsuranceBenefitTypes()
+		{
+			try
+			{
+				var item = _itemService.BenefitType_GetAll();
+				//return item;
+				return Ok(item);
+			}
+			catch (Exception ex)
+			{
+				return DefaultError(ex.Message);
+			}
+		}
+
 		private IActionResult DefaultError(string exceptionMessage) {
 
 			return StatusCode(StatusCodes.Status500InternalServerError, new {

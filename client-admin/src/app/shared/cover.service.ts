@@ -15,7 +15,7 @@ export class CoverService {
     return this.http.get<[]>(`${environment.baseURL}/Covers`).toPromise();
   }
   GetByPlan(planId: number) {
-    return this.http.get<[]>(`${environment.baseURL}/Covers/${planId}`);
+    return this.http.get<[]>(`${environment.baseURL}/Covers/Healthplan/${planId}`);
   }
 
   GetPlanByCover(coverId: number) {

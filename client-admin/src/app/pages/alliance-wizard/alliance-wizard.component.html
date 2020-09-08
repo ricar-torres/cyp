@@ -89,6 +89,28 @@
             }}</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'ALLIANCEWIZARD.JOINT' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="joint"
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+          />
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'ALLIANCEWIZARD.PRIMA' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="prima"
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+          />
+        </mat-form-field>
       </div>
     </form>
     <div class="top-bottom-margin">
@@ -187,7 +209,12 @@
     <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
-    <button select mat-raised-button color="primary" (click)="checkPercent()">
+    <button
+      select
+      mat-raised-button
+      color="primary"
+      (click)="checkPercent(true)"
+    >
       {{ 'NEXT' | translate }}
     </button>
   </mat-step>
@@ -202,7 +229,7 @@
         </mat-card-header> -->
         <mat-card-content>
           <div fxLayout="Column">
-            <div>Costos de cubierta</div>
+            <!--<div>Costos de cubierta</div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Cubierta Básica:</div>
@@ -211,14 +238,58 @@
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
               <div>Major Médical:</div>
-              <div>$0.00</div>
+              <div>${{ allianceWithCost?.majorMedicalAmount }}</div>
+            </div>
+            <div class="separator"></div> -->
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.COVERCOST' | translate }}:</div>
+              <div>${{ allianceWithCost?.coverAmount }}</div>
+            </div>
+            <div
+              *ngFor="let item of allianceWithCost?.alianzaAddOns"
+              fxLayout
+              fxLayoutAlign="space-between center"
+            >
+              <div>{{ item.insuranceAddOn.name }}:</div>
+              <div>${{ item?.cost }}</div>
             </div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
-              <div>Seguro de Vida:</div>
-              <div>$3.00</div>
+              <div>{{ 'ALLIANCEWIZARD.TOTALCOST' | translate }}</div>
+              <div>${{ allianceWithCost?.subTotal }}</div>
             </div>
             <hr />
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.PRIMA' | translate }}:</div>
+              <div>
+                ${{ allianceWithCost?.prima ? allianceWithCost?.prima : 0 }}
+              </div>
+            </div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.JOINT' | translate }}:</div>
+              <div>
+                ${{ allianceWithCost?.joint ? allianceWithCost?.joint : 0 }}
+              </div>
+            </div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'CLIENTS.EMPLOYERBENEFIT' | translate }}</div>
+              <div>
+                ${{ allianceWithCost?.clientProduct?.client?.contribution }}
+              </div>
+            </div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>Total:</div>
+              <div>
+                ${{
+                  (allianceWithCost?.clientProduct?.client?.contribution
+                    ? allianceWithCost?.clientProduct?.client?.contribution
+                    : 0) +
+                    (allianceWithCost?.joint ? allianceWithCost?.joint : 0) +
+                    (allianceWithCost?.prima ? allianceWithCost?.prima : 0)
+                }}
+              </div>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>
@@ -231,11 +302,11 @@
     >
       {{ 'CLOSE' | translate }}
     </button>
-    <button mat-raised-button color="primary" matStepperPrevious>
+    <!-- <button mat-raised-button color="primary" matStepperPrevious>
       {{ 'GOBACK' | translate }}
     </button>
     <button mat-raised-button color="primary" (click)="submitAliance()">
       {{ 'SAVE' | translate }}
-    </button>
+    </button> -->
   </mat-step>
 </mat-horizontal-stepper>

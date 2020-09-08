@@ -111,6 +111,7 @@ export class ClientWizardService {
     HealthPlan: [null],
     MedicareA: [null],
     MedicareB: [null],
+    Contribution: [null],
   });
 
   secondFormGroup = this.formBuilder.group({

@@ -57,7 +57,7 @@
         </mat-autocomplete>
       </mat-form-field>
 
-      <mat-form-field fxFlex="75%">
+      <mat-form-field fxFlex="25%">
         <mat-label>{{ 'CLIENTS.ACOVER' | translate }}</mat-label>
         <mat-select formControlName="CoverId">
           <mat-option *ngFor="let cover of covers" [value]="cover.id">
@@ -66,7 +66,7 @@
         </mat-select>
       </mat-form-field>
 
-      <mat-form-field fxFlex="75%">
+      <mat-form-field fxFlex="25%">
         <mat-label>{{ 'CLIENTS.EFFECTIVEDATE' | translate }}</mat-label>
         <input
           [matDatepicker]="effectiveDatePiker"
@@ -78,6 +78,18 @@
           [for]="effectiveDatePiker"
         ></mat-datepicker-toggle>
         <mat-datepicker #effectiveDatePiker disabled="false"></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field fxFlex="25%">
+        <mat-label>{{ 'CLIENTS.EMPLOYERBENEFIT' | translate }}</mat-label>
+        <input
+          matInput
+          formControlName="Contribution"
+          type="text"
+          prefix="$"
+          mask="separator.2"
+          thousandSeparator=","
+        />
       </mat-form-field>
     </div>
     <div fxLayout="row" fxLayoutGap="20px" fxLayoutAlign="flex-start">

@@ -125,10 +125,20 @@ import { AllianceComponent } from './pages/alliance/alliance.component';
 import { AllianceListComponent } from './pages/alliance-list/alliance-list.component';
 import { AllianceWizardComponent } from './pages/alliance-wizard/alliance-wizard.component';
 import { BeneficiariesBenefitDistributionComponent } from './components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
+import { InsuranceCompanyComponent } from './pages/insurance-company/insurance-company.component';
+import {
+  InsuranceCompanyItemComponent,
+  AddOnsDialog,
+} from './pages/insurance-company-item/insurance-company-item.component';
+import {
+  InsurancePlanItemComponent,
+  BenefitTypeDialog,
+} from './pages/insurance-plan-item/insurance-plan-item.component';
 import { MultiAssistComponent } from './pages/multi-assist/multi-assist.component';
 import { MultiAssistListComponent } from './pages/multi-assist-list/multi-assist-list.component';
-import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet/alliance-inscription-sheet.component';
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
+import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet-psm/alliance-inscription-sheet.component';
+import { AllianceInscriptionSheetFirtsMedicalComponent } from './pages/alliance-inscription-sheet-firts-medical/alliance-inscription-sheet-firts-medical.component';
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -188,10 +198,16 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AllianceListComponent,
     AllianceWizardComponent,
     BeneficiariesBenefitDistributionComponent,
+    InsuranceCompanyComponent,
+    InsuranceCompanyItemComponent,
+    AddOnsDialog,
+    BenefitTypeDialog,
+    InsurancePlanItemComponent,
     MultiAssistComponent,
     MultiAssistListComponent,
     AllianceInscriptionSheetComponent,
     VehicleListComponent,
+    AllianceInscriptionSheetFirtsMedicalComponent,
   ],
   imports: [
     BrowserModule,
@@ -273,6 +289,9 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BonafidesAssociatorComponent,
     AllianceWizardComponent,
     AllianceInscriptionSheetComponent,
+    AddOnsDialog,
+    BenefitTypeDialog,
+    AllianceInscriptionSheetFirtsMedicalComponent,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

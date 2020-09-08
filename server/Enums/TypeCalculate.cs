@@ -2,7 +2,7 @@
 
 namespace WebApi.Enums
 {
-    public enum AddonsTypeCalculate
+    public enum TypeCalculate
     {
         EEOnly = 1, //Se le suma solo al empleados y tiene un costo fijo independientemente de la aseguradora.
         AllMember = 2, //Se le suma a todos los miembros y tiene un costo fijo independientemente de la aseguradora.

@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using server.Dtos;
 using WebApi.Entities;
 using WebApi.Helpers;
+using WebApi.Enums;
 
 namespace WebApi.Services
 {
@@ -14,7 +15,7 @@ namespace WebApi.Services
   {
     List<Clients> GetAll();
     Clients GetById(int id);
-    Clients Create(ClientInformationDto payload);
+    ClientInformationDto Create(ClientInformationDto payload);
     Task<ClientInformationDto> Update(ClientInformationDto payload);
     void Delete(int id);
     Task<Boolean> ChekcName(string criteria);
@@ -23,6 +24,22 @@ namespace WebApi.Services
     Task<List<Clients>> GetClientByCriteria(string criteria);
     Task Deceased(int clientId);
   }
+  public class Rate
+  {
+    /*
+            planName = "Current",
+                    addOns = "",
+                    cost = Member.CurrentCost,
+                    Class = "",
+
+             */
+    public string company { get; set; }
+    public string planName { get; set; }
+    public string addOns { get; set; }
+    public double cost { get; set; }
+    public string Class { get; set; }
+  }
+
 
   public class ClientService : IClientService
   {
@@ -71,7 +88,7 @@ namespace WebApi.Services
       return res;
     }
 
-    public Clients Create(ClientInformationDto payload)
+    public ClientInformationDto Create(ClientInformationDto payload)
     {
       try
       {
@@ -132,13 +149,7 @@ namespace WebApi.Services
 
           _context.SaveChanges();
         }
-
-        foreach (var item in newClient.ChapterClient)
-        {
-          item.Client = null;
-        }
-
-        return newClient;
+        return payload;
       }
       catch (Exception ex)
       {
@@ -305,6 +316,7 @@ namespace WebApi.Services
       client.BirthDate = payload.Demographic.BirthDate;
       client.MedicareA = payload.Demographic.MedicareA;
       client.MedicareB = payload.Demographic.MedicareB;
+      client.Contribution = payload.Demographic.Contribution;
 
       var AgencyId = payload.Demographic.AgencyId;
       if (AgencyId != null)
@@ -396,7 +408,7 @@ namespace WebApi.Services
       if (!String.IsNullOrEmpty(criteria))
       {
         criteria = criteria.ToLower().Trim();
-        var payload = await _context.Clients.FirstOrDefaultAsync(ag => ag.Ssn.Replace("-", "") == criteria && ag.DeletedAt == null);
+        var payload = await _context.Clients.FirstOrDefaultAsync(ag => ag.Ssn.Replace("-", "") == criteria);
         if (payload != null)
         {
           return true;
@@ -425,6 +437,173 @@ namespace WebApi.Services
 
       return matchingClients;
     }
+
+
+
+
+    private List<Rate> getRate(Clients Member, Alianzas _estimate)
+    {
+      try
+      {
+        var Rate = new List<Rate>();
+
+        //var Plans = (from r in _estimate.Cover
+        //			 where r.GroupNumber == Member.GroupNumber
+        //			 select new { insuranceAddOns = r.InsuranceAddOns.ToList(), plan = r.InsurancePlan }).ToList();
+
+
+        //foreach (var r in Plans)
+        //{
+
+        var r = _estimate.Cover;
+        Rate.Add(new Rate
+        {
+          company = _estimate.Cover.HealthPlan.Name,
+          planName = _estimate.Cover.Name,
+          addOns = String.Join(",", _estimate.AlianzaAddOns.Select(h => h.InsuranceAddOn.Name).ToArray()),
+          cost = CalcularCost(Member, _estimate.Cover, _estimate.AlianzaAddOns.ToList(), Convert.ToDateTime(_estimate.StartDate)),
+          Class = "",
+
+        });
+
+
+        //var u = (from r in Plans
+        //     where r.count > 1
+        //     select r.member).ToList();
+
+        return Rate;
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
+
+    private double CalcularCost(Clients Member, Covers Plans, List<AlianzaAddOns> AddOns, DateTime EffectiveDate)
+    {
+      try
+      {
+
+        float cost = 0;
+        float Totalcost = 0;
+
+
+        int age = CalcularEdad(Convert.ToDateTime(Member.BirthDate), EffectiveDate);
+
+        //if (Member.Identifier >= 4)
+        //	return cost;
+
+        if (age > 100)
+          age = 100;
+        else if (age < 1)
+          age = 1;
+        //else
+        //	age = Member.Age;
+
+
+        if (Plans.TypeCalculate == (int)TypeCalculate.AllMember)
+        {
+
+          cost = Plans.IndividualRate;
+
+        }
+        else if (Plans.TypeCalculate == (int)TypeCalculate.AllMemberAndAge)
+        {
+
+          var RateByAge = _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
+          cost = RateByAge.IndividualRate;
+
+        }
+        else if (Plans.TypeCalculate == (int)TypeCalculate.EEOnly)
+        {
+
+          cost = Plans.IndividualRate;
+
+        }
+        else if (Plans.TypeCalculate == (int)TypeCalculate.Tier)
+        {
+
+          if (Member.Dependents.ToList().Count <= 0)
+            cost = Plans.CoverageSingleRate;
+          else if (Member.Dependents.ToList().Count == 1)
+            cost = Plans.CoverageCoupleRate;
+          else if (Member.Dependents.ToList().Count > 1)
+            cost = Plans.CoverageFamilyRate;
+
+        }
+        else if (Plans.TypeCalculate == (int)TypeCalculate.TierAndAge)
+        {
+
+          var RateByAge = _context.InsuranceRate.Where(r => r.CoverId == Plans.Id && r.Age == age && r.PolicyYear == EffectiveDate.Year).FirstOrDefault();
+
+          if (Member.Dependents.ToList().Count <= 0)
+            cost = RateByAge.CoverageSingleRate;
+          else if (Member.Dependents.ToList().Count == 1)
+            cost = RateByAge.CoverageCoupleRate;
+          else if (Member.Dependents.ToList().Count > 1)
+            cost = RateByAge.CoverageFamilyRate;
+
+        }
+
+
+
+        Totalcost += cost;
+
+
+        //AddOns
+        for (int p = 0; p <= AddOns.Count - 1; p++)
+        {
+          var r = AddOns[p];
+          if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.AllMember)
+          {
+            cost = r.InsuranceAddOn.IndividualRate;
+
+          }
+          else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.AllMemberAndAge)
+          {
+            var RateByAge = _context.InsuranceAddOnsRateAge.Where(h => h.InsuranceAddOnsId == r.InsuranceAddOn.Id && h.Age == age).FirstOrDefault();
+            cost = RateByAge.Rate;
+          }
+          else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.EEOnly)
+          {
+            cost = r.InsuranceAddOn.IndividualRate;
+          }
+          else if (r.InsuranceAddOn.TypeCalculate == (int)TypeCalculate.Tier)
+          {
+            if (Member.Dependents.ToList().Count <= 0)
+              cost = r.InsuranceAddOn.CoverageSingleRate;
+            else if (Member.Dependents.ToList().Count == 1)
+              cost = r.InsuranceAddOn.CoverageCoupleRate;
+            else if (Member.Dependents.ToList().Count > 1)
+              cost = r.InsuranceAddOn.CoverageFamilyRate;
+          }
+
+
+          Totalcost += cost;
+
+
+        }
+
+
+        return Math.Round(Totalcost, 2);
+      }
+      catch (Exception ex)
+      {
+        throw ex;
+      }
+    }
+
+
+
+    private int CalcularEdad(DateTime birthDate, DateTime now)
+    {
+      int age = now.Year - birthDate.Year;
+      if (now.Month < birthDate.Month || (now.Month == birthDate.Month && now.Day < birthDate.Day))
+        age--;
+      return age;
+    }
+
+
 
     public async Task Deceased(int clientId)
     {

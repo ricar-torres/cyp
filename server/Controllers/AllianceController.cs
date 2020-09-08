@@ -86,11 +86,12 @@ namespace WebApi.Controllers
 
       try
       {
+        var res = new Alianzas();
         if (payload.Id == null)
-          await _service.Create(payload);
+          res = await _service.Create(payload);
         else
-          await this.Update(payload);
-        return Ok(payload);
+          res = await _service.Update(payload);
+        return Ok(res);
 
       }
       catch (AppException ex)
@@ -101,15 +102,18 @@ namespace WebApi.Controllers
     }
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Update)]
-    [Authorize]
-    [HttpPut("{id}")]
-    public async Task<IActionResult> Update([FromBody] AllianceDto payload)
+
+    [AllowAnonymous]
+    [HttpPost("Cost/{id}")]
+    public async Task<IActionResult> Cost(int id)
     {
       try
       {
-        await _service.Update(payload);
-        return Ok();
 
+        var res = await _service.UpdateCost(id);
+
+        return Ok();
+        //return Ok(res);
       }
       catch (AppException ex)
       {
@@ -117,6 +121,42 @@ namespace WebApi.Controllers
         return DefaultError(ex);
       }
     }
+
+    // public async Task<Alianzas> Update([FromBody] AllianceDto payload)
+    // {
+    //   try
+    //   {
+    //     var res = await _service.Update(payload);
+    //     return res;
+
+    //   }
+    //   catch (AppException ex)
+    //   {
+    //     // return error message if there was an exception
+    //     return null;
+    //   }
+    // }
+
+
+    //[Authorize]
+    //[HttpPut("{id}")]
+    //public IActionResult Update(int id, [FromBody] Alianzas payload)
+    //{
+    //    try
+    //    {
+
+    //        payload.Id = id;
+    //        var res = _service.Update(payload);
+
+    //        return Ok(res);
+
+    //    }
+    //    catch (AppException ex)
+    //    {
+    //        // return error message if there was an exception
+    //        return DefaultError(ex);
+    //    }
+    //}
 
     //[Filters.Authorize(PermissionItem.User, PermissionAction.Delete)]
     [Authorize]

@@ -33,6 +33,9 @@ import { QualifyingEventComponent } from './pages/qualifying-event/qualifying-ev
 import { ClientListComponent } from './pages/client-list/client-list.component';
 import { ClientComponent } from './pages/client/client.component';
 import { DocumentationCallComponent } from './components/documentation-call/documentation-call.component';
+import { InsuranceCompanyComponent } from './pages/insurance-company/insurance-company.component';
+import { InsuranceCompanyItemComponent } from './pages/insurance-company-item/insurance-company-item.component';
+import { InsurancePlanItemComponent } from './pages/insurance-plan-item/insurance-plan-item.component';
 
 const routes: Routes = [
   {
@@ -270,6 +273,46 @@ const routes: Routes = [
       {
         path: 'dependants-list',
         component: DependantsListComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
+        },
+      },
+      {
+        path: 'insurance-company',
+        component: InsuranceCompanyComponent,
+        //canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
+        },
+      },
+      {
+        path: 'insurance-company/:id',
+        component: InsuranceCompanyItemComponent,
+        //canActivate: [AuthGuardService],
+        data: {
+          //TODO: expectedRoles: MenuRoles.USERS_UPDATE,
+        },
+      },
+      {
+        path: 'insurance-company/:insuranceCompanyId/plan/:id',
+        component: InsurancePlanItemComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          //expectedRoles: MenuRoles.USERS
+        },
+      },
+      {
+        path: 'insurance-company/:insuranceCompanyId/plan',
+        component: InsurancePlanItemComponent,
+        canActivate: [AuthGuardService],
+        data: {
+          // expectedRoles: MenuRoles.USERS
+        },
+      },
+      {
+        path: 'multi-assist',
+        component: MultiAssistListComponent,
         canActivate: [AuthGuardService],
         data: {
           //expectedRoles: MenuRoles.BONAFIDE_UPDATE,
