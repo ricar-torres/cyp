@@ -261,11 +261,12 @@
     "COVER": "Cover",
     "LIFEINSURANCE": "Life Insurance",
     "DATES": "Dates",
-    "COVERCOST": "Cover Cost",
+    "BASICCOVER": "Basic Cover",
     "PRIMA": "Contribution of the client",
-    "TOTALCOST": "Total Cost",
+    "TOTALCOST": "Sub Total",
     "JOINT": "Joint",
-    "TOTALCLIENTPROVIDED": "Total"
+    "TOTALCLIENTPROVIDED": "Total",
+    "COVERCOST": "Cover Cost"
   },
   "BENEFICIERIES": {
     "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "

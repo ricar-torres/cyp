@@ -263,11 +263,13 @@
     "COVER": "Cubierta",
     "LIFEINSURANCE": "Seguro de Vida",
     "DATES": "Fechas",
-    "COVERCOST": "Costo de Cubierta",
+    "BASICCOVER": "Cubierta Basica",
     "PRIMA": "Aportación del pencionado",
-    "TOTALCOST": "Costo Total",
+    "TOTALCOST": "Sub Total",
     "JOINT": "Mancomunado",
-    "TOTALCLIENTPROVIDED": "Total"
+    "TOTALCLIENTPROVIDED": "Total",
+    "COVERCOST": "Costo de Cubierta",
+    "DETAILS": "Detalles de Costo"
   },
   "BENEFICIERIES": {
     "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "
