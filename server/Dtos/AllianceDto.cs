@@ -56,5 +56,6 @@ namespace server.Dtos
     public List<Addresses> ClientAddressses { get; set; }
 
     public List<Dependents> CLientDependents { get; set; }
+    public List<Chapters> ClientChapters { get; set; }
   }
 }

@@ -19,9 +19,6 @@ namespace WebApi.Entities
     public DateTime? CreatedAt { get; set; }
     public DateTime? UpdatedAt { get; set; }
     public DateTime? DeletedAt { get; set; }
-
-    [JsonIgnore]
-    [IgnoreDataMember]
     public virtual BonaFides BonaFide { get; set; }
     public virtual ICollection<ChapterClient> ChapterClient { get; set; }
   }

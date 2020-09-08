@@ -41,16 +41,29 @@
       ><br />
       <div class="col-12">
         <div class="col-4">
-          <input type="radio" class="form-check-input" />aff_type == 1 ?
-          'checked' : '' > Ingreso Nuevo
+          <input
+            type="radio"
+            class="form-check-input"
+            disabled
+            [checked]="alliance.affType == 1"
+          />Ingreso Nuevo
         </div>
         <div class="col-4">
-          <input type="radio" class="form-check-input" />aff_type == 2 ?
-          'checked' : '' > Renovación
+          <input
+            type="radio"
+            class="form-check-input"
+            disabled
+            [checked]="alliance.affType == 2"
+          />
+          Renovación
         </div>
         <div class="col-4">
-          <input type="radio" class="form-check-input" />aff_type == 3 ?
-          'checked' : '' > Conversión
+          <input
+            type="radio"
+            class="form-check-input"
+            disabled
+            [checked]="alliance.affType == 3"
+          />Conversión
         </div>
         --
         <div class="form-check-inline"></div>
@@ -74,18 +87,23 @@
             <tr>
               <td>{{$client->ssn</td>
               <td></td>
-              <td>{{ \Carbon\Carbon::parse($client->birth_date)->age</td>
+              <td>{{ getAge(alliance?.client?.birthDate) }}</td>
               <td>
-                {{\Carbon\Carbon::parse($client->birth_date)->format('m-d-Y')
+                {{ alliance?.client?.birthDate | date: 'shortDate' }}
               </td>
               <td>
-                @if($client->marital_status == 1) soltero
+                <p *ngIf="alliance.client.maritalStatus == 1">soltero</p>
+                <p *ngIf="alliance.client.maritalStatus == 2">casado</p>
+                <p *ngIf="alliance.client.maritalStatus == 3">viudo</p>
+                <!-- @if($client->marital_status == 1) soltero
                 @elseif($client->marital_status == 2) casado
-                @elseif($client->marital_status == 3) viudo @endif
+                @elseif($client->marital_status == 3) viudo @endif -->
               </td>
               <td>
-                @if($client->gender == 1) Masculino @elseif($client->gender ==
-                2) Femenino @elseif($client->gender == 3) Otro @endif
+                <!-- @if($client->gender == 1) Masculino @elseif($client->gender ==
+                2) Femenino @elseif($client->gender == 3) Otro @endif -->
+                <p *ngIf="alliance.client.gender == 1">Masculino</p>
+                <p *ngIf="alliance.client.gender == 2">Femenino</p>
               </td>
             </tr>
           </tbody>
@@ -103,32 +121,41 @@
       <div class="col-12">
         <div class="col-4">
           <strong>Nombre completo</strong> <br />
-          $client->name $client->initial$client->last_name_1
-          $client->last_name_2
+          <!-- $client->name $client->initial$client->last_name_1
+          $client->last_name_2 -->
+          {{ alliance?.client?.name }}
         </div>
         <div class="col-4">
           <strong>Teléfono del Hogar</strong> <br />
-          $client->phone_1
+          <!-- $client->phone_1 -->
+          {{ alliance?.client?.phone1 }}
         </div>
         <div class="col-4">
           <strong>Teléfono celular</strong> <br />
-          $client->phone_2
+          <!-- $client->phone_2 -->
+          {{ alliance?.client?.phone2 }}
         </div>
       </div>
       <div class="col-12">
         <div class="col-4">
           <strong>Dirección residencial</strong> <br />
-          $client->addresses->first()->full_address['line_1']<br />
-          @if($client->addresses->first()->full_address['line_2'] != "")
+          <!-- $client->addresses->first()->full_address['line_1'] -->
+          {{ alliance?.clientAddressses[0]?.line1 }}
+          <br />
+          <!-- @if($client->addresses->first()->full_address['line_2'] != "")
           $client->addresses->first()->full_address['line_2'] @endif
-          $client->addresses->first()->full_address['line_3']
+          $client->addresses->first()->full_address['line_3'] -->
+          {{ alliance?.clientAddressses[0]?.line2 }}
         </div>
         <div class="col-4">
           <strong>Dirección postal</strong> <br />
-          $client->addresses->last()->full_address['line_1']<br />
-          @if($client->addresses->last()->full_address['line_2'] != "")
+          <!-- $client->addresses->last()->full_address['line_1'] -->
+          {{ alliance?.clientAddressses[1]?.line1 }}
+          <br />
+          <!-- @if($client->addresses->last()->full_address['line_2'] != "")
           $client->addresses->last()->full_address['line_2'] @endif
-          $client->addresses->last()->full_address['line_3']
+          $client->addresses->last()->full_address['line_3'] -->
+          {{ alliance?.clientAddressses[1]?.line2 }}
         </div>
       </div>
     </div>
@@ -144,15 +171,16 @@
     <div class="row">
       <div class="col-6">
         <ul>
-          <li>
-            @foreach($client->chapters as $chapter) $chapter->bonaFide->name
-            @endforeach
+          <li *ngFor="let item of alliance.clientChapters">
+            <!-- @foreach($client->chapters as $chapter) $chapter->bonaFide->name
+            @endforeach -->
+            {{ item?.bonaFide?.name }}
           </li>
         </ul>
       </div>
       <div class="col-6">
         <ul>
-          <li>$client->retirement->name</li>
+          <li>{{ alliance?.client?.alliance }}</li>
         </ul>
       </div>
     </div>
@@ -165,43 +193,61 @@
       </div>
       <div class="col-12">
         <strong>¿Tiene usted otro seguro médico?</strong>
-        @if($client->cover_id == 50) No @else Si /
-        <strong>Indique cual:</strong
-        >$client->cover->healthPlan->name,$client->cover->name @endif
+        <p *ngIf="alliance?.client?.coverId == 50">Si</p>
+        <p *ngIf="alliance?.client?.coverId != 50">No</p>
+        <!-- @if($client->cover_id == 50) No @else Si / -->
+        <strong>Indique cual:</strong>
+        <!-- $client->cover->healthPlan->name,$client->cover->name @endif -->
+        <p>{{ alliance?.client?.cover?.healthPlan?.name }}</p>
         <br /><br />
-        -- @foreach($client->dependents as $dependent)
-        @if($dependent->relationship == 3)
-        <div class="col-4">
-          <strong>Nombre del cónyuge:</strong> <br />
-          $dependent->name $dependent->last_name_1 $dependent->last_name_2
+        <!-- -- @foreach($client->dependents as $dependent)
+        @if($dependent->relationship == 3) -->
+        <div *ngFor="let dependant of alliance?.cLientDependents">
+          <div *ngIf="dependant.relationship == 3">
+            <div class="col-4">
+              <strong>Nombre del cónyuge:</strong> <br />
+              <!-- $dependent->name $dependent->last_name_1 $dependent->last_name_2 -->
+              {{ dependant?.name }}
+              {{ dependant?.lastName1 }}
+              {{ dependant?.lastName2 }}
+            </div>
+            <div class="col-4">
+              <strong>Fecha de nacimiento:</strong> <br />
+              <!-- \Carbon\Carbon::parse($dependent->birth_date)->format('m-d-Y') -->
+              {{ dependant?.birthDate | date: 'shortDate' }}
+            </div>
+            <div class="col-4">
+              <strong>Seguro social:</strong> <br />
+              {{ dependant?.ssn }}
+            </div>
+          </div>
+          <!-- @endif @endforeach-- -- @if($client->dependents->where('relationship',
+        1)->count() == 1) -->
+          <div *ngIf="dependant.relationship == 3">
+            <div class="col-4">
+              <strong>Nombre del cónyuge:</strong> <br />
+              <!-- $client->dependents->where('relationship',
+              1)->first()->name$client->dependents->where('relationship',
+              1)->first()->last_name_1$client->dependents->where('relationship',
+              1)->first()->last_name_2 -->
+              {{ dependant?.name }}
+              {{ dependant?.lastName1 }}
+              {{ dependant?.lastName2 }}
+            </div>
+            <div class="col-4">
+              <strong>Fecha de nacimiento:</strong> <br />
+              <!-- \Carbon\Carbon::parse($client->dependents->where('relationship',
+              1)->first()->birth_date)->format('m-d-Y') -->
+              {{ dependant?.birthDate | date: 'shortDate' }}
+            </div>
+            <div class="col-4">
+              <strong>Seguro social:</strong> <br />
+              <!-- $client->dependents->where('relationship', 1)->first()->ssn -->
+              {{ dependant?.ssn }}
+            </div>
+            <!-- @endif -- -->
+          </div>
         </div>
-        <div class="col-4">
-          <strong>Fecha de nacimiento:</strong> <br />
-          \Carbon\Carbon::parse($dependent->birth_date)->format('m-d-Y')
-        </div>
-        <div class="col-4">
-          <strong>Seguro social:</strong> <br />
-          $dependent->ssn
-        </div>
-        @endif @endforeach-- -- @if($client->dependents->where('relationship',
-        1)->count() == 1)
-        <div class="col-4">
-          <strong>Nombre del cónyuge:</strong> <br />
-          $client->dependents->where('relationship',
-          1)->first()->name$client->dependents->where('relationship',
-          1)->first()->last_name_1$client->dependents->where('relationship',
-          1)->first()->last_name_2
-        </div>
-        <div class="col-4">
-          <strong>Fecha de nacimiento:</strong> <br />
-          \Carbon\Carbon::parse($client->dependents->where('relationship',
-          1)->first()->birth_date)->format('m-d-Y')
-        </div>
-        <div class="col-4">
-          <strong>Seguro social:</strong> <br />
-          $client->dependents->where('relationship', 1)->first()->ssn
-        </div>
-        @endif --
       </div>
     </div>
     <div class="row">

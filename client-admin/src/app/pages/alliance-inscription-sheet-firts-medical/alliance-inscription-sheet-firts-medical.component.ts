@@ -48,4 +48,9 @@ export class AllianceInscriptionSheetFirtsMedicalComponent implements OnInit {
       pdf.save('newPDF.pdf');
     });
   }
+  getAge(dob: string) {
+    var diff_ms = Date.now() - Date.parse(dob.substring(0, 10));
+    var age_dt = new Date(diff_ms);
+    return Math.abs(age_dt.getUTCFullYear() - 1970);
+  }
 }

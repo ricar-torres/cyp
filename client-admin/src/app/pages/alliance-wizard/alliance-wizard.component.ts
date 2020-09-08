@@ -78,6 +78,41 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
     public dialogRef: MatDialogRef<AllianceWizardComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  ngOnInit(): void {
+    this.qualifyingEventService.getAll().subscribe((res) => {
+      this.qualifyingEvents = <any>res;
+    });
+
+    this.AllianceService.getAllAffTypes().subscribe((res) => {
+      this.affTypes = <[]>res;
+    });
+
+    this.affiliationMethod = this._formBuilder.group({
+      affiliationMethod: [null],
+      qualifyingEvent: [null],
+    });
+
+    this.finalFormGroup = this._formBuilder.group({
+      effectiveDate: [{ value: null, disabled: true }, [Validators.required]],
+      eligibiliyDate: [{ value: null, disabled: true }, [Validators.required]],
+      inscriptionType: [null, Validators.required],
+      inscriptionStatus: [null, Validators.required],
+    });
+
+    this.benefits = this._formBuilder.group({
+      HealthPlan: [null],
+      cover: [null],
+      joint: [null, Validators.maxLength(255)],
+      prima: [null, Validators.maxLength(255)],
+    });
+
+    this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
+      this.coverService.GetByPlan(res).subscribe((res) => {
+        this.covers = res;
+      });
+    });
+  }
   async ngAfterViewInit() {
     this.stepper.selectionChange.subscribe((ev) => {
       var qlf = this.affiliationMethod.get('qualifyingEvent').value;
@@ -110,6 +145,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       if (alliance.cover.healthPlanId) {
         this.benefits.get('HealthPlan').setValue(alliance.cover.healthPlanId);
         this.benefits.get('cover').setValue(alliance.cover.id);
+        this.benefits.get('joint').setValue(alliance.joint);
+        this.benefits.get('prima').setValue(alliance.prima);
       }
 
       if (alliance.addonList) {
@@ -165,39 +202,6 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
           .setValue(alliance.affStatus);
       }
     }
-  }
-
-  ngOnInit(): void {
-    this.qualifyingEventService.getAll().subscribe((res) => {
-      this.qualifyingEvents = <any>res;
-    });
-
-    this.AllianceService.getAllAffTypes().subscribe((res) => {
-      this.affTypes = <[]>res;
-    });
-
-    this.affiliationMethod = this._formBuilder.group({
-      affiliationMethod: [null],
-      qualifyingEvent: [null],
-    });
-
-    this.finalFormGroup = this._formBuilder.group({
-      effectiveDate: [{ value: null, disabled: true }, [Validators.required]],
-      eligibiliyDate: [{ value: null, disabled: true }, [Validators.required]],
-      inscriptionType: [null, Validators.required],
-      inscriptionStatus: [null, Validators.required],
-    });
-
-    this.benefits = this._formBuilder.group({
-      HealthPlan: [null],
-      cover: [null],
-    });
-
-    this.benefits.get('HealthPlan').valueChanges.subscribe((res) => {
-      this.coverService.GetByPlan(res).subscribe((res) => {
-        this.covers = res;
-      });
-    });
   }
 
   async checkPercent(save?) {
@@ -292,8 +296,8 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       // Coordination: null,
       // LifeInsurance: null, //will be moved to other table
       // MajorMedical: null, //will be moved to other table
-      // Prima: null,
-      // Joint: null,
+      Prima: this.benefits.get('prima').value,
+      Joint: this.benefits.get('joint').value,
       // CoverAmount: null,
       // LifeInsuranceAmount: null,
       // MajorMedicalAmount: null,

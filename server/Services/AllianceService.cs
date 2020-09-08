@@ -97,7 +97,9 @@ namespace WebApi.Services
         StartDate = DateTime.Now,
         CreatedAt = DateTime.Now,
         UpdatedAt = DateTime.Now,
-        EndDate = DateTime.Now.AddYears(1)
+        EndDate = DateTime.Now.AddYears(1),
+        Joint = payload.Joint,
+        Prima = payload.Prima
       };
 
       //TODO: check if the status of the aliance is complete or pending
@@ -254,6 +256,14 @@ namespace WebApi.Services
           ad.HealthPlans = null;
           ad.AlianzaAddOns = null;
         });
+        x.ClientChapters = _context.ChapterClient.
+        Join(_context.Chapters.Include(ss => ss.BonaFide), chapterclient => chapterclient.ChapterId, chapter => chapter.Id, (chapterclient, chapter) => new { chapter = chapter, chapterClient = chapterclient })
+        .Where(s => s.chapterClient.ClientId == x.Client.Id).Select(s => s.chapter).ToList();
+        x.ClientChapters.ForEach(s =>
+        {
+          s.ChapterClient = null;
+          s.BonaFide.Chapters = null;
+        });
       });
 
       return clientAlliances;
@@ -312,6 +322,8 @@ namespace WebApi.Services
       alliance.AffType = payload.AffType;
       alliance.AffStatus = payload.AffStatus.GetValueOrDefault();
       alliance.CoverId = payload.CoverId.GetValueOrDefault();
+      alliance.Joint = payload.Joint;
+      alliance.Prima = payload.Prima;
       UpdateBeneficiaries(payload);
       UpdateAddons(payload);
       await _context.SaveChangesAsync();

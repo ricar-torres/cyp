@@ -89,6 +89,28 @@
             }}</mat-option>
           </mat-select>
         </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'ALLIANCEWIZARD.JOINT' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="joint"
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+          />
+        </mat-form-field>
+        <mat-form-field fxFlex>
+          <mat-label>{{ 'ALLIANCEWIZARD.PRIMA' | translate }}</mat-label>
+          <input
+            matInput
+            formControlName="prima"
+            type="text"
+            prefix="$"
+            mask="separator.2"
+            thousandSeparator=","
+          />
+        </mat-form-field>
       </div>
     </form>
     <div class="top-bottom-margin">
@@ -220,7 +242,7 @@
             </div>
             <div class="separator"></div> -->
             <div fxLayout fxLayoutAlign="space-between center">
-              <div>Costo de cubierta:</div>
+              <div>{{ 'ALLIANCEWIZARD.COVERCOST' | translate }}:</div>
               <div>${{ allianceWithCost?.coverAmount }}</div>
             </div>
             <div
@@ -233,10 +255,32 @@
             </div>
             <div class="separator"></div>
             <div fxLayout fxLayoutAlign="space-between center">
-              <div>Costo Total</div>
+              <div>{{ 'ALLIANCEWIZARD.TOTALCOST' | translate }}</div>
               <div>${{ allianceWithCost?.subTotal }}</div>
             </div>
             <hr />
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.PRIMA' | translate }}:</div>
+              <div>
+                ${{ allianceWithCost?.prima ? allianceWithCost?.prima : 0 }}
+              </div>
+            </div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.JOINT' | translate }}:</div>
+              <div>
+                ${{ allianceWithCost?.joint ? allianceWithCost?.joint : 0 }}
+              </div>
+            </div>
+            <div class="separator"></div>
+            <div fxLayout fxLayoutAlign="space-between center">
+              <div>{{ 'ALLIANCEWIZARD.TOTALCLIENTPROVIDED' | translate }}</div>
+              <div>
+                ${{
+                  (allianceWithCost?.joint ? allianceWithCost?.joint : 0) +
+                    (allianceWithCost?.prima ? allianceWithCost?.prima : 0)
+                }}
+              </div>
+            </div>
           </div>
         </mat-card-content>
       </mat-card>

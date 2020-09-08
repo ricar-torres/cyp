@@ -261,7 +261,12 @@
     "BENEFITS": "Beneficios",
     "COVER": "Cubierta",
     "LIFEINSURANCE": "Seguro de Vida",
-    "DATES": "Fechas"
+    "DATES": "Fechas",
+    "COVERCOST": "Costo de Cubierta",
+    "PRIMA": "Aportación Patronal",
+    "TOTALCOST": "Consto Total",
+    "JOINT": "Mancomunado",
+    "TOTALCLIENTPROVIDED": "Total"
   },
   "BENEFICIERIES": {
     "SUMERROR": "La suma de los porcentajes en cada beneficiario debe resultar en 100, su suma resulto en: "

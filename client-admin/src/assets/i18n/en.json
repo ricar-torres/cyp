@@ -259,7 +259,12 @@
     "BENEFITS": "Benefits",
     "COVER": "Cover",
     "LIFEINSURANCE": "Life Insurance",
-    "DATES": "Dates"
+    "DATES": "Dates",
+    "COVERCOST": "Cover Cost",
+    "PRIMA": "Employer Contribution",
+    "TOTALCOST": "Total Cost",
+    "JOINT": "Joint",
+    "TOTALCLIENTPROVIDED": "Total"
   },
   "BENEFICIERIES": {
     "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "
