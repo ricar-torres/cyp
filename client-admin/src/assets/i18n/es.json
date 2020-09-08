@@ -479,11 +479,11 @@
   },
   "VEHICLE_LIST": {
     "MODEL": "Modelo",
-    "PLATE_NUM": "Numero de Tablilla",
+    "PLATE_NUM": "Número de Tablilla",
     "BRAND": "Marca",
-    "YEAR": "Ano",
+    "YEAR": "Año",
     "DELETE": "Borrar",
-    "ADD": "Anadir",
+    "ADD": "Añadir",
     "CAR_INSURANCE": "Seguro de Vehiculo"
   }
 }
