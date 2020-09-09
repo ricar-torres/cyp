@@ -240,11 +240,15 @@ namespace WebApi.Services
           x.Alianza = null;
         });
         x.Client.Agency = _context.Agencies.FirstOrDefault(s => s.Id == x.Client.AgencyId && s.DeletedAt == null);
-        x.Client.Agency.Clients = null;
-        x.Client.Agency.Dependents = null;
+        if (x.Client.Agency != null)
+        {
+          x.Client.Agency.Clients = null;
+          x.Client.Agency.Dependents = null;
+        }
         x.CLientDependents = _context.Dependents.Where(s => s.DeletedAt == null && s.ClientId == clientId).ToList();
         x.CLientDependents.ForEach(c =>
         {
+          c.Cover = null;
           c.Client = null;
           c.Agency = _context.Agencies.FirstOrDefault(a => a.Id == c.AgencyId);
           if (c.Agency != null)
@@ -270,6 +274,7 @@ namespace WebApi.Services
         {
           s.ChapterClient = null;
           s.BonaFide.Chapters = null;
+          x.Client = null;
         });
       });
 

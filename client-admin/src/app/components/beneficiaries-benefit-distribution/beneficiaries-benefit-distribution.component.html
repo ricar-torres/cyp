@@ -55,7 +55,18 @@
                     #birthDatePiker
                     disabled="false"
                   ></mat-datepicker>
+                  <mat-error
+                    *ngIf="
+                      !item.get('birthDate').value &&
+                      item.get('birthDate').touched
+                    "
+                  >
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
                 </mat-form-field>
+                {{
+                  item.get('birthDate').value && item.get('birthDate').touched
+                }}
                 <mat-form-field fxFlex="15%">
                   <mat-label>{{ 'RELATION' | translate }}</mat-label>
                   <mat-select

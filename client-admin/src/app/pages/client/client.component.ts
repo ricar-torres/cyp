@@ -173,40 +173,44 @@ export class ClientComponent implements OnInit, OnDestroy {
         this.multi_assist.create();
         break;
       case 'Alliance':
-        this.alianceService.iselegible(this.clientid).subscribe(
-          (res: string[]) => {
-            var validationNotMeetText = '';
-            var promiseArray: Promise<string>[] = new Array();
-            if (res)
-              res.forEach((s) =>
-                promiseArray.push(
-                  this.languageService.translate
-                    .get(`CLIENTS.${s}`)
-                    .toPromise()
-                    .then(
-                      (txt) =>
-                        (validationNotMeetText += `<div style="margin:20px;" >${txt}</div>`)
-                    )
-                )
-              );
+        try {
+          this.alianceService.iselegible(this.clientid).subscribe(
+            (res: string[]) => {
+              var validationNotMeetText = '';
+              var promiseArray: Promise<string>[] = new Array();
+              if (res)
+                res.forEach((s) =>
+                  promiseArray.push(
+                    this.languageService.translate
+                      .get(`CLIENTS.${s}`)
+                      .toPromise()
+                      .then(
+                        (txt) =>
+                          (validationNotMeetText += `<div style="margin:20px;" >${txt}</div>`)
+                      )
+                  )
+                );
 
-            Promise.all(promiseArray).then(() => {
-              if (!res) {
-                this.alliance.goToNew();
-              } else {
-                Swal.default.fire({
-                  position: 'center',
-                  icon: 'error',
-                  title: 'Error',
-                  html: validationNotMeetText,
-                  showConfirmButton: false,
-                  heightAuto: false,
-                });
-              }
-            });
-          },
-          (err) => {}
-        );
+              Promise.all(promiseArray).then(() => {
+                if (!res) {
+                  this.alliance.goToNew();
+                } else {
+                  Swal.default.fire({
+                    position: 'center',
+                    icon: 'error',
+                    title: 'Error',
+                    html: validationNotMeetText,
+                    showConfirmButton: false,
+                    heightAuto: false,
+                  });
+                }
+              });
+            },
+            (err) => {}
+          );
+        } catch (ex) {
+          this.app.showErrorMessage(ex);
+        }
         break;
       default:
         break;

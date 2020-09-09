@@ -193,6 +193,15 @@ namespace WebApi.Helpers {
 
 				#endregion
 
+				#region InsurancePlanAddOns
+
+				var insurancePlanAddOns = JsonConvert.DeserializeObject<List<InsurancePlanAddOns>>(File.ReadAllText("Seeds" + Path.DirectorySeparatorChar + "Insurance_plan_addons.json"));
+				insurancePlanAddOns = insurancePlanAddOns.Where(x => !context.InsurancePlanAddOns.Any(y => y.CoverId == x.CoverId && y.InsuranceAddOnsId == x.InsuranceAddOnsId)).ToList();
+				context.AddRange(insurancePlanAddOns);
+				context.SaveChanges();
+				
+				#endregion
+
 			}
 			finally {
 				context.Database.CloseConnection();

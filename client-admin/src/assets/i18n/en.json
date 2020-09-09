@@ -158,7 +158,8 @@
     "SSNNOTCOMPLETE": "The SSN must be complete to proceed",
     "MISSINGDOB": "The DOB must be provided to proceed",
     "MISSINGBONAFIDES": "The client must be part of a bona fide association to proceed",
-    "EMPLOYERBENEFIT": "Contribución del Patrono"
+    "EMPLOYERBENEFIT": "Contribución del Patrono",
+    "RETIREMENTSYSTEM": "Retirement System"
   },
   "QUALIFYINGEVENT": {
     "TITLE": "Qualifying Events",
@@ -266,7 +267,8 @@
     "TOTALCOST": "Sub Total",
     "JOINT": "Joint",
     "TOTALCLIENTPROVIDED": "Total",
-    "COVERCOST": "Cover Cost"
+    "COVERCOST": "Cover Cost",
+    "DETAILS": "Cost Details"
   },
   "BENEFICIERIES": {
     "SUMERROR": "The sum of the percentage in each beneficiery should yield 100, your sum is: "

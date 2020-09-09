@@ -19,6 +19,46 @@
                 fxLayout.lt-md="column"
               >
                 <mat-form-field fxFlex="20%">
+                  <mat-label>{{ 'VEHICLE_LIST.BRAND' | translate }}</mat-label>
+                  <input matInput [formControl]="item.get('make')" />
+                  <mat-error *ngIf="item.get('make').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field fxFlex="20%">
+                  <mat-label>{{ 'VEHICLE_LIST.YEAR' | translate }}</mat-label>
+                  <input
+                    matInput
+                    [formControl]="item.get('year')"
+                    mask="9999"
+                  />
+                  <mat-error *ngIf="item.get('year').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field> -->
+                <mat-form-field fxFlex="20%">
+                  <input
+                    matInput
+                    [matDatepicker]="dp"
+                    [formControl]="item.get('year')"
+                  />
+                  <mat-datepicker-toggle
+                    matSuffix
+                    [for]="dp"
+                  ></mat-datepicker-toggle>
+                  <mat-datepicker
+                    #dp
+                    startView="multi-year"
+                    (yearSelected)="chosenYearHandler($event)"
+                    (monthSelected)="chosenMonthHandler($event, dp)"
+                    panelClass="example-month-picker"
+                  >
+                  </mat-datepicker>
+                  <mat-error *ngIf="item.get('year').hasError('required')">
+                    {{ 'REQUIRED' | translate }}
+                  </mat-error>
+                </mat-form-field>
+                <mat-form-field fxFlex="20%">
                   <mat-label>{{ 'VEHICLE_LIST.MODEL' | translate }}</mat-label>
                   <input matInput [formControl]="item.get('model')" />
                   <mat-error *ngIf="item.get('model').hasError('required')">
@@ -31,24 +71,6 @@
                   }}</mat-label>
                   <input matInput [formControl]="item.get('vin')" />
                   <mat-error *ngIf="item.get('vin').hasError('required')">
-                    {{ 'REQUIRED' | translate }}
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field fxFlex="20%">
-                  <mat-label>{{ 'VEHICLE_LIST.BRAND' | translate }}</mat-label>
-                  <input matInput [formControl]="item.get('make')" />
-                  <mat-error *ngIf="item.get('make').hasError('required')">
-                    {{ 'REQUIRED' | translate }}
-                  </mat-error>
-                </mat-form-field>
-                <mat-form-field fxFlex="20%">
-                  <mat-label>{{ 'VEHICLE_LIST.YEAR' | translate }}</mat-label>
-                  <input
-                    matInput
-                    [formControl]="item.get('year')"
-                    mask="9999"
-                  />
-                  <mat-error *ngIf="item.get('year').hasError('required')">
                     {{ 'REQUIRED' | translate }}
                   </mat-error>
                 </mat-form-field>

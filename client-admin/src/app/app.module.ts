@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { CustomFormsModule } from 'ng2-validation';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -44,7 +45,7 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { MomentModule } from 'ngx-moment';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { DatePipe, CurrencyPipe } from '@angular/common';
-
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import {
   FormsModule,
   ReactiveFormsModule,
@@ -262,6 +263,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserModule,
     HttpClientModule,
     MatStepperModule,
+    CustomFormsModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [

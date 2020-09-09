@@ -30,6 +30,7 @@ import * as Swal from 'sweetalert2';
 import { AlliancesService } from '@app/shared/alliances.service';
 import { BeneficiariesBenefitDistributionComponent } from '@app/components/beneficiaries-benefit-distribution/beneficiaries-benefit-distribution.component';
 import { Observable } from 'rxjs';
+import { debug } from 'console';
 
 @Component({
   selector: 'app-alliance-wizard',
@@ -212,10 +213,9 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       this.beneficiaries.first.dependantsEnabled &&
       this.beneficiaries.first.dependantsEnabled.checked
     ) {
-      //debugger;
       this.BeneficiariesList.forEach((x) => {
         percentage += Number.parseFloat(x.get('percent').value);
-        if (x.invalid) {
+        if (x.invalid || !x.get('birthDate').value) {
           AllBeneficieriesAreValid = false;
         }
       });
@@ -225,12 +225,33 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
         console.log(this.allianceWithCost);
         this.stepper.next();
       } else {
-        if (percentage != 100) {
-          this.BeneficiariesList.forEach((x) => {
-            x.get('percent').markAsDirty();
+        this.BeneficiariesList.forEach((x) => {
+          var check = x.getRawValue();
+          if (percentage != 100) {
+            x.get('percent').markAsTouched();
             x.get('percent').setErrors({ BadPercentage: true });
-          });
-        }
+          }
+          if (!check.birthDate) {
+            x.get('birthDate').markAsTouched();
+            x.get('birthDate').setErrors({ required: true });
+          }
+          if (!check.name) {
+            x.get('name').markAsTouched();
+            x.get('name').setErrors({ required: true });
+          }
+          if (!check.gender) {
+            x.get('gender').markAsTouched();
+            x.get('gender').setErrors({ required: true });
+          }
+          if (!check.relationship) {
+            x.get('relationship').markAsTouched();
+            x.get('relationship').setErrors({ required: true });
+          }
+          if (!check.ssn) {
+            x.get('ssn').markAsTouched();
+            x.get('ssn').setErrors({ required: true });
+          }
+        });
       }
     } else {
       if (!this.data.alliance || save)
@@ -329,5 +350,27 @@ export class AllianceWizardComponent implements OnInit, AfterViewInit {
       }
       return null;
     };
+  }
+
+  checkEvent() {
+    debugger;
+    if (this.affiliationMethod.get('affiliationMethod').value == 1) {
+      if (this.affiliationMethod.get('qualifyingEvent').value) {
+        this.affiliationMethod.get('qualifyingEvent').setErrors(null);
+        this.stepper.next();
+        return;
+      } else {
+        this.affiliationMethod
+          .get('qualifyingEvent')
+          .setErrors({ fieldRequired: true });
+        return;
+      }
+    } else if (this.affiliationMethod.get('affiliationMethod').value == 2) {
+      this.stepper.next();
+      return;
+    }
+    this.affiliationMethod
+      .get('affiliationMethod')
+      .setErrors({ atLeasOne: true });
   }
 }
