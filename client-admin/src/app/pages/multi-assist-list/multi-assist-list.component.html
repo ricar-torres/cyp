@@ -1,4 +1,4 @@
-<md-content layout-margin layout-padding>
+<md-content layout-margin layout-padding class="full-width">
   <mat-card class="full-width">
     <!-- <mat-card-header>
       <mat-card-title>{{
@@ -6,7 +6,7 @@
       }}</mat-card-title>
     </mat-card-header> -->
     <mat-card-content>
-      <div fxLayout fxLayoutAlign="end start">
+      <div fxLayout fxLayoutAlign="space-around start">
         <button
           hidden
           type="button"
@@ -34,7 +34,7 @@
         mat-table
         [dataSource]="dataSource"
         matSort
-        class="mat-elevation-z8"
+        class="mat-elevation-z8 full-width"
       >
         <!-- id Column -->
         <ng-container matColumnDef="id">
@@ -58,7 +58,7 @@
             {{ 'MULTI_ASSIST_LIST.EFFECTIVE_DATE' | translate }}
           </th>
           <td mat-cell *matCellDef="let element">
-            {{ element.multiAssist.effectiveDate }}
+            {{ element.multiAssist.effectiveDate | date: 'dd/MM/yyyy' }}
           </td>
         </ng-container>
 

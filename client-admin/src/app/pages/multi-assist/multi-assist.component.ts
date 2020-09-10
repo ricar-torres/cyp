@@ -83,7 +83,7 @@ export class MultiAssistComponent implements OnInit, AfterViewInit {
   async ngOnInit() {
     try {
       this.initForms();
-      this.daysNums = Array.from(Array(30), (x, i) => i + 1);
+      this.daysNums = Array.from(Array(2), (x, i) => (i + 1) * 15);
       this.healthPlans = await this.multiAssistApiService
         .getMultiAssistPlans()
         .toPromise();

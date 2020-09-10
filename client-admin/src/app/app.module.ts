@@ -1,6 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { CustomFormsModule } from 'ng2-validation';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -78,6 +77,8 @@ import {
   MatSortModule,
 } from '@angular/material';
 
+// import { CustomFormsModule } from 'ngx-validators';
+
 import { SsnInputDirective } from './directives/ssn-input.directive';
 import { LoginComponent } from './pages/login/login.component';
 import { HomeComponent } from './pages/home/home.component';
@@ -140,6 +141,8 @@ import { MultiAssistListComponent } from './pages/multi-assist-list/multi-assist
 import { VehicleListComponent } from './components/vehicle-list/vehicle-list.component';
 import { AllianceInscriptionSheetComponent } from './pages/alliance-inscription-sheet-psm/alliance-inscription-sheet.component';
 import { AllianceInscriptionSheetFirtsMedicalComponent } from './pages/alliance-inscription-sheet-firts-medical/alliance-inscription-sheet-firts-medical.component';
+import { DatepickerComponent } from './components/datepicker/datepicker.component';
+
 // AoT requires an exported function for factories
 export function HttpLoaderFactory(httpClient: HttpClient) {
   //return new TranslateHttpLoader(httpClient);
@@ -209,6 +212,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     AllianceInscriptionSheetComponent,
     VehicleListComponent,
     AllianceInscriptionSheetFirtsMedicalComponent,
+    DatepickerComponent,
   ],
   imports: [
     BrowserModule,
@@ -263,7 +267,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
     BrowserModule,
     HttpClientModule,
     MatStepperModule,
-    CustomFormsModule,
+    // CustomFormsModule,
     NgxMaskModule.forRoot(),
   ],
   providers: [

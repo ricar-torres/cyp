@@ -11,6 +11,7 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  ValidatorFn,
 } from '@angular/forms';
 import {
   MatSlideToggle,
@@ -20,29 +21,14 @@ import {
   MatDatepicker,
 } from '@angular/material';
 import { trigger, transition, style, animate } from '@angular/animations';
-
+import { UniversalValidators } from 'ngx-validators';
 import * as _moment from 'moment';
 // tslint:disable-next-line:no-duplicate-imports
 import {
   MomentDateAdapter,
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
 } from '@angular/material-moment-adapter';
-// import { default as _rollupMoment } from 'moment';
-// const moment = _rollupMoment || _moment;
 
-// See the Moment.js docs for the meaning of these formats:
-// https://momentjs.com/docs/#/displaying/format/
-export const MY_FORMATS = {
-  parse: {
-    dateInput: 'MM/YYYY',
-  },
-  display: {
-    dateInput: 'MM/YYYY',
-    monthYearLabel: 'MMM YYYY',
-    dateA11yLabel: 'LL',
-    monthYearA11yLabel: 'MMMM YYYY',
-  },
-};
 @Component({
   selector: 'app-vehicle-list',
   templateUrl: './vehicle-list.component.html',
@@ -58,18 +44,6 @@ export const MY_FORMATS = {
         animate('300ms', style({ opacity: 0 })),
       ]),
     ]),
-  ],
-  providers: [
-    // `MomentDateAdapter` can be automatically provided by importing `MomentDateModule` in your
-    // application's root module. We provide it at the component level here, due to limitations of
-    // our example generation script.
-    {
-      provide: DateAdapter,
-      useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
-    },
-
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
   ],
 })
 export class VehicleListComponent implements OnInit {
@@ -94,7 +68,7 @@ export class VehicleListComponent implements OnInit {
       model: [null, [Validators.required]],
       vin: [null, [Validators.required]],
       make: [null, [Validators.required]],
-      year: [null, [Validators.required, CustomsValidators]],
+      year: [null, Validators.required, this.min(1990), this.max(2020)],
     });
 
     //newForm.get('birthDate').disable();
@@ -103,24 +77,31 @@ export class VehicleListComponent implements OnInit {
   delete(i: number) {
     this.VehicleList.splice(i, 1);
   }
+  max(max: number): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+      let val: number = control.value;
 
-  // clearIsuranceDependants(event) {
-  //   this.benefitChecked.emit(event);
-  //   if (!event) this.VehicleList = [];
-  // }
-  // chosenYearHandler(normalizedYear: _moment.Moment) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.year(normalizedYear.year());
-  //   this.date.setValue(ctrlValue);
-  // }
+      if (control.pristine || control.pristine) {
+        return null;
+      }
+      if (val <= max) {
+        return null;
+      }
+      return { max: true };
+    };
+  }
 
-  // chosenMonthHandler(
-  //   normalizedMonth: _moment.Moment,
-  //   datepicker: MatDatepicker<_moment.Moment>
-  // ) {
-  //   const ctrlValue = this.date.value;
-  //   ctrlValue.month(normalizedMonth.month());
-  //   this.date.setValue(ctrlValue);
-  //   datepicker.close();
-  // }
+  min(min: number): ValidatorFn {
+    return (control: FormControl): { [key: string]: boolean } | null => {
+      let val: number = control.value;
+
+      if (control.pristine || control.pristine) {
+        return null;
+      }
+      if (val >= min) {
+        return null;
+      }
+      return { min: true };
+    };
+  }
 }

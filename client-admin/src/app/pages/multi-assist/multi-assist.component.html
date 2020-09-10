@@ -153,6 +153,15 @@
                   [formControl]="multi_assist_bank.get('routingNum')"
                 />
               </mat-form-field>
+              <mat-form-field fxFlex>
+                <mat-label>{{
+                  'MULTI_ASSIST.ACCOUNT_NUM' | translate
+                }}</mat-label>
+                <input
+                  matInput
+                  [formControl]="multi_assist_bank.get('accountNum')"
+                />
+              </mat-form-field>
             </div>
             <div
               *ngIf="multi_assist_bank.get('accType').value == '2'"
@@ -183,15 +192,6 @@
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
             </div>
-            <mat-form-field fxFlex>
-              <mat-label>{{
-                'MULTI_ASSIST.ACCOUNT_NUM' | translate
-              }}</mat-label>
-              <input
-                matInput
-                [formControl]="multi_assist_bank.get('accountNum')"
-              />
-            </mat-form-field>
           </div>
 
           <div fxLayout fxLayoutGap="5px">

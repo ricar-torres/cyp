@@ -36,7 +36,7 @@
                     {{ 'REQUIRED' | translate }}
                   </mat-error>
                 </mat-form-field> -->
-                <mat-form-field fxFlex="20%">
+                <!-- <mat-form-field fxFlex="20%">
                   <input
                     matInput
                     [matDatepicker]="dp"
@@ -57,7 +57,8 @@
                   <mat-error *ngIf="item.get('year').hasError('required')">
                     {{ 'REQUIRED' | translate }}
                   </mat-error>
-                </mat-form-field>
+                </mat-form-field> -->
+                <app-datepicker [date]="item.get('year')"></app-datepicker>
                 <mat-form-field fxFlex="20%">
                   <mat-label>{{ 'VEHICLE_LIST.MODEL' | translate }}</mat-label>
                   <input matInput [formControl]="item.get('model')" />

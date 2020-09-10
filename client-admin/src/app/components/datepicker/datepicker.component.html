@@ -1,0 +1,20 @@
+<mat-form-field>
+  <input
+    matInput
+    [matDatepicker]="dp"
+    placeholder="Year"
+    [formControl]="date"
+  />
+  <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
+  <mat-datepicker
+    #dp
+    startView="multi-year"
+    (yearSelected)="chosenYearHandler($event, dp)"
+    (monthSelected)="chosenMonthHandler($event, dp)"
+    panelClass="example-month-picker"
+    strictMode="true"
+    [startAt]="1990"
+    [stickyEnd]="2020"
+  >
+  </mat-datepicker>
+</mat-form-field>
